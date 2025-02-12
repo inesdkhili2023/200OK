@@ -1,0 +1,11 @@
+<!-- Comments -->
+<h2>Comments</h2>
+<div *ngFor="let comment of comments" class="comment-post">
+    <div><img [src]="comment.image" class="comment-img"></div>
+    <div class="comment-text">
+        <h4>{{ comment.name }}</h4>
+        <h6>{{ comment.date }}</h6>
+        <h5>{{ comment.text }}</h5>
+        <button class="btn btn-secondary" (click)="onReply(comment)">Reply</button>
+    </div>
+</div>

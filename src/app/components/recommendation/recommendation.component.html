@@ -1,0 +1,37 @@
+<div class="recommendation-container">
+    <h2>Personalized Insurance Recommendations</h2>
+    <form (ngSubmit)="getRecommendations()">
+      
+      <label for="age">Age Group:</label>
+      <select id="age" [(ngModel)]="preferences.ageGroup" name="ageGroup" required>
+        <option value="18-25">18-25</option>
+        <option value="26-40">26-40</option>
+        <option value="41-60">41-60</option>
+        <option value="60+">60+</option>
+      </select>
+  
+      <label for="coverage">Preferred Coverage:</label>
+      <select id="coverage" [(ngModel)]="preferences.coverage" name="coverage" required>
+        <option value="Basic">Basic</option>
+        <option value="Standard">Standard</option>
+        <option value="Premium">Premium</option>
+      </select>
+  
+      <label for="risk">Risk Level:</label>
+      <select id="risk" [(ngModel)]="preferences.riskLevel" name="riskLevel" required>
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
+  
+      <button type="submit" class="btn-recommend">Get Recommendations</button>
+    </form>
+  
+    <div *ngIf="recommendations.length > 0">
+      <h3>Recommended Insurance Plans</h3>
+      <ul>
+        <li *ngFor="let rec of recommendations">{{ rec }}</li>
+      </ul>
+    </div>
+  </div>
+  

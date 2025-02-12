@@ -1,0 +1,14 @@
+<h2>Categories</h2>
+<ul class="category-post">
+  <li *ngFor="let category of categories">
+    <a href="#">
+      <div class="inline-text">
+        <i class="glyphicon glyphicon-play blue-text"></i>
+        <h4>{{ category.name }}</h4>
+        <div class="margin-left-auto blue-text">
+          <span>({{ category.count }})</span>
+        </div>
+      </div>
+    </a>
+  </li>
+</ul>

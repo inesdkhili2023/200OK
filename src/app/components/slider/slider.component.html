@@ -1,0 +1,16 @@
+<section class="flexslider">
+    <ul class="slides">
+      <li *ngFor="let slide of slides">
+        <img [src]="slide.image" />
+        <div class="slide-info">
+          <div class="slide-con">
+            <b>{{ slide.title }}</b>
+            <h3>{{ slide.subtitle }}</h3>
+            <p>{{ slide.text }}</p>
+            <a href="#" class="ti-arrow-right"></a>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </section>
+  

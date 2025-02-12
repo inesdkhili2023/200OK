@@ -1,0 +1,23 @@
+.recommendation {
+    text-align: center;
+    margin-top: 30px;
+  }
+  
+  .recommendation select, .recommendation button {
+    padding: 10px;
+    margin: 10px;
+    font-size: 16px;
+  }
+  
+  .recommendation .btn-recommend {
+    background-color: #00b2ce;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .recommendation .btn-recommend:hover {
+    background-color: #008da3;
+  }
+  

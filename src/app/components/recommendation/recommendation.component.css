@@ -1,0 +1,41 @@
+.recommendation-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 10px;
+  }
+  
+  h2, h3 {
+    text-align: center;
+    color: #333;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  select {
+    padding: 8px;
+    margin-bottom: 15px;
+  }
+  
+  .btn-recommend {
+    background: #eb9239;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .btn-recommend:hover {
+    background: #eb9239;
+  }
+  
