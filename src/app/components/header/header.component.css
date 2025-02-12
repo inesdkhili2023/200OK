@@ -1,0 +1,29 @@
+.top-bar {
+    background: #333;
+    color: #fff;
+    padding: 10px 0;
+  }
+  
+  .top-bar .social ul {
+    display: flex;
+    justify-content: flex-end;
+    list-style: none;
+  }
+  
+  .top-bar .social ul li {
+    margin-left: 10px;
+  }
+  
+  .navbar-custom {
+    background: #222;
+  }
+  
+  .navbar-brand {
+    color: #fff;
+    font-size: 24px;
+  }
+  
+  .navbar-nav li a {
+    color: #fff !important;
+  }
+  

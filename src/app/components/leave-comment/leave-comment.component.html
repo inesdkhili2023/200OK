@@ -1,0 +1,25 @@
+<!-- Leave comment -->
+<h2>Leave A Comment</h2>
+<form (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-sm-8">
+            <div>
+                <input type="text" [(ngModel)]="comment.name" name="name" placeholder="Name" required />
+            </div>
+            <div>
+                <input type="email" [(ngModel)]="comment.email" name="email" placeholder="Email" required />
+            </div>
+            <div>
+                <input type="text" [(ngModel)]="comment.subject" name="subject" placeholder="Subject" />
+            </div>
+        </div>
+        <div class="col-sm-10">
+            <div>
+                <textarea [(ngModel)]="comment.message" rows="3" cols="1" placeholder="Message" required></textarea>
+            </div>
+            <div>
+                <button type="submit" class="btn-default">Submit</button>
+            </div>
+        </div>
+    </div>
+</form>
