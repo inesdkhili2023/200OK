@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\Users\ahmet\OneDrive\Desktop\web\git\insur\src\main\java\com\ahch\entity\Claim.java
 C:\Users\ahmet\OneDrive\Desktop\web\git\insur\src\main\java\com\ahch\Repo\AgencyRepo.java
 C:\Users\ahmet\OneDrive\Desktop\web\git\insur\src\main\java\com\ahch\controller\ClaimController.java
@@ -9,3 +10,23 @@ C:\Users\ahmet\OneDrive\Desktop\web\git\insur\src\main\java\com\ahch\service\Cla
 C:\Users\ahmet\OneDrive\Desktop\web\git\insur\src\main\java\com\ahch\entity\Agency.java
 C:\Users\ahmet\OneDrive\Desktop\web\git\insur\src\main\java\com\ahch\Repo\ClaimRepo.java
 C:\Users\ahmet\OneDrive\Desktop\web\git\insur\src\main\java\com\ahch\entity\ClaimType.java
+=======
+C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\config\CorsConfig.java
+C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\config\JWTAuthFilter.java
+C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\config\SecurityConfig.java
+C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\controller\UserManagementController.java
+C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\dto\ReqRes.java
+C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\email\EmailSender.java
+C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\email\EmailService.java
+C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\entity\Civility.java
+C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\entity\ConfirmationToken.java
+C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\entity\OurUsers.java
+C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\repository\ConfirmationTokenRepository.java
+C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\repository\UsersRepo.java
+C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\service\ConfirmationTokenService.java
+C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\service\EmailValidator.java
+C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\service\JWTUtils.java
+C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\service\OurUserDetailsService.java
+C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\service\UsersManagementService.java
+C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\UsersmanagementsystemApplication.java
+>>>>>>> c9305956a030b291610f62d4a496788fd831d8e1

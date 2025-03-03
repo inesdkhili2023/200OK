@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 com\ahch\entity\ClaimType.class
 com\ahch\entity\Agency.class
 com\ahch\service\AgencyService.class
@@ -9,3 +10,24 @@ com\ahch\entity\ClaimStatus.class
 com\ahch\service\ClaimService.class
 com\ahch\controller\AgencyController.class
 com\ahch\controller\ClaimController.class
+=======
+com\phegondev\usersmanagementsystem\service\ConfirmationTokenService.class
+com\phegondev\usersmanagementsystem\config\CorsConfig.class
+com\phegondev\usersmanagementsystem\service\OurUserDetailsService.class
+com\phegondev\usersmanagementsystem\dto\ReqRes.class
+com\phegondev\usersmanagementsystem\service\UsersManagementService.class
+com\phegondev\usersmanagementsystem\config\CorsConfig$1.class
+com\phegondev\usersmanagementsystem\email\EmailSender.class
+com\phegondev\usersmanagementsystem\service\JWTUtils.class
+com\phegondev\usersmanagementsystem\config\JWTAuthFilter.class
+com\phegondev\usersmanagementsystem\repository\UsersRepo.class
+com\phegondev\usersmanagementsystem\repository\ConfirmationTokenRepository.class
+com\phegondev\usersmanagementsystem\UsersmanagementsystemApplication.class
+com\phegondev\usersmanagementsystem\entity\OurUsers.class
+com\phegondev\usersmanagementsystem\controller\UserManagementController.class
+com\phegondev\usersmanagementsystem\config\SecurityConfig.class
+com\phegondev\usersmanagementsystem\email\EmailService.class
+com\phegondev\usersmanagementsystem\entity\Civility.class
+com\phegondev\usersmanagementsystem\entity\ConfirmationToken.class
+com\phegondev\usersmanagementsystem\service\EmailValidator.class
+>>>>>>> c9305956a030b291610f62d4a496788fd831d8e1

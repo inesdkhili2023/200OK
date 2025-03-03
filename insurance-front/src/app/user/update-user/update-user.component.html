@@ -1,0 +1,46 @@
+<div class="container">
+    <p *ngIf="errorMessage" class="error-message">{{errorMessage}}</p>
+    <h2>Update User</h2>
+    <form (ngSubmit)="updateUser()">
+        <div class="form-group">
+                <label for="">Prenom: </label>
+                <input type="text" name="name" [(ngModel)]="userData.name">
+        </div>
+        <div class="form-group">
+            <label for="">Nom: </label>
+            <input type="text" name="lastname" [(ngModel)]="userData.lastname">
+        </div>
+        <div class="form-group">
+            <label for="">Date de naissance : </label>
+            <input type="date" name="dnaiss" [(ngModel)]="userData.dnaiss">
+        </div>
+        <div class="form-group">
+            <label for="">Cin: </label>
+            <input type="text" name="cin" [(ngModel)]="userData.cin">
+        </div>
+        <div class="form-group">
+                <label for="">Email: </label>
+                <input type="text" name="email" [(ngModel)]="userData.email">
+        </div>
+        <div class="form-group">
+            <label for="">Civility: </label>
+            <select name="civility" [(ngModel)]="userData.civility" required>
+                <option value="">Selectionner civilite</option>
+                <option value="SINGLE">SINGLE</option>
+                <option value="MARRIED">MARRIED</option>
+                <option value="DIVORCED">DIVORCED</option>
+              </select>
+        </div>
+        <div class="form-group">
+            <label for="">City: </label>
+            <input type="text" name="city" [(ngModel)]="userData.city">
+        </div>
+        <div class="form-group">
+            <label for="">Image: </label>
+            <img *ngIf="userData.image" [src]="userData.image" alt="Update Image" width="150" class="profile-image">
+            <input type="file" (change)="onFileSelected($event)">
+        </div>
+        
+        <button type="submit">Update</button>
+    </form>
+</div>
