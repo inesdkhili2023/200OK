@@ -1,0 +1,66 @@
+<form [formGroup]="contactForm" (ngSubmit)=" onSubmit(contactForm)">
+
+
+  <section class="breadcrumb">
+    <div class="container">
+      <h2>Paiement</h2>
+      <ul>
+        <li><a routerLink="/">Home</a> ></li>
+        <li><a href="#">Paiement</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="Paiement">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <div class="form-box">
+           
+            <div class="form-content">
+              
+              <input type="text" formControlName="numContrat" placeholder="Numéro de contrat" />
+              <input type="text" formControlName="name" placeholder="Prénom" />
+              <input type="text" formControlName="email" placeholder="Email" />
+              <input type="text" formControlName="confirmEmail" placeholder="Confirmer Email" />
+        
+
+              <div class="form-group form-check">
+                <input id="terms" type="checkbox" formControlName="terms" class="form-check-input" />
+                <label for="terms" class="form-check-label">
+                  J’ai lu et approuvé les 
+                  <a href="#">conditions de traitement des données personnelles</a> saisies dans cette page.
+                </label>
+              </div>
+
+              <div class="text-center">
+                <button type="submit" class="btn-default" (click)="onSubmit(contactForm) " title="Soumettre le formulaire">Soumettre</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</form>
+<h2>Liste des Paiements</h2>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Montant</th>
+      <th>Numéro de Contrat</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let paiement of paiements">
+      <td>{{ paiement.id }}</td>
+      <td>{{ paiement.montant }}</td>
+      <td>{{ paiement.numContrat }}</td>
+      <td>{{ paiement.datePaiement }}</td>
+    </tr>
+  </tbody>
+</table>
+

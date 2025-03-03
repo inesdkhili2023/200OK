@@ -1,0 +1,13 @@
+<div class="packs-container">
+    <h2>Nos Packs:</h2>
+    <div class="packs">
+      <div class="pack-card" *ngFor="let pack of packs" (click)="openPackModal(pack)">
+        <img [src]="pack.image" [alt]="pack.name">
+        <h3>Pack {{ pack.name }}</h3>
+        <p>{{ pack.description }}</p>
+        <p class="eco-price">À <span>{{ pack.ecoPrice }}</span> pour une habitation verte</p>
+        <button mat-button class="discover-btn">Je Découvre ✈</button>
+      </div>
+    </div>
+  </div>
+  

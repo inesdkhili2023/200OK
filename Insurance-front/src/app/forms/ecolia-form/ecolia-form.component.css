@@ -1,0 +1,124 @@
+/* Style général */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    background: linear-gradient(to right, #d18501, #8d1b06);
+    padding: 20px 0;
+    text-align: center;
+    color: #fff;
+}
+
+.breadcrumb h2 {
+    font-size: 28px;
+    margin: 0;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.breadcrumb ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0;
+}
+
+.breadcrumb ul li {
+    display: inline;
+    font-size: 18px;
+}
+
+.breadcrumb ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.breadcrumb ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Stepper */
+mat-horizontal-stepper {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 30px auto;
+    max-width: 800px;
+}
+
+/* Form Fields */
+mat-form-field {
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+mat-form-field .mat-input-element {
+    font-size: 16px;
+}
+
+/* Buttons */
+button {
+    font-size: 16px;
+    font-weight: 600;
+    padding: 12px 20px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+button[mat-flat-button] {
+    text-transform: uppercase;
+}
+
+button.mat-primary {
+    background: #d18501;
+    color: white;
+}
+
+button.mat-primary:hover {
+    background: #a66601;
+}
+
+button.mat-accent {
+    background: #8d1b06;
+    color: white;
+}
+
+button.mat-accent:hover {
+    background: #6e1404;
+}
+
+button.matStepperPrevious {
+    background: #ccc;
+    color: #333;
+}
+
+button.matStepperPrevious:hover {
+    background: #aaa;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .breadcrumb h2 {
+        font-size: 24px;
+    }
+    
+    .breadcrumb ul li {
+        font-size: 16px;
+    }
+
+    mat-horizontal-stepper {
+        padding: 15px;
+        max-width: 95%;
+    }
+
+    button {
+        width: 100%;
+    }
+}

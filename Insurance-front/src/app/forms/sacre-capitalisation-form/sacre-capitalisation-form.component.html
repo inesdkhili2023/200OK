@@ -1,0 +1,46 @@
+<div class="form-container">
+    <h2>Sacre Capitalisation</h2>
+  
+    <!-- Premier Formulaire -->
+    <form [formGroup]="capitalisationForm" (ngSubmit)="onSubmitFirstForm()">
+      
+      <label>Date d'effet</label>
+      <input type="date" formControlName="dateEffet" required />
+  
+      <label>Durée : {{ capitalisationForm.get('duree')?.value }}</label>
+      <input type="range" formControlName="duree" min="1" />
+  
+      <label>Capital initial : {{ capitalisationForm.get('capitalInitial')?.value }}</label>
+      <input type="range" formControlName="capitalInitial" min="0" />
+  
+      <label>Versement régulier : {{ capitalisationForm.get('versementRegulier')?.value }}</label>
+      <input type="range" formControlName="versementRegulier" min="1" />
+  
+      <label>Fréquence versement régulier</label>
+      <select formControlName="frequenceVersement">
+        <option *ngFor="let freq of frequencies" [value]="freq">{{ freq }}</option>
+      </select>
+  
+      <label>Prime variable :</label>
+      <input type="radio" formControlName="primeVariable" value="Oui" /> Oui
+      <input type="radio" formControlName="primeVariable" value="Non" checked /> Non
+  
+      <button type="submit" [disabled]="capitalisationForm.invalid">ENVOYER</button>
+    </form>
+  
+    <!-- Deuxième Formulaire (affiché après validation du premier) -->
+    <div *ngIf="showSecondForm" class="second-form">
+      <h3>Deuxième Formulaire</h3>
+  
+      <form [formGroup]="secondForm" (ngSubmit)="onSubmitSecondForm()">
+        <label>Montant supplémentaire</label>
+        <input type="number" formControlName="montantAjout" required />
+  
+        <label>Commentaire</label>
+        <textarea formControlName="commentaire" required></textarea>
+  
+        <button type="submit" [disabled]="secondForm.invalid">VALIDER</button>
+      </form>
+    </div>
+  </div>
+  

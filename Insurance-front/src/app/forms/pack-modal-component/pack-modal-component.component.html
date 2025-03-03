@@ -1,0 +1,162 @@
+<!-- insurance-form-modal.component.html -->
+<div class="modal-container">
+  <div class="modal-header">
+    <h2>{{ getStepTitle() }}</h2>
+    <div class="step-indicator">Étape {{ currentStep }}/3</div>
+  </div>
+
+  <div class="modal-body" [ngSwitch]="currentStep">
+    <!-- Étape 1 - Garanties -->
+    <div *ngSwitchCase="1" class="step-content garanties-step">
+      <div class="grid-layout">
+        <div class="left-panel">
+          <div class="price-section">
+            <div class="monthly-price">
+              {{ calculatePrice() }} at/mois
+              <div class="family-condition">
+                Pour une famille de {{ selectedFamilyMembers }} membres
+              </div>
+            </div>
+            <div class="duration">Durée : 7 mois</div>
+          </div>
+
+          <div class="family-selector">
+            <label>Nombre de membres :</label>
+            <select [(ngModel)]="selectedFamilyMembers" class="form-control">
+              <option *ngFor="let num of familyMembersOptions" [value]="num">
+                {{ num }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="right-panel">
+          <div class="garanties-list">
+            <div class="garantie-item" *ngFor="let garantie of garanties">
+              <div class="garantie-title">{{ garantie.title }}</div>
+              <div class="garantie-limit">{{ garantie.limit }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Étape 2 - Souscripteur -->
+    <div *ngSwitchCase="2" class="step-content subscriber-step">
+      <form [formGroup]="subscriberForm">
+        <div class="type-selector">
+          <label>Type de souscripteur:</label>
+          <div class="radio-group">
+            <label>
+              <input type="radio" formControlName="type" value="physical" 
+                     (change)="showMoralFields = false"> Personne Physique
+            </label>
+            <label>
+              <input type="radio" formControlName="type" value="moral" 
+                     (change)="showMoralFields = true"> Personne Morale
+            </label>
+          </div>
+        </div>
+
+        <!-- Personne Physique -->
+        <div *ngIf="!showMoralFields" class="physical-fields">
+          <div class="form-group">
+            <label>Civilité:</label>
+            <select formControlName="civilite" class="form-control">
+              <option value="M">M</option>
+              <option value="Mme">Mme</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Secteur d'activité:</label>
+            <select formControlName="secteur" class="form-control">
+              <option *ngFor="let secteur of secteurs" [value]="secteur">
+                {{ secteur }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Profession:</label>
+            <select formControlName="profession" class="form-control">
+              <option *ngFor="let profession of professions" [value]="profession">
+                {{ profession }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Personne Morale -->
+        <div *ngIf="showMoralFields" class="moral-fields">
+          <div class="form-group">
+            <label>Secteur:</label>
+            <select formControlName="secteurMoral" class="form-control">
+              <option *ngFor="let secteur of secteursMoral" [value]="secteur">
+                {{ secteur }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Activité:</label>
+            <select formControlName="activite" class="form-control">
+              <option *ngFor="let activite of activites" [value]="activite">
+                {{ activite }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Code Postal:</label>
+            <select formControlName="codePostal" class="form-control">
+              <option *ngFor="let cp of codesPostaux" [value]="cp">
+                {{ cp }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Étape 3 - Logement -->
+    <div *ngSwitchCase="3" class="step-content housing-step">
+      <form [formGroup]="housingForm">
+        <div class="form-group">
+          <label>Qualité de l'assuré:</label>
+          <select formControlName="qualite" class="form-control">
+            <option *ngFor="let qualite of qualites" [value]="qualite">
+              {{ qualite }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Installation photovoltaïque:</label>
+          <div class="radio-group">
+            <label>
+              <input type="radio" formControlName="photovoltaique" value="oui"> Oui
+            </label>
+            <label>
+              <input type="radio" formControlName="photovoltaique" value="non"> Non
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Surface du bâtiment (m²):</label>
+          <input type="number" formControlName="surface" class="form-control">
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button *ngIf="currentStep > 1" class="btn-previous" (click)="previousStep()">
+      Retour
+    </button>
+    <button class="btn-next" (click)="nextStep()" [disabled]="!isFormValid()">
+      {{ currentStep === 3 ? 'Valider' : 'Suivant' }}
+    </button>
+  </div>
+</div>
