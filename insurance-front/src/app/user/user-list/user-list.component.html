@@ -1,0 +1,40 @@
+<div class="container">
+    <h2>Liste d'utilisateurs</h2>
+    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+    <button routerLink="/register" class="reg-button">Add User</button>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Prenom</th>
+                <th>Nom</th>
+                <th>Date de naissance</th>
+                <th>Cin</th>
+                <th>Email</th>
+                <th>Civility</th>
+                <th>City</th>
+                <th>Image</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users" key="user.id">
+                <td>{{ user.id }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.lastname }}</td>
+                <td>{{ user.dnaiss}}</td>
+                <td>{{ user.cin }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.civility }}</td>
+                <td>{{ user.city }}</td>
+                <td>{{ user.image }}</td>
+                <td>{{ user.role }}</td>
+                <td>
+                    <button class="delete-button" (click)="deleteUser(user.id)">Delete</button>
+                    <button class="update-button" (click)="navigateToUpdate(user.id)">Update</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
