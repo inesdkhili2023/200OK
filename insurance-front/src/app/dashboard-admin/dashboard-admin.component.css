@@ -1,5 +1,4 @@
 .dashboard-container {
-<<<<<<< HEAD
     display: flex;
     min-height: 100vh;
     background-color: #f5f6fa;
@@ -105,11 +104,8 @@
     color: #f38F1D;
   }
   
-=======
-  display: flex;
-  min-height: 100vh;
-  background-color: #f5f6fa;
-}
+
+
 
 .dashboard-sidebar {
   width: 250px;
@@ -212,4 +208,3 @@
   font-weight: bold;
   color: #f38f1d;
 }
->>>>>>> c9305956a030b291610f62d4a496788fd831d8e1

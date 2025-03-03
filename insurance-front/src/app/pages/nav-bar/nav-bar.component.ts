@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
-<<<<<<< HEAD
-=======
 import { UsersService } from 'src/app/services/users.service';
->>>>>>> c9305956a030b291610f62d4a496788fd831d8e1
 
 @Component({
   selector: 'app-nav-bar',
@@ -10,9 +7,6 @@ import { UsersService } from 'src/app/services/users.service';
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent {
-<<<<<<< HEAD
-
-=======
   constructor(private readonly userService: UsersService){}
 
   isAuthenticated:boolean = false;
@@ -36,5 +30,4 @@ export class NavBarComponent {
     this.isAgent= false;
 
   }
->>>>>>> c9305956a030b291610f62d4a496788fd831d8e1
 }

@@ -25,7 +25,6 @@
               "src/assets"
             ],
             "styles": [
-<<<<<<< HEAD
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "node_modules/leaflet/dist/leaflet.css",
               "src/styles.css"
@@ -33,11 +32,6 @@
             "scripts": [
               "node_modules/leaflet/dist/leaflet.js"
             ]
-=======
-              "src/styles.css"
-            ],
-            "scripts": []
->>>>>>> c9305956a030b291610f62d4a496788fd831d8e1
           },
           "configurations": {
             "production": {
@@ -69,11 +63,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-<<<<<<< HEAD
-            "proxyConfig": "../proxy.conf.json"
-=======
-            "proxyConfig": "C:\\Users\\user\\Desktop\\front+back\\insurance-front\\proxy.conf.json"
->>>>>>> c9305956a030b291610f62d4a496788fd831d8e1
+            "proxyConfig": "./proxy.conf.json"
           },
           "configurations": {
             "production": {
@@ -104,10 +94,7 @@
               "src/assets"
             ],
             "styles": [
-<<<<<<< HEAD
               "@angular/material/prebuilt-themes/indigo-pink.css",
-=======
->>>>>>> c9305956a030b291610f62d4a496788fd831d8e1
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],

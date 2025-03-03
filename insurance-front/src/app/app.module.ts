@@ -12,7 +12,6 @@ import { DashboardAdminComponent } from './dashboard-admin/dashboard-admin.compo
 import { InsurancesComponent } from './pages/insurances/insurances.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-<<<<<<< HEAD
 import { ClaimComponent } from './pages/claim/claim.component';
 import { AgencyComponent } from './pages/agency/agency.component';
 import { ClaimAdminComponent } from './pages/claim-admin/claim-admin.component';
@@ -30,14 +29,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { AssignAgencyDialog } from './pages/agent-list/agent-list.component';  
-=======
 import { UpdateUserComponent } from './user/update-user/update-user.component';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { RegisterComponent } from './user/register/register.component';
 import { ProfileComponent } from './user/profile/profile.component';
 import { LoginComponent } from './user/login/login.component'; // <-- add this import
 import { SignupComponent } from './user/signup/signup.component';
->>>>>>> c9305956a030b291610f62d4a496788fd831d8e1
 
 @NgModule({
   declarations: [
@@ -48,7 +45,6 @@ import { SignupComponent } from './user/signup/signup.component';
     ContactUsComponent,
     NavBarComponent,
     FooterComponent,
-<<<<<<< HEAD
     DashboardAdminComponent,
     InsurancesComponent,
     ClaimComponent,
@@ -60,8 +56,7 @@ import { SignupComponent } from './user/signup/signup.component';
     SideBarComponent,
     ValidationPopupComponent,
     AgentListComponent,
-    AssignAgencyDialog
-=======
+    AssignAgencyDialog,
     SignupComponent,
     DashboardAdminComponent,
     InsurancesComponent,
@@ -70,13 +65,11 @@ import { SignupComponent } from './user/signup/signup.component';
     RegisterComponent,
     ProfileComponent,
     LoginComponent  // Add this line
->>>>>>> c9305956a030b291610f62d4a496788fd831d8e1
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-<<<<<<< HEAD
     HttpClientModule,
     MatPaginatorModule,
     MatTableModule,
@@ -88,11 +81,5 @@ import { SignupComponent } from './user/signup/signup.component';
   ],
   providers: [],
   bootstrap: [AppComponent],
-=======
-    HttpClientModule    // <-- add this module
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
->>>>>>> c9305956a030b291610f62d4a496788fd831d8e1
 })
 export class AppModule { }
