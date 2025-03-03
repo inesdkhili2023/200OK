@@ -1,0 +1,67 @@
+<div class="dashboard-container">
+  <div class="col-md-3">
+    <app-side-bar></app-side-bar>
+  </div>
+
+  <!-- Claims Table -->
+  <div class="container">
+    <div class="mb-3">
+      <!-- Search Bar -->
+      <div class="search-section">
+        <input type="text" [(ngModel)]="searchQuery" placeholder="Search by name, description, or ID" (input)="filterClaims()">
+      </div>
+
+      <!-- Filter by Status -->
+      <div class="filter-section">
+        <label for="statusFilter">Filter by Status:</label>
+        <select id="statusFilter" [(ngModel)]="selectedStatus" (change)="filterClaims()">
+          <option value="">All</option>
+          <option *ngFor="let status of claimStatuses" [value]="status">{{ status }}</option>
+        </select>
+      </div>
+
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>User ID</th>
+            <th>User Name</th>
+            <th>User Lastname</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Claim Type</th>
+            <th>Date Creation</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let element of filteredClaims">
+            <td>{{element.claimId}}</td>
+            <td>{{element.user?.iduser || 'N/A'}}</td>
+            <td>{{element.user?.name || 'N/A'}}</td>
+            <td>{{element.user?.lastname || 'N/A'}}</td>
+            <td>{{element.description}}</td>
+            <td>{{element.claimStatus}}</td>
+            <td>{{element.claimType}}</td>
+            <td>{{element.dateCreation | date:'medium'}}</td>
+            <td>
+              <button class="btn btn-warning" (click)="updateClaim(element.claimId)">
+                Edit
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-danger" (click)="deleteClaim(element.claimId)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div>
+      <button class="btn-primary" routerLink="/admin/dashboard">Back</button>
+    </div>
+  </div>
+</div>

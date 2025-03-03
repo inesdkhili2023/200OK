@@ -1,0 +1,88 @@
+<div class="dashboard-container">
+  <div class="sidebar">
+    <app-side-bar></app-side-bar>
+  </div>
+
+  <div class="dashboard-main">
+    <div class="dashboard-header">
+      <div class="header-profile">
+        <div class="notifications">
+          <i class="fas fa-bell"></i>
+          <span class="badge">3</span>
+        </div>
+       
+      </div>
+    </div>
+
+    <div class="dashboard-content">
+      <div class="container">
+        <div class="mb-3">
+          <button class="btn btn-primary" routerLink="/agent-list">Agent List</button>
+        </div>
+
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <ng-container matColumnDef="idAgency">
+            <th mat-header-cell *matHeaderCellDef> Agency ID </th>
+            <td mat-cell *matCellDef="let element"> {{element.idAgency}} </td>
+          </ng-container>
+          <ng-container matColumnDef="agencyName">
+            <th mat-header-cell *matHeaderCellDef> Agency Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.agencyName}} </td>
+          </ng-container>
+          <ng-container matColumnDef="location">
+            <th mat-header-cell *matHeaderCellDef> Location </th>
+            <td mat-cell *matCellDef="let element"> {{element.location}} </td>
+          </ng-container>
+          <ng-container matColumnDef="telephone">
+            <th mat-header-cell *matHeaderCellDef> Telephone </th>
+            <td mat-cell *matCellDef="let element"> {{element.telephone}} </td>
+          </ng-container>
+          <ng-container matColumnDef="latitude">
+            <th mat-header-cell *matHeaderCellDef> Latitude </th>
+            <td mat-cell *matCellDef="let element"> {{element.latitude}} </td>
+          </ng-container>
+          <ng-container matColumnDef="longitude">
+            <th mat-header-cell *matHeaderCellDef> Longitude </th>
+            <td mat-cell *matCellDef="let element"> {{element.longitude}} </td>
+          </ng-container>
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef> Email </th>
+            <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+          </ng-container>
+          <ng-container matColumnDef="openingHour">
+            <th mat-header-cell *matHeaderCellDef> Opening Hour </th>
+            <td mat-cell *matCellDef="let element"> {{element.openingHour}} </td>
+          </ng-container>
+          <ng-container matColumnDef="closingHour">
+            <th mat-header-cell *matHeaderCellDef> Closing Hour </th>
+            <td mat-cell *matCellDef="let element"> {{element.closingHour}} </td>
+          </ng-container>
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let element">
+              <button class="btn btn-warning" (click)="updateAgency(element.idAgency)">
+                Edit
+              </button>
+              <button class="btn btn-danger" (click)="deleteAgency(element.idAgency)">
+                Delete
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+
+        <div class="mb-3">
+          <button class="btn btn-primary" routerLink="/agency">Add New Agency</button>
+        </div>
+
+        <div class="map">
+          <app-map></app-map>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

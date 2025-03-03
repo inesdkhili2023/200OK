@@ -1,0 +1,56 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="container">
+      <div align="right">
+        <button class="btn-primary" routerLink="/claim-list">View claims history</button>
+      </div>
+
+      <div class="card p-5 mt-2">
+        <form #ClaimForm="ngForm" (ngSubmit)="saveClaim(ClaimForm)">
+          <div class="form-group">
+            <label for="user">Select User:</label>
+            <select [(ngModel)]="selectedUserId" name="user" id="user" required>
+              <option value="" disabled selected>Select User</option>
+              <option *ngFor="let user of users" [value]="user.iduser">{{ user.name }} {{ user.lastname }}</option>
+            </select>
+
+          </div>
+
+          <div class="form-group">
+            <label for="claimType">Claim Type</label>
+            <select class="form-control" name="claimType" [(ngModel)]="claim.claimType">
+              <option *ngFor="let type of claimTypes" [value]="type">{{ type }}</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control-desc" id="description" placeholder="Description" name="description" [(ngModel)]="claim.description" required minlength="4"  description #description="ngModel"></textarea>
+          
+            
+            <div *ngIf="description.invalid && (description.dirty || description.touched)" class="text-danger">
+              <div *ngIf="description.errors?.['required']">required is required.</div>
+              <div *ngIf="description.errors?.['description']">Please enter a valid description.</div>
+              <div *ngIf="description.errors?.['minlength']">Please enter a valid description.</div>
+              
+
+            </div>
+          </div>
+
+          <div *ngIf="adminMode">
+            <label for="claimStatus">Status:</label>
+            <select id="claimStatus" [(ngModel)]="claim.claimStatus" name="claimStatus">
+              <option *ngFor="let status of claimStatuses" [value]="status">{{ status }}</option>
+            </select>
+          </div>
+
+          <hr>
+          <div class="text-center mt-3">
+            <button class="secondary" type="button" (click)="clearForm(ClaimForm)">Clear</button>
+            <button class="btn btn-primary m-2"  >Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

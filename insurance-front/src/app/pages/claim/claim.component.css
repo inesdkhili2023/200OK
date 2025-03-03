@@ -1,0 +1,118 @@
+/* Ensure proper spacing from navbar */
+.container {
+    margin-top: 120px; /* Adjust if necessary */
+    max-width: 600px; /* Keeps form centered and readable */
+}
+
+/* Card Styling */
+.card {
+    border-radius: 12px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+    border: none;
+}
+
+
+/* Form Fields */
+.form-group {
+    margin-bottom: 10px;
+    height: 100px;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #333;
+    margin-left: 10px;
+ 
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Input Fields */
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    padding: 12px;
+    margin-left: 10px;
+    font-size: 16px;
+    background-color: #f8f9fa;
+    transition: all 0.3s ease-in-out;
+    width: 540px;
+    height: 45px;
+}
+
+.form-control-desc {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    padding: 10px;
+    margin-left: 10px;
+    font-size: 16px;
+    background-color: #f8f9fa;
+    transition: all 0.3s ease-in-out;
+    width: 540px;
+    height: 65px;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    background-color: #ffffff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+/* Select Dropdown */
+select.form-control {
+    cursor: pointer;
+}
+
+/* Buttons */
+.btn {
+    font-size: 16px;
+    padding: 12px 10px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    font-weight: 600;
+    margin-left: 5px;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.secondary {
+    
+    font-size: 16px;
+    padding: 12px 10px;
+    border-radius: 8px;
+    transition: 0.3s;
+    background-color: #6f6f6f;
+    border: none;
+    font-weight: 600;
+    margin-left: 5px;
+    width: 140px;
+}
+
+.secondary:hover {
+    background-color: #0056b3;
+}
+
+
+/* Centering buttons */
+.text-center .btn {
+    width: 160px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        margin-top: 140px;
+    }
+    .btn {
+        width: 100%;
+    }
+}
