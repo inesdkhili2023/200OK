@@ -1,0 +1,114 @@
+<section class="breadcrumb">
+  <div class="container">
+    <h2>Insurances</h2>
+    <ul>
+      <li><a routerLink="/">Home</a> ></li>
+      <li>Insurances</li>
+    </ul>
+  </div>
+</section>
+
+<section class="contact-us">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+        <!-- Insurance List Card -->
+        <div class="card mb-4">
+          <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">Insurances</h2>
+          </div>
+          <div class="card-body">
+            <table class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Type</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Description</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let insurance of insurances">
+                  <td>{{ insurance.insuranceId }}</td>
+                  <td>{{ insurance.insuranceType }}</td>
+                  <td>{{ insurance.startDate | date }}</td>
+                  <td>{{ insurance.endDate | date }}</td>
+                  <td>{{ insurance.description }}</td>
+                  <td>
+                    <button class="btn btn-sm btn-warning" (click)="editInsurance(insurance)">Edit</button>
+                    <button class="btn btn-sm btn-danger" (click)="deleteInsurance(insurance.insuranceId!)">Delete</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+        <!-- Create or Edit Form Card -->
+        <div *ngIf="!isEditing; else editForm">
+          <div class="card">
+            <div class="card-header bg-success text-white">
+              <h3 class="mb-0">Add Insurance</h3>
+            </div>
+            <div class="card-body">
+              <form (ngSubmit)="createInsurance()">
+                <div class="form-group mb-3">
+                  <label for="newType">Type:</label>
+                  <input type="text" id="newType" class="form-control" [(ngModel)]="newInsurance.insuranceType" name="newType" required>
+                </div>
+                <div class="form-group mb-3">
+                  <label for="newStartDate">Start Date:</label>
+                  <input type="date" id="newStartDate" class="form-control" [(ngModel)]="newInsurance.startDate" name="newStartDate" required>
+                </div>
+                <div class="form-group mb-3">
+                  <label for="newEndDate">End Date:</label>
+                  <input type="date" id="newEndDate" class="form-control" [(ngModel)]="newInsurance.endDate" name="newEndDate" required>
+                </div>
+                <div class="form-group mb-3">
+                  <label for="newDescription">Description:</label>
+                  <input type="text" id="newDescription" class="form-control" [(ngModel)]="newInsurance.description" name="newDescription" required>
+                </div>
+                <button type="submit" class="btn btn-success">Create</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        
+        <ng-template #editForm>
+          <div class="card">
+            <div class="card-header bg-warning text-dark">
+              <h3 class="mb-0">Edit Insurance</h3>
+            </div>
+            <div class="card-body">
+              <form (ngSubmit)="updateInsurance()">
+                <div class="form-group mb-3">
+                  <label for="editType">Type:</label>
+                  <input type="text" id="editType" class="form-control" [(ngModel)]="selectedInsurance.insuranceType" name="editType" required>
+                </div>
+                <div class="form-group mb-3">
+                  <label for="editStartDate">Start Date:</label>
+                  <input type="date" id="editStartDate" class="form-control" [(ngModel)]="selectedInsurance.startDate" name="editStartDate" required>
+                </div>
+                <div class="form-group mb-3">
+                  <label for="editEndDate">End Date:</label>
+                  <input type="date" id="editEndDate" class="form-control" [(ngModel)]="selectedInsurance.endDate" name="editEndDate" required>
+                </div>
+                <div class="form-group mb-3">
+                  <label for="editDescription">Description:</label>
+                  <input type="text" id="editDescription" class="form-control" [(ngModel)]="selectedInsurance.description" name="editDescription" required>
+                </div>
+                <button type="submit" class="btn btn-warning">Update</button>
+                <button type="button" class="btn btn-secondary ms-2" (click)="cancelEdit()">Cancel</button>
+              </form>
+            </div>
+          </div>
+        </ng-template>
+        <!-- End Form Card -->
+        
+      </div>
+    </div>
+  </div>
+</section>
+
