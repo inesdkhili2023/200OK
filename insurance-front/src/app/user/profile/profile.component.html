@@ -1,0 +1,21 @@
+<div class="container" >
+
+    <p *ngIf="errorMessage" class="error-message">{{errorMessage}}</p>
+    <h2>Profil </h2>
+    <p>Prenom: {{profileInfo?.ourUsers?.name}}</p>
+    <p>Nom: {{profileInfo?.ourUsers?.lastname}}</p>
+    <p>Date de naissance: {{profileInfo?.ourUsers?.dnaiss}}</p>
+    <p>Cin: {{profileInfo?.ourUsers?.cin}}</p>
+    <p>Email: {{profileInfo?.ourUsers?.email}}</p>
+    <p>Civility: {{profileInfo?.ourUsers?.civility}}</p>
+    <p>City: {{profileInfo?.ourUsers?.city}}</p>
+    <img *ngIf="profileInfo?.ourUsers?.image" 
+     [src]="profileInfo.ourUsers.image" 
+     alt="Profile Image" 
+     width="150" 
+     class="profile-image">
+    
+    <p *ngIf = "isAdmin">Role: {{profileInfo?.ourUsers?.role}}</p>
+    <button  (click)="updateProfile(profileInfo?.ourUsers?.id)">Update Profile</button>
+</div>
+
