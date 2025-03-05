@@ -1,0 +1,47 @@
+
+.owl-carousel .item {
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+}
+
+.owl-carousel img {
+	width: 100%;
+	height: auto;
+	display: block;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for navigation arrows */
+.owl-theme .owl-controls .owl-buttons div {
+	font-size: 30px;
+	color: #FFF;
+	display: inline-block;
+	cursor: pointer;
+}
+
+.owl-theme .owl-controls .owl-buttons .owl-prev,
+.owl-theme .owl-controls .owl-buttons .owl-next {
+	background: #00b2ce;
+	padding: 10px;
+	border-radius: 50%;
+}
+
+/* Styling for pagination dots */
+.owl-theme .owl-controls .owl-page {
+	display: inline-block;
+}
+
+.owl-theme .owl-controls .owl-page span {
+	display: block;
+	width: 12px;
+	height: 12px;
+	margin: 5px 7px;
+	background: #869791;
+	border-radius: 50%;
+}
+
+.owl-theme .owl-controls .owl-page.active span {
+	background: #00b2ce;
+}

@@ -1,0 +1,33 @@
+<div class="admin-sinisters">
+    <div class="card">
+      <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <h2 class="mb-0">Sinisters List</h2>
+      </div>
+      <div class="card-body">
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Accident Date</th>
+              <th>Client ID</th>
+              <th>Declaration Date</th>
+              <th>Location</th>
+              <th>Type</th>
+              <th>Description</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let sinister of sinisters">
+              <td>{{ sinister.dateAccident | date }}</td>
+              <td>{{ sinister.idClient }}</td>
+              <td>{{ sinister.dateDeclaration | date }}</td>
+              <td>{{ sinister.accidentLocation }}</td>
+              <td>{{ sinister.typeSinister }}</td>
+              <td>{{ sinister.description }}</td>
+              <td>{{ sinister.status }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

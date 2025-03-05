@@ -1,0 +1,72 @@
+<section class="recommendations-container">
+    <h2 class="recommendations-title">Recommendations Management</h2>
+ <!-- 🔍 Search Filter -->
+ <div class="mb-3">
+    <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="filterText" (input)="applyFilter()">
+</div>
+
+    <!-- Recommendations Table -->
+    <div class="table-responsive">
+        <table class="table">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Description</th>
+                    <th>User Preferences</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let rec of filteredRecommendations | paginate: { itemsPerPage: 5, currentPage: currentPage }">
+                    <td>{{ rec.idRec }}</td>
+                    <td>{{ rec.description }}</td>
+                    <td>{{ rec.userPreferences }}</td>
+                    <td>{{ rec.dateCreation | date: 'shortDate' }}</td>
+                    <td>
+                        <span class="badge" [ngClass]="{'bg-success': rec.status === 'Approved', 'bg-warning': rec.status === 'Pending', 'bg-danger': rec.status === 'Rejected'}">
+                            {{ rec.status }}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" (click)="editRecommendation(rec)">Edit</button>
+                        <button class="btn btn-danger btn-sm" (click)="deleteRecommendation(rec.idRec!)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+    <!-- Create/Edit Recommendation -->
+    <div class="card mt-4">
+        <div class="card-header bg-primary text-white">
+            <h3>{{ selectedRecommendation ? 'Edit Recommendation' : 'Add Recommendation' }}</h3>
+        </div>
+        <div class="card-body">
+            <form (ngSubmit)="selectedRecommendation ? updateRecommendation() : createRecommendation()">
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" class="form-control" [(ngModel)]="newRecommendation.description" name="desc" placeholder="Enter description" required>
+                </div>
+
+                <div class="form-group">
+                    <label>User Preferences</label>
+                    <input type="text" class="form-control" [(ngModel)]="newRecommendation.userPreferences" name="prefs" placeholder="Enter user preferences" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Status</label>
+                    <select class="form-control" [(ngModel)]="newRecommendation.status" name="status">
+                        <option value="Pending">Pending</option>
+                        <option value="Approved">Approved</option>
+                        <option value="Rejected">Rejected</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-success mt-2">{{ selectedRecommendation ? 'Update' : 'Add' }}</button>
+                <button *ngIf="selectedRecommendation" type="button" class="btn btn-secondary mt-2 ms-2" (click)="cancelEdit()">Cancel</button>
+            </form>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,104 @@
+<section class="breadcrumb">
+    <div class="container">
+        <h2 class="towing-title">Towing Requests</h2>
+    </div>
+</section>
+
+<section class="towing-container">
+    <div class="container">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Status</th>
+                        <th>Location</th>
+                        <th>Request Date</th>
+                        <th>Agent</th>
+                        <th>User</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let towing of towings | paginate: { itemsPerPage: 2, currentPage: page }">
+                        <td>{{ towing.id }}</td>
+                        <td>
+                            <span class="badge"
+                                  [ngClass]="{
+                                      'bg-success': towing.status === 'Completed',
+                                      'bg-warning': towing.status === 'Pending',
+                                      'bg-danger': towing.status === 'Cancelled'
+                                  }">
+                                {{ towing.status }}
+                            </span>
+                        </td>
+                        <td>{{ towing.location }}</td>
+                        <td *ngIf="towing.requestDate">{{ towing.requestDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                        <td *ngIf="!towing.requestDate">N/A</td>   
+                        <td>{{ getAgentName(towing) }}</td>
+                        <td>{{ getUserName(towing) }}</td>
+                        
+                        <td>
+                            <button class="btn btn-warning btn-sm" (click)="editTowing(towing)">Edit</button>
+                            <button class="btn btn-danger btn-sm" (click)="deleteTowing(towing.id!)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <pagination-controls (pageChange)="page = $event"></pagination-controls>
+        </div>
+
+        <!-- Create/Edit Towing Request -->
+        <div class="card mt-4">
+            <div class="card-header bg-primary text-white">
+                <h3>{{ selectedTowing ? 'Edit Towing Request' : 'Add Towing Request' }}</h3>
+            </div>
+            <div class="card-body">
+                <form (ngSubmit)="selectedTowing ? updateTowing() : createTowing()">
+                    
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select class="form-control" [(ngModel)]="newTowing.status" name="status">
+                            <option value="Pending">Pending</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" class="form-control" [(ngModel)]="newTowing.location" name="location" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Request Date</label>
+                        <input type="datetime-local" class="form-control" [(ngModel)]="newTowing.requestDate" name="requestDate" required>
+                    </div>
+                    
+
+                    <div class="form-group">
+                        <label>Select Agent</label>
+                        <select class="form-control" [(ngModel)]="newTowing.idAgent" name="idAgent" required>
+                            <option *ngFor="let agent of agents" [value]="agent.idAgent">
+                                {{ agent.name }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Select User</label>
+                        <select class="form-control" [(ngModel)]="newTowing.idUser" name="idUser" required>
+                            <option *ngFor="let user of users" [value]="user.idUser">
+                                {{ user.name }}
+                            </option>
+                        </select>
+                    </div>
+                    
+
+                    <button type="submit" class="btn btn-success mt-2">{{ selectedTowing ? 'Update' : 'Add' }}</button>
+                    <button *ngIf="selectedTowing" type="button" class="btn btn-secondary mt-2 ms-2" (click)="cancelEdit()">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

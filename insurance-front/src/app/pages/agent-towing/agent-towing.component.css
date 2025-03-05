@@ -1,0 +1,147 @@
+/* General Styling */
+body {
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Breadcrumb Styling */
+  .breadcrumb {
+    background: #f8f9fa;
+    padding: 15px 0;
+    border-bottom: 2px solid #ddd;
+  }
+  
+  .breadcrumb h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 0;
+  }
+  
+  .breadcrumb ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  
+  .breadcrumb ul li {
+    display: inline;
+    font-size: 16px;
+  }
+  
+  .breadcrumb ul li a {
+    text-decoration: none;
+    color: #007bff;
+  }
+  
+  .breadcrumb ul li a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Card Styling */
+  .card {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-header {
+    font-weight: bold;
+    font-size: 1.2rem;
+    padding: 15px;
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  /* Table Styling */
+  .table {
+    margin-bottom: 0;
+    font-size: 14px;
+  }
+  
+  .table th {
+    text-transform: uppercase;
+    background: #343a40;
+    color: white;
+    text-align: center;
+  }
+  
+  .table th, .table td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 10px;
+  }
+  
+  .table tbody tr:hover {
+    background-color: #f8f9fa;
+    transition: 0.3s;
+  }
+  
+  /* Form Styling */
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-control {
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    font-size: 14px;
+  }
+  
+  /* Button Styling */
+  .btn {
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    transition: 0.3s ease-in-out;
+  }
+  
+  .btn-success:hover {
+    background-color: #218838;
+    color: white;
+  }
+  
+  .btn-warning:hover {
+    background-color: #e0a800;
+    color: white;
+  }
+  
+  .btn-danger:hover {
+    background-color: #c82333;
+    color: white;
+  }
+  
+  /* Availability Badge */
+  .badge {
+    padding: 6px 10px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 5px;
+  }
+  
+  .bg-success {
+    background: #28a745 !important;
+  }
+  
+  .bg-danger {
+    background: #dc3545 !important;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .table {
+      font-size: 12px;
+    }
+  
+    .breadcrumb h2 {
+      font-size: 20px;
+    }
+  
+    .btn {
+      font-size: 12px;
+      padding: 6px 10px;
+    }
+  }
+  
