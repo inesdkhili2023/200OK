@@ -1,0 +1,9 @@
+.navbar-nav {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-end; /* Aligner les éléments à droite */
+}
+.navbar-nav > li {
+  margin: 0 5px; /* Réduit l'espace entre les éléments */
+  white-space: nowrap; /* Empêche la coupure du texte */
+}

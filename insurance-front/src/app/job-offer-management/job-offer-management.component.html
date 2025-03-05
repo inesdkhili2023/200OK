@@ -1,0 +1,57 @@
+<mat-toolbar color="primary" class="header">
+  <span class="title">CARRIÈRES</span>
+</mat-toolbar>
+
+<div class="banner" style="background-image: url('assets/images/carrieres.jpg'); background-size: cover; background-position: center; height: 250px; display: flex; align-items: center; justify-content: center; color: darkblue;">
+  <h1>Rejoignez-nous !</h1>
+</div>
+
+<section class="content">
+  <div class="cards">
+    <mat-card class="card" [routerLink]="['/politique']">
+      <div class="icon-container">
+        <mat-icon class="icon">menu_book</mat-icon>
+      </div>
+      <h3>POLITIQUE RH</h3>
+    </mat-card>
+    <mat-card class="card" [routerLink]="['/joboffer']">
+      <div class="icon-container">
+        <mat-icon class="icon">group_add</mat-icon>
+      </div>
+      <h3>OFFRES D'EMPLOI</h3>
+    </mat-card>
+    <mat-card class="card" [routerLink]="['/jobApp']">
+      <div class="icon-container">
+        <mat-icon class="icon">refresh</mat-icon>
+      </div>
+      <h3>CANDIDATURE SPONTANÉE</h3>
+    </mat-card>
+  </div>
+</section>
+
+<style>
+  .icon-container {
+    width: 80px;
+    height: 80px;
+    background-color: orange;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+  }
+  .icon {
+    color: white;
+    font-size: 25px;
+  }
+  .cards {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+  }
+  .card {
+    text-align: center;
+    padding: 20px;
+  }
+</style>
+

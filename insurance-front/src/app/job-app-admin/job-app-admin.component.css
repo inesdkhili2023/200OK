@@ -1,0 +1,62 @@
+.breadcrumb{
+  margin-top: 70px;
+}
+.card-header{
+  margin-top: -20px;
+
+}
+.mb-0{
+  text-align: center;
+  
+}
+.search{
+  width: 60%;
+  margin-left: 40px;
+}
+/* Définir les couleurs selon le statut */
+.status-on-hold {
+  color: orange ; /* Orange pour "En attente" */
+}
+
+.status-accepted {
+  color: green ; /* Vert pour "Accepté" */
+}
+
+.status-refused {
+  color: red ; /* Rouge pour "Refusé" */
+}
+/* Styles des badges */
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+  min-width: 80px;
+}
+
+.status-accepted {
+  background-color: #e0f7e9;
+  color: #2e7d32;
+}
+
+.status-on-hold {
+  background-color: #fff3e0;
+  color: #e65100;
+}
+
+.status-refused {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+/* Personnalisation du dropdown */
+.custom-dropdown .mat-option {
+  display: flex;
+  align-items: center;
+}
+
+.custom-dropdown .mat-option span {
+  width: 100%;
+}
+

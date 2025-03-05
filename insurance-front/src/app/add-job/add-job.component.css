@@ -1,0 +1,59 @@
+.add-job-form {
+  max-width: 600px;
+  margin: 0 auto;
+  margin-top: 100px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  font-weight: bold;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 5px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #cccccc;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem; /* Espacement entre les boutons */
+  margin-top: 1rem; /* Espacement avec le formulaire */
+}
+
+.btn-secondary {
+  background-color: #a70707;
+  color: rgb(249, 247, 247);
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.btn-secondary:hover {
+  background-color: #a30808;
+}
+

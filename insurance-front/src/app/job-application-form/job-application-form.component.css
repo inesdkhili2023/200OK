@@ -1,0 +1,28 @@
+
+/* Appliquer une marge à gauche de 20px */
+form {
+  margin-bottom: 100;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+.banner {
+  background-image: url("/assets/images/carrieres.jpg");
+  margin-top: 100px;
+  width: 100vw;  /* Largeur = 100% de l'écran */
+  height: 50vh; /* Hauteur = 100% de l'écran */
+  object-fit: cover; /* Ajuste l'image pour remplir sans déformation */
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+  background-color: #ffe6e6;
+}
+select.ng-invalid.ng-touched {
+  border: 1px solid red;
+  background-color: #ffe6e6;
+}
+

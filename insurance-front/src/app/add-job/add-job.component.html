@@ -1,0 +1,60 @@
+<div class="add-job-form">
+  <h2>Ajouter une offre d'emploi</h2>
+  <form [formGroup]="jobForm" (submit)="onSubmit()">
+    <div class="form-group">
+      <label for="title">Titre</label>
+      <input id="title" formControlName="title" type="text" class="form-control" placeholder="Titre du poste">
+      <div *ngIf="jobForm.get('title')?.invalid && jobForm.get('title')?.touched" class="error">
+        Le titre est obligatoire.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" formControlName="description" class="form-control" placeholder="Description du poste"></textarea>
+      <div *ngIf="jobForm.get('description')?.invalid && jobForm.get('description')?.touched" class="error">
+        La description est obligatoire.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="requirements">Exigences</label>
+      <textarea id="requirements" formControlName="requirements" class="form-control" placeholder="Exigences du poste"></textarea>
+      <div *ngIf="jobForm.get('requirements')?.invalid && jobForm.get('requirements')?.touched" class="error">
+        Les exigences sont obligatoires.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="location">Localisation</label>
+      <input id="location" formControlName="location" type="text" class="form-control" placeholder="Lieu du poste">
+      <div *ngIf="jobForm.get('location')?.invalid && jobForm.get('location')?.touched" class="error">
+        La localisation est obligatoire.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="contractType">Type de contrat</label>
+      <select id="contractType" formControlName="contractType" class="form-control">
+        <option value="">Choisir un type de contrat</option>
+        <option value="CDI">CDI</option>
+        <option value="CDD">CDD</option>
+        <option value="Freelance">Freelance</option>
+      </select>
+      <div *ngIf="jobForm.get('contractType')?.invalid && jobForm.get('contractType')?.touched" class="error">
+        Le type de contrat est obligatoire.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="applicationDeadline">Date limite de candidature</label>
+      <input id="applicationDeadline" formControlName="applicationDeadline" type="date" class="form-control">
+      <div *ngIf="jobForm.get('applicationDeadline')?.invalid && jobForm.get('applicationDeadline')?.touched" class="error">
+        {{ jobForm.get('applicationDeadline')?.errors?.['invalidDate'] || 'La date limite est obligatoire.' }}
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="jobForm.invalid">Ajouter l'offre</button>
+    <button type="button" class="btn btn-secondary" (click)="onCancel()">Annuler</button>
+  </form>
+</div>

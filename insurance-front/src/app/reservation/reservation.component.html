@@ -1,0 +1,13 @@
+<div class="container">
+  <h2>Planning des Rendez-vous</h2>
+  <full-calendar [options]="calendarOptions"></full-calendar>
+
+  <div *ngIf="selectedDate">
+    <h3>Heures disponibles pour le {{ selectedDate }}</h3>
+    <button *ngFor="let time of availableTimes" class="time" (click)="onTimeSelect(time)">
+      {{ time }}
+    </button>
+  </div>
+
+  <button class="confirm-btn" (click)="confirmReservation()">Confirmer la réservation</button>
+</div>

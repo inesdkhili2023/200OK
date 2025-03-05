@@ -1,0 +1,28 @@
+<section class="breadcrumb">
+  <div class="container">
+    <h2>Dashboard Admin</h2>
+    <ul>
+      <li><a routerLink="/admin/dashboard">Dashboard</a> ></li>
+      <li>Disponibilités</li>
+    </ul>
+  </div>
+</section>
+<div  class="availability-form">
+  <h3>Définir vos disponibilités</h3>
+  <form (ngSubmit)="submitAvailability()">
+    <div>
+      <label for="date">Date :</label>
+      <input type="date" id="date" [(ngModel)]="availability.date" name="date" required>
+    </div>
+    <div>
+      <label for="start-time">Heure de début :</label>
+      <input type="time" id="start-time" [(ngModel)]="availability.startTime" name="startTime" required>
+    </div>
+    <div>
+      <label for="end-time">Heure de fin :</label>
+      <input type="time" id="end-time" [(ngModel)]="availability.endTime" name="endTime" required>
+    </div>
+    <button type="submit" class="btn-success">Ajouter disponibilité</button>
+  </form>
+</div>
+

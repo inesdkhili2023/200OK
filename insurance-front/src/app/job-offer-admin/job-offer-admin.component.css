@@ -1,0 +1,30 @@
+.breadcrumb{
+  margin-top: 70px;
+}
+.card-header{
+  margin-top: -20px;
+
+}
+.mb-0{
+  text-align: center;
+}
+.search{
+  width: 50%;
+  margin-left: 40px;
+}
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem; /* Ajoute un espacement entre les éléments */
+}
+
+.search-container .search {
+  flex: 1; /* La barre de recherche prend tout l'espace disponible */
+}
+.btn{
+margin-top: -15px;
+}
+
+
+
