@@ -1,0 +1,29 @@
+# Java / Maven / Spring
+insurance-back/target/
+*.jar
+
+# Angular / Node
+insurance-front/node_modules/
+insurance-front/.angular/cache/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Ignore Node modules
+node_modules/
+
+# Ignore Maven target folder
+target/
+
+# Ignore IntelliJ files
+.idea/
+
+# Ignore log files
+*.log
+

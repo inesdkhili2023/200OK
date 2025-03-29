@@ -1,0 +1,2 @@
+insurance-front/.angular/cache/*.pack filter=lfs diff=lfs merge=lfs -text
+insurance-back/target/*.jar filter=lfs diff=lfs merge=lfs -text

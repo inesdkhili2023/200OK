@@ -1,0 +1,14 @@
+<!-- chat.component.html -->
+<div class="chat-container">
+    <div class="chat-messages" style="height: 250px; overflow-y: auto; border: 1px solid #ccc; margin-bottom: 10px; padding: 5px;">
+      <div *ngFor="let msg of messages">
+        <strong>{{ msg.sender }}:</strong> {{ msg.message }} 
+        <em>({{ msg.timestamp | date:'shortTime' }})</em>
+      </div>
+    </div>
+    <div class="chat-input" style="display: flex; gap: 10px;">
+      <input [(ngModel)]="newMessage" placeholder="Type your message..." class="form-control" />
+      <button (click)="send()" class="btn btn-sm btn-primary">Send</button>
+    </div>
+  </div>
+  

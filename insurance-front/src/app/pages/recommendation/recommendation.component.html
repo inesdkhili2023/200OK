@@ -1,0 +1,42 @@
+<section class="recommendations-container">
+    <h2 class="recommendations-title">Recommendations Management</h2>
+ <!-- 🔍 Search Filter -->
+ <div class="mb-3">
+    <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="filterText" (input)="applyFilter()">
+</div>
+
+    <!-- Recommendations Table -->
+    <div class="table-responsive">
+        <table class="table">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Description</th>
+                    <th>User Preferences</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let rec of filteredRecommendations | paginate: { itemsPerPage: 5, currentPage: currentPage }">
+                    <td>{{ rec.idRec }}</td>
+                    <td>{{ rec.description }}</td>
+                    <td>{{ rec.userPreferences }}</td>
+                    <td>{{ rec.dateCreation | date: 'shortDate' }}</td>
+                    <td>
+                        <span class="badge" [ngClass]="{'bg-success': rec.status === 'Approved', 'bg-warning': rec.status === 'Pending', 'bg-danger': rec.status === 'Rejected'}">
+                            {{ rec.status }}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" (click)="editRecommendation(rec)">Edit</button>
+                        <button class="btn btn-danger btn-sm" (click)="deleteRecommendation(rec.idRec!)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+    <!-- Create/Edit Recommendation -->
+</section>

@@ -1,0 +1,67 @@
+<div class="dashboard-container">
+  <div class="dashboard-sidebar">
+    <div class="sidebar-header">
+      <h3>Admin Dashboard</h3>
+    </div>
+    <ul class="sidebar-menu">
+      <li class="active">
+        <i class="fas fa-tachometer-alt"></i>
+        <span>Dashboard</span>
+      </li>
+      <li>
+        <i class="fas fa-users"></i>
+        <span>Users</span>
+      </li>
+      <li>
+        <i class="fas fa-file-alt"></i>
+        <span>Claims</span>
+      </li>
+      <li [routerLink]="['/admin/sinisters']" routerLinkActive="active">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span>Sinisters List</span>
+      </li>
+      <li>
+        <i class="fas fa-shield-alt"></i>
+        <span>Policies</span>
+      </li>
+      <li>
+        <i class="fas fa-cog"></i>
+        <span>Settings</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="dashboard-main">
+    <div class="dashboard-header">
+      <div class="header-search">
+        <input type="text" placeholder="Search..." class="search-input">
+        <i class="fas fa-search search-icon"></i>
+      </div>
+      <div class="header-profile">
+        <div class="notifications">
+          <i class="fas fa-bell"></i>
+          <span class="badge">3</span>
+        </div>
+        <div class="profile-info">
+          <img src="assets/images/avatar-placeholder.png" alt="Admin Profile">
+          <span>Admin Name</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-content">
+      <!-- Router outlet for displaying sinisters list -->
+      <router-outlet></router-outlet>
+
+      <!-- Original dashboard content -->
+      <div class="stats-container">
+        <!-- ... existing stat cards ... -->
+      </div>
+
+      <div class="dashboard-grid">
+        <!-- ... existing dashboard grid content ... -->
+      </div>
+    </div>
+  </div>
+</div>
