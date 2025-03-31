@@ -10,9 +10,8 @@ export interface Paiement {
   mail: string;
   confirmationMail: string;
   datePaiement?: string;
-  contrat: { id: number }; 
+  contrat: { numContrat: number };
 }
-
 @Injectable({
   providedIn: 'root'
 })
@@ -24,6 +23,9 @@ export class PaiementService {
  
   createPaiement(paiement: Paiement): Observable<Paiement> {
     return this.http.post<Paiement>(`${this.apiUrl}/create`, paiement);
+  }
+  createPaymentIntent(amount: number): Observable<string> {
+    return this.http.post(`${this.apiUrl}/create-payment-intent?amount=${amount}`, {}, { responseType: 'text' });
   }
 
   

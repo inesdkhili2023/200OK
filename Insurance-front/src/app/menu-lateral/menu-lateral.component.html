@@ -1,0 +1,27 @@
+<div class="main-container">
+    <!-- Menu latéral (sera toujours visible) -->
+    <mat-sidenav-container class="sidenav-container">
+      <mat-sidenav #menuLateral mode="side" opened class="modern-sidenav">
+        <div class="menu-header">
+          <h3>Espace client</h3>
+        </div>
+        <mat-nav-list>
+          <a mat-list-item routerLink="/">Accueil</a>
+          <a mat-list-item routerLink="/contrats">Mes Contrats</a>
+          <a mat-list-item routerLink="/factures">Mes Factures</a>
+          <a mat-list-item routerLink="/paiement">Payer</a>
+        </mat-nav-list>
+      </mat-sidenav>
+      <!-- Contenu principal -->
+      <mat-sidenav-content class="main-content">
+        <button mat-icon-button (click)="menuLateral.toggle()" class="menu-button">
+          <mat-icon>menu</mat-icon>
+        </button>
+  
+        <!-- Contenu dynamique chargé dans le router-outlet -->
+        <router-outlet></router-outlet>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
+  
+  

@@ -12,26 +12,48 @@ import { EcoliaFormComponent } from './forms/ecolia-form/ecolia-form.component';
 import { AssuranceHabitationFormComponent } from './forms/assurance-habitation-form/assurance-habitation-form.component';
 import { AssuranceAccidentsFormComponent } from './forms/assurance-accidents-form/assurance-accidents-form.component';
 import { SacreCapitalisationFormComponent } from './forms/sacre-capitalisation-form/sacre-capitalisation-form.component';
-
+import { SanteFormComponent } from './forms/sante-form/sante-form.component';
+import { MenuLateralComponent } from './menu-lateral/menu-lateral.component';
+import { ContratsComponent } from './contrats/contrats.component';
+import { FacturesComponent } from './factures/factures.component';
+import { AssuranceVoyageFormComponent } from './forms/assurance-voyage-form/assurance-voyage-form.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
 
+  // Routes sans menu latéral
   { path: 'home', component: HomeComponent },
   { path: 'blog', component: BlogComponent },
   { path: 'blog-details', component: BlogDetailsComponent },
   { path: 'contact-us', component: ContactUsComponent },
-  { path: 'ecolia', component:  EcoliaFormComponent },
+  { path: 'ecolia', component: EcoliaFormComponent },
   { path: 'habitation', component: AssuranceHabitationFormComponent },
-  {path:'accident',component:AssuranceAccidentsFormComponent},
-  {path:'sacre-capitalisation',component:SacreCapitalisationFormComponent },
-
-
-  { path: 'admin/dashboard', component: DashboardAdminComponent },
+  { path: 'accident', component: AssuranceAccidentsFormComponent },
+  { path: 'sacre-capitalisation', component: SacreCapitalisationFormComponent },
+  { path: 'sante', component: SanteFormComponent },
+  { path: 'menu', component: MenuLateralComponent },
   { path: 'insurances', component: InsurancesComponent },
-  { path: 'payment', component:PaymentComponent },
-  { path: 'assurance-devis', component:AssuranceDevisComponent },
-  { path: '**', redirectTo: 'home' } 
+  { path: 'assurance-devis', component: AssuranceDevisComponent },
+  { path: 'admin/dashboard', component: DashboardAdminComponent },
+  { path: 'payment', component: PaymentComponent },
+  {path: 'voyage',component:AssuranceVoyageFormComponent},
+  
+
+  // Route avec le menu latéral
+  {
+    path: '',
+    component: MenuLateralComponent, // Le layout principal avec le menu latéral
+    children: [
+      { path: 'home', component: HomeComponent },
+      { path: 'contrats', component: ContratsComponent },
+      { path: 'factures', component: FacturesComponent },
+     
+
+    ]
+  },
+
+  // Catch-all pour rediriger vers home si la route n'existe pas
+  { path: '**', redirectTo: 'home' }
 ];
 
 @NgModule({

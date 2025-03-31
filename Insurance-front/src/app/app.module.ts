@@ -16,14 +16,13 @@ import { PaymentComponent } from './pages/payment/payment.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
+
 
 import { AssuranceDevisComponent } from './pages/assurance-devis/assurance-devis.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
 
-import { AssuranceVoyageFormComponent } from './forms/assurance-voyage-form/assurance-voyage-form.component';
 import { AssuranceHabitationFormComponent } from './forms/assurance-habitation-form/assurance-habitation-form.component';
 import { SanteFormComponent } from './forms/sante-form/sante-form.component';
 import { EpargneFormComponent } from './forms/epargne-form/epargne-form.component';
@@ -35,8 +34,18 @@ import { AssuranceSanteInternationaleFormComponent } from './forms/assurance-san
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PackModalComponentComponent } from './forms/pack-modal-component/pack-modal-component.component';
+import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { ContratsComponent } from './contrats/contrats.component';
+import { FacturesComponent } from './factures/factures.component';
+import { FactureService } from './services/facture.service'; // Importez votre service
+import { AssuranceVoyageFormComponent } from './forms/assurance-voyage-form/assurance-voyage-form.component';
 
-import { ReactiveFormsModule } from '@angular/forms';  
+
 
 
 
@@ -51,11 +60,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     FooterComponent,
     DashboardAdminComponent,
     InsurancesComponent,
-   
-   
- 
-    AssuranceVoyageFormComponent,
-    AssuranceHabitationFormComponent,
+     AssuranceHabitationFormComponent,
+     AssuranceVoyageFormComponent ,
     SanteFormComponent,
     EpargneFormComponent,
     RetraiteFormComponent,
@@ -64,6 +70,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     SacrePrevoyanceFormComponent,
     AssuranceSanteInternationaleFormComponent,
     PackModalComponentComponent,
+    ContratsComponent,
+    FacturesComponent
 ],
   imports: [
     BrowserModule,
@@ -74,9 +82,15 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatMenuModule ,
     BrowserAnimationsModule,
     ReactiveFormsModule ,
-    MatDialogModule 
+    MatDialogModule ,
+    BrowserModule,
+    MatSidenavModule,
+    MatListModule,
+    MatIconModule,
+    MatButtonModule,
+    RouterModule ,
   ],
-  providers: [],
+  providers: [    FactureService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

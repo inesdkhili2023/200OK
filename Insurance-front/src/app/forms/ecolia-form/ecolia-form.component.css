@@ -122,3 +122,175 @@ button.matStepperPrevious:hover {
         width: 100%;
     }
 }
+form div {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input, select {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:disabled {
+    background-color: #cccccc;
+  }
+  .simulation-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .form-group input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .assurance-cards {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .card {
+    width: 48%;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card h3 {
+    margin-top: 0;
+    color: #007bff;
+  }
+  
+  .card ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .card ul li {
+    margin-bottom: 10px;
+  }
+  
+  .montant {
+    font-weight: bold;
+    color: #28a745;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  .validation-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  
+  }
+  
+  .formule-details {
+    margin-bottom: 20px;
+    margin-top: 50px;
+  }
+  .Contenu{
+    margin-top: 50px;
+  }
+  
+  .formule-details h3 {
+    color: #007bff;
+  }
+  
+  .garanties ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .garanties ul li {
+    margin-bottom: 10px;
+  }
+  
+  .enfants-a-assurer {
+    margin-top: 20px;
+  }
+  
+  .enfants-a-assurer h5 {
+    margin-bottom: 10px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .form-actions button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .form-actions button[type="button"] {
+    background-color: #6c757d;
+    color: white;
+  }
+  
+  .form-actions button[type="submit"] {
+    background-color: #28a745;
+    color: white;
+  }

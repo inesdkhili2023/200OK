@@ -1,0 +1,27 @@
+<div *ngIf="factures.length > 0; else noFactures">
+    <table class="factures-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Date</th>
+          <th>Montant</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let facture of factures">
+          <td>{{ facture.id }}</td>
+          <td>{{ facture.dateEmission | date: 'dd/MM/yyyy' }}</td> <!-- Format de la date -->
+          <td>{{ facture.montant }} TND</td>
+          <td>
+            <button (click)="downloadPdf(facture.id)">Télecharger</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <ng-template #noFactures>
+    <p>Aucune facture disponible.</p>
+  </ng-template>
+  

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl,AbstractControl } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,6 +12,9 @@ import { PaiementService, Paiement } from '../../services/paiement.service';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { AfterViewInit } from '@angular/core';
+
+
 
 
 @Component({
@@ -35,13 +38,14 @@ export class PaymentComponent implements OnInit {
   contactForm: FormGroup;
   apiUrl: string = 'http://localhost:8011/paiements/create';
 
+
   constructor(private paiementService: PaiementService,private http: HttpClient) {
     this.contactForm = new FormGroup({
       numContrat: new FormControl('', Validators.required),
-      name: new FormControl('', Validators.required),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      confirmEmail: new FormControl('', [Validators.required, Validators.email]),
-      terms: new FormControl(false, Validators.requiredTrue)
+  numtel: new FormControl('', [Validators.required, Validators.pattern('[0-9]{8}')]),
+  mail: new FormControl('', [Validators.required, Validators.email]),
+  confirmationMail: new FormControl('', [Validators.required, Validators.email]),
+  terms: new FormControl(false, Validators.requiredTrue)
     });
   }
 
@@ -70,26 +74,42 @@ export class PaymentComponent implements OnInit {
       })
     );
   }
-  onSubmit( contactForm: any) {
-    if ( contactForm.valid) {
-      console.log("✅ Formulaire valide :",  contactForm.value);
+  onSubmit(contactForm: any) {
+    if (this.contactForm.valid) {
+      const paiementData: Paiement = {
+        numContrat: this.contactForm.value.numContrat,
+        montant: this.contactForm.value.montant,
+        numtel: this.contactForm.value.numtel,
+        mail: this.contactForm.value.mail,
+        confirmationMail: this.contactForm.value.confirmationMail,
+        contrat: { numContrat: this.contactForm.value.numContrat }
+      };
   
-      this.createPaiement( contactForm.value).subscribe({
+      console.log("✅ Données envoyées :", paiementData);
+  
+      this.createPaiement(paiementData).subscribe({
         next: (response) => {
-          console.log("🎉 Paiement créé avec succès :", response);
+          console.log("✅ Réponse reçue :", response);
           alert("Paiement enregistré !");
         },
         error: (error) => {
-          console.error("❌ Erreur lors de la création du paiement :", error);
-          alert("Erreur lors de l'enregistrement du paiement !");
+          console.error("❌ Erreur :", error);
         }
       });
-    } else {
-      console.warn("⚠️ Formulaire invalide !");
     }
+  }
+  
+  
+  private emailMatchValidator(control: AbstractControl) {
+    const email = control.get('email')?.value;
+    const confirmEmail = control.get('confirmEmail')?.value;
+    return email === confirmEmail ? null : { emailMismatch: true };
+  }
+
+  
   }
   
   
   
   
-}
+

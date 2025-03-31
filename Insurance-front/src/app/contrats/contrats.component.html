@@ -1,0 +1,21 @@
+<table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Numéro de Contrat</th>
+        <th>Date de Création</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let contrat of contrats">
+        <td>{{ contrat.id }}</td>
+        <td>{{ contrat.numContrat }}</td>
+        <td>{{ contrat.dateCreation }}</td>
+        <td>
+          <button (click)="downloadPdf(contrat.id)">Télécharger PDF</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  

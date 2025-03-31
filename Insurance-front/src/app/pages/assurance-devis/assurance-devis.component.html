@@ -1,74 +1,39 @@
 <div class="grid-container">
-    <a [routerLink]="['/ecolia']" class="grid-item" style="background-image: url('assets/images/ecolia.jpg');">
+    <a (click)="setTypeAssuranceId(1, '/ecolia')" class="grid-item" style="background-image: url('assets/images/ecolia.jpg');">
         <div class="overlay">
             <div class="icon">🎒</div>
             <p>Ecolia</p>
         </div>
     </a>
 
-    <a [routerLink]="['/assurance-voyage']" class="grid-item" style="background-image: url('assets/images/assurance-voyage.jpg');">
+    <a (click)="setTypeAssuranceId(2, '/voyage')" class="grid-item" style="background-image: url('assets/images/assurance-voyage.jpg');">
         <div class="overlay">
-            <div class="icon"></div>
-            
+            <p>Assurance Voyage</p>
         </div>
     </a>
 
-    <a [routerLink]="['/habitation']" class="grid-item" style="background-image: url('assets/images/assurance-habitation.jpg');">
+    <a (click)="setTypeAssuranceId(3, '/habitation')" class="grid-item" style="background-image: url('assets/images/assurance-habitation.jpg');">
         <div class="overlay">
             <div class="icon">🏠</div>
             <p>Assurance Habitation</p>
         </div>
     </a>
-    
 
-
-    <a [routerLink]="['/sante']" class="grid-item" style="background-image: url('assets/images/sante.jpg');">
+    <a (click)="setTypeAssuranceId(4, '/sante')" class="grid-item" style="background-image: url('assets/images/sante.jpg');">
         <div class="overlay">
-            <div class="icon">🏥</div>
-            <p>Santé</p>
+            <p>Assurance Santé</p>
         </div>
     </a>
 
-    <a [routerLink]="['/epargne']" class="grid-item" style="background-image: url('assets/images/epargne.jpg');">
+    <a (click)="setTypeAssuranceId(5, '/accident')" class="grid-item" style="background-image: url('assets/images/assurance-accidents.jpg');">
         <div class="overlay">
-            <div class="icon">📅</div>
-            <p>Épargne</p>
+            <p>Assurance Accidents</p>
         </div>
     </a>
 
-    <a [routerLink]="['/retraite']" class="grid-item" style="background-image: url('assets/images/retraite.jpg');">
+    <a (click)="setTypeAssuranceId(6, '/sacre-capitalisation')" class="grid-item" style="background-image: url('assets/images/sacre-capitalisation.jpg');">
         <div class="overlay">
-            <div class="icon">💰</div>
-            <p>Retraite</p>
-        </div>
-    </a>
- 
-
-    <a [routerLink]="['/accident']" class="grid-item" style="background-image: url('assets/images/assurance-accidents.jpg');">
-        <div class="overlay">
-            <div class="icon">🩹</div>
-            <p>Assurance contre les accidents</p>
-        </div>
-    </a>
-
-    <a [routerLink]="['/sacre-capitalisation']" class="grid-item" style="background-image: url('assets/images/sacre-capitalisation.jpg');">
-        <div class="overlay">
-            <div class="icon">📊</div>
             <p>Sacre Capitalisation</p>
-        </div>
-    </a>
-
-    <a [routerLink]="['/sacre-prevoyance']" class="grid-item" style="background-image: url('assets/images/sacre-prevoyance.jpg');">
-        <div class="overlay">
-            <div class="icon">💾</div>
-            <p>Sacre Prévoyance</p>
-        </div>
-    </a>
-
-    <a [routerLink]="['/assurance-sante-internationale']" class="grid-item" style="background-image: url('assets/images/assurance-sante-internationale.jpg');">
-        <div class="overlay">
-            <div class="icon">🌍</div>
-            <p>Assurance santé internationale <br> <strong>CHAMEL</strong></p>
         </div>
     </a>
 </div>

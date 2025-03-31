@@ -1,0 +1,74 @@
+/* Style général du formulaire */
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  /* Style des labels */
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* Style des champs de formulaire */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  /* Style spécifique pour les champs obligatoires */
+  input[required],
+  textarea[required] {
+    border-color: #007bff;
+  }
+  
+  /* Style de la checkbox */
+  input[type="checkbox"] {
+    margin-right: 10px;
+  }
+  
+  /* Style du bouton de soumission */
+  button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  button[type="submit"]:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  /* Style du bouton au survol */
+  button[type="submit"]:hover:not(:disabled) {
+    background-color: #0056b3;
+  }
+  
+  /* Style pour les messages d'erreur (optionnel) */
+  .ng-invalid.ng-touched {
+    border-color: #dc3545;
+  }
+  
+  .ng-valid.ng-touched {
+    border-color: #28a745;
+  }

@@ -1,0 +1,146 @@
+/* Variables CSS pour les couleurs et les espacements */
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #1abc9c;
+    --hover-color: rgba(26, 188, 156, 0.2);
+    --text-color: #ecf0f1;
+    --menu-width: 250px;
+    --transition-speed: 0.3s;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Conteneur principal */
+  .main-container {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: var(--menu-width) 1fr;
+    grid-template-rows: 1fr;
+    transition: grid-template-columns var(--transition-speed) ease-in-out;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Conteneur du menu latéral */
+  .sidenav-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  /* Menu latéral */
+  .modern-sidenav {
+    width: var(--menu-width);
+    background: var(--primary-color);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    box-shadow: var(--shadow);
+  }
+  
+  /* En-tête du menu */
+  .modern-sidenav .menu-header {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 20px;
+    background: darken(var(--primary-color), 5%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  /* Liens du menu */
+  .modern-sidenav mat-nav-list a {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    color: var(--text-color);
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background var(--transition-speed) ease-in-out, transform var(--transition-speed) ease-in-out;
+    margin: 5px 10px;
+  }
+  
+  /* Icônes dans les liens du menu */
+  .modern-sidenav mat-nav-list a mat-icon {
+    margin-right: 15px;
+    color: var(--secondary-color);
+  }
+  
+  /* Effet de survol sur les liens */
+  .modern-sidenav mat-nav-list a:hover {
+    background: var(--hover-color);
+    transform: translateX(5px);
+  }
+  
+  /* Bouton pour ouvrir/fermer le menu */
+  .menu-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: var(--primary-color);
+    color: var(--text-color);
+    z-index: 1000;
+    transition: left var(--transition-speed) ease-in-out;
+    border-radius: 50%;
+    box-shadow: var(--shadow);
+  }
+  
+  /* Icône du bouton */
+  .menu-button mat-icon {
+    font-size: 30px;
+  }
+  
+  /* Contenu principal */
+  .main-content {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;
+  }
+  
+  /* Titre du contenu */
+  .main-content .content h1 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-size: 36px;
+    font-weight: bold;
+  }
+  
+  /* Texte du contenu */
+  .main-content .content p {
+    color: darken(var(--primary-color), 20%);
+    font-size: 18px;
+    text-align: center;
+  }
+  
+  /* Styles pour les écrans mobiles */
+  @media (max-width: 768px) {
+    .main-container {
+      grid-template-columns: 0 1fr;
+    }
+  
+    .modern-sidenav {
+      transform: translateX(-100%);
+    }
+  
+    .modern-sidenav.opened {
+      transform: translateX(0);
+    }
+  
+    .menu-button {
+      left: 10px;
+    }
+  
+    .main-content {
+      padding: 20px;
+    }
+  
+    .main-content .content h1 {
+      font-size: 28px;
+    }
+  
+    .main-content .content p {
+      font-size: 16px;
+    }
+  }
