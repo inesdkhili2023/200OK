@@ -2,9 +2,12 @@ package com.ahch.controller;
 
 import com.ahch.Repo.AgentTowingRepository;
 import com.ahch.entity.AgentTowing;
+import com.ahch.service.AgentTowingPDFExporterService;
 import com.ahch.service.AgentTowingService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,10 +22,11 @@ public class AgentTowingController {
 
     private final AgentTowingService agentTowingService;
     private final AgentTowingRepository agentTowingRepository;
-
-    public AgentTowingController(AgentTowingService agentTowingService, AgentTowingRepository agentTowingRepository) {
+    private final AgentTowingPDFExporterService pdfExporterService;
+    public AgentTowingController(AgentTowingService agentTowingService, AgentTowingRepository agentTowingRepository, AgentTowingPDFExporterService pdfExporterService) {
         this.agentTowingService = agentTowingService;
         this.agentTowingRepository = agentTowingRepository;
+        this.pdfExporterService = pdfExporterService;
     }
 
     // ✅ Fetch all agents
@@ -42,7 +46,20 @@ public class AgentTowingController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
     }
-
+    @GetMapping("/export/pdf")
+    public ResponseEntity<byte[]> exportAgentTowingsToPDF() {
+        try {
+            List<AgentTowing> agents = agentTowingRepository.findAll();
+            byte[] pdfBytes = pdfExporterService.exportAgentTowingsToPDF(agents);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDispositionFormData("attachment", "agent_towings.pdf");
+            return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
 
     // ✅ Create a new agent (Fixed path)
     @PostMapping("/add")

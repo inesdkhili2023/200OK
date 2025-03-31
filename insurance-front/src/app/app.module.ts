@@ -23,6 +23,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AgentTowingService } from './services/agent-towing.service';
 import { AgentEspaceComponent } from './pages/agent-espace/agent-espace.component';
 import { ChatComponent } from './pages/chat/chat.component';
+import { AdminExportComponent } from './pages/admin-export/admin-export.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { ChatComponent } from './pages/chat/chat.component';
     TowingComponent,
     AdminSinistersListComponent,
     AgentEspaceComponent,
-    ChatComponent  // Add this line
+    ChatComponent,
+    AdminExportComponent  // Add this line
        
   ],
   imports: [

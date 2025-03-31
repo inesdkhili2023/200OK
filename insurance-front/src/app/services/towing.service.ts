@@ -41,7 +41,9 @@ export class TowingService {
     return this.http.delete<any>(`${this.apiUrl}/delete/${id}`, { responseType: 'json' });
   }
   
-  
+  exportPDF() {
+    return this.http.get(`${this.apiUrl}/export/pdf`, { responseType: 'blob' });
+  }
 
   /**
    * Get all agents

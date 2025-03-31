@@ -75,6 +75,24 @@ export class AgentTowingComponent implements OnInit {
     console.log("✅ Map initialized successfully!");
   }
 
+
+  exportPDF(): void {
+    this.agentService.exportPDF().subscribe({
+      next: (blob: Blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'agent_towings.pdf';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      },
+      error: (error) => {
+        console.error("Error exporting PDF", error);
+      }
+    });
+  }
+
+
   loadTowings() {
     this.towingService.getAllTowings().subscribe(
       (data) => {

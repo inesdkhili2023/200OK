@@ -23,7 +23,9 @@ export class AgentTowingService {
   updateAgent(id: number, agent: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/update/${id}`, agent);
   }
-
+  exportPDF() {
+    return this.http.get(`${this.apiUrl}/export/pdf`, { responseType: 'blob' });
+  }
   deleteAgent(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/delete/${id}`);
   }

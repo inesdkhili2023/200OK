@@ -6,6 +6,9 @@
   
   <section class="towing-container">
     <div class="container">
+      <div class="mb-3">
+        <button class="btn btn-primary" (click)="exportPDF()">Export PDF</button>
+      </div>
       <div class="table-responsive">
         <div class="mb-3">
           <input type="text" class="form-control" placeholder="Search towing..." [(ngModel)]="searchText" (input)="filterTowings()">

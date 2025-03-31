@@ -7,9 +7,13 @@ import com.ahch.entity.Towing;
 import com.ahch.entity.AgentTowing;
 import com.ahch.entity.User;
 import com.ahch.service.TowingService;
+import com.itextpdf.text.DocumentException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.ahch.service.PDFExporterService;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -25,8 +29,15 @@ private final TowingRepository towingRepository;
     private final TowingService towingService;
     private final AgentTowingRepository agentRepository;
     private final UserRepository userRepository;
-    public TowingController(TowingService towingService, AgentTowingRepository agentRepository, UserRepository userRepository,TowingRepository towingRepository) {
+    private final PDFExporterService pdfExporterService;
+
+    public TowingController( PDFExporterService pdfExporterService,
+                             TowingService towingService,
+                             AgentTowingRepository agentRepository,
+                             UserRepository userRepository,
+                             TowingRepository towingRepository) {
         this.towingService = towingService;
+        this.pdfExporterService = pdfExporterService;
         this.agentRepository = agentRepository;
         this.userRepository = userRepository;
         this.towingRepository = towingRepository;
@@ -35,6 +46,22 @@ private final TowingRepository towingRepository;
     @GetMapping("/all")
     public List<Towing> getAllTowings() {
         return towingRepository.findAll();
+    }
+
+    @GetMapping("/export/pdf")
+    public ResponseEntity<byte[]> exportTowingsToPDF() {
+        try {
+            List<Towing> towings = towingRepository.findAll();
+            byte[] pdfBytes = pdfExporterService.exportTowingsToPDF(towings);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDispositionFormData("attachment", "towings.pdf");
+            return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
+        } catch (DocumentException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     @PostMapping("/add/{id_agent}/{id_user}")

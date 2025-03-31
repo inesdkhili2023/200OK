@@ -24,7 +24,7 @@ export class TowingComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private towingService: TowingService,
-    private http: HttpClient
+    private http: HttpClient,
   ) {
     // Define form controls with validators
     this.towingForm = this.fb.group({
@@ -41,7 +41,22 @@ export class TowingComponent implements OnInit {
     this.loadAgents();
     this.loadUsers();
   }
-
+  exportPDF(): void {
+    this.towingService.exportPDF().subscribe({
+      next: (blob: Blob) => {
+        // Create a URL for the blob and trigger a download
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'towings.pdf';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      },
+      error: (error) => {
+        console.error('Export PDF failed', error);
+      }
+    });
+  }
   loadTowings(): void {
     this.towingService.getAllTowings().subscribe(
       (data: Towing[]) => {
