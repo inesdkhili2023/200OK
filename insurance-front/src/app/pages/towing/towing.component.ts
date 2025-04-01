@@ -95,12 +95,28 @@ export class TowingComponent implements OnInit {
     );
   }
 
+  /**
+   * Gets the name of the agent for a towing request
+   */
   getAgentName(towing: Towing): string {
-    return towing.agent ? towing.agent.name : 'N/A';
+    const agent = this.agents.find(a => a.idAgent === towing.idAgent);
+    return agent ? agent.name : 'N/A';
   }
-  
+
+  /**
+   * Gets the initial letter of the agent's name for the avatar
+   */
+  getAgentInitial(towing: Towing): string {
+    const agent = this.agents.find(a => a.idAgent === towing.idAgent);
+    return agent && agent.name ? agent.name.charAt(0).toUpperCase() : '?';
+  }
+
+  /**
+   * Gets the name of the user for a towing request
+   */
   getUserName(towing: Towing): string {
-    return towing.user ? towing.user.name : 'N/A';
+    const user = this.users.find(u => u.idUser === towing.idUser);
+    return user ? user.name : 'N/A';
   }
   
   editTowing(towing: Towing): void {
