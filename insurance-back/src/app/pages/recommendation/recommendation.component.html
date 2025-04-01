@@ -1,0 +1,127 @@
+<section class="breadcrumb">
+    <div class="container">
+        <h2 class="recommendations-title"><i class="fas fa-thumbs-up me-2"></i>Recommendations</h2>
+        <ul>
+            <li><a routerLink="/"><i class="fas fa-home me-1"></i>Home</a> <i class="fas fa-chevron-right mx-2"></i></li>
+            <li>Recommendations Management</li>
+        </ul>
+    </div>
+</section>
+
+<section class="recommendations-container">
+    <div class="container">
+        <div class="card">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h3 class="mb-0"><i class="fas fa-list me-2"></i>Recommendations List</h3>
+                <span class="badge bg-light text-primary">{{filteredRecommendations.length}} Recommendations</span>
+            </div>
+            <div class="card-body">
+                <!-- Search Filter -->
+                <div class="search-box position-relative mb-4">
+                    <i class="fas fa-search position-absolute search-icon"></i>
+                    <input type="text" class="form-control ps-5" placeholder="Search by description, status..." 
+                        [(ngModel)]="filterText" (input)="applyFilter()" aria-label="Search recommendations">
+                </div>
+
+                <!-- Recommendations Table -->
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th><i class="fas fa-hashtag me-1"></i>ID</th>
+                                <th><i class="fas fa-file-alt me-1"></i>Description</th>
+                                <th><i class="fas fa-user-tag me-1"></i>User Preferences</th>
+                                <th><i class="fas fa-calendar-alt me-1"></i>Date</th>
+                                <th><i class="fas fa-info-circle me-1"></i>Status</th>
+                                <th><i class="fas fa-cogs me-1"></i>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let rec of filteredRecommendations | paginate: { itemsPerPage: 5, currentPage: currentPage }">
+                                <td>{{ rec.idRec }}</td>
+                                <td>
+                                    <div class="description-text">
+                                        <i class="fas fa-quote-left text-muted me-1"></i>
+                                        {{ rec.description }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="preference-badge">
+                                        <i class="fas fa-tag me-1"></i>
+                                        {{ rec.userPreferences }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="date-badge">
+                                        <i class="fas fa-calendar-day me-1"></i>
+                                        {{ rec.dateCreation | date: 'shortDate' }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge" [ngClass]="{'bg-success': rec.status === 'Approved', 'bg-warning': rec.status === 'Pending', 'bg-danger': rec.status === 'Rejected'}">
+                                        <i class="status-icon" 
+                                           [ngClass]="{
+                                             'fas fa-check-circle': rec.status === 'Approved',
+                                             'fas fa-clock': rec.status === 'Pending',
+                                             'fas fa-times-circle': rec.status === 'Rejected'
+                                           }"></i>
+                                        {{ rec.status }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-warning btn-sm" (click)="editRecommendation(rec)" 
+                                                aria-label="Edit recommendation" title="Edit recommendation">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm" (click)="deleteRecommendation(rec.idRec!)" 
+                                                aria-label="Delete recommendation" title="Delete recommendation">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination-container">
+                    <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Create/Edit Recommendation Form would go here -->
+    </div>
+</section>
+
+<style>
+    .description-text {
+        max-width: 200px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: left;
+    }
+    
+    .preference-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 8px;
+        background-color: var(--primary-light);
+        border-radius: 4px;
+        font-size: 13px;
+    }
+    
+    .date-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 8px;
+        background-color: var(--primary-light);
+        border-radius: 4px;
+        font-size: 13px;
+    }
+    
+    .status-icon {
+        margin-right: 6px;
+    }
+</style>

@@ -1,0 +1,353 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Global Styles for Insurance Portal */
+:root {
+    --primary-color: #4a6fd4;
+    --primary-light: #eef2ff;
+    --secondary-color: #f56565;
+    --success-color: #38b2ac;
+    --warning-color: #ed8936;
+    --danger-color: #e53e3e;
+    --dark-color: #2d3748;
+    --light-color: #f7fafc;
+    --text-color: #4a5568;
+    --border-radius: 10px;
+    --box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --transition: all 0.3s ease;
+  }
+  
+  /* General Body Styling */
+  body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-color);
+    background-color: #f9fafb;
+    line-height: 1.6;
+  }
+  
+  /* Breadcrumb Styling */
+  .breadcrumb {
+    background: linear-gradient(to right, var(--primary-color), #667eea);
+    padding: 20px 0;
+    border-bottom: none;
+    color: white;
+    margin-bottom: 30px;
+    box-shadow: var(--box-shadow);
+  }
+  
+  .breadcrumb h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    letter-spacing: 0.5px;
+    animation: fadeInDown 0.5s ease;
+  }
+  
+  .breadcrumb ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    animation: fadeInUp 0.5s ease;
+  }
+  
+  .breadcrumb ul li {
+    display: inline;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.9);
+  }
+  
+  .breadcrumb ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    transition: var(--transition);
+  }
+  
+  .breadcrumb ul li a:hover {
+    text-decoration: none;
+    opacity: 0.8;
+  }
+  
+  /* Card Styling */
+  .card {
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    border: none;
+    transition: var(--transition);
+    margin-bottom: 25px;
+    background: white;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+  
+  .card-header {
+    font-weight: 600;
+    font-size: 1.2rem;
+    padding: 18px 20px;
+    border-bottom: none;
+  }
+  
+  .card-body {
+    padding: 25px;
+  }
+  
+  /* Table Styling */
+  .table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 5px;
+    background-color: transparent;
+    margin-bottom: 20px;
+  }
+  
+  .table thead {
+    background-color: var(--dark-color);
+    color: white;
+  }
+  
+  .table th {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 15px;
+    text-align: center;
+    border: none;
+  }
+  
+  .table th:first-child {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+  
+  .table th:last-child {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+  
+  .table td {
+    text-align: center;
+    padding: 12px;
+    vertical-align: middle;
+    background-color: white;
+    border-top: 1px solid #edf2f7;
+  }
+  
+  .table tbody tr {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    transition: var(--transition);
+  }
+  
+  .table tbody tr:hover {
+    background-color: var(--primary-light);
+    transform: translateY(-2px);
+    z-index: 10;
+  }
+  
+  /* Badge Styling */
+  .badge {
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+  }
+  
+  .bg-success {
+    background-color: var(--success-color) !important;
+    color: white;
+  }
+  
+  .bg-warning {
+    background-color: var(--warning-color) !important;
+    color: white;
+  }
+  
+  .bg-danger {
+    background-color: var(--danger-color) !important;
+    color: white;
+  }
+  
+  .bg-info {
+    background-color: #4299e1 !important;
+    color: white;
+  }
+  
+  .bg-primary {
+    background-color: var(--primary-color) !important;
+    color: white;
+  }
+  
+  /* Form Styling */
+  .form-control {
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    padding: 12px 15px;
+    font-size: 14px;
+    transition: var(--transition);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+  
+  .form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(74, 111, 212, 0.2);
+  }
+  
+  /* Button Styling */
+  .btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: var(--transition);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    border: none;
+    cursor: pointer;
+  }
+  
+  .btn-primary {
+    background: var(--primary-color);
+    color: white;
+  }
+  
+  .btn-primary:hover {
+    background: #3759c5;
+    transform: translateY(-2px);
+  }
+  
+  .btn-success {
+    background: var(--success-color);
+    color: white;
+  }
+  
+  .btn-success:hover {
+    background: #2c9a9a;
+    transform: translateY(-2px);
+  }
+  
+  .btn-warning {
+    background: var(--warning-color);
+    color: white;
+  }
+  
+  .btn-warning:hover {
+    background: #dd7722;
+    transform: translateY(-2px);
+  }
+  
+  .btn-danger {
+    background: var(--danger-color);
+    color: white;
+  }
+  
+  .btn-danger:hover {
+    background: #c53030;
+    transform: translateY(-2px);
+  }
+  
+  .btn-secondary {
+    background: #718096;
+    color: white;
+  }
+  
+  .btn-secondary:hover {
+    background: #4a5568;
+    transform: translateY(-2px);
+  }
+  
+  .btn-sm {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+  
+  /* Search Box */
+  .search-box {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  
+  .search-icon {
+    position: absolute;
+    top: 12px;
+    left: 15px;
+    color: var(--primary-color);
+  }
+  
+  /* Pagination Controls */
+  pagination-controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+  }
+  
+  /* Avatar */
+  .avatar {
+    width: 32px;
+    height: 32px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  
+  /* Animations */
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .breadcrumb h2 {
+      font-size: 22px;
+    }
+  
+    .btn {
+      font-size: 12px;
+      padding: 8px 15px;
+    }
+    
+    .card-body {
+      padding: 15px;
+    }
+    
+    .table {
+      font-size: 12px;
+    }
+  }
+  
