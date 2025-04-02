@@ -16,6 +16,64 @@
       </button>
     </div>
     
+    <!-- Stats Section -->
+    <div class="row mb-4">
+      <div class="col-md-3">
+        <div class="card bg-primary text-white">
+          <div class="card-body">
+            <h5 class="card-title">Total Agents</h5>
+            <h2 class="card-text">{{ agentStats.totalAgents }}</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card bg-success text-white">
+          <div class="card-body">
+            <h5 class="card-title">Available Agents</h5>
+            <h2 class="card-text">{{ agentStats.availableAgents }}</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card bg-info text-white">
+          <div class="card-body">
+            <h5 class="card-title">Average Rating</h5>
+            <h2 class="card-text">{{ agentStats.averageRating | number:'1.1-1' }} ⭐</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card bg-warning text-white">
+          <div class="card-body">
+            <h5 class="card-title">Total Requests</h5>
+            <h2 class="card-text">{{ agentStats.totalRequests }}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Agent Location Controls -->
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Agent Location Controls</h5>
+            <div class="d-flex gap-2">
+              <button class="btn btn-success" (click)="findNearestAndFarthestAgents()">
+                <i class="fas fa-sync-alt me-2"></i>Update Locations
+              </button>
+              <button class="btn btn-primary" *ngIf="nearestAgent" (click)="map.setView([nearestAgent.latitude!, nearestAgent.longitude!], 13)">
+                <i class="fas fa-map-marker-alt me-2"></i>Show Nearest Agent
+              </button>
+              <button class="btn btn-warning" *ngIf="farthestAgent" (click)="map.setView([farthestAgent.latitude!, farthestAgent.longitude!], 13)">
+                <i class="fas fa-map-marker-alt me-2"></i>Show Farthest Agent
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="row">
       <!-- Left Column - Agents List -->
       <div class="col-lg-8">

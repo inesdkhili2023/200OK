@@ -1,58 +1,72 @@
-// chat.component.ts
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ChatService, ChatMessage } from '../../services/chat.service';
-import { ChatStoreService } from '../../services/chat-store.service';
-import { Subscription } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.css']
+  styleUrls: ['./chat.component.css'],
+  imports: [CommonModule, FormsModule],
+  standalone: true
 })
-export class ChatComponent implements OnInit, OnDestroy {
+export class ChatComponent implements OnInit {
+  @Input() agentId?: number;
+  @ViewChild('chatContainer') private chatContainer!: ElementRef;
+
   messages: ChatMessage[] = [];
   newMessage: string = '';
-  sender: string = 'agent1';     // Replace with the actual agent id/name
-  receiver: string = 'customer1'; // Replace with the actual receiver id/name
-  eventSource!: EventSource;
-  private subscription!: Subscription;
 
-  constructor(
-    private chatService: ChatService,
-    private chatStore: ChatStoreService
-  ) {}
+  constructor(private chatService: ChatService) {}
 
   ngOnInit(): void {
-    // Load stored chat messages
-    this.subscription = this.chatStore.messages$.subscribe((msgs) => {
-      this.messages = msgs;
-    });
+    if (this.agentId) {
+      this.chatService.getChatHistory(this.agentId).subscribe(messages => {
+        this.messages = messages;
+      });
 
-    // Subscribe to SSE messages if needed
-    this.eventSource = this.chatService.getMessageStream(this.sender);
-    this.eventSource.addEventListener('chat', (event: MessageEvent) => {
-      const data = JSON.parse(event.data);
-      this.chatStore.addMessage(data);
-    });
+      this.chatService.getMessages().subscribe(message => {
+        this.messages.push(message);
+        this.scrollToBottom();
+      });
+    }
   }
 
-  send(): void {
-    const msg: ChatMessage = {
-      sender: this.sender,
-      receiver: this.receiver,
-      message: this.newMessage
+  sendMessage(): void {
+    if (!this.newMessage.trim() || !this.agentId) return;
+
+    const message: ChatMessage = {
+      senderId: this.agentId,
+      senderName: 'Agent', // You might want to get this from a user service
+      content: this.newMessage,
+      timestamp: new Date(),
+      type: 'text'
     };
-    this.chatService.sendMessage(msg).subscribe(() => {
-      // Optionally, add the message to the store on success
-      this.chatStore.addMessage(msg);
-    });
+
+    this.chatService.sendMessage(message);
     this.newMessage = '';
   }
 
-  ngOnDestroy(): void {
-    this.eventSource.close();
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+  isCurrentUser(message: ChatMessage): boolean {
+    return message.senderId === this.agentId;
   }
-}
+
+  formatTime(date: Date): string {
+    return new Date(date).toLocaleTimeString([], { 
+      hour: '2-digit', 
+      minute: '2-digit' 
+    });
+  }
+
+  private scrollToBottom(): void {
+    setTimeout(() => {
+      try {
+        this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight;
+      } catch(err) {}
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.chatService.disconnect();
+  }
+} 

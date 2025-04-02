@@ -42,12 +42,11 @@ import { AdminExportComponent } from './pages/admin-export/admin-export.componen
     TowingComponent,
     AdminSinistersListComponent,
     AgentEspaceComponent,
-    ChatComponent,
     AdminExportComponent  // Add this line
        
   ],
   imports: [
-    BrowserModule,
+    BrowserModule,ChatComponent,
     AppRoutingModule,
     FormsModule,
     CommonModule, 

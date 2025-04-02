@@ -1,4 +1,5 @@
 export const environment = {
   production: false,
-  apiUrl: '/api/examen'
+  apiUrl: 'http://localhost:8081/api/examen',
+  wsUrl: 'ws://localhost:8081/api/examen'
 };

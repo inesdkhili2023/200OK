@@ -4,5 +4,7 @@ export interface AgentTowing {
     contactInfo: string;
     availability: boolean;
     vehicleType: string;
+    latitude?: number;
+    longitude?: number;
   }
   
