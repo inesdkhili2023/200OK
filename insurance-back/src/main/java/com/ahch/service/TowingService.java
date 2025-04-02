@@ -6,6 +6,7 @@ import com.ahch.Repo.UserRepository;
 import com.ahch.entity.Towing;
 import com.ahch.entity.AgentTowing;
 import com.ahch.entity.User;
+import com.ahch.service.WebhookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.context.ApplicationContext;
+import java.util.HashMap;
+import java.util.Map;
 @Service
 public class TowingService {
     private static final Logger logger = LoggerFactory.getLogger(TowingService.class);
@@ -27,6 +31,10 @@ public class TowingService {
 
     @Autowired
     private GeocodingService geocodingService;
+
+    @Autowired
+    private ApplicationContext applicationContext;
+
     public TowingService(SimpMessagingTemplate messagingTemplate,TowingRepository towingRepository, AgentTowingRepository agentRepository, UserRepository userRepository) {
         this.messagingTemplate = messagingTemplate;
         this.towingRepository = towingRepository;
@@ -44,6 +52,11 @@ public class TowingService {
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    public Towing getTowingById(Long id) {
+        return towingRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Towing not found with ID: " + id));
     }
 
     public Towing addTowing(Towing towing) {
@@ -102,12 +115,53 @@ public class TowingService {
         Towing towing = towingRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Towing not found with ID: " + id));
 
+        // Capture old status to check for status changes
+        String oldStatus = towing.getStatus();
+
         towing.setStatus(towingDetails.getStatus());
         towing.setLocation(towingDetails.getLocation());
         towing.setRequestDate(towingDetails.getRequestDate());
 
+        // If rating is provided in the update, set it
+        if (towingDetails.getRating() != null) {
+            towing.setRating(towingDetails.getRating());
+        }
+
         // ✅ Save updated towing request
         Towing updatedTowing = towingRepository.save(towing);
+
+        // Status change event - notify webhooks
+        if (!oldStatus.equals(updatedTowing.getStatus())) {
+            try {
+                // If WebhookService is available, trigger webhooks
+                if (applicationContext.containsBean("webhookService")) {
+                    WebhookService webhookService = applicationContext.getBean(WebhookService.class);
+
+                    Map<String, Object> payload = new HashMap<>();
+                    payload.put("towingId", updatedTowing.getId());
+                    payload.put("oldStatus", oldStatus);
+                    payload.put("newStatus", updatedTowing.getStatus());
+                    payload.put("location", updatedTowing.getLocation());
+                    payload.put("timestamp", LocalDateTime.now().toString());
+
+                    // Agent info
+                    if (updatedTowing.getAgent() != null) {
+                        payload.put("agentId", updatedTowing.getAgent().getIdAgent());
+                        payload.put("agentName", updatedTowing.getAgent().getName());
+                    }
+
+                    // User info
+                    if (updatedTowing.getUser() != null) {
+                        payload.put("userId", updatedTowing.getUser().getIdUser());
+                    }
+
+                    // Async webhook trigger
+                    webhookService.triggerWebhooks("towing.status.changed", payload);
+                }
+            } catch (Exception e) {
+                logger.error("Error triggering webhooks for status change", e);
+            }
+        }
 
         // 🚀 Notify the agent about the status change
         messagingTemplate.convertAndSend("/topic/agent-" + towing.getAgent().getIdAgent(),
@@ -116,6 +170,56 @@ public class TowingService {
         return updatedTowing;
     }
 
+    // Overloaded method to update an existing Towing entity directly
+    public Towing updateTowing(Towing towing) {
+        if (towing.getId() == null) {
+            throw new IllegalArgumentException("Towing ID must be provided.");
+        }
+
+        // Verify towing exists
+        towingRepository.findById(towing.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Towing not found with ID: " + towing.getId()));
+
+        // Save the updated entity
+        return towingRepository.save(towing);
+    }
+
+    public Towing updateTowingRating(Long towingId, Double rating) {
+        if (rating < 1 || rating > 5) {
+            throw new IllegalArgumentException("Rating must be between 1 and 5");
+        }
+
+        Towing towing = towingRepository.findById(towingId)
+                .orElseThrow(() -> new IllegalArgumentException("Towing not found with ID: " + towingId));
+
+        towing.setRating(rating);
+        Towing updatedTowing = towingRepository.save(towing);
+
+        // Trigger webhook for rating update
+        try {
+            if (applicationContext.containsBean("webhookService")) {
+                WebhookService webhookService = applicationContext.getBean(WebhookService.class);
+
+                Map<String, Object> payload = new HashMap<>();
+                payload.put("towingId", updatedTowing.getId());
+                payload.put("rating", rating);
+                payload.put("timestamp", LocalDateTime.now().toString());
+
+                // Agent info
+                if (updatedTowing.getAgent() != null) {
+                    payload.put("agentId", updatedTowing.getAgent().getIdAgent());
+                    payload.put("agentName", updatedTowing.getAgent().getName());
+                }
+
+                // Async webhook trigger
+                webhookService.triggerWebhooks("towing.rating.updated", payload);
+            }
+        } catch (Exception e) {
+            logger.error("Error triggering webhooks for rating update", e);
+        }
+
+        return updatedTowing;
+    }
 
     public void deleteTowing(Long id) {
         Towing towing = towingRepository.findById(id)

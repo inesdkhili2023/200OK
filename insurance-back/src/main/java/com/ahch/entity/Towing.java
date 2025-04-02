@@ -28,6 +28,13 @@ public class Towing {
     private LocalDateTime requestDate;
     private double latitude;
     private double longitude;
+
+    // Rating given by user after service completion (1-5 stars)
+    private Double rating;
+
+    // Description or notes about the towing request
+    private String description;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_agent", referencedColumnName = "idAgent", insertable = true, updatable = true)
     private AgentTowing agent;
@@ -39,4 +46,7 @@ public class Towing {
     // Getters and setters
     public AgentTowing getAgent() { return agent; }
     public User getUser() { return user; }
+
+    public Double getRating() { return rating; }
+    public void setRating(Double rating) { this.rating = rating; }
 }
