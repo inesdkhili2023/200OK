@@ -9,11 +9,11 @@ public class Paiement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private double numContrat;
+    private Long numContrat;
     private double montant;
-    private  int numtel;
-    private  String Mail;
-    private String ConfirmationMail;
+    private String numtel; // ✅ Changement de int à String
+    private String mail;
+    private String confirmationMail;
     private LocalDate datePaiement;
 
     @ManyToOne
@@ -31,6 +31,15 @@ public class Paiement {
     }
 
     public Long getId() { return id; }
+
+    public String getMail() { return mail; }
+    public void setMail(String mail) { this.mail = mail; }
+
+    public String getConfirmationMail() { return confirmationMail; }
+    public void setConfirmationMail(String confirmationMail) { this.confirmationMail = confirmationMail; }
+
+    public String getNumtel() { return numtel; } // ✅ Corrigé
+    public void setNumtel(String numtel) { this.numtel = numtel; } // ✅ Corrigé
 
     public double getMontant() { return montant; }
     public void setMontant(double montant) { this.montant = montant; }

@@ -1,7 +1,9 @@
 package com.ahch.entity;
 
+import com.ahch.JsonConverter;
 import jakarta.persistence.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Entity
@@ -18,8 +20,7 @@ public class Devis {
     @CollectionTable(name = "devis_details", joinColumns = @JoinColumn(name = "devis_id"))
     @MapKeyColumn(name = "champ")
     @Column(name = "valeur")
-    private Map<String, String> details;
-
+    private Map<String, String> details = new HashMap<>();
     private boolean valide;
 
     public Devis() {}
@@ -28,9 +29,7 @@ public class Devis {
         this.typeAssurance = type;
     }
 
-    public void setDetails(Map<String, String> details) {
-        this.details = details;
-    }
+
 
     public void setValide(boolean valide) {
         this.valide = valide;
@@ -44,11 +43,17 @@ public class Devis {
         return typeAssurance;
     }
 
-    public Map<String, String> getDetails() {
-        return details;
-    }
+
 
     public boolean isValide() {
         return valide;
     }
-}
+
+    public Map<String, String> getDetails() {
+        return details;
+    }
+
+    public void setDetails(Map<String, String> details) {
+        this.details = details;
+
+    }}

@@ -41,4 +41,5 @@ public class Facture {
 
     public Paiement getPaiement() { return paiement; }
     public void setPaiement(Paiement paiement) { this.paiement = paiement; }
+
 }

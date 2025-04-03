@@ -25,7 +25,9 @@ public class TypeAssurance {
         @Column(name = "champ")
         private List<String> champsDynamiques;
 
+
         public TypeAssurance() {}
+
 
         // Getters et Setters
         public Long getId() { return id; }

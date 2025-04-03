@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/types-assurance")
-@CrossOrigin("*") // Permet les requêtes Angular
+@CrossOrigin("*")
 public class TypeAssuranceController {
     @Autowired
     private TypeAssuranceService typeAssuranceService;

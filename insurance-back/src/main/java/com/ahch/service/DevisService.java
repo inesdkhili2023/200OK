@@ -15,6 +15,11 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Map;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class DevisService {
@@ -29,25 +34,30 @@ public class DevisService {
     @Autowired
     private FactureRepository factureRepository;
 
-    //  Création d'un devis
-    public Devis createDevis(Long typeAssuranceId, Map<String, String> details) {
-        System.out.println("Type Assurance ID reçu : " + typeAssuranceId);
 
-        TypeAssurance type = typeAssuranceRepository.findById(typeAssuranceId)
-                .orElseThrow(() -> new RuntimeException("Type d'assurance non trouvé"));
-
-        System.out.println("Type Assurance trouvé : " + type.getNom());
-
+    public Devis createDevis(Map<String, Object> payload) {
         Devis devis = new Devis();
-        devis.setTypeAssurance(type);
+
+        // Associer le type d'assurance
+        Long typeAssuranceId = Long.valueOf(payload.get("typeAssuranceId").toString());
+        TypeAssurance typeAssurance = typeAssuranceRepository.findById(typeAssuranceId)
+                .orElseThrow(() -> new RuntimeException("TypeAssurance introuvable"));
+        devis.setTypeAssurance(typeAssurance);
+
+        // Extraire les champs dynamiques (sauf typeAssuranceId)
+        Map<String, String> details = new HashMap<>();
+        for (Map.Entry<String, Object> entry : payload.entrySet()) {
+            if (!entry.getKey().equals("typeAssuranceId")) {
+                details.put(entry.getKey(), entry.getValue().toString());
+            }
+        }
         devis.setDetails(details);
-        devis.setValide(false);
 
-        Devis savedDevis = devisRepository.save(devis);
-        System.out.println("Devis enregistré avec ID : " + savedDevis.getId());
-
-        return savedDevis;
+        return devisRepository.save(devis);
     }
+
+
+
 
     // 🔹 Récupération d'un devis par ID
     public Devis getDevisById(Long id) {
@@ -56,11 +66,11 @@ public class DevisService {
     }
 
     // 🔹 Mise à jour d'un devis
-    public Devis updateDevis(Long id, Map<String, String> newDetails) {
+    public Devis updateDevis(Long id, Map<String,Object> newDetails) {
         Devis devis = devisRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Devis non trouvé"));
 
-        devis.setDetails(newDetails);
+
         return devisRepository.save(devis);
     }
 

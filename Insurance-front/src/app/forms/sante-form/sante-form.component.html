@@ -1,43 +1,43 @@
 <form (ngSubmit)="onSubmit(contactForm)" #contactForm="ngForm">
-    <div>
-      <label for="nom">Nom</label>
-      <input type="text" id="nom" name="nom" ngModel required>
-    </div>
-    <div>
-      <label for="prenom">Prénom</label>
-      <input type="text" id="prenom" name="prenom" ngModel required>
-    </div>
-    <div>
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" ngModel required>
-    </div>
-    <div>
-      <label for="confirmationEmail">Confirmation de mail</label>
-      <input type="email" id="confirmationEmail" name="confirmationEmail" ngModel required>
-    </div>
-    <div>
-      <label for="societe">Société</label>
-      <input type="text" id="societe" name="societe" ngModel>
-    </div>
-    <div>
-      <label for="telephone">Téléphone</label>
-      <input type="tel" id="telephone" name="telephone" ngModel>
-    </div>
-    <div>
-      <label for="fonction">Fonction</label>
-      <input type="text" id="fonction" name="fonction" ngModel>
-    </div>
-    <div>
-      <label for="dateNaissance">Date de Naissance</label>
-      <input type="date" id="dateNaissance" name="dateNaissance" ngModel>
-    </div>
-    <div>
-      <label for="message">Votre message</label>
-      <textarea id="message" name="message" ngModel></textarea>
-    </div>
-    <div>
-      <input type="checkbox" id="conditions" name="conditions" ngModel required>
-      <label for="conditions">J’ai lu et approuvé les conditions de traitement des données personnelles saisies dans cette page.</label>
-    </div>
-    <button type="submit" [disabled]="!contactForm.form.valid">Envoyer</button>
-  </form>
+  <div>
+    <label for="nom">Nom</label>
+    <input type="text" id="nom" name="nom" ngModel required>
+  </div>
+  <div>
+    <label for="prenom">Prénom</label>
+    <input type="text" id="prenom" name="prenom" ngModel required>
+  </div>
+  <div>
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" ngModel required>
+  </div>
+  <div>
+    <label for="confirmationEmail">Confirmation de mail</label>
+    <input type="email" id="confirmationEmail" name="confirmationEmail" ngModel required>
+  </div>
+  <div>
+    <label for="societe">Société</label>
+    <input type="text" id="societe" name="societe" ngModel>
+  </div>
+  <div>
+    <label for="telephone">Téléphone</label>
+    <input type="tel" id="telephone" name="telephone" ngModel>
+  </div>
+  <div>
+    <label for="fonction">Fonction</label>
+    <input type="text" id="fonction" name="fonction" ngModel>
+  </div>
+  <div>
+    <label for="dateNaissance">Date de Naissance</label>
+    <input type="date" id="dateNaissance" name="dateNaissance" ngModel>
+  </div>
+  <div>
+    <label for="message">Votre message</label>
+    <textarea id="message" name="message" ngModel></textarea>
+  </div>
+  <div>
+    <input type="checkbox" id="conditions" name="conditions" ngModel required>
+    <label for="conditions">J’ai lu et approuvé les conditions de traitement des données personnelles saisies dans cette page.</label>
+  </div>
+  <button type="submit" [disabled]="!contactForm.form.valid">Envoyer</button>
+</form>

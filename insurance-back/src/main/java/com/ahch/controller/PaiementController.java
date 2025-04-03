@@ -16,9 +16,14 @@ public class PaiementController {
     @Autowired
     private PaiementService paiementService;
 
-    // Créer un paiement
+
     @PostMapping("/create")
     public ResponseEntity<?> createPaiement(@RequestBody Paiement paiement) {
+        System.out.println("📝 Données reçues dans le backend : " + paiement);
+        System.out.println("📩 Email : " + paiement.getMail());
+        System.out.println("📩 Confirmation Email : " + paiement.getConfirmationMail());
+        System.out.println("📞 Numéro de téléphone : " + paiement.getNumtel());
+
         try {
             Paiement savedPaiement = paiementService.createPaiement(paiement);
             return ResponseEntity.ok(savedPaiement);
@@ -27,19 +32,20 @@ public class PaiementController {
         }
     }
 
-    // Récupérer tous les paiements
+
+
     @GetMapping("/all")
     public ResponseEntity<List<Paiement>> getAllPaiements() {
         return ResponseEntity.ok(paiementService.getAllPaiements());
     }
 
-    // Récupérer un paiement par ID
+
     @GetMapping("/{id}")
     public ResponseEntity<Paiement> getPaiementById(@PathVariable Long id) {
         return ResponseEntity.ok(paiementService.getPaiementById(id));
     }
 
-    // Modifier un paiement
+
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updatePaiement(@PathVariable Long id, @RequestBody Paiement paiement) {
         try {
@@ -50,7 +56,7 @@ public class PaiementController {
         }
     }
 
-    // Supprimer un paiement
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deletePaiement(@PathVariable Long id) {
         paiementService.deletePaiement(id);

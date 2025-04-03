@@ -26,6 +26,23 @@ public class Contrat {
         this.dateCreation = LocalDate.now();
     }
 
-    public String getNumContrat() { return numContrat; }
-    public Devis getDevis() { return devis; }
+    public Long getId() {
+        return id;
+    }
+
+    public String getNumContrat() {
+        return numContrat;
+    }
+
+    public Devis getDevis() {
+        return devis;
+    }
+
+    public Long getDevisId() {
+        return devis != null ? devis.getId() : null;
+    }
+
+    public LocalDate getDateCreation() {
+        return dateCreation;
+    }
 }

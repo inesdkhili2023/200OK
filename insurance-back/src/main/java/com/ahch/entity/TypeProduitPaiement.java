@@ -1,5 +1,5 @@
 package com.ahch.entity;
 
 public enum TypeProduitPaiement {
-    Ecolia,Habitation,Santé
+    Ecolia,Habitation,Santé,Voyage
 }

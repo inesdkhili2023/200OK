@@ -2,10 +2,12 @@ package com.ahch.controller;
 
 import com.ahch.entity.Devis;
 import com.ahch.service.DevisService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 @RestController
 @RequestMapping("/devis")
@@ -14,14 +16,29 @@ public class DevisController {
     @Autowired
     private DevisService devisService;
 
-    @PostMapping("/create")
-    public ResponseEntity<Devis> createDevis(@RequestBody Map<String, Object> payload) {
-        Long typeAssuranceId = Long.parseLong(payload.get("typeAssuranceId").toString());
-        Map<String, String> details = (Map<String, String>) payload.get("details");
 
-        Devis createdDevis = devisService.createDevis(typeAssuranceId, details);
-        return ResponseEntity.ok(createdDevis);
+    @PostMapping("/create")
+    public ResponseEntity<?> createDevis(@RequestBody Map<String, Object> payload) {
+        try {
+            Object typeAssuranceIdObj = payload.get("typeAssuranceId");
+            if (typeAssuranceIdObj == null || !(typeAssuranceIdObj instanceof Number)) {
+                return ResponseEntity.badRequest().body("Erreur : typeAssuranceId doit être un nombre.");
+            }
+            System.out.println("✅ Received payload: " + payload);
+
+            // Le typeAssuranceId est intégré directement dans le payload
+            payload.put("typeAssuranceId", ((Number) typeAssuranceIdObj).longValue());
+
+            // Appel avec le payload complet
+            Devis createdDevis = devisService.createDevis(payload);
+            return ResponseEntity.ok(createdDevis);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("❌ Erreur lors de la création du devis: " + e.getMessage());
+        }
     }
+
+
+
     @PostMapping("/valider-et-payer")
     public ResponseEntity<String> validerEtPayerDevis(@RequestBody Map<String, Object> payload) {
         Long devisId = Long.parseLong(payload.get("devisId").toString());
@@ -40,7 +57,7 @@ public class DevisController {
         return ResponseEntity.ok(devis);
     }
     @PutMapping("/update/{id}")
-    public ResponseEntity<Devis> updateDevis(@PathVariable Long id, @RequestBody Map<String, String> newDetails) {
+    public ResponseEntity<Devis> updateDevis(@PathVariable Long id, @RequestBody Map<String,Object> newDetails) {
         Devis updatedDevis = devisService.updateDevis(id, newDetails);
         return ResponseEntity.ok(updatedDevis);
     }

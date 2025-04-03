@@ -22,7 +22,7 @@ public class PaiementService {
     @Autowired
     private FactureRepository factureRepository;
 
-    // ✅ Créer un paiement et générer une facture
+
     public Paiement createPaiement(Paiement paiement) {
         if (paiement.getContrat() == null || paiement.getContrat().getNumContrat() == null) {
             throw new IllegalArgumentException("Le paiement doit être lié à un contrat valide.");
@@ -44,18 +44,18 @@ public class PaiementService {
         return savedPaiement;
     }
 
-    // ✅ Récupérer tous les paiements
+
     public List<Paiement> getAllPaiements() {
         return paiementRepository.findAll();
     }
 
-    // ✅ Récupérer un paiement par ID
+
     public Paiement getPaiementById(Long id) {
         return paiementRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Paiement non trouvé."));
     }
 
-    // ✅ Mettre à jour un paiement
+
     public Paiement updatePaiement(Long id, Paiement newPaiement) {
         Paiement existingPaiement = paiementRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Paiement non trouvé."));
@@ -64,7 +64,7 @@ public class PaiementService {
         return paiementRepository.save(existingPaiement);
     }
 
-    // ✅ Supprimer un paiement
+
     public void deletePaiement(Long id) {
         Paiement paiement = paiementRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Paiement non trouvé."));
