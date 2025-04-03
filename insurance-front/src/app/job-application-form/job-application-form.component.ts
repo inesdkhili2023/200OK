@@ -20,6 +20,7 @@ export class JobApplicationFormComponent  implements OnInit  {
   selectedJobId: number | null = null;
   jobOfferId!: number;
   siteKey: string = '6Le5S-MqAAAAALSbrYTUmV1IgrBQPBExN4zJpBVq';
+  submitted = false; // Variable pour suivre l'état de soumission
 
 
 
@@ -182,6 +183,8 @@ export class JobApplicationFormComponent  implements OnInit  {
     }
 // Méthode pour envoyer la candidature au backend
 submitApplication(): void {
+  this.submitted = true; // Activer l'affichage des erreurs
+
   const formData = {
     ...this.jobApplicationForm.value,
     jobOfferId: this.jobOfferId
@@ -195,6 +198,7 @@ submitApplication(): void {
  
   console.log("Données envoyées au backend :", mappedData);
   if (this.jobApplicationForm.invalid) {
+    alert('formulaire invalide');
     console.log('Le formulaire est invalide', this.jobApplicationForm.errors);
     return;
   }

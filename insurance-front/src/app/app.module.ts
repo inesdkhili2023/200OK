@@ -47,6 +47,11 @@ import { MatTableDataSource } from '@angular/material/table';
 import { JobOfferEditComponent } from './job-offer-edit/job-offer-edit.component';
 import { JobAppAdminComponent } from './job-app-admin/job-app-admin.component';
 import { RecaptchaModule, RecaptchaFormsModule  } from 'ng-recaptcha';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { format } from 'date-fns';
+import { AvailabilityAdminComponent } from './availability-admin/availability-admin.component';
+import { WeatherComponent } from './weather/weather.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +76,9 @@ import { RecaptchaModule, RecaptchaFormsModule  } from 'ng-recaptcha';
     JobOfferAdminComponent,
     AppointmentManagementComponent,
     JobOfferEditComponent,
-    JobAppAdminComponent
+    JobAppAdminComponent,
+    AvailabilityAdminComponent,
+    WeatherComponent
   ],
   imports: [
     BrowserModule,
@@ -98,7 +105,10 @@ import { RecaptchaModule, RecaptchaFormsModule  } from 'ng-recaptcha';
     MatTableModule,
     MatSortModule,
     RecaptchaModule,
-    RecaptchaFormsModule
+    RecaptchaFormsModule,
+    MatProgressBarModule,
+    NgxMaterialTimepickerModule,
+    
     
   ],
   providers: [AvailabilityService],

@@ -66,9 +66,12 @@ public class Appointment implements Serializable {
 
     @PrePersist
     protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
+        if (this.availability != null) {
+            this.createdAt = this.availability.getDate().atStartOfDay(); // Prend la date de disponibilité
+        }
         this.updatedAt = LocalDateTime.now();
     }
+
 
     @PreUpdate
     protected void onUpdate() {
@@ -82,5 +85,13 @@ public class Appointment implements Serializable {
         CANCELED,
         COMPLETED
     }
+    private String selectedSlot; // Ex: "08:30"
 
+    public String getSelectedSlot() {
+        return selectedSlot;
+    }
+
+    public void setSelectedSlot(String selectedSlot) {
+        this.selectedSlot = selectedSlot;
+    }
 }

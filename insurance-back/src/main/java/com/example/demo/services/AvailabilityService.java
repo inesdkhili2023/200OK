@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.entities.Availability;
+import com.example.demo.entities.AvailabilityStatus;
 import com.example.demo.repositories.AvailabilityRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,5 +57,25 @@ public class AvailabilityService implements IAvailabilityService {
     @Override
     public List<Availability> getAvailabilitiesByTimeRange(LocalDateTime start, LocalDateTime end) {
         return availabilityRepository.findByStartTimeBetween(start, end);
+    }
+
+    @Override
+    public Availability updateAvailabilityStatus(int id, AvailabilityStatus status) {
+        // Find the availability by ID
+        Optional<Availability> availabilityOptional = availabilityRepository.findById(id);
+
+        if (availabilityOptional.isPresent()) {
+            Availability availability = availabilityOptional.get();
+            availability.setStatus(status); // Update the status of the availability
+            return availabilityRepository.save(availability); // Save the updated availability
+        } else {
+            throw new RuntimeException("Availability not found with ID: " + id); // Handle not found case
+        }
+    }
+
+    // Get availabilities filtered by status
+    public List<Availability> getAvailabilitiesByStatus(String status) {
+        AvailabilityStatus availabilityStatus = AvailabilityStatus.valueOf(status);
+        return availabilityRepository.findByStatus(availabilityStatus);
     }
 }

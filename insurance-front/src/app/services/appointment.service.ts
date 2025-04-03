@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,11 @@ private baseUrl = 'http://localhost:8081/appointments';
 
 constructor(private http: HttpClient) {}
 createAppointment(appointment: any): Observable<any> {
-  return this.http.post<any>(`${this.baseUrl}/create`, appointment);
+  return this.http.post<any>(`${this.baseUrl}/create`, appointment).pipe(
+    tap(response => {
+      console.log('Response from backend:', response);
+    })
+  );
 }
 
 getAppointments(): Observable<any[]> {
@@ -24,4 +28,8 @@ updateAppointment(appointment: any): Observable<any> {
 deleteAppointment(id: number): Observable<void> {
   return this.http.delete<void>(`${this.baseUrl}/${id}`);
 }
+updateAppointmentStatus(id: number, newStatus: string): Observable<any> {
+  return this.http.put(`${this.baseUrl}/${id}/status`, newStatus, { responseType: 'text' });
+}
+
 }

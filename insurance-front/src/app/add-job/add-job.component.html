@@ -34,12 +34,12 @@
     </div>
 
     <div class="form-group">
-      <label for="contractType">Type de contrat</label>
+      <mat-label for="contractType">Type de contrat</mat-label>
       <select id="contractType" formControlName="contractType" class="form-control">
         <option value="">Choisir un type de contrat</option>
         <option value="CDI">CDI</option>
         <option value="CDD">CDD</option>
-        <option value="Freelance">Freelance</option>
+        <option value="Stage">Stage</option>
       </select>
       <div *ngIf="jobForm.get('contractType')?.invalid && jobForm.get('contractType')?.touched" class="error">
         Le type de contrat est obligatoire.

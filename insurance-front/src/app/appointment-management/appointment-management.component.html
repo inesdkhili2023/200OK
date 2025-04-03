@@ -7,10 +7,85 @@
     </ul>
   </div>
 </section>
+
 <div class="appointments-container">
-  <div class="card-header bg-primary text-white">
+<!--<div class="card-header bg-primary text-white">
     <h2 class="mb-0">Gestion des rendez-vous</h2>
+  </div>-->
+
+  <!-- Statistiques -->
+<div class="card mb-4">
+  <div class="card-header bg-light">
+    <!-- <h4 class="mb-0">Statistiques des candidatures</h4>-->
   </div>
+  <div class="card-body">
+    <div class="row">
+      <!-- Total Rendez-vous -->
+      <div class="col-md-3">
+        <div class="stat-item">
+          <mat-icon class="stat-icon" style="color: #007bff;">group</mat-icon>
+          <h5>Total Rendez-vous</h5>
+          <p>{{ totalAppointments }}</p>
+        </div>
+      </div>
+
+      <!-- Annulé -->
+      <div class="col-md-3">
+        <div class="stat-item annule">
+          <mat-icon class="stat-icon" style="color: #dc3545;">cancel</mat-icon>
+          <h5>Annulé</h5>
+          <p>{{ statusCounts['CANCELED'] }}</p>
+        </div>
+      </div>
+
+      <!-- Terminé -->
+      <div class="col-md-3">
+        <div class="stat-item termine">
+          <mat-icon class="stat-icon" style="color: #28a745;">check_circle</mat-icon>
+          <h5>Terminé</h5>
+          <p>{{ statusCounts['COMPLETED'] }}</p>
+        </div>
+      </div>
+
+      <!-- Confirmé -->
+      <div class="col-md-3">
+        <div class="stat-item confirme">
+          <mat-icon class="stat-icon" style="color: #f39c12;">hourglass_empty</mat-icon>
+          <h5>Confirmé</h5>
+          <p>{{ statusCounts['CONFIRMED'] }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Filter Section -->
+<div class="filters-container mb-4">
+  <div class="row">
+    <!-- Search Filter -->
+    <div class="col-md-6">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Rechercher un rendez-vous</mat-label>
+        <input matInput (keyup)="applySearchFilter($event)" placeholder="Rechercher par client, date...">
+      </mat-form-field>
+    </div>
+
+    <!-- Status Filter -->
+    <div class="col-md-6">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Filtrer par statut</mat-label>
+        <mat-select [(value)]="selectedStatus" (selectionChange)="applyStatusFilter()">
+          <mat-option value="">Tous</mat-option> <!-- This is the "Tous" option -->
+          <mat-option *ngFor="let status of statusList" [value]="status.value">
+            {{ status.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+
+
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
     <!-- Client Name Column -->
@@ -22,29 +97,51 @@
     <!-- Date Column -->
     <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
-      <td mat-cell *matCellDef="let element">{{ element.date }}</td>
+      <td mat-cell *matCellDef="let element">{{ formatDate(element.createdAt) }}</td>
     </ng-container>
 
     <!-- Time Column -->
     <ng-container matColumnDef="time">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Time</th>
-      <td mat-cell *matCellDef="let element">{{ element.time }}</td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Heure</th>
+      <td mat-cell *matCellDef="let element">{{ element.selectedSlot }}</td>
     </ng-container>
 
-    <!-- Status Column -->
-    <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-      <td mat-cell *matCellDef="let element">{{ element.status }}</td>
-    </ng-container>
+    <!-- Time Remaining Column -->
+  <ng-container matColumnDef="remainingTime">
+    <th mat-header-cell *matHeaderCellDef>Temps restant</th>
+    <td mat-cell *matCellDef="let element">{{ getRemainingTime(element.createdAt) }}</td>
+  </ng-container>
+
+    <!-- Statut -->
+<ng-container matColumnDef="status">
+  <th mat-header-cell *matHeaderCellDef> Statut </th>
+  <td mat-cell *matCellDef="let appointment">
+    <!-- Badge cliquable qui ouvre le menu -->
+    <span [matMenuTriggerFor]="menu" class="status-badge" [ngClass]="getStatusClass(appointment.status)">
+      {{ getStatusLabel(appointment.status) }}
+    </span>
+
+    <!-- Menu déroulant contenant les statuts -->
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item *ngFor="let status of statusList" (click)="updateAppointmentStatus(appointment.id, status.value)">
+        <span class="status-badge" [ngClass]="getStatusClass(status.value)">
+          {{ status.label }}
+        </span>
+      </button>
+    </mat-menu>
+  </td>
+</ng-container>
+
+    
 
     <!-- Actions Column -->
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef>Actions</th>
       <td mat-cell *matCellDef="let element">
-        <button mat-icon-button color="primary" >
+        <button mat-icon-button color="primary">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="warn" >
+        <button mat-icon-button color="warn">
           <mat-icon>delete</mat-icon>
         </button>
       </td>
@@ -56,4 +153,3 @@
 
   <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
 </div>
-

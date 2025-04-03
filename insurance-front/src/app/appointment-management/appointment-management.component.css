@@ -1,3 +1,101 @@
 .appointments-container{
-  margin-top: 100px;
+  margin-top: 70px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: -5px;
+}
+.breadcrumb{
+  margin-top: 70px;
+}
+.status-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.card-header{
+  margin-top: -70px;
+  background-color: #344659;
+
+}
+.confirmed p { color: #28a745; } /* Vert pour Confirmé */
+.canceled p { color: #dc3545; } /* Rouge pour Annulé */
+.completed p { color: #f39c12; } /* Orange pour Terminé */
+
+.stat-item {
+  background: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.card-body{
+  margin-left: 20px;
+  margin-right: 20px;
+
+}
+.status-badge {
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  display: inline-block;
+  min-width: 100px;
+  text-align: center;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+}
+
+/* Couleurs des statuts avec texte plus foncé */
+.status-confirmed {
+  background-color: #d4edda; /* Vert clair */
+  color: #155724; /* Vert foncé */
+}
+
+.status-canceled {
+  background-color: #f8d7da; /* Rouge clair */
+  color: #721c24; /* Rouge foncé */
+}
+
+.status-completed {
+  background-color: #d1ecf1; /* Bleu clair */
+  color: #0c5460; /* Bleu foncé */
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+  min-width: 80px;
+}
+
+/* Personnalisation du dropdown */
+.custom-dropdown .mat-option {
+  display: flex;
+  align-items: center;
+}
+
+.custom-dropdown .mat-option span {
+  width: 100%;
+}
+.status-select {
+  width: 140px;
+}
+.filters-container{
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
 }

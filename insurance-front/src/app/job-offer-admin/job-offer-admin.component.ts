@@ -22,7 +22,7 @@ export class JobOfferAdminComponent implements AfterViewInit {
   showForm: boolean = false;
   jobApplications: any[] = [];
   jobOffers: any[] = [];
-  displayedColumns: string[] = ['title', 'description','location', 'contractType', 'deadline', 'action'];
+  displayedColumns: string[] = ['title', 'description','requirements','location', 'contractType', 'deadline', 'action'];
   dataSource = new MatTableDataSource(this.jobOffers);
  
 

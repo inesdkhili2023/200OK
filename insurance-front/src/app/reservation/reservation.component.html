@@ -1,13 +1,21 @@
+<body>
+  <app-weather></app-weather>
 <div class="container">
   <h2>Planning des Rendez-vous</h2>
   <full-calendar [options]="calendarOptions"></full-calendar>
 
   <div *ngIf="selectedDate">
     <h3>Heures disponibles pour le {{ selectedDate }}</h3>
-    <button *ngFor="let time of availableTimes" class="time" (click)="onTimeSelect(time)">
-      {{ time }}
+    <button *ngFor="let time of availableTimes; let i = index"
+            class="time-btn" [disabled]="isSlotDisabled(time)"
+            [ngClass]="{'selected-time': isSlotSelected(i)}"
+            (click)="onTimeSelect(time)">      {{ time }}
     </button>
   </div>
 
-  <button class="confirm-btn" (click)="confirmReservation()">Confirmer la réservation</button>
+  <button class="confirm-btn" (click)="confirmReservation()" [disabled]="!selectedDate || !selectedTime">Confirmer la réservation</button>
+  <button (click)="signIn()">Se connecter avec Google</button>
+
 </div>
+
+</body>

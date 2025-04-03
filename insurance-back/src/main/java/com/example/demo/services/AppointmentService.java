@@ -10,10 +10,14 @@ import java.util.Optional;
 
 @Service
 public class AppointmentService implements IAppointmentService {
+
     @Autowired
     private AppointmentRepo appointmentRepository;
 
+
+
     public Appointment createAppointment(Appointment appointment) {
+
         return appointmentRepository.save(appointment);
     }
 

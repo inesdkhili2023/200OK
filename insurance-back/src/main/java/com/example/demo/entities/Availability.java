@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 @Table(name = "availability")
@@ -82,7 +83,6 @@ public class Availability implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private AvailabilityStatus status = AvailabilityStatus.AVAILABLE;
-
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt;
 
@@ -90,7 +90,8 @@ public class Availability implements Serializable {
     public void setLastUpdate() {
         this.updatedAt = LocalDateTime.now();
     }
-
+    @OneToMany(mappedBy = "availability", cascade = CascadeType.ALL)
+    private List<Appointment> appointments;
 
 }
 

@@ -1,0 +1,19 @@
+.status-badge {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.breadcrumb{
+  margin-top: 70px;
+}
+.status-available { background-color: #28a745; color: white; }
+.status-booked { background-color: #f39c12; color: white; }
+.status-cancelled { background-color: #dc3545; color: white; }
+.search-and-status-container {
+  display: flex;
+  justify-content:flex-start;
+  align-items: center;
+  margin-bottom: 15px;
+}

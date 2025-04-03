@@ -22,4 +22,5 @@ public interface AvailabilityRepo extends JpaRepository<Availability, Integer> {
     List<Availability> findByStatus(AvailabilityStatus status);
     List<Availability> findByDate(LocalDateTime date);
 
+
 }

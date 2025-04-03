@@ -6,11 +6,15 @@ import com.example.demo.entities.TextUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.io.IOException;
 import java.util.Map;
 @SpringBootApplication
 @EnableDiscoveryClient
+@Configuration
+@EnableScheduling
 public class Application {
 
 	public static void main(String[] args) {

@@ -17,6 +17,7 @@ import { AvailabilityComponent } from './availability/availability.component';
 import { JobOfferAdminComponent } from './job-offer-admin/job-offer-admin.component';
 import { AppointmentManagementComponent } from './appointment-management/appointment-management.component';
 import { JobAppAdminComponent } from './job-app-admin/job-app-admin.component';
+import { AvailabilityAdminComponent } from './availability-admin/availability-admin.component';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
@@ -37,6 +38,8 @@ const routes: Routes = [
   { path: 'jobManagement', component: JobOfferAdminComponent },
   { path: 'appointmentManagement', component: AppointmentManagementComponent },
   { path: 'jobAppAdmin', component: JobAppAdminComponent },
+  { path: 'DisponibiliteAdmin', component: AvailabilityAdminComponent },
+
 
   { path: '**', redirectTo: 'home' } 
 ];

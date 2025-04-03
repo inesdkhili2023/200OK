@@ -25,6 +25,34 @@
 .btn{
 margin-top: -15px;
 }
+table {
+  width: 100%;
+  table-layout: fixed; /* Fixe la largeur des colonnes */
+  border-collapse: collapse;
+}
+
+th, td {
+  width: auto;
+  text-align: left;
+  padding: 10px;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+th {
+  background-color: #f8f9fa;
+}
+
+.mat-column-title,
+.mat-column-description,
+.mat-column-requirements,
+.mat-column-location,
+.mat-column-contractType,
+.mat-column-deadline,
+.mat-column-action {
+  width: 14%; /* Ajuste en fonction du nombre de colonnes */
+}
+
 
 
 

@@ -52,13 +52,28 @@ public class JobApplicationController {
         JobApplication savedJobApplication = jobApplicationService.saveJobApplication(jobApplication);
         System.out.println("Données reçues : " + jobApplication);
 
-            // 📩 Envoyer l'email de confirmation
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("malekfeki18@gmail.com"); // Remplace par ton email
-            message.setTo(jobApplication.getEmail());
-            message.setSubject("Candidature envoyée");
-            message.setText("Votre candidature a bien été envoyée ! Bonne chance.");
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("malekfeki18@gmail.com"); // Remplace par ton email
+        message.setTo(jobApplication.getEmail());
+        message.setSubject("Confirmation de votre candidature - " + jobApplication.getJobOffer().getTitle());
+
+        String emailContent = String.format(
+                "Cher(e) %s %s,\n\n"
+                        + "Nous vous remercions pour votre candidature au poste de référence %s. "
+                        + "Nous avons bien reçu votre dossier et notre équipe de recrutement l'examinera avec attention.\n\n"
+                        + "Si votre profil correspond à nos attentes, nous vous contacterons prochainement pour la suite du processus.\n\n"
+                        + "En attendant, n’hésitez pas à consulter notre site pour découvrir nos dernières actualités.\n\n"
+                        + "Bonne chance et à bientôt !\n\n"
+                        + "Cordialement,\n"
+                        + "L'équipe RH d'assurances Maghrebia",
+                jobApplication.getFirstName(),
+                jobApplication.getLastName(),
+                jobApplication.getJobOffer().getJobOfferId()
+        );
+
+        message.setText(emailContent);
         mailSender.send(message);
+
 
         return new ResponseEntity<>(savedJobApplication, HttpStatus.CREATED);
     }
@@ -260,8 +275,38 @@ public class JobApplicationController {
     }
     @PutMapping("{id}/status")
     public ResponseEntity<JobApplication> updateApplicationStatus(@PathVariable int id, @RequestParam JobApplicationStatus status) {
-        return ResponseEntity.ok(jobApplicationService.updateApplicationStatus(id, status));
+
+        JobApplication updatedApplication = jobApplicationService.updateApplicationStatus(id, status);
+
+        // Envoi de l'email au candidat
+        sendStatusUpdateEmail(updatedApplication);
+
+        return ResponseEntity.ok(updatedApplication);
+
     }
+    private void sendStatusUpdateEmail(JobApplication jobApplication) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("malekfeki18@gmail.com");
+        message.setTo(jobApplication.getEmail());
+        message.setSubject("Mise à jour de votre candidature");
+
+        String emailContent = String.format(
+                "Cher(e) %s %s,\n\n" +
+                        "Nous vous informons que le statut de votre candidature au poste de référence %s a été mis à jour.\n\n" +
+                        "Statut actuel : %s\n\n" +
+                        "Si vous avez des questions, n'hésitez pas à nous contacter.\n\n" +
+                        "Cordialement,\n" +
+                        "L'équipe RH d'assurances Maghrebia",
+                jobApplication.getFirstName(),
+                jobApplication.getLastName(),
+                jobApplication.getJobOffer().getJobOfferId(),
+                jobApplication.getApplicationStatus()
+        );
+
+        message.setText(emailContent);
+        mailSender.send(message);
+    }
+
     @PostMapping(value = "fileUpload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> handleFileUpload(
             @RequestParam("cv") MultipartFile cvFile,

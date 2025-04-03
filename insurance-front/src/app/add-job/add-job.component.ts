@@ -78,4 +78,5 @@ export class AddJobComponent {
   onCancel(): void {
     this.dialogRef.close(); // Ferme le dialogue
   }
+  
 }

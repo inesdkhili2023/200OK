@@ -6,12 +6,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AvailabilityService {
-  private apiUrl = 'http://localhost:8081/availabilities'; // Replace with your actual API endpoint
+  private apiUrl = 'http://localhost:8081/availabilities'; 
 
   constructor(private http: HttpClient) {}
 
   getAvailabilities(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/getAll`);
+  }
+  getAvailabilitiesByStatus(status: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/availabilities/filter?status=${status}`);
   }
 
   getAvailabilitiesByDate(date: string): Observable<any[]> {
@@ -25,6 +28,10 @@ export class AvailabilityService {
   deleteAppointment(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+  updateStatus(id: number, status: string): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}/status?status=${status}`, {});
+  }
+  
 
  
 }
