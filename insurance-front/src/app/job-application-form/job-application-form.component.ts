@@ -5,7 +5,11 @@ import { Location } from '@angular/common';
 import { JobApplicationService } from '../services/job-application.service';
 import { JobOfferService } from '../services/job-offer.service';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import { VoiceRecognitionService } from '../services/voice-recognition.service';
+interface IWindow extends Window {
+  webkitSpeechRecognition: any;
+}
 @Component({
   selector: 'app-job-application-form',
   templateUrl: './job-application-form.component.html',
@@ -14,7 +18,7 @@ import { map } from 'rxjs';
 export class JobApplicationFormComponent  implements OnInit  {
   @Input() selectedJob: any;
   @Output() closeFormEvent = new EventEmitter<void>(); 
-
+  message: string = '';
   jobApplicationForm!: FormGroup;
   jobReference: string | null = null;
   selectedJobId: number | null = null;
@@ -22,18 +26,29 @@ export class JobApplicationFormComponent  implements OnInit  {
   siteKey: string = '6Le5S-MqAAAAALSbrYTUmV1IgrBQPBExN4zJpBVq';
   submitted = false; // Variable pour suivre l'état de soumission
 
-
+  isListening = false;
+  recognition: any;
+  transcript: string = '';
+  buttonText!: Observable<string>;
 
     constructor(private fb: FormBuilder,
-      private jobApplicationService: JobApplicationService, private jobOfferService:JobOfferService,
+      private jobApplicationService: JobApplicationService, private jobOfferService:JobOfferService,private voiceRecognitionService: VoiceRecognitionService,
       private route: ActivatedRoute, private location: Location,private router: Router,private http:HttpClient) {
       this.router.events.subscribe((event) => {
         if (event instanceof NavigationEnd) {
           window.scrollTo(0, 0); // Remonte en haut de la page
         }
       });
+      
     }
     ngOnInit(): void {
+      this.voiceRecognitionService.init();
+      this.voiceRecognitionService.transcript$.subscribe(transcript => {
+        if (transcript) {
+          const current = this.jobApplicationForm.get('commentaire')?.value || '';
+          this.jobApplicationForm.get('commentaire')?.setValue(current + ' ' + transcript);
+        }
+      });
       const storedJob = localStorage.getItem('selectedJob');
   if (storedJob) {
     this.selectedJob = JSON.parse(storedJob);
@@ -76,6 +91,18 @@ export class JobApplicationFormComponent  implements OnInit  {
       {
         validators: this.emailMatchValidator
     });
+
+    // Mise à jour du champ commentaire en live
+    this.voiceRecognitionService.recognition.onresult = (event: any) => {
+      const transcript = Array.from(event.results)
+        .map((result: any) => result[0])
+        .map((result: any) => result.transcript)
+        .join('');
+
+      const current = this.jobApplicationForm.get('commentaire')?.value || '';
+      this.jobApplicationForm.get('commentaire')?.setValue(current + ' ' + transcript);
+    };
+
      // Mise à jour du formulaire après récupération de l’offre
   if (this.jobOfferId) {
     this.jobApplicationForm.patchValue({ jobOfferId: this.jobOfferId });
@@ -93,6 +120,7 @@ export class JobApplicationFormComponent  implements OnInit  {
         console.error('Erreur lors de la récupération du job:', error);
       }
     );
+    
   }
     this.jobReference = jobOfferId;
     console.log('Postuler pour l’offre :', this.jobReference);
@@ -130,7 +158,13 @@ export class JobApplicationFormComponent  implements OnInit  {
 
       };
    
+
+      
     }
+
+    
+   
+
     handleCaptcha(token: string | null) {
       console.log("reCAPTCHA Token reçu :", token);
       if (token) {
@@ -280,5 +314,37 @@ uploadFiles(cvFile: File, lettreMotivationFile: File) {
   closeForm(): void {
     this.location.back(); 
   }
+
+ 
+
+  stopRecording() {
+    this.voiceRecognitionService.stop();
+    this.message += this.voiceRecognitionService.text;
+    this.voiceRecognitionService.text = ''; // Clear the recognized text after appending to message
+  }
+
+
+
+  startListening(): void {
+    this.isListening = true;
+    this.voiceRecognitionService.start();
   
+  }
+  
+
+  stopListening() {
+    this.isListening = false;
+    this.voiceRecognitionService.stop();
+  }
+
+  get transcribedText(): string {
+    return this.voiceRecognitionService.text;
+  }
+  submitMessage(event: KeyboardEvent) {
+    event.preventDefault();
+    this.stopListening();
 }
+}
+  
+
+

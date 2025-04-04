@@ -222,9 +222,21 @@
   </div>
 
   <h3 class="mb-3">Commentaires</h3>
-  <textarea formControlName="commentaire" class="form-control" placeholder="Votre commentaire" rows="3">
+  <textarea formControlName="commentaire" class="form-control" placeholder="Votre commentaire" rows="3" >
+    
   </textarea>
-
+  
+  <div class="d-flex align-items-center mt-2">
+    <button type="button" class="btn btn-outline-primary" (click)="startListening()">
+      🎤 Dicter un commentaire
+    </button>
+    <span *ngIf="isListening" class="ml-2 text-info">Écoute en cours...</span>
+  </div>
+  <button type="button" class="btn btn-outline-danger ml-2" (click)="stopListening()">
+    ⏹️ Stop
+  </button>
+ 
+  
   <h3 class="mb-3">Fichiers</h3>
   <div class="mb-3">
     <label>Ajoutez votre lettre de motivation</label>
