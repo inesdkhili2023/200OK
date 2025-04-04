@@ -102,6 +102,26 @@ public class DataLoader implements CommandLineRunner {
             "acceptConditions"
             ));
 
+            // ✅ Ajout de Capitalisation avec les champs sous forme de liste
+            TypeAssurance capitalisation = new TypeAssurance();
+            ecolia.setNom("Capitalisation");
+            ecolia.setIconUrl("assets/icons/capitalisation.png");
+            ecolia.setChampsDynamiques(Arrays.asList(
+
+
+                    "typeAssuranceId",
+
+                    "dateEffet",
+                    "duree",
+                    "capitalInitial",
+                    "versementRegulier",
+                    "frequenceVersement",
+                    "primeVariable",
+                    "montantAjout",
+                    "commentaire"
+
+            ));
+
 
             typeAssuranceRepository.saveAll(Arrays.asList(auto,ecolia,voyage,sante,accident));
 
