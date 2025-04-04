@@ -64,6 +64,10 @@ public class JobApplicationService implements IJobApplicationService {
     public Optional<JobApplication> getJobApplicationById(int jobApplicationId) {
         return jobApplicationRepo.findById(jobApplicationId);
     }
+//    @Override
+//    public List<JobApplication> getJobApplicationsByUserId(int userId) {
+//        return jobApplicationRepo.findByUserId(userId);
+//    }
 
     @Override
     public void deleteJobApplication(int jobApplicationId) {

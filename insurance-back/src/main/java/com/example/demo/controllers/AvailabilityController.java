@@ -105,6 +105,16 @@ public class AvailabilityController {
         }
     }
 
+    // Méthode pour récupérer les disponibilités d'un utilisateur spécifique
+//    @GetMapping("user/{userId}")
+//    public ResponseEntity<List<Availability>> getAvailabilitiesByUserId(@PathVariable int userId) {
+//        List<Availability> availabilities = availabilityService.getAvailabilitiesByUserId(userId);
+//        if (availabilities.isEmpty()) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+//        }
+//        return ResponseEntity.ok(availabilities);
+//    }
+
 
 
 }

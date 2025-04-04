@@ -16,6 +16,7 @@ public interface IJobApplicationService {
     List<JobApplication> getApplicationsByJobOfferId(int jobOfferId);
     JobApplication updateApplicationStatus(int id, JobApplicationStatus status);
     String storeFile(MultipartFile file); // Ajout de la méthode pour stocker les fichiers
+    //List<JobApplication> getJobApplicationsByUserId(int userId);
 
     String saveFile(MultipartFile file) throws IOException;
 }

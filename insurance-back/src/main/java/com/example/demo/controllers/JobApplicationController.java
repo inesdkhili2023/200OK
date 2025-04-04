@@ -261,6 +261,12 @@ public class JobApplicationController {
         Optional<JobApplication> jobApplication = jobApplicationService.getJobApplicationById(jobApplicationId);
         return jobApplication.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+//    @GetMapping("user/{userId}")
+//    public ResponseEntity<List<JobApplication>> getJobApplicationsByUserId(@PathVariable int userId) {
+//        List<JobApplication> applications = jobApplicationService.getJobApplicationsByUserId(userId);
+//        return ResponseEntity.ok(applications);
+//    }
+
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteJobApplication(@PathVariable("id") int jobApplicationId) {

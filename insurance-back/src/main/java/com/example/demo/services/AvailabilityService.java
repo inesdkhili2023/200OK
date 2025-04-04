@@ -78,4 +78,9 @@ public class AvailabilityService implements IAvailabilityService {
         AvailabilityStatus availabilityStatus = AvailabilityStatus.valueOf(status);
         return availabilityRepository.findByStatus(availabilityStatus);
     }
+
+    // Méthode pour récupérer les disponibilités d'un utilisateur spécifique
+//    public List<Availability> getAvailabilitiesByUserId(int userId) {
+//        return availabilityRepository.findByUserId(userId);  // Assurez-vous que cette méthode est implémentée dans le repository
+//    }
 }

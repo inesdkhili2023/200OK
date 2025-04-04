@@ -1,5 +1,5 @@
 .container {
-    max-width: 900px;
+    max-width: 1500px;
     margin: 20px auto;
     padding: 20px;
     padding-top: 30px;
@@ -7,13 +7,52 @@
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    margin-top: 50px; /* Décale tout le contenu sous le navbar */
+    margin-top: 20px; /* Décale tout le contenu sous le navbar */
+}
+/* Breadcrumb */
+.breadcrumb {
+  background-color: #f8f9fa;
+  padding: 10px;
+  text-align: center;
+  margin-top: -5px;
 }
 
+.breadcrumb ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 16px;
+  color: #666;
+}
+
+.breadcrumb li {
+  display: inline;
+  margin-right: 5px;
+  color: #ff8c00;
+}
+.schedule-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px; /* Space between elements */
+}
+
+/* Weather Widget Styling */
+.weather-widget {
+  flex: 1;
+  max-width: 250px; /* Adjust width as needed */
+}
+
+/* Calendar Section Styling */
+.calendar-section {
+  flex: 2;
+  width: 100%;
+}
 
 h2 {
     color: #333;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
+    
 }
 
 .time {

@@ -15,6 +15,7 @@ import java.util.Optional;
 @Repository
 public interface AvailabilityRepo extends JpaRepository<Availability, Integer> {
     //List<Availability> findByAgent(User agent);
+    //List<Availability> findByUserId(int userId);
 
     List<Availability> findByStartTimeBetween(LocalDateTime start, LocalDateTime end);
 

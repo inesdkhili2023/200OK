@@ -24,8 +24,10 @@
       <div class="col-md-3">
         <div class="stat-item">
           <mat-icon class="stat-icon" style="color: #007bff;">group</mat-icon>
-          <h5>Total Rendez-vous</h5>
-          <p>{{ totalAppointments }}</p>
+          <h5 style=" font-size: 16px;
+          font-weight: bold;">Total Rendez-vous</h5>
+          <p style="color: #007bff;font-size: 20px;
+  font-weight: bold;">{{ totalAppointments }}</p>
         </div>
       </div>
 
@@ -33,8 +35,10 @@
       <div class="col-md-3">
         <div class="stat-item annule">
           <mat-icon class="stat-icon" style="color: #dc3545;">cancel</mat-icon>
-          <h5>Annulé</h5>
-          <p>{{ statusCounts['CANCELED'] }}</p>
+          <h5 style=" font-size: 16px;
+          font-weight: bold;">Annulé</h5>
+          <p style="color: #dc3545;font-size: 20px;
+  font-weight: bold;">{{ statusCounts['CANCELED'] }}</p>
         </div>
       </div>
 
@@ -42,8 +46,10 @@
       <div class="col-md-3">
         <div class="stat-item termine">
           <mat-icon class="stat-icon" style="color: #28a745;">check_circle</mat-icon>
-          <h5>Terminé</h5>
-          <p>{{ statusCounts['COMPLETED'] }}</p>
+          <h5 style=" font-size: 16px;
+          font-weight: bold;">Terminé</h5>
+          <p style="color: #28a745;font-size: 20px;
+  font-weight: bold;">{{ statusCounts['COMPLETED'] }}</p>
         </div>
       </div>
 
@@ -51,8 +57,10 @@
       <div class="col-md-3">
         <div class="stat-item confirme">
           <mat-icon class="stat-icon" style="color: #f39c12;">hourglass_empty</mat-icon>
-          <h5>Confirmé</h5>
-          <p>{{ statusCounts['CONFIRMED'] }}</p>
+          <h5 style=" font-size: 16px;
+          font-weight: bold;">Confirmé</h5>
+          <p style="color: #f39c12;font-size: 20px;
+  font-weight: bold;">{{ statusCounts['CONFIRMED'] }}</p>
         </div>
       </div>
     </div>
@@ -64,7 +72,7 @@
   <div class="row">
     <!-- Search Filter -->
     <div class="col-md-6">
-      <mat-form-field appearance="outline" class="full-width">
+      <mat-form-field appearance="outline" class="full-width" style="margin-left: 20px;">
         <mat-label>Rechercher un rendez-vous</mat-label>
         <input matInput (keyup)="applySearchFilter($event)" placeholder="Rechercher par client, date...">
       </mat-form-field>
@@ -72,7 +80,7 @@
 
     <!-- Status Filter -->
     <div class="col-md-6">
-      <mat-form-field appearance="outline" class="full-width">
+      <mat-form-field appearance="outline" class="full-width" style="margin-left: -10px;">
         <mat-label>Filtrer par statut</mat-label>
         <mat-select [(value)]="selectedStatus" (selectionChange)="applyStatusFilter()">
           <mat-option value="">Tous</mat-option> <!-- This is the "Tous" option -->
