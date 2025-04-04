@@ -39,7 +39,18 @@
   margin-top: -5px;
 }
 
-
+.google-btn{
+  margin-left: 5px;
+  margin-top: 20px;
+    padding: 12px 20px;
+    font-size: 16px;
+    background: orange;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
 
 .breadcrumb li {
   display: inline;
@@ -97,7 +108,7 @@ h2 {
 }
 
 .confirm-btn:hover {
-    background: #0056b3;
+    background: #28a745;
 }
 .time-slots {
     display: flex;

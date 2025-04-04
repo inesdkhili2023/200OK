@@ -52,6 +52,7 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { format } from 'date-fns';
 import { AvailabilityAdminComponent } from './availability-admin/availability-admin.component';
 import { WeatherComponent } from './weather/weather.component';
+import { AvailabilityEditComponent } from './availability-edit/availability-edit.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { WeatherComponent } from './weather/weather.component';
     JobOfferEditComponent,
     JobAppAdminComponent,
     AvailabilityAdminComponent,
-    WeatherComponent
+    WeatherComponent,
+    AvailabilityEditComponent
   ],
   imports: [
     BrowserModule,

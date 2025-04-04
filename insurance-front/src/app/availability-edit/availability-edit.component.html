@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>Modifier Disponibilité</h2>
+<mat-dialog-content>
+  <form #editForm="ngForm">
+    
+    <!-- 📅 Date -->
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Date</mat-label>
+      <input matInput [matDatepicker]="picker" [(ngModel)]="data.date" name="date" required>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <!-- ⏰ Heure de début -->
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Heure de début</mat-label>
+      <input matInput type="time" [(ngModel)]="data.startTime" name="startTime" required>
+    </mat-form-field>
+
+    <!-- ⏰ Heure de fin -->
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Heure de fin</mat-label>
+      <input matInput type="time" [(ngModel)]="data.endTime" name="endTime" required>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Annuler</button>
+  <button mat-raised-button color="primary" (click)="updateAvailability(data)">Enregistrer</button>
+</mat-dialog-actions>

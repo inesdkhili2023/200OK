@@ -8,8 +8,8 @@
   </div>
 </section>
 <div  class="availability-form">
-  <h3>Définir vos disponibilités</h3>
-  <form (ngSubmit)="submitAvailability()">
+  <h3><i class="fa fa-clock-o" style="margin-right: 6px;"></i>Définir vos disponibilités</h3>
+  <form #form="ngForm" (ngSubmit)="submitAvailability()">
     <div>
       <label for="date">Date :</label>
       <input type="date" id="date" [(ngModel)]="availability.date" name="date" required>
@@ -22,7 +22,11 @@
       <label for="end-time">Heure de fin :</label>
       <input type="time" id="end-time" [(ngModel)]="availability.endTime" name="endTime" required>
     </div>
-    <button type="submit" class="btn-success">Ajouter disponibilité</button>
+    <!-- Afficher un message d'alerte si le formulaire est invalide -->
+    <div *ngIf="form.invalid" style="color: red; margin-top: 10px;margin-bottom: 10px;">
+      Veuillez remplir tous les champs pour ajouter votre disponibilité
+    </div>
+    <button type="submit" class="btn-success"[disabled]="form.invalid">Ajouter disponibilité</button>
   </form>
 </div>
 

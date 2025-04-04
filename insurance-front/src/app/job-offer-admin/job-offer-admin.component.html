@@ -17,9 +17,9 @@
       <div class="search-container">
         <mat-form-field appearance="outline" class="search ">
           <mat-label>Rechercher une offre</mat-label>
-          <input matInput (keyup)="applyFilter($event)" placeholder="Filtrer par titre, localisation...">
+          <input matInput (keyup)="applyFilter($event)" placeholder="Rechercher par titre, localisation...">
         </mat-form-field>
-      <button mat-raised-button color="primary" class="btn" (click)="openAddJobOfferDialog()">Ajouter une offre d'emploi</button>
+      <button mat-raised-button color="primary" class="btn" (click)="openAddJobOfferDialog()"><i class="fa fa-plus"></i>Ajouter une offre d'emploi</button>
 </div>
         <div class="leads-report-table">
             <div class="table-responsive">

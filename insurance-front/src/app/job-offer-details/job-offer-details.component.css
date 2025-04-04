@@ -8,8 +8,18 @@
   border-radius: 5px;
   cursor: pointer;
   transition: 0.3s;
+  align-content: center
 }
 
 .annuler-btn:hover {
   background: rgb(167, 7, 7);
+}
+p{
+font-size: medium;
+gap: 20px;
+padding: auto;
+}
+h2{
+  margin-bottom: 20px;
+  font-size: larger;
 }

@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { AvailabilityService } from '../services/availability.service';
+import { AvailabilityEditComponent } from '../availability-edit/availability-edit.component';
 
 @Component({
   selector: 'app-availability-admin',
@@ -51,6 +52,16 @@ export class AvailabilityAdminComponent implements OnInit {
 
   openEditAvailabilityDialog(availability: any): void {
     // Open a dialog to edit an availability
+    const dialogRef = this.dialog.open(AvailabilityEditComponent, {
+      width: '400px',
+      data: { ...availability } // clone pour ne pas modifier directement
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.updateAvailability(result); // appel d’un service pour update
+      }
+    });
   }
 
   deleteAvailability(id: number): void {
@@ -101,5 +112,9 @@ export class AvailabilityAdminComponent implements OnInit {
     console.log('Selected row:', row);
     this.selectedRowIndex = row.id;
   }
-  
+  updateAvailability(updated: any) {
+    this.availabilityService.updateAvailability(updated).subscribe(() => {
+      this.loadAvailabilities(); // refresh
+    });
+  }
 }

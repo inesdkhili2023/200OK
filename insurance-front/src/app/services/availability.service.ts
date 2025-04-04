@@ -31,7 +31,9 @@ export class AvailabilityService {
   updateStatus(id: number, status: string): Observable<any> {
     return this.http.put(`${this.apiUrl}/${id}/status?status=${status}`, {});
   }
-  
+  updateAvailability(availability: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${availability.id}`, availability);
+  }
 
  
 }

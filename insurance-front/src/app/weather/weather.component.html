@@ -5,7 +5,7 @@
 
 <div *ngIf="weather">
   
-  <h3>Météo à {{ weather.name }}</h3>
+  <h3><i class="fa fa-sun-o" style="margin-right: 6px;"></i>Météo à {{ weather.name }}</h3>
   <div class="weather-info">
   <p>Température : {{ weather.main.temp }}°C</p>
   <p>Condition : {{ weather.weather[0].description }}</p>
