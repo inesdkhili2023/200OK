@@ -36,4 +36,10 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> 
             "ORDER BY c.timestamp DESC LIMIT :limit",
             nativeQuery = true)
     List<ChatMessage> findRecentMessagesForUser(@Param("userId") Integer userId, @Param("limit") int limit);
+
+    // Find all messages for an agent (as sender or receiver)
+    @Query("SELECT c FROM ChatMessage c WHERE " +
+            "c.senderId = :agentId OR c.receiverId = :agentId " +
+            "ORDER BY c.timestamp ASC")
+    List<ChatMessage> findMessagesByAgentId(@Param("agentId") Integer agentId);
 }

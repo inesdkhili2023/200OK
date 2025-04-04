@@ -49,7 +49,8 @@ import { AdminExportComponent } from './pages/admin-export/admin-export.componen
     BrowserModule,ChatComponent,
     AppRoutingModule,
     FormsModule,
-    CommonModule, 
+    CommonModule,     ChatComponent,
+
     HttpClientModule ,
     ReactiveFormsModule,
     NgxPaginationModule  

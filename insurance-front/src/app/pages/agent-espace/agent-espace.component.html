@@ -2,37 +2,36 @@
 
 <!-- Login Section (visible when not logged in) -->
 <div class="container mt-4" *ngIf="!isLoggedIn">
-    <h2>Agent Towing Login</h2>
-    <form (ngSubmit)="login()" style="max-width: 400px;">
-      <div class="form-group mb-3">
-        <label for="agentName">Name:</label>
-        <input type="text" class="form-control" id="agentName" [(ngModel)]="agentName" name="agentName" required />
-      </div>
-      <div class="form-group mb-3">
-        <label for="vehicleType">Car Type:</label>
-        <input type="text" class="form-control" id="vehicleType" [(ngModel)]="vehicleType" name="vehicleType" required />
-      </div>
-      <button type="submit" class="btn btn-primary">Login</button>
-    </form>
-  </div>
-  
-  <!-- Main Content (visible when logged in) -->
-  <div class="container mt-4" *ngIf="isLoggedIn">
-    <div class="d-flex justify-content-between align-items-center">
-      <div>
-        <h2>Welcome, {{ authService.agent?.name }}</h2>
-        <p>Your car type: <strong>{{ authService.agent?.vehicleType }}</strong></p>
-      </div>
-      <button class="btn btn-secondary" (click)="logout()">Logout</button>
+  <h2>Agent Towing Login</h2>
+  <form (ngSubmit)="login()" style="max-width: 400px;">
+    <div class="form-group mb-3">
+      <label for="agentName">Name:</label>
+      <input type="text" class="form-control" id="agentName" [(ngModel)]="agentName" name="agentName" required />
     </div>
-  
-    <!-- Map Section -->
-    <div id="agentMap" style="height: 400px; border: 1px solid #ccc; margin-bottom: 20px;"></div>
-  
-    <!-- Chat Section -->
-    <div class="chat-section mt-3">
-      <h3>Chat</h3>
-      <app-chat></app-chat>
+    <div class="form-group mb-3">
+      <label for="vehicleType">Car Type:</label>
+      <input type="text" class="form-control" id="vehicleType" [(ngModel)]="vehicleType" name="vehicleType" required />
     </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+  </form>
+</div>
+
+<!-- Main Content (visible when logged in) -->
+<div class="container mt-4" *ngIf="isLoggedIn">
+  <div class="d-flex justify-content-between align-items-center">
+    <div>
+      <h2>Welcome, {{ authService.agent?.name }}</h2>
+      <p>Your car type: <strong>{{ authService.agent?.vehicleType }}</strong></p>
+    </div>
+    <button class="btn btn-secondary" (click)="logout()">Logout</button>
   </div>
-  
+
+  <!-- Map Section -->
+  <div id="agentMap" style="height: 400px; border: 1px solid #ccc; margin-bottom: 20px;"></div>
+
+  <!-- Chat Section -->
+  <div class="chat-section mt-3">
+    <h3>Chat</h3>
+    <app-chat></app-chat>
+  </div>
+</div>

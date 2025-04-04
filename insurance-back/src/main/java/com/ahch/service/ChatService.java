@@ -39,6 +39,11 @@ public class ChatService {
         return chatMessageRepository.findConversationBetweenUsers(user1Id, user2Id);
     }
 
+    public List<ChatMessage> getMessagesForAgent(Integer agentId) {
+        // Get messages where the agent is either sender or receiver
+        return chatMessageRepository.findMessagesByAgentId(agentId);
+    }
+
     @Transactional
     public void markConversationAsRead(Integer senderId, Integer receiverId) {
         List<ChatMessage> messages = chatMessageRepository.findConversationBetweenUsers(senderId, receiverId);

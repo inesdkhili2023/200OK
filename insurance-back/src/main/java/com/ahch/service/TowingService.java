@@ -108,6 +108,17 @@ public class TowingService {
         messagingTemplate.convertAndSend("/topic/agent-" + agent.getIdAgent(),
                 "New towing request assigned at " + towing.getLocation() + " (Status: " + towing.getStatus() + ")");
 
+        // Send to the chat topic for all agents to see
+        Map<String, Object> chatNotification = new HashMap<>();
+        chatNotification.put("id", savedTowing.getId());
+        chatNotification.put("location", savedTowing.getLocation());
+        chatNotification.put("status", savedTowing.getStatus());
+        chatNotification.put("agentId", agent.getIdAgent());
+        chatNotification.put("agentName", agent.getName());
+        chatNotification.put("timestamp", LocalDateTime.now().toString());
+
+        messagingTemplate.convertAndSend("/topic/towing", chatNotification);
+
         return savedTowing;
     }
 
@@ -157,6 +168,9 @@ public class TowingService {
 
                     // Async webhook trigger
                     webhookService.triggerWebhooks("towing.status.changed", payload);
+
+                    // Also send to the chat topic for all agents to see
+                    messagingTemplate.convertAndSend("/topic/towing", payload);
                 }
             } catch (Exception e) {
                 logger.error("Error triggering webhooks for status change", e);
@@ -213,6 +227,10 @@ public class TowingService {
 
                 // Async webhook trigger
                 webhookService.triggerWebhooks("towing.rating.updated", payload);
+
+                // Also send to the chat topic for all agents to see
+                payload.put("action", "rating.updated");
+                messagingTemplate.convertAndSend("/topic/towing", payload);
             }
         } catch (Exception e) {
             logger.error("Error triggering webhooks for rating update", e);

@@ -4,18 +4,23 @@ package com.ahch.controller;
 import com.ahch.entity.ChatMessage;
 import com.ahch.service.ChatService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @RestController
-@RequestMapping("/api/chat")
-@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/chat")
+@CrossOrigin(origins = "*", allowCredentials = "false")
 public class ChatController {
 
     private final ChatService chatService;
@@ -25,6 +30,29 @@ public class ChatController {
 
     public ChatController(ChatService chatService) {
         this.chatService = chatService;
+    }
+
+    // WebSocket endpoint for sending chat messages
+    @MessageMapping("/chat.sendMessage")
+    @SendTo("/topic/public")
+    public ChatMessage sendMessageWebSocket(@Payload ChatMessage chatMessage) {
+        return chatService.saveMessage(chatMessage);
+    }
+
+    // WebSocket endpoint for towing request notifications
+    @MessageMapping("/towing.request")
+    @SendTo("/topic/towing")
+    public Map<String, Object> sendTowingRequest(@Payload Map<String, Object> towingRequest) {
+        // You can process/save the towing request here if needed
+        return towingRequest;
+    }
+
+    // WebSocket endpoint for towing status updates
+    @MessageMapping("/towing.update")
+    @SendTo("/topic/towing")
+    public Map<String, Object> updateTowingStatus(@Payload Map<String, Object> towingUpdate) {
+        // You can process the status update here if needed
+        return towingUpdate;
     }
 
     // SSE endpoint: clients subscribe to receive events.
@@ -60,6 +88,13 @@ public class ChatController {
         return ResponseEntity.ok(savedMessage);
     }
 
+    // Get chat history for an agent
+    @GetMapping("/history/{agentId}")
+    public ResponseEntity<List<ChatMessage>> getChatHistory(@PathVariable Integer agentId) {
+        List<ChatMessage> messages = chatService.getMessagesForAgent(agentId);
+        return ResponseEntity.ok(messages);
+    }
+
     // Get conversation between two users
     @GetMapping("/conversation/{userId1}/{userId2}")
     public ResponseEntity<List<ChatMessage>> getConversation(
@@ -93,5 +128,61 @@ public class ChatController {
             @RequestBody Map<String, String> notification) {
         chatService.sendSystemNotification(userId, notification.get("content"));
         return ResponseEntity.ok().build();
+    }
+
+    // Simple connectivity test endpoint
+    @GetMapping("/test")
+    public ResponseEntity<Map<String, Object>> testConnection() {
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+        response.put("message", "Chat API connection successful");
+        response.put("timestamp", LocalDateTime.now().toString());
+        return ResponseEntity.ok(response);
+    }
+
+    // Special endpoint to test CORS with no authentication requirements
+    @GetMapping("/cors-test")
+    @CrossOrigin(origins = "*", allowCredentials = "false")
+    public ResponseEntity<Map<String, Object>> corsTest() {
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+        response.put("message", "CORS test passed");
+        response.put("timestamp", LocalDateTime.now().toString());
+        response.put("cors", "enabled");
+        return ResponseEntity.ok(response);
+    }
+
+    // Test endpoint to send a WebSocket message
+    @GetMapping("/send-test")
+    public ResponseEntity<Map<String, Object>> sendTestMessage() {
+        // Create a test chat message
+        ChatMessage testMessage = new ChatMessage();
+        testMessage.setSenderId(0);
+        testMessage.setSenderName("System Test");
+        testMessage.setContent("This is a test message from the server. If you can see this, WebSocket is working!");
+        testMessage.setTimestamp(LocalDateTime.now());
+        testMessage.setRead(false);
+        testMessage.setType(ChatMessage.MessageType.NOTIFICATION);
+
+        // Save the message
+        ChatMessage savedMessage = chatService.saveMessage(testMessage);
+
+        // Create response
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+        response.put("message", "Test message sent via WebSocket");
+        response.put("sentMessageId", savedMessage.getId());
+
+        // Send via WebSocket
+        try {
+            // Send via WebSocket - bypassing the return value
+            ChatMessage broadcasted = sendMessageWebSocket(savedMessage);
+            response.put("broadcastedMessage", broadcasted);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("status", "error");
+            response.put("message", "Error sending test message: " + e.getMessage());
+            return ResponseEntity.status(500).body(response);
+        }
     }
 }
