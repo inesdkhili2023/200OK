@@ -87,6 +87,8 @@ export class AvailabilityAdminComponent implements OnInit {
   }
   updateAvailabilityStatus(id: number, newStatus: string): void {
     this.availabilityService.updateStatus(id, newStatus).subscribe(() => {
+      console.log(`✅ Disponibilité ${id} mise à jour en :`, newStatus); // 🔥 Vérification
+    this.loadAvailabilities();
       const availability = this.dataSource.data.find(a => a.id === id);
       if (availability) {
         availability.status = newStatus;

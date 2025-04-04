@@ -17,7 +17,7 @@ export class ReservationComponent implements OnInit {
   availableTimes: string[] = [];
   isLoading = false;
   calendarEvents: any[] = []; 
-  availableDates: { id:number,date: string, startTime: string, endTime: string }[] = [];
+  availableDates: { id:number,date: string, startTime: string, endTime: string ,status:string}[] = [];
   selectedSlotIndex: number | null = null;  // Garder l'index du créneau sélectionné
   confirmedSlots: string[] = [];
   confirmedDates: string[] = [];
@@ -45,6 +45,7 @@ export class ReservationComponent implements OnInit {
     } else {
       console.error("gapi n'est pas encore chargé. Vérifiez que Google API est bien inclus dans `index.html`.");
     }
+
   }
 
   loadAvailabilities() {
@@ -55,41 +56,43 @@ export class ReservationComponent implements OnInit {
           id: a.id,  // 🔹 Assurer que l'id est présent
           date: a.date,
           startTime: a.startTime, 
-          endTime: a.endTime
+          endTime: a.endTime,
+          status: a.status
         }));
         console.log(this.availableDates);  // Vérifiez ici les données retournées par l'API
+        this.updateCalendarEvents(this.availableDates);
 
-        // 🔹 Mettre à jour le calendrier
-        this.calendarOptions = {
-          ...this.calendarOptions, 
-          events: this.availableDates.map(a => ({
-            title: '📅 Dispo',
-            date: a.date,
-            color: 'green'
-          }))
-        };
+        
       },
       (error) => {
         console.error('Erreur lors du chargement des disponibilités :', error);
       }
+      
     );
+    
   }
   
 
   onDateClick(info: any) {
     const availability = this.availableDates.find(a => a.date === info.dateStr);
     if (availability) {
+      if (availability.status.toUpperCase() === 'CANCELLED') {
+        alert("❌ Cette disponibilité est annulée. Vous ne pouvez plus réserver.");
+        this.selectedDate = '';
+        this.availableTimes = [];
+        return;
+      }
+  
       this.selectedDate = info.dateStr;
-      // Pass both startTime and endTime to generate time slots
       this.availableTimes = this.generateTimeSlots(availability.startTime, availability.endTime);
       this.loadConfirmedAppointments();
-
     } else {
       this.selectedDate = '';
       this.availableTimes = [];
       alert("Aucune disponibilité pour cette date.");
     }
   }
+  
   
   
 
@@ -213,7 +216,22 @@ async addToGoogleCalendar(appointment: any) {
   }
 }
 
-  
+updateCalendarEvents(data: any[]): void {
+  this.calendarOptions = {
+    ...this.calendarOptions,
+    events: data.map(a => ({
+      title: a.status.toUpperCase() === 'CANCELLED' ? '❌ Annulé' : '📅 Dispo',
+      date: a.date,
+      color: a.status.toUpperCase() === 'CANCELLED' ? 'red' : 'green',
+      allDay: true
+    }))
+  };
+   // 🔹 Forcer la mise à jour avec setTimeout()
+   setTimeout(() => {
+    this.calendarOptions = { ...this.calendarOptions };
+    console.log("✅ Calendrier mis à jour !");
+  }, 100);
+}
   // Fonction pour générer des créneaux horaires entre startTime et endTime
 generateTimeSlots(startTime: string, endTime: string, interval: number = 30): string[] {
   const slots: string[] = [];
