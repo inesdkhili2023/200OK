@@ -95,5 +95,11 @@ export class AvailabilityAdminComponent implements OnInit {
       this.loadAvailabilities();  // If no status is selected, reload all availabilities
     }
   }
+  selectedRowIndex: number | null = null;
+
+  onRowClick(row: any) {
+    console.log('Selected row:', row);
+    this.selectedRowIndex = row.id;
+  }
   
 }

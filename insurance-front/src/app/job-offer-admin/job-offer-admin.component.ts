@@ -144,6 +144,14 @@ openJobOfferEditDialog(job: any): void {
     }
   });
 }
+selectedRowIndex: any | null = null;
+
+onRowClick(row: any) {
+  console.log('Selected row:', row.jobOfferId);
+  this.selectedRowIndex = row.jobOfferId;
+  console.log('selectedRowIndex:', this.selectedRowIndex);
+
+}
 }
 
 

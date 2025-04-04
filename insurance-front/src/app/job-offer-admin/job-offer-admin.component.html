@@ -19,7 +19,7 @@
           <mat-label>Rechercher une offre</mat-label>
           <input matInput (keyup)="applyFilter($event)" placeholder="Filtrer par titre, localisation...">
         </mat-form-field>
-      <button mat-raised-button color="primary" class="btn" (click)="openAddJobOfferDialog()">Ajouter une offre</button>
+      <button mat-raised-button color="primary" class="btn" (click)="openAddJobOfferDialog()">Ajouter une offre d'emploi</button>
 </div>
         <div class="leads-report-table">
             <div class="table-responsive">
@@ -68,7 +68,8 @@
                 </ng-container>
             
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"(click)="onRowClick(row)" 
+                [ngClass]="{ 'selected-row': selectedRowIndex === row?.jobOfferId }"></tr>
             
             </table>
             

@@ -99,3 +99,9 @@
   color: white;
   font-size: 30px;
 }
+.selected-row {
+  background-color: #e3f2fd !important; /* Bleu clair */
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease;
+  transform: scale(1.02); /* Effet léger d'agrandissement */
+  cursor: pointer;
+}

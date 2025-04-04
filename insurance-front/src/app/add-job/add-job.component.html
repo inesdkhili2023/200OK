@@ -34,7 +34,7 @@
     </div>
 
     <div class="form-group">
-      <mat-label for="contractType">Type de contrat</mat-label>
+      <label for="contractType">Type de contrat</label>
       <select id="contractType" formControlName="contractType" class="form-control">
         <option value="">Choisir un type de contrat</option>
         <option value="CDI">CDI</option>
@@ -55,6 +55,6 @@
     </div>
 
     <button type="submit" class="btn btn-primary" [disabled]="jobForm.invalid">Ajouter l'offre</button>
-    <button type="button" class="btn btn-secondary" (click)="onCancel()">Annuler</button>
+    <button type="button" class="close-btn" (click)="onCancel()">Annuler</button>
   </form>
 </div>

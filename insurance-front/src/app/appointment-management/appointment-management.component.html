@@ -94,6 +94,7 @@
 </div>
 
 
+
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
     <!-- Client Name Column -->
@@ -156,7 +157,8 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClick(row)" 
+      [ngClass]="{ 'selected-row': selectedRowIndex === row.id }"></tr>
   </table>
 
   <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>

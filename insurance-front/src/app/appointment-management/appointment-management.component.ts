@@ -126,6 +126,13 @@ export class AppointmentManagementComponent implements AfterViewInit {
     const date = new Date(dateString);
     return date.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
   }
+  selectedRowIndex: number | null = null;
+
+onRowClick(row: any) {
+  console.log('Selected row:', row);
+  this.selectedRowIndex = row.id;
+}
+
   getStatusClass(status: string): string {
     switch (status) {
       case 'CONFIRMED': return 'status-confirmed';

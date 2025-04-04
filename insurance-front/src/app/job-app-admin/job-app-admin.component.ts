@@ -330,7 +330,12 @@ calculateCompatibilityScore(jobOffer: any, jobApplication: any): number {
   // Final calculation of the score based on total weight
   return Math.round((score / totalWeight) * totalWeight);  // Ensure the score is properly calculated
 }
+selectedRowIndex: number | null = null;
 
+onRowClick(row: any) {
+  console.log('Selected row:', row);
+  this.selectedRowIndex = row.jobApplicationId;
+}
 
 
   
