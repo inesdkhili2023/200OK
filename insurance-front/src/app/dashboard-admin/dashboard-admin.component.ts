@@ -10,24 +10,55 @@ import { Router } from '@angular/router';
 })
 export class DashboardAdminComponent implements OnInit {
   chart: any;
-  showUserList: boolean = false;
   showSettingsList: boolean = false;
+  isMenuOpen = false;
 
   isAuthenticated: boolean = false;
   isAdmin: boolean = false;
   isUser: boolean = false;
   isAgent: boolean = false;
+  Info: any;
+  userName: string = ''; // Nom de l'utilisateur
+  userImage: string = 'assets/images/avatar-placeholder.png'; // Image de l'utilisateur
+  errorMessage: string = '';
 
   constructor(private readonly userService: UsersService, private router: Router) {
     Chart.register(...registerables);
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.initializeRevenueChart();
     this.isAuthenticated = this.userService.isAuthenticated();
     this.isAdmin = this.userService.isAdmin();
     this.isUser = this.userService.isUser();
     this.isAgent = this.userService.isAgent();
+
+    // Récupérer les informations de l'utilisateur connecté
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error("No Token Found");
+      }
+
+      // Attendre la résolution de la promesse
+      this.Info = await this.userService.getYourProfile(token);
+      console.log(this.Info);
+
+      // Mettre à jour les propriétés userName et userImage
+      if (this.Info && this.Info.ourUsers) {
+        this.userName = this.Info.ourUsers.name;
+        this.userImage = this.Info.ourUsers.image || 'assets/images/avatar-placeholder.png';
+      }
+    } catch (error: any) {
+      this.showError(error.message);
+    }
+  }
+
+  showError(mess: string) {
+    this.errorMessage = mess;
+    setTimeout(() => {
+      this.errorMessage = '';
+    }, 3000);
   }
 
   private initializeRevenueChart(): void {
@@ -55,13 +86,13 @@ export class DashboardAdminComponent implements OnInit {
     });
   }
 
-  toggleUserList(): void {
-    this.showUserList = !this.showUserList;
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
   }
 
-  toggleSettingsList(): void {
-    this.showSettingsList = !this.showSettingsList;
-  }
+  updateProfile(id: string){
+    this.router.navigate(['/update', id])
+}
 
   logout(): void {
     this.userService.logOut();
@@ -82,18 +113,6 @@ export class DashboardAdminComponent implements OnInit {
 
   generateReport(): void {
     console.log('Generate report clicked');
-  }
-
-  handleSearch(searchTerm: string): void {
-    console.log('Searching for:', searchTerm);
-  }
-
-  viewNotifications(): void {
-    console.log('Viewing notifications');
-  }
-
-  handleProfileAction(): void {
-    console.log('Profile action clicked');
   }
 
   navigate(route: string): void {

@@ -1,21 +1,31 @@
-<div class="container" >
-
-    <p *ngIf="errorMessage" class="error-message">{{errorMessage}}</p>
-    <h2>Profil </h2>
-    <p>Prenom: {{profileInfo?.ourUsers?.name}}</p>
-    <p>Nom: {{profileInfo?.ourUsers?.lastname}}</p>
-    <p>Date de naissance: {{profileInfo?.ourUsers?.dnaiss}}</p>
-    <p>Cin: {{profileInfo?.ourUsers?.cin}}</p>
-    <p>Email: {{profileInfo?.ourUsers?.email}}</p>
-    <p>Civility: {{profileInfo?.ourUsers?.civility}}</p>
-    <p>City: {{profileInfo?.ourUsers?.city}}</p>
-    <img *ngIf="profileInfo?.ourUsers?.image" 
-     [src]="profileInfo.ourUsers.image" 
-     alt="Profile Image" 
-     width="150" 
-     class="profile-image">
+<div class="profile-container">
+    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
     
-    <p *ngIf = "isAdmin">Role: {{profileInfo?.ourUsers?.role}}</p>
-    <button  (click)="updateProfile(profileInfo?.ourUsers?.id)">Update Profile</button>
-</div>
+    <div class="profile-card">
+        <div class="profile-header">
+            <img *ngIf="profileInfo?.ourUsers?.image"
+                 [src]="profileInfo.ourUsers.image"
+                 alt="Profile Image"
+                 class="profile-image"
+                 >
+        </div>
 
+        <div class="profile-body">
+            <h2>Profil</h2>
+            <p><strong>Prénom:</strong> {{ profileInfo?.ourUsers?.name }}</p>
+            <p><strong>Nom:</strong> {{ profileInfo?.ourUsers?.lastname }}</p>
+            <p><strong>Date de naissance:</strong> {{ profileInfo?.ourUsers?.dnaiss }}</p>
+            <p><strong>CIN:</strong> {{ profileInfo?.ourUsers?.cin }}</p>
+            <p><strong>Email:</strong> {{ profileInfo?.ourUsers?.email }}</p>
+            <p><strong>Civilité:</strong> {{ profileInfo?.ourUsers?.civility }}</p>
+            <p><strong>Ville:</strong> {{ profileInfo?.ourUsers?.city }}</p>
+            <p *ngIf="isAdmin"><strong>Rôle:</strong> {{ profileInfo?.ourUsers?.role }}</p>
+        </div>
+
+        <div class="profile-footer">
+            <button (click)="updateProfile(profileInfo?.ourUsers?.id)">Mettre à jour</button>
+        </div>
+        <a routerLink="/admin/dashboard" *ngIf="isAdmin"><- dashboard</a>
+        <a routerLink="/dashboard" *ngIf="isUser"><- dashboard</a>
+    </div>
+</div>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -7,7 +8,7 @@ import { UsersService } from 'src/app/services/users.service';
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent {
-  constructor(private readonly userService: UsersService){}
+  constructor(private readonly userService: UsersService,private router: Router){}
 
   isAuthenticated:boolean = false;
   isAdmin:boolean = false;
@@ -29,5 +30,9 @@ export class NavBarComponent {
     this.isUser = false;
     this.isAgent= false;
 
+  }
+  goToFaceDetection() {
+
+    this.router.navigate(['/detect-face']);
   }
 }

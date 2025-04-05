@@ -2,6 +2,7 @@ com\phegondev\usersmanagementsystem\service\ConfirmationTokenService.class
 com\phegondev\usersmanagementsystem\config\CorsConfig.class
 com\phegondev\usersmanagementsystem\service\OurUserDetailsService.class
 com\phegondev\usersmanagementsystem\dto\ReqRes.class
+com\phegondev\usersmanagementsystem\service\FaceRecognitionService.class
 com\phegondev\usersmanagementsystem\service\UsersManagementService.class
 com\phegondev\usersmanagementsystem\config\CorsConfig$1.class
 com\phegondev\usersmanagementsystem\email\EmailSender.class

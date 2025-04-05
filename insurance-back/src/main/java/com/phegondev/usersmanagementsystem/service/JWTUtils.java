@@ -1,7 +1,9 @@
 package com.phegondev.usersmanagementsystem.service;
 
+import com.phegondev.usersmanagementsystem.entity.OurUsers;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.logging.Logger;
 
@@ -45,6 +48,7 @@ public class JWTUtils {
                 .signWith(Key)
                 .compact();
     }
+
 
     public  String extractUsername(String token){
         return  extractClaims(token, Claims::getSubject);

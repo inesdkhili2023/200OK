@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -10,6 +11,7 @@ import { UsersService } from 'src/app/services/users.service';
 export class UpdateUserComponent implements OnInit {
   selectedFile: File | null = null;
   isAdmin: boolean = false;
+  isUser: boolean = false;
   userId: any;
   userData: any = {};
   errorMessage: string = '';
@@ -17,11 +19,13 @@ export class UpdateUserComponent implements OnInit {
   constructor(
     private readonly userService: UsersService,
     private readonly router: Router,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
     this.isAdmin = this.userService.isAdmin();
+    this.isUser = this.userService.isUser();
     this.getUserById();
   }
 
@@ -29,7 +33,7 @@ export class UpdateUserComponent implements OnInit {
     this.userId = this.route.snapshot.paramMap.get('id');
     const token = localStorage.getItem('token');
     if (!this.userId || !token) {
-      this.showError("User ID or Token is required");
+      this.toastr.error("User ID or Token is required");
       return;
     }
 
@@ -53,7 +57,7 @@ export class UpdateUserComponent implements OnInit {
   }
 
   async updateUser() {
-    const confirmUpdate = confirm("Are you sure you want to update this user?");
+    const confirmUpdate = this.toastr.success("Utilisateur est modifiée");
     if (!confirmUpdate) return;
 
     try {

@@ -1,42 +1,44 @@
 package com.phegondev.usersmanagementsystem.service;
 
-import com.phegondev.usersmanagementsystem.config.JWTAuthFilter;
+import com.google.gson.Gson;
 import com.phegondev.usersmanagementsystem.dto.ReqRes;
 import com.phegondev.usersmanagementsystem.email.EmailSender;
-import com.phegondev.usersmanagementsystem.entity.Civility;
 import com.phegondev.usersmanagementsystem.entity.ConfirmationToken;
 import com.phegondev.usersmanagementsystem.entity.OurUsers;
 import com.phegondev.usersmanagementsystem.repository.UsersRepo;
-import io.jsonwebtoken.Jwts;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.RedirectView;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import org.bytedeco.opencv.global.opencv_imgproc;
+import org.bytedeco.opencv.opencv_core.Mat;
+import org.bytedeco.opencv.opencv_core.RectVector;
+import org.bytedeco.opencv.opencv_objdetect.CascadeClassifier;
 
 @Service
 @AllArgsConstructor
 public class UsersManagementService {
+    private static final String HAAR_CASCADE_FILE = "src/main/resources/haarcascade_frontalface_alt.xml";
+
 
     @Autowired
     private UsersRepo usersRepo;
+    @Autowired
+    private FaceRecognitionService faceRecognitionService;
     @Autowired
     private JWTUtils jwtUtils;
     @Autowired
@@ -47,8 +49,9 @@ public class UsersManagementService {
     private  EmailValidator emailValidator;
     @Autowired
     private ConfirmationTokenService confirmationTokenService;
-@Autowired
-private EmailSender emailSender;
+@Autowired  private EmailSender emailSender;
+    private Gson gson = new Gson();
+
 
     public ReqRes register(ReqRes registrationRequest, MultipartFile imageFile){
         ReqRes resp = new ReqRes();
@@ -63,6 +66,7 @@ private EmailSender emailSender;
             ourUser.setDnaiss(registrationRequest.getDnaiss());
             ourUser.setCivility(registrationRequest.getCivility());
             ourUser.setCin(registrationRequest.getCin());
+            ourUser.setEnabled(true);
 
             ourUser.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
             if (imageFile != null && !imageFile.isEmpty()) {
@@ -99,7 +103,7 @@ private EmailSender emailSender;
         ReqRes resp = new ReqRes();
         boolean isValidEmail = emailValidator.test(registrationRequest.getEmail());
         if (!isValidEmail) {
-            throw new IllegalStateException("email not valid");
+            throw new IllegalStateException("email non valide");
         }
         boolean userExists = usersRepo.findByEmail(registrationRequest.getEmail()).isPresent();
 
@@ -164,8 +168,77 @@ private EmailSender emailSender;
         return resp;
     }
 
+    public ReqRes sendResetPasswordEmail(ReqRes registrationRequest) {
+        ReqRes resp = new ReqRes();
+        OurUsers user = usersRepo.findByEmail(registrationRequest.getEmail())
+                .orElseThrow(() -> new UsernameNotFoundException("Email Not Found: " +registrationRequest.getEmail()));
+
+        // Générer un token de réinitialisation
+        String token = UUID.randomUUID().toString();
+
+        // Enregistrer le token dans la base de données
+        ConfirmationToken confirmationToken = new ConfirmationToken(
+                token,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusMinutes(15), // Token valide pendant 15 minutes
+                user
+        );
+        confirmationTokenService.saveConfirmationToken(confirmationToken);
+
+        // Créer le lien de réinitialisation
+        String resetLink = "http://localhost:4200/resetpassword?token=" + token;
+
+        // Envoyer l'e-mail
+
+        emailSender.send(registrationRequest.getEmail(), buildResetPasswordEmail(user.getName(), resetLink));
+        resp.setMessage("E-mail de réinitialisation envoyé à " +registrationRequest.getEmail());
+        return resp;
+    }
+    private String buildResetPasswordEmail(String name, String link) {
+        return "<div style=\"font-family: Arial, sans-serif; color: #333;\">"
+                + "<h2>Bonjour " + name + ",</h2>"
+                + "<p>Vous avez demandé à réinitialiser votre mot de passe. Cliquez sur le lien ci-dessous pour procéder :</p>"
+                + "<p><a href=\"" + link + "\" style=\"background-color: #FF8000; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;\">Réinitialiser mon mot de passe</a></p>"
+                + "<p>Si vous n'avez pas demandé cette réinitialisation, veuillez ignorer cet e-mail.</p>"
+                + "<p>Cordialement,<br/>L'équipe de support</p>"
+                + "</div>";
+    }
+    public ReqRes resetPassword(ReqRes resetRequest) {
+        ReqRes resp = new ReqRes();
+
+        // Extraire le token et le nouveau mot de passe de la requête
+        String token = resetRequest.getToken();
+        String newPassword = resetRequest.getNewPassword();
+
+        // Valider le token
+        ConfirmationToken confirmationToken = confirmationTokenService.getToken(token)
+                .orElseThrow(() -> new IllegalStateException("Token invalide ou expiré."));
+
+        if (confirmationToken.getConfirmedAt() != null) {
+            throw new IllegalStateException("Ce token a déjà été utilisé.");
+        }
+
+        if (confirmationToken.getExpiresAt().isBefore(LocalDateTime.now())) {
+            throw new IllegalStateException("Le token a expiré.");
+        }
+
+        // Réinitialiser le mot de passe
+        OurUsers user = confirmationToken.getOurUser();
+        user.setPassword(passwordEncoder.encode(newPassword));
+        usersRepo.save(user);
+
+        // Marquer le token comme utilisé
+        confirmationToken.setConfirmedAt(LocalDateTime.now());
+        confirmationTokenService.saveConfirmationToken(confirmationToken);
+
+        // Définir la réponse
+        resp.setMessage("Mot de passe réinitialisé avec succès.");
+        resp.setStatusCode(200);
+        return resp;
+    }
+
     @Transactional
-    public String confirmToken(String token) {
+    public RedirectView confirmToken(String token) {
         System.out.println("Token reçu : " + token); // Ajoute ce log
 
         ConfirmationToken confirmationToken = confirmationTokenService
@@ -186,8 +259,14 @@ private EmailSender emailSender;
 
         confirmationTokenService.setConfirmedAt(token);
         enableOurUser(confirmationToken.getOurUser().getEmail());
-        return "confirmed";
+
+        // Rediriger vers la page de login Angular
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl("http://localhost:4200/login"); // Remplacez par l'URL de votre page de login Angular
+        return redirectView;
     }
+
+
 
     public int enableOurUser(String email) {
         return usersRepo.enableOurUser(email);
@@ -261,7 +340,6 @@ private EmailSender emailSender;
                 "\n" +
                 "</div></div>";
     }
-
     public ReqRes login(ReqRes loginRequest){
         ReqRes response = new ReqRes();
         try {
@@ -295,8 +373,6 @@ private EmailSender emailSender;
         }
         return response;
     }
-
-
 
 
 
@@ -379,7 +455,46 @@ private EmailSender emailSender;
         }
         return reqRes;
     }
-
+    public ReqRes blockUser(Integer userId) {
+        ReqRes reqRes = new ReqRes();
+        try {
+            Optional<OurUsers> userOptional = usersRepo.findById(userId);
+            if (userOptional.isPresent()) {
+                OurUsers user = userOptional.get();
+                user.setEnabled(false); // Mettre l'utilisateur en état "bloqué"
+                usersRepo.save(user); // Sauvegarder la mise à jour de l'utilisateur
+                reqRes.setStatusCode(200);
+                reqRes.setMessage("User blocked successfully");
+            } else {
+                reqRes.setStatusCode(404);
+                reqRes.setMessage("User not found for blocking");
+            }
+        } catch (Exception e) {
+            reqRes.setStatusCode(500);
+            reqRes.setMessage("Error occurred while blocking user: " + e.getMessage());
+        }
+        return reqRes;
+    }
+    public ReqRes deblockUser(Integer userId) {
+        ReqRes reqRes = new ReqRes();
+        try {
+            Optional<OurUsers> userOptional = usersRepo.findById(userId);
+            if (userOptional.isPresent()) {
+                OurUsers user = userOptional.get();
+                user.setEnabled(true); // Mettre l'utilisateur en état "bloqué"
+                usersRepo.save(user); // Sauvegarder la mise à jour de l'utilisateur
+                reqRes.setStatusCode(200);
+                reqRes.setMessage("User blocked successfully");
+            } else {
+                reqRes.setStatusCode(404);
+                reqRes.setMessage("User not found for blocking");
+            }
+        } catch (Exception e) {
+            reqRes.setStatusCode(500);
+            reqRes.setMessage("Error occurred while blocking user: " + e.getMessage());
+        }
+        return reqRes;
+    }
     public ReqRes updateUser(Integer userId, OurUsers updatedUser, MultipartFile newImageFile) {
         ReqRes reqRes = new ReqRes();
         try {
@@ -472,5 +587,119 @@ private EmailSender emailSender;
         }
         return reqRes;
     }
+
+
+    public ReqRes signupface(ReqRes registrationRequest, MultipartFile imageFile){
+        ReqRes resp = new ReqRes();
+        boolean isValidEmail = emailValidator.test(registrationRequest.getEmail());
+        if (!isValidEmail) {
+            throw new IllegalStateException("email non valide");
+        }
+        boolean userExists = usersRepo.findByEmail(registrationRequest.getEmail()).isPresent();
+
+        if (userExists) {
+            throw new IllegalStateException("email already taken");
+        }
+
+        try {
+            OurUsers ourUser = new OurUsers();
+            ourUser.setEmail(registrationRequest.getEmail());
+            ourUser.setCity(registrationRequest.getCity());
+            ourUser.setName(registrationRequest.getName());
+            ourUser.setRole(registrationRequest.getRole());
+            ourUser.setLastname(registrationRequest.getLastname());
+            ourUser.setDnaiss(registrationRequest.getDnaiss());
+            ourUser.setCivility(registrationRequest.getCivility());
+            ourUser.setCin(registrationRequest.getCin());
+            ourUser.setImage(registrationRequest.getImage());
+            ourUser.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
+            if (ourUser.getRole() == null || ourUser.getRole().isEmpty()) {
+                ourUser.setRole("USER"); // Valeur par défaut
+            }
+            if (imageFile != null && !imageFile.isEmpty()) {
+                String uploadDir = "C:\\Users\\user\\Desktop\\front+back\\insurance-back\\uploads";
+                File uploadFolder = new File(uploadDir);
+                if (!uploadFolder.exists()) {
+                    uploadFolder.mkdirs();
+
+
+                }
+
+                String fileName = System.currentTimeMillis() + "_" + imageFile.getOriginalFilename();
+                File file = new File(uploadDir + File.separator + fileName);
+
+                imageFile.transferTo(file);
+                ourUser.setImage(fileName);
+
+                // Conversion du fichier en Base64 (simulant ce que renverrait Angular)
+                try {
+                    float[] embedding = faceRecognitionService.computeEmbedding(file.getAbsolutePath());
+                    if (embedding == null || embedding.length == 0) {
+                        throw new Exception("Empty embedding generated");
+                    }
+                    String embeddingJson = gson.toJson(embedding);
+                    ourUser.setFaceEmbedding(embeddingJson);
+                } catch (Exception e) {
+                    System.err.println("Error generating face embedding: " + e.getMessage());
+                    throw new Exception("Face embedding generation failed: " + e.getMessage());
+                }
+            }
+            else {
+                throw new Exception("Face image is required for registration");
+            }
+            OurUsers ourUsersResult = usersRepo.save(ourUser);
+
+            String token = UUID.randomUUID().toString();
+            ConfirmationToken confirmationToken = new ConfirmationToken(
+                    token,
+                    LocalDateTime.now(),
+                    LocalDateTime.now().plusMinutes(15),
+                    ourUsersResult
+            );
+            confirmationTokenService.saveConfirmationToken(confirmationToken);
+
+            String link = "http://localhost:1010/auth/signup/confirm?token=" + token;
+            emailSender.send(registrationRequest.getEmail(), buildEmail(registrationRequest.getName(), link));
+
+            if (ourUsersResult.getId() > 0) {
+                resp.setOurUsers((ourUsersResult));
+                resp.setMessage("User added Successfully. Please check your email to confirm your account.");
+                resp.setStatusCode(200);
+            }
+
+        } catch (Exception e) {
+            resp.setStatusCode(500);
+            resp.setError(e.getMessage());
+        }
+        return resp;
+    }
+    public ReqRes faceLogin(String imageData) throws Exception {
+        ReqRes response = new ReqRes();
+        OurUsers user = faceRecognitionService.recognizeUser(imageData);
+
+        if (user != null) {
+            if (!user.isEnabled()) {
+                throw new Exception("Utilisateur non activé");
+            }
+
+
+            String jwt = jwtUtils.generateToken(user);
+            String refreshToken = jwtUtils.generateRefreshToken(new HashMap<>(), user);
+
+            response.setStatusCode(200);
+            response.setToken(jwt);
+            response.setRefreshToken(refreshToken);
+            response.setExpirationTime("24Hrs");
+            response.setMessage("Face recognized, login successful");
+            response.setRole(user.getRole());
+            response.setOurUsers(user); // optionnel
+        } else {
+            throw new Exception("Face not recognized");
+        }
+
+        return response;
+    }
+
+
 
 }

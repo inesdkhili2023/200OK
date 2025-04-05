@@ -1,0 +1,60 @@
+.face-login-container {
+    background-color: #f9d9a9;
+    padding: 30px;
+    border-radius: 15px;
+    width: 400px;
+    margin: 40px auto;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .face-login-container h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .underline {
+    width: 50px;
+    height: 3px;
+    background-color: orange;
+    margin: 0 auto 20px auto;
+    border: none;
+  }
+  
+  .face-login-btn {
+    background-color: #ff7300;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .face-login-btn:hover {
+    background-color: #e66400;
+  }
+  
+  .login-message {
+    margin-top: 15px;
+    font-weight: bold;
+    color: #006400;
+  }
+  
+  .back-login-text {
+    margin-top: 20px;
+  }
+  
+  .back-login-text a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .back-login-text a:hover {
+    text-decoration: underline;
+  }
+  

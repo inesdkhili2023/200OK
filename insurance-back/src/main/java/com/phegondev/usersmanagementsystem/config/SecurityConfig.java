@@ -33,11 +33,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
-                .authorizeHttpRequests(request-> request.requestMatchers("/auth/**", "/public/**").permitAll()
+
+                .authorizeHttpRequests(request-> request.requestMatchers("/auth/**", "/public/**","/login/oauth2/**").permitAll()
                         .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
                         .requestMatchers("/uploads/**").permitAll()
-                        //.requestMatchers("/auth/signup/confirm/**").permitAll()
-                        //.requestMatchers("/confirm/**").permitAll()
                         .requestMatchers("/user/**").hasAnyAuthority("USER")
                         .requestMatchers("/agent/**").hasAnyAuthority("AGENT")
                         .requestMatchers("/adminuser/**").hasAnyAuthority("ADMIN","USER")
@@ -45,6 +44,11 @@ public class SecurityConfig {
                         .requestMatchers("/agentuser/**").hasAnyAuthority("AGENT","USER")
                         .requestMatchers("/allRole/**").hasAnyAuthority("ADMIN","USER","AGENT")
                         .anyRequest().authenticated())
+
+                       /* .oauth2Login(oauth2 -> oauth2
+                            .defaultSuccessUrl("http://localhost:4200/profile", true)
+                        )*/
+
                 .sessionManagement(manager->manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
                         jwtAuthFilter, UsernamePasswordAuthenticationFilter.class

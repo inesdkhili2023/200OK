@@ -12,6 +12,7 @@ export class ProfileComponent implements OnInit  {
     private readonly router: Router){}
 
     isAdmin:boolean = false;
+    isUser:boolean = false;
     profileInfo: any;
     errorMessage: string = ''
 
@@ -19,6 +20,7 @@ export class ProfileComponent implements OnInit  {
 
   async ngOnInit() {
     this.isAdmin = this.userService.isAdmin();
+    this.isUser = this.userService.isUser();
     try {
       const token = localStorage.getItem('token')
       if(!token){
@@ -44,4 +46,5 @@ export class ProfileComponent implements OnInit  {
       this.errorMessage = ''
     }, 3000)
   }
+  
 }

@@ -1,53 +1,71 @@
+
 <div class="dashboard-container">
   <div class="dashboard-sidebar">
-    <div class="sidebar-header">
-      <h3>Admin Dashboard</h3>
-    </div>
+    
+
+    
+  
     <ul class="sidebar-menu">
       <li class="active">
         <i class="fas fa-tachometer-alt"></i>
         <span>Dashboard</span>
       </li>
-      <li (click)="toggleUserList()">
-        <i class="fas fa-users"></i>
-        <span>Users</span>
+      <li (click)="navigate('/contrat')">
+        <i class="fas fa-file-contract"></i>
+        <span>Contrat</span>
       </li>
-      <li>
-        <i class="fas fa-file-alt"></i>
-        <span>Claims</span>
-      </li>
-      <li>
+      <li (click)="navigate('/assurance')">
         <i class="fas fa-shield-alt"></i>
-        <span>Policies</span>
+        <span>Assurance</span>
       </li>
-      <li (click)="toggleSettingsList()">
+      <li (click)="navigate('/reclamation')">
+        <i class="fas fa-exclamation-circle"></i>
+        <span>Réclamation</span>
+      </li>
+      <li (click)="navigate('/users')">
+        <i class="fas fa-exclamation-circle"></i>
+        <span>Liste d'utilisateurs</span>
+      </li>
+      <li (click)="toggleMenu()">
         <i class="fas fa-cog"></i>
         <span>Settings</span>
+       
       </li>
+      <div >
+        
+          <div *ngIf="isMenuOpen" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg">
+            <ul class="py-2">
+              <li  class="px-4 py-2 hover:bg-gray-100 cursor-pointer" (click)="navigate('/profile')">
+                Profil
+              </li>
+              <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer"  (click)="updateProfile(Info?.ourUsers?.id)">
+                Modifier Profil
+              </li>
+              <li (click)="logout()" class="px-4 py-2 hover:bg-red-100 text-red-500 cursor-pointer">
+                Se déconnecter
+              </li>
+            </ul>
+          </div>
+        </div>
     </ul>
   </div>
-  <div *ngIf="showSettingsList" class="settings-list">
-    <ul>
-      <li *ngIf="isAuthenticated"><a routerLink="/profile">Profil</a></li>
-      <li *ngIf="isAdmin"><a routerLink="/users">Liste d'Utilisateurs</a></li>
-      <li *ngIf="!isAuthenticated"><a routerLink="/login">Se Connecter</a></li>
-      <li *ngIf="isAuthenticated"><a routerLink="" (click)="logout()">Se déconnecter</a></li>
-    </ul>
-  </div>
+
+  
+
   <div class="dashboard-main">
     <div class="dashboard-header">
       <div class="header-search">
         <input type="text" placeholder="Search..." class="search-input">
         <i class="fas fa-search search-icon"></i>
       </div>
-      <div class="header-profile">
+      <div class="header-profile" >
         <div class="notifications">
           <i class="fas fa-bell"></i>
           <span class="badge">3</span>
         </div>
         <div class="profile-info">
-          <img src="assets/images/avatar-placeholder.png" alt="Admin Profile">
-          <span>Admin Name</span>
+          <img [src]="userImage" alt="User Profile">
+          <span>{{ userName }}</span>
           <i class="fas fa-chevron-down"></i>
         </div>
       </div>
@@ -104,7 +122,6 @@
         <div class="grid-item chart-container">
           <h3>Revenue Overview</h3>
           <div class="chart">
-            <!-- Add your chart component here -->
             <canvas id="revenueChart"></canvas>
           </div>
         </div>

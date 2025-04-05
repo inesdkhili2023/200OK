@@ -18,6 +18,16 @@ import { RegisterComponent } from './user/register/register.component';
 import { ProfileComponent } from './user/profile/profile.component';
 import { LoginComponent } from './user/login/login.component'; // <-- add this import
 import { SignupComponent } from './user/signup/signup.component';
+import { SendemailComponent } from './user/sendemail/sendemail.component';
+import { ResetpasswordComponent } from './user/resetpassword/resetpassword.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { LogingoogleComponent } from './user/logingoogle/logingoogle.component';
+import { ConfirmationComponentComponent } from './user/confirmation-component/confirmation-component.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { FaceLoginComponent } from './user/face-login/face-login.component';
+import { LoginAttentanceComponent } from './user/login-attentance/login-attentance.component';
+import { FaceDetectionComponent } from './user/face-detection/face-detection.component';
 
 @NgModule({
   declarations: [
@@ -35,10 +45,24 @@ import { SignupComponent } from './user/signup/signup.component';
     UserListComponent,
     RegisterComponent,
     ProfileComponent,
-    LoginComponent  // Add this line
+    LoginComponent,
+    SendemailComponent,
+    ResetpasswordComponent,
+    DashboardComponent,
+    LogingoogleComponent,
+    ConfirmationComponentComponent,
+    FaceLoginComponent,
+    LoginAttentanceComponent,
+    FaceDetectionComponent,
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule, 
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right', // Ou 'toast-top-right', selon ce que vous préférez
+      timeOut: 3000, // Durée de la notification
+      extendedTimeOut: 1000
+    }),
     AppRoutingModule,
     FormsModule,
     HttpClientModule    // <-- add this module

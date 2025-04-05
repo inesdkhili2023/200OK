@@ -1,25 +1,47 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
+  changeData(msg: any) {
+    throw new Error('Method not implemented.');
+  }
 
   private BASE_URL="http://localhost:1010";
+  currentUserData: any;
+  private currentUserSubject = new BehaviorSubject<any>(null);
   constructor(private http:HttpClient  ) { }
+// Méthode pour récupérer l'utilisateur connecté
+getCurrentUser(): any {
+  
+  return this.currentUserSubject.value;
+  // Retourne l'utilisateur actuel
+}
+
+// Méthode pour définir l'utilisateur connecté
+setCurrentUser(user: any): void {
+  this.currentUserSubject.next(user);
+ // Met à jour l'utilisateur actuel
+}
 
   ///////////login////////
   async login(email:string,password:string):Promise<any>{
     const url=`${this.BASE_URL}/auth/login`
     try{
       const response=await this.http.post<any>(url,{email,password}).toPromise()
+      this.setCurrentUser(response.user);
+      console.log(response.user);
       return response;
     }catch(error){
       throw error;
     }
     
   }
+  ////////login google ///////
+  
 
   ////////register////////
   async register(userData:any, token:string):Promise<any>{
@@ -40,7 +62,7 @@ export class UsersService {
 
   ////////Signup////////
   async signup(userData:any):Promise<any>{
-    const url = `${this.BASE_URL}/auth/signup`
+    const url = `${this.BASE_URL}/auth/signupface`
     try{
       const response =  this.http.post<any>(url, userData).toPromise()
       console.log("Réponse de l'API:", response);
@@ -123,7 +145,65 @@ logOut():void{
     localStorage.removeItem('role')
   }
 }
+/////////////send email reset mdp///////////
+async sendResetEmail(email: string): Promise<any> {
+  const url = `${this.BASE_URL}/auth/forgot-password`;
 
+  try{
+    const response = this.http.post<any>(url, { email }).toPromise();
+    return response;
+}catch(error){
+  throw error;
+}
+}
+
+// Réinitialiser le mot de passe
+async resetPassword(token: string, newPassword: string): Promise<any> {
+  const url = `${this.BASE_URL}/auth/reset-password`;
+  try{
+  return this.http.post<any>(url, { token, newPassword }).toPromise();
+}catch(error){
+  throw error;
+}
+}
+////////confirmed token ////
+confirmEmail(token: string): Observable<any> {
+  return this.http.post<any>(`${this.BASE_URL}/auth/signup/confirmemail`, { token });
+}
+////////////block user///////
+blockUser(userId: string, token: string): Promise<any> {
+  const url = `${this.BASE_URL}/admin/block/${userId}`;
+  const headers = new HttpHeaders({
+    'Authorization': `Bearer ${token}`
+  });
+
+  // Correction : Passer les headers dans les options de la requête
+  return this.http.post<any>(url, {}, { headers }).toPromise()
+    .catch(error => {
+      throw error;
+    });
+}
+//////////deblocker//////
+deblockUser(userId: string, token: string): Promise<any> {
+  const url = `${this.BASE_URL}/admin/deblock/${userId}`;
+  const headers = new HttpHeaders({
+    'Authorization': `Bearer ${token}`
+  });
+
+  // Correction : Passer les headers dans les options de la requête
+  return this.http.post<any>(url, {}, { headers }).toPromise()
+    .catch(error => {
+      throw error;
+    });
+}
+//login with google et github
+/*loginWithGoogle() {
+  window.location.href = `${this.BASE_URL}/oauth2/authorization/google`;
+}
+
+loginWithGithub() {
+  window.location.href = `${this.BASE_URL}/oauth2/authorization/github`;
+}*/
 isAuthenticated(): boolean {
   if(typeof localStorage !== 'undefined'){
     const token = localStorage.getItem('token');

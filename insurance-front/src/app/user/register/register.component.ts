@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -24,19 +25,20 @@ export class RegisterComponent {
   selectedFile: File | null = null;
   constructor(
     private readonly userService: UsersService,
-    private readonly router: Router
+    private readonly router: Router,
+     private  toastr: ToastrService
   ) { }
 
   async handleSubmit() {
     // Vérifier si tous les champs obligatoires sont remplis
     if (!this.formData.name || !this.formData.email || !this.formData.password || !this.formData.role || !this.formData.city 
      || !this.formData.lastname || !this.formData.dnaiss || !this.formData.cin || !this.formData.civility) {
-      this.showError('Please fill in all fields.');
+      this.toastr.error('Please fill in all fields.');
       return;
     }
   
     // Demander confirmation à l'utilisateur avant l'inscription
-    const confirmRegistration = confirm('Are you sure you want to register this user?');
+    const confirmRegistration = this.toastr.success('Utilisateur est ajouté avec succées');
     if (!confirmRegistration) {
       return;
     }

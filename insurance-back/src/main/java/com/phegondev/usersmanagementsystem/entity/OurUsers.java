@@ -31,6 +31,8 @@ public class OurUsers implements UserDetails {
     private String image;
     private String city;
     private String role;
+    @Column(columnDefinition = "TEXT")
+    private String faceEmbedding;
     private boolean locked=false;
     private boolean enabled=false;
 
@@ -55,6 +57,7 @@ public class OurUsers implements UserDetails {
     }
 
     @Override
+
     public boolean isCredentialsNonExpired() {
         return true;
     }

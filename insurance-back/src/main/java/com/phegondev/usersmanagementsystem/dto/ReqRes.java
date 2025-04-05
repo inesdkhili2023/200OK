@@ -25,12 +25,14 @@ public class ReqRes {
     private String name;
     private String lastname;
     private String password ;
+    private String newPassword;
     private Civility civility;
     private Date dnaiss;
     private String cin;
     private String image;
     private String city;
     private String role;
+    private String faceEmbedding;
     private OurUsers ourUsers;
     private boolean locked;
     private boolean enabled;

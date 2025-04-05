@@ -1,6 +1,104 @@
-/* You can add global styles to this file, and also import other style files */
-body, html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
+/* Conteneur principal des notifications */
+.toast-container {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    z-index: 999999 !important;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Style général des notifications */
+.toast {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 300px;
+    max-width: 400px;
+    background-color: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateX(50px);
+    animation: fadeInToast 0.5s ease-out forwards;
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Animation d'apparition */
+@keyframes fadeInToast {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Succès */
+.toast-success {
+    background-color: rgba(81, 163, 81, 0.9);
+    border-left: 5px solid #4CAF50;
+}
+
+/* Erreur */
+.toast-error {
+    background-color: rgba(189, 54, 47, 0.9);
+    border-left: 5px solid #FF3B30;
+}
+
+/* Info */
+.toast-info {
+    background-color: rgba(47, 150, 180, 0.9);
+    border-left: 5px solid #2196F3;
+}
+
+/* Avertissement */
+.toast-warning {
+    background-color: rgba(248, 148, 6, 0.9);
+    border-left: 5px solid #FF9800;
+}
+
+/* Icônes */
+.toast::before {
+    content: "ℹ️";
+    font-size: 20px;
+}
+
+.toast-success::before {
+    content: "✅";
+}
+
+.toast-error::before {
+    content: "❌";
+}
+
+.toast-info::before {
+    content: "ℹ️";
+}
+
+.toast-warning::before {
+    content: "⚠️";
+}
+
+/* Effet de disparition */
+.toast.hide {
+    animation: fadeOutToast 0.5s ease-out forwards;
+}
+
+@keyframes fadeOutToast {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(50px);
+    }
 }

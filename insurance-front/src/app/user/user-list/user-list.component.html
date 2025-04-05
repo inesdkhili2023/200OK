@@ -1,40 +1,65 @@
 <div class="container">
     <h2>Liste d'utilisateurs</h2>
     <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
-    <button routerLink="/register" class="reg-button">Add User</button>
+
+    <!-- Barre de recherche -->
+    <div class="search-bar">
+        <input
+            type="text"
+            [(ngModel)]="searchQuery"
+            (input)="filterUsers()"
+            placeholder="Rechercher un utilisateur..."
+        />
+    </div>
+
+    <button routerLink="/register" class="reg-button">Ajouter un utilisateur</button>
+
+    <!-- Tableau des utilisateurs -->
     <table>
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Prenom</th>
+                <th>Prénom</th>
                 <th>Nom</th>
                 <th>Date de naissance</th>
-                <th>Cin</th>
+                <th>CIN</th>
                 <th>Email</th>
-                <th>Civility</th>
-                <th>City</th>
-                <th>Image</th>
-                <th>Role</th>
-                <th>Actions</th>
+                <th>Civilité</th>
+                <th>Ville</th>
+                <th>Activé</th>
+                <th>Rôle</th>
+                <th>Bloquer</th>
+                <th>Modifier</th>
+                <th>débliquer</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let user of users" key="user.id">
+            <tr *ngFor="let user of paginatedUsers" key="user.id">
                 <td>{{ user.id }}</td>
                 <td>{{ user.name }}</td>
                 <td>{{ user.lastname }}</td>
-                <td>{{ user.dnaiss}}</td>
+                <td>{{ user.dnaiss }}</td>
                 <td>{{ user.cin }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.civility }}</td>
                 <td>{{ user.city }}</td>
-                <td>{{ user.image }}</td>
+                <td>{{ user.enabled ? 'Oui' : 'Non' }}</td>
                 <td>{{ user.role }}</td>
                 <td>
-                    <button class="delete-button" (click)="deleteUser(user.id)">Delete</button>
-                    <button class="update-button" (click)="navigateToUpdate(user.id)">Update</button>
+                    <button class="delete-button" (click)="blockUser(user.id)">Bloquer</button></td>
+                   <td> <button class="update-button" (click)="navigateToUpdate(user.id)">Modifier</button></td>
+                   <td> <button class="debloque-button" (click)="deblockUser(user.id)">Débloquer</button>
                 </td>
             </tr>
         </tbody>
     </table>
+
+    <!-- Contrôles de pagination -->
+    <div class="pagination-controls">
+        <button (click)="previousPage()" [disabled]="currentPage === 1">Précédent</button>
+        <span>Page {{ currentPage }} sur {{ totalPages }}</span>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages">Suivant</button>
+    </div>
+    <a routerLink="/admin/dashboard" *ngIf="isAdmin"><- dashboard</a>
+    <a routerLink="/dashboard" *ngIf="isUser"><- dashboard</a>
 </div>

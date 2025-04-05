@@ -1,55 +1,120 @@
+<div class="container">
+  <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+  <h2>S'inscrire</h2>
+  <form (submit)="handleSubmit()">
+    <!-- Champ Prénom -->
+    <div class="form-group" [ngClass]="{ 'valid': nameVerified, 'invalid': nameError }">
+      <label><span class="required">*</span> Prénom:</label>
+      <div class="input-wrapper">
+      <input type="text" name="name" [(ngModel)]="formData.name" (blur)="validateName()" placeholder="Entrez votre prénom" required />
+      <span *ngIf="nameVerified" class="icon check">✔️</span>
+      <span *ngIf="nameError" class="icon cross">❌</span>
+    </div>
+      <p *ngIf="nameError" class="error-text">{{ nameError }}</p>
+    </div>
 
-  <div class="container" >
-    
-    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
-    <h2>S'inscrire</h2>
-    <form (submit)="handleSubmit()">
-      <div class="form-group">
-        <label>Prenom:</label>
-        <input type="text" name="name" [(ngModel)]="formData.name" required />
-      </div>
-      <div class="form-group">
-        <label>Nom:</label>
-        <input type="text" name="lastname" [(ngModel)]="formData.lastname" required />
-      </div>
-      <div class="form-group">
-        <label>Date de naissance:</label>
+    <!-- Champ Nom -->
+    <div class="form-group" [ngClass]="{ 'valid': lastnameVerified, 'invalid': lastnameError }">
+      <label><span class="required">*</span> Nom:</label>
+      <div class="input-wrapper">
+      <input type="text" name="lastname" [(ngModel)]="formData.lastname" (blur)="validateLastName()" placeholder="Entrez votre nom" required />
+      <span *ngIf="lastnameVerified" class="icon check">✔️</span>
+      <span *ngIf="lastnameError" class="icon cross">❌</span>
+    </div>
+      <p *ngIf="lastnameError" class="error-text">{{ lastnameError }}</p>
+    </div>
+
+    <!-- Champ Date de naissance -->
+    <div class="form-group">
+      <label><span class="required">*</span> Date de naissance:</label>
+      <div class="input-wrapper">
         <input type="date" name="dnaiss" [(ngModel)]="formData.dnaiss" required />
+
       </div>
-     
-      <div class="form-group">
-        <label>Cin:</label>
-        <input type="text" name="cin" [(ngModel)]="formData.cin" required />
+    </div>
+
+    <!-- Champ CIN -->
+    <div class="form-group" [ngClass]="{ 'valid': cinVerified, 'invalid': cinError }">
+      <label><span class="required">*</span> CIN:</label>
+      <div class="input-wrapper">
+      <input type="text" name="cin" [(ngModel)]="formData.cin" (blur)="validateCin()" placeholder="Entrez votre cin" />
+      <span *ngIf="cinVerified" class="icon check">✔️</span>
+      <span *ngIf="cinError" class="icon cross">❌</span>
+    </div>
+      <p *ngIf="cinError" class="error-text">{{ cinError }}</p>
+    </div>
+
+    <!-- Champ Email -->
+    <div class="form-group" [ngClass]="{ 'valid': emailVerified, 'invalid': emailError }">
+      <label><span class="required">*</span> Email:</label>
+      <div class="input-wrapper">
+      <input type="email" name="email" [(ngModel)]="formData.email" (blur)="validateEmail()" placeholder="Entrez votre email" required   />
+      <span *ngIf="emailVerified" class="icon check">✔️</span>
+      <span *ngIf="emailError" class="icon cross">❌</span>
+    </div>
+      <p *ngIf="emailError" class="error-text">{{ emailError }}</p>
+    </div>
+
+    <!-- Champ Mot de passe -->
+    <div class="form-group" [ngClass]="{ 'valid': passwordVerified, 'invalid': passwordError }">
+      <label><span class="required">*</span> Mot de passe:</label>
+      <div class="input-wrapper">
+        
+      <input [type]="changetype?'password':'text'" name="password" [(ngModel)]="formData.password" (blur)="validatePassword()" placeholder="Entrez votre mot de passe" required>
+      <button (click)="generateStrongPassword()">Générer un mot de passe sécurisé</button>
+
+      <span class="eyeicon" (click)="viewpass()">
+        <i [ngClass]="visible?'fa fa-eye':'fa fa-eye-slash'"></i>
+      </span>
+      <span *ngIf="passwordVerified" class="icon check">✔️</span>
+      <span *ngIf="passwordError" class="icon cross">❌</span>
+    </div>
+      <p *ngIf="passwordError" class="error-text">{{ passwordError }}</p>
+    </div>
+
+    <!-- Champ Ville -->
+    <div class="form-group" [ngClass]="{ 'valid': cityVerified, 'invalid': cityError }">
+      <label><span class="required">*</span> Ville:</label>
+      <div class="input-wrapper">
+      <input type="text" name="city" [(ngModel)]="formData.city" placeholder="Entrez votre ville" required (blur)="validatecity()"  />
+      <span *ngIf="cityVerified" class="icon check">✔️</span>
+      <span *ngIf="cityError" class="icon cross">❌</span>
       </div>
-      
-      <div class="form-group">
-        <label>Email:</label>
-        <input type="email" name="email" [(ngModel)]="formData.email" required />
+      <p *ngIf="cityError" class="error-text">{{ cityError }}</p>
+
+    </div>
+
+    <!-- Champ Civilité -->
+    <div class="form-group">
+      <label><span class="required">*</span> Civilité:</label>
+      <select name="civility" [(ngModel)]="formData.civility" required>
+        <option value="">Selectionner civilité</option>
+        <option value="SINGLE">SINGLE</option>
+        <option value="MARRIED">MARRIED</option>
+        <option value="DIVORCED">DIVORCED</option>
+      </select>
+    </div>
+
+    <!-- Champ Image -->
+    <div class="form-group">
+      <input type="file" (change)="onFileSelected($event)" />
+    </div>
+    <div class="form-group">
+      <label>Ou prendre une photo</label>
+      <div>
+        <video #video width="320" height="240" autoplay></video>
+        <canvas #canvas width="320" height="240" style="display: none;"></canvas>
       </div>
-      <div class="form-group">
-        <label>Mot de passe:</label>
-        <input type="password" name="password" [(ngModel)]="formData.password" required />
-      </div>
-      <div class="form-group">
-        <label>Ville:</label>
-        <input type="text" name="city" [(ngModel)]="formData.city" required />
-      </div>
-      <div class="form-group">
-        <label>Civilite:</label>
-        <select name="role" [(ngModel)]="formData.civility" required>
-          <option value="">Selectionner civilite</option>
-          <option value="DIVORCED">SINGLE</option>
-          <option value="MARRIED">MARRIED</option>
-          <option value="DIVORCED">DIVORCED</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <input type="file" (change)="onFileSelected($event)">
-      </div>
-     
-      <img *ngIf="formData.image" [src]="formData.image" alt="Selected Image" width="150">
-     
-      <button type="submit">S'inscrire</button>
-    </form>
-  </div>
-  
+      <button type="button" (click)="startWebcam()">Activer Webcam</button>
+      <button type="button" (click)="captureImageFromWebcam()">Capturer</button>
+      <button type="button" (click)="stopWebcam()">Arrêter Webcam</button>
+    </div>
+    <img *ngIf="formData.image" [src]="formData.image" alt="Selected Image" width="150" />
+
+    <!-- Bouton Soumettre -->
+    <button type="submit" class="animated-btn">S'inscrire</button>
+  </form>
+
+  <!-- Lien Connexion -->
+  <p class="signup-text">déja a un compte ? <a routerLink="../login">Se connecter</a></p>
+</div>

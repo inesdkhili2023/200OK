@@ -1,0 +1,24 @@
+<div class="detection-wrapper">
+  <div class="detection-card">
+    <h2>🔍 Détection de visage</h2>
+
+    <div class="video-frame">
+      <video #video autoplay muted playsinline></video>
+    </div>
+
+    <div class="status-message">
+      <ng-container *ngIf="loadingModels">
+        <p class="loading">Chargement des modèles...</p>
+      </ng-container>
+      <ng-container *ngIf="!loadingModels && !faceDetected">
+        <p class="waiting">Aucun visage détecté. Regardez la caméra 👀</p>
+      </ng-container>
+      <ng-container *ngIf="faceDetected">
+        <p class="success">✅ Visage détecté ! Vous pouvez continuer.</p>
+        <button (click)="navigateToSignup()" class="continue-btn">
+          Continuer vers l'inscription
+        </button>
+      </ng-container>
+    </div>
+  </div>
+</div>

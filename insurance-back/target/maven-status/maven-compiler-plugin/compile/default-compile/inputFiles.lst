@@ -1,18 +1,19 @@
-C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\config\CorsConfig.java
-C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\config\JWTAuthFilter.java
-C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\config\SecurityConfig.java
-C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\controller\UserManagementController.java
-C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\dto\ReqRes.java
-C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\email\EmailSender.java
-C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\email\EmailService.java
-C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\entity\Civility.java
-C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\entity\ConfirmationToken.java
-C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\entity\OurUsers.java
-C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\repository\ConfirmationTokenRepository.java
-C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\repository\UsersRepo.java
-C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\service\ConfirmationTokenService.java
-C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\service\EmailValidator.java
-C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\service\JWTUtils.java
-C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\service\OurUserDetailsService.java
-C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\service\UsersManagementService.java
-C:\Users\user\Desktop\pi\users-management-system\springboot + angular\backend\src\main\java\com\phegondev\usersmanagementsystem\UsersmanagementsystemApplication.java
+C:\Users\user\Desktop\front+back\insurance-back\src\main\java\com\phegondev\usersmanagementsystem\config\CorsConfig.java
+C:\Users\user\Desktop\front+back\insurance-back\src\main\java\com\phegondev\usersmanagementsystem\config\JWTAuthFilter.java
+C:\Users\user\Desktop\front+back\insurance-back\src\main\java\com\phegondev\usersmanagementsystem\config\SecurityConfig.java
+C:\Users\user\Desktop\front+back\insurance-back\src\main\java\com\phegondev\usersmanagementsystem\controller\UserManagementController.java
+C:\Users\user\Desktop\front+back\insurance-back\src\main\java\com\phegondev\usersmanagementsystem\dto\ReqRes.java
+C:\Users\user\Desktop\front+back\insurance-back\src\main\java\com\phegondev\usersmanagementsystem\email\EmailSender.java
+C:\Users\user\Desktop\front+back\insurance-back\src\main\java\com\phegondev\usersmanagementsystem\email\EmailService.java
+C:\Users\user\Desktop\front+back\insurance-back\src\main\java\com\phegondev\usersmanagementsystem\entity\Civility.java
+C:\Users\user\Desktop\front+back\insurance-back\src\main\java\com\phegondev\usersmanagementsystem\entity\ConfirmationToken.java
+C:\Users\user\Desktop\front+back\insurance-back\src\main\java\com\phegondev\usersmanagementsystem\entity\OurUsers.java
+C:\Users\user\Desktop\front+back\insurance-back\src\main\java\com\phegondev\usersmanagementsystem\repository\ConfirmationTokenRepository.java
+C:\Users\user\Desktop\front+back\insurance-back\src\main\java\com\phegondev\usersmanagementsystem\repository\UsersRepo.java
+C:\Users\user\Desktop\front+back\insurance-back\src\main\java\com\phegondev\usersmanagementsystem\service\ConfirmationTokenService.java
+C:\Users\user\Desktop\front+back\insurance-back\src\main\java\com\phegondev\usersmanagementsystem\service\EmailValidator.java
+C:\Users\user\Desktop\front+back\insurance-back\src\main\java\com\phegondev\usersmanagementsystem\service\FaceRecognitionService.java
+C:\Users\user\Desktop\front+back\insurance-back\src\main\java\com\phegondev\usersmanagementsystem\service\JWTUtils.java
+C:\Users\user\Desktop\front+back\insurance-back\src\main\java\com\phegondev\usersmanagementsystem\service\OurUserDetailsService.java
+C:\Users\user\Desktop\front+back\insurance-back\src\main\java\com\phegondev\usersmanagementsystem\service\UsersManagementService.java
+C:\Users\user\Desktop\front+back\insurance-back\src\main\java\com\phegondev\usersmanagementsystem\UsersmanagementsystemApplication.java

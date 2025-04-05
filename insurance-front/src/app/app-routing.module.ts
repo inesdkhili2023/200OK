@@ -12,21 +12,38 @@ import { ProfileComponent } from './user/profile/profile.component';
 import { UpdateUserComponent } from './user/update-user/update-user.component';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { SignupComponent } from './user/signup/signup.component';
+import { SendemailComponent } from './user/sendemail/sendemail.component';
+import { ResetpasswordComponent } from './user/resetpassword/resetpassword.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { LogingoogleComponent } from './user/logingoogle/logingoogle.component';
+import { FaceLoginComponent } from './user/face-login/face-login.component';
+import { LoginAttentanceComponent } from './user/login-attentance/login-attentance.component';
+import { FaceDetectionComponent } from './user/face-detection/face-detection.component';
+import { FaceDetectionGuard } from './guards/face-detection.guard';
+import { AuthGuard } from './guards/auth.guard';
+import { RoleGuard } from './guards/role.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
+  { path: 'detect-face', component: FaceDetectionComponent },
   { path: 'blog', component: BlogComponent },
+  { path: 'loginface', component: LoginAttentanceComponent },
   { path: 'blog-details', component: BlogDetailsComponent },
   { path: 'contact-us', component: ContactUsComponent },
-  { path: 'admin/dashboard', component: DashboardAdminComponent },
+  { path: 'admin/dashboard', component: DashboardAdminComponent, canActivate: [AuthGuard, RoleGuard] },
+  { path: 'dashboard', component: DashboardComponent },
   { path: 'insurances', component: InsurancesComponent },
   {path: 'login', component: LoginComponent},
-  {path: 'register', component: RegisterComponent,},
+  {path: 'register', component: RegisterComponent},
   {path: 'profile', component: ProfileComponent},
   {path: 'update/:id', component: UpdateUserComponent},
   {path: 'users', component: UserListComponent},
-  {path: 'signup', component: SignupComponent},
+  {path: 'signup', component: SignupComponent, canActivate: [FaceDetectionGuard]},
+  {path: 'sendemail', component: SendemailComponent},
+  {path: 'google', component: LogingoogleComponent},
+  {path: 'facial', component: FaceLoginComponent},
+  {path: 'resetpassword', component: ResetpasswordComponent},
   { path: '**', redirectTo: 'home' } 
 ];
 

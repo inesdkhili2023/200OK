@@ -42,5 +42,8 @@
         </div>
         
         <button type="submit">Update</button>
+        <a routerLink="/admin/dashboard" *ngIf="isAdmin"><- dashboard</a>
+        <a routerLink="/dashboard" *ngIf="isUser"><- dashboard</a>
     </form>
+    
 </div>
