@@ -18,6 +18,7 @@ export class AgentListComponent implements OnInit{
   agents: OurUsers[] = []; 
   agencies: Agency[] = []; 
   isLoading: boolean = false;
+  errorMessage: string = '';
 
   constructor(private userService: UserService,public dialog: MatDialog,private agencyService: AgencyService) {}
 
@@ -27,21 +28,31 @@ export class AgentListComponent implements OnInit{
     
   }
 
-  loadAgents(): void {
-    this.userService.getUsers().subscribe(
-      (users: OurUsers[]) => {
-        // Filter users with role "agent"
-        this.agents = users.filter(user => user.role === 'agent');
+  loadAgents() {
+    this.isLoading = true;
+    this.errorMessage = '';
+    
+    this.userService.getAgents().subscribe({
+      next: (data: OurUsers[]) => {
+        this.agents = data || []; // Handle case where data might be null/undefined
+        this.isLoading = false;
       },
-      (error) => {
-        console.error('Error fetching agents:', error);
+      error: (error) => {
+        this.errorMessage = 'Failed to load agents. Please try again later.';
+        this.isLoading = false;
+        console.error('Error loading agents:', error);
       }
-    );
+    });
   }
   loadAgencies() {
-    this.agencyService.getAgencys().subscribe(data => {
-      this.agencies = data; // Fetch the agencies from the backend
-    });
+    this.agencyService.getAgencys().subscribe(
+      data => {
+        this.agencies = data;
+      },
+      error => {
+        console.error('Error loading agencies:', error);
+      }
+    );
   }
   openAssignDialog(agent: OurUsers): void {
     const dialogRef = this.dialog.open(AssignAgencyDialog, {

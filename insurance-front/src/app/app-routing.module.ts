@@ -19,32 +19,55 @@ import { ProfileComponent } from './user/profile/profile.component';
 import { UpdateUserComponent } from './user/update-user/update-user.component';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { SignupComponent } from './user/signup/signup.component';
+import { AdminGuard } from './guards/admin.guard';
+import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.component';
 
 const routes: Routes = [
+  // Public routes
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'blog', component: BlogComponent },
   { path: 'blog-details', component: BlogDetailsComponent },
   { path: 'contact-us', component: ContactUsComponent },
-  { path: 'admin/dashboard', component: DashboardAdminComponent },
   { path: 'insurances', component: InsurancesComponent },
-  { path: 'claim', component: ClaimComponent},
-  { path: 'claim-list', component: ClaimListComponent},
-  { path: 'claim-admin', component: ClaimAdminComponent},
-  { path: 'agency', component: AgencyComponent},
-  { path: 'agency-list', component: AgencyListComponent},
-  { path: 'agent-list', component: AgentListComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'register', component: RegisterComponent,},
-  {path: 'profile', component: ProfileComponent},
-  {path: 'update/:id', component: UpdateUserComponent},
-  {path: 'users', component: UserListComponent},
-  {path: 'signup', component: SignupComponent},
+  { path: 'claim', component: ClaimComponent },
+  { path: 'claim-list', component: ClaimListComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignupComponent },
+  
+  // Admin routes with AdminLayout
+  { 
+    path: 'admin',
+    component: AdminLayoutComponent,
+    canActivate: [AdminGuard],
+    children: [
+      { path: 'dashboard', component: DashboardAdminComponent },
+      { path: 'claims', component: ClaimAdminComponent },
+      { path: 'agency', component: AgencyComponent },
+      { path: 'agencies', component: AgencyListComponent },
+      { path: 'agents', component: AgentListComponent },
+      { path: 'users', component: UserListComponent },
+      { path: 'profile', component: ProfileComponent },
+      { path: 'register', component: RegisterComponent },
+      { path: 'update/:id', component: UpdateUserComponent },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
+    ]
+  },
+  
+  // Redirect old admin URLs to new structure
+  { path: 'dashboard-admin', redirectTo: 'admin/dashboard', pathMatch: 'full' },
+  { path: 'claim-admin', redirectTo: 'admin/claims', pathMatch: 'full' },
+  { path: 'agency-list', redirectTo: 'admin/agencies', pathMatch: 'full' },
+  { path: 'agent-list', redirectTo: 'admin/agents', pathMatch: 'full' },
+  { path: 'users', redirectTo: 'admin/users', pathMatch: 'full' },
+  { path: 'profile', component: ProfileComponent }, // Keep this for non-admin users
+  
+  // Catch-all route
   { path: '**', redirectTo: 'home' } 
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

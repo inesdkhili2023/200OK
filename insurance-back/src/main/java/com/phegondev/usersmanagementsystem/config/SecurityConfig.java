@@ -28,27 +28,26 @@ public class SecurityConfig {
     @Autowired
     private JWTAuthFilter jwtAuthFilter;
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
-                .authorizeHttpRequests(request-> request.requestMatchers("/auth/**", "/public/**").permitAll()
-                        .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
-                        .requestMatchers("/uploads/**").permitAll()
-                        //.requestMatchers("/auth/signup/confirm/**").permitAll()
-                        //.requestMatchers("/confirm/**").permitAll()
-                        .requestMatchers("/user/**").hasAnyAuthority("USER")
-                        .requestMatchers("/agent/**").hasAnyAuthority("AGENT")
-                        .requestMatchers("/adminuser/**").hasAnyAuthority("ADMIN","USER")
-                        .requestMatchers("/adminagent/**").hasAnyAuthority("ADMIN","AGENT")
-                        .requestMatchers("/agentuser/**").hasAnyAuthority("AGENT","USER")
-                        .requestMatchers("/allRole/**").hasAnyAuthority("ADMIN","USER","AGENT")
+                .authorizeHttpRequests(request-> request
+                        .requestMatchers("/auth/**", "/public/**", "/uploads/**").permitAll()
+                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                        .requestMatchers("/user/**").hasAuthority("USER")
+                        .requestMatchers("/agent/**").hasAuthority("AGENT")
+                        .requestMatchers("/adminuser/**").hasAnyAuthority("ADMIN", "USER")
+                        .requestMatchers("/adminagent/**").hasAnyAuthority("ADMIN", "AGENT")
+                        .requestMatchers("/agentuser/**").hasAnyAuthority("AGENT", "USER")
+                        // Update these lines:
+                        .requestMatchers("/get/Users").hasAnyAuthority("ADMIN", "AGENT") // Add this line
+                        .requestMatchers("/allRole/**").hasAnyAuthority("ADMIN", "USER", "AGENT")
                         .anyRequest().authenticated())
                 .sessionManagement(manager->manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authenticationProvider(authenticationProvider()).addFilterBefore(
-                        jwtAuthFilter, UsernamePasswordAuthenticationFilter.class
-                );
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
         return httpSecurity.build();
     }
     @Bean
@@ -61,12 +60,11 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder( );
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
         return authenticationConfiguration.getAuthenticationManager();
     }
-
 }

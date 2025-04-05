@@ -1,9 +1,9 @@
-package com.ahch.service;
+package com.phegondev.usersmanagementsystem.service;
 
-import com.ahch.Repo.ClaimRepo;
-import com.ahch.Repo.UserRepo;
-import com.ahch.entity.Claim;
-import com.ahch.entity.OurUsers;
+import com.phegondev.usersmanagementsystem.repository.ClaimRepo;
+import com.phegondev.usersmanagementsystem.repository.UsersRepo;
+import com.phegondev.usersmanagementsystem.entity.Claim;
+import com.phegondev.usersmanagementsystem.entity.OurUsers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ public class ClaimService {
     @Autowired
     private ClaimRepo ClaimDao;
     @Autowired
-    private UserRepo UserRepo;
+    private UsersRepo UserRepo;
     public Claim saveClaim(Long iduser,Claim claim) {
         OurUsers user = UserRepo.findById(iduser).orElseThrow(() -> new RuntimeException("User not found"));
         claim.setUser(user);

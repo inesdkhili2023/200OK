@@ -36,16 +36,13 @@
           <li><a routerLink="/blog-details">Blog Details</a></li>
           <li><a routerLink="/contact-us">Contact</a></li>
           <li><a routerLink="/claim" >Claim</a></li>
-          <li><a routerLink="/admin/dashboard">Admin Dashboard</a></li>
+          <li *ngIf="isAdmin"><a routerLink="/admin/dashboard">Admin Dashboard</a></li>
           <li><a routerLink="/insurances">Insurances</a></li>
-          <li><a routerLink="/buy-pro" class="btn-default">Buy Pro Version</a></li>
-          <li><a routerLink="/admin/dashboard">Admin Dashboard</a></li>
-          <li><a routerLink="/insurances">Insurances</a></li>
-          <li *ngIf = "!isAuthenticated"><a routerLink = "/signup">S'inscrire</a></li>
-          <li *ngIf = "isAuthenticated"><a routerLink = "/profile">Profil</a></li>
-          <li *ngIf = "isAdmin"><a routerLink = "/users">Liste d'Utilisateurs </a></li>
-          <li *ngIf = "!isAuthenticated"><a routerLink = "/login">Se Connecter</a></li>
-          <li *ngIf = "isAuthenticated"><a routerLink = "" (click)="logout()">Se déconnecter</a></li>
+          <li *ngIf="!isAuthenticated"><a routerLink="/signup">S'inscrire</a></li>
+          <li *ngIf="isAuthenticated && !isAdmin"><a routerLink="/profile">Profil</a></li>
+          <li *ngIf="isAdmin && false"><a routerLink="/users">Liste d'Utilisateurs</a></li>
+          <li *ngIf="!isAuthenticated"><a routerLink="/login">Se Connecter</a></li>
+          <li *ngIf="isAuthenticated && !isAdmin"><a routerLink="" (click)="logout()">Se déconnecter</a></li>
         </ul>
       </div>
     </div>

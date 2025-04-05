@@ -1,15 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
+import { Router } from '@angular/router';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-side-bar',
   templateUrl: './side-bar.component.html',
   styleUrls: ['./side-bar.component.css']
 })
-export class SideBarComponent {
-chart: any;
+export class SideBarComponent implements OnInit {
+  chart: any;
 
-  constructor() {
+  constructor(
+    private router: Router,
+    private usersService: UsersService
+  ) {
     Chart.register(...registerables);
   }
 
@@ -20,6 +25,11 @@ chart: any;
 
   private initializeRevenueChart(): void {
     const ctx = document.getElementById('revenueChart') as HTMLCanvasElement;
+    if (!ctx) {
+      console.error('Revenue chart canvas not found');
+      return;
+    }
+    
     this.chart = new Chart(ctx, {
       type: 'line',
       data: {
@@ -41,6 +51,12 @@ chart: any;
         }
       }
     });
+  }
+
+  // Logout method
+  logout(): void {
+    this.usersService.logOut();
+    this.router.navigate(['/login']);
   }
 
   // Methods for handling quick actions
@@ -79,8 +95,7 @@ chart: any;
 
   // Method for handling sidebar navigation
   navigate(route: string): void {
-    console.log('Navigating to:', route);
-    // Implement navigation logic
+    this.router.navigate([route]);
   }
 }
 

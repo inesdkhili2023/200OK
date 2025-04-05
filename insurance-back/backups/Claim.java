@@ -1,4 +1,4 @@
-package com.ahch.entity;
+package com.phegondev.usersmanagementsystem.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -18,19 +18,20 @@ public class Claim {
     LocalDateTime DateCreation;
 
     @Enumerated(EnumType.STRING)
-    ClaimStatus ClaimStatus = com.ahch.entity.ClaimStatus.UNTREATED;
+    ClaimStatus ClaimStatus = com.phegondev.usersmanagementsystem.entity.ClaimStatus.UNTREATED;
 
     @Enumerated(EnumType.STRING)
     ClaimType ClaimType;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private OurUsers user; // Remove @JsonBackReference
+    private OurUsers user;
 
     // Getters and Setters
     public OurUsers getUser() {
         return user;
     }
+
 
     public void setUser(OurUsers user) {
         this.user = user;
@@ -52,11 +53,11 @@ public class Claim {
         Description = description;
     }
 
-    public com.ahch.entity.ClaimStatus getClaimStatus() {
+    public ClaimStatus getClaimStatus() {
         return ClaimStatus;
     }
 
-    public void setClaimStatus(com.ahch.entity.ClaimStatus claimStatus) {
+    public void setClaimStatus(ClaimStatus claimStatus) {
         ClaimStatus = claimStatus;
     }
 
@@ -68,12 +69,11 @@ public class Claim {
         DateCreation = dateCreation;
     }
 
-    public com.ahch.entity.ClaimType getClaimType() {
+    public ClaimType getClaimType() {
         return ClaimType;
     }
 
-    public void setClaimType(com.ahch.entity.ClaimType claimType) {
+    public void setClaimType(ClaimType claimType) {
         ClaimType = claimType;
     }
-// Other getters and setters...
 }

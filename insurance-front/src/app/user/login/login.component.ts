@@ -20,7 +20,6 @@ export class LoginComponent {
   errorMessage: string = ''
 
   async handleSubmit() {
-
     if (!this.email || !this.password) {
       this.showError("Email and Password is required");
       return
@@ -28,17 +27,40 @@ export class LoginComponent {
 
     try {
       const response = await this.usersService.login(this.email, this.password);
-      if(response.statusCode == 200){
-        localStorage.setItem('token', response.token)
-        localStorage.setItem('role', response.role)
-        this.router.navigate(['/profile'])
-      }else{
-        this.showError(response.message)
+      if(response.statusCode == 200 && response.token) {
+        // Clear any existing tokens first
+        localStorage.removeItem('token');
+        localStorage.removeItem('role');
+        
+        // Store token and role
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('role', response.role);
+        
+        // Log token for debugging
+        console.log('Role:', response.role);
+        console.log('Token stored:', response.token);
+        
+        // Check role and redirect accordingly
+        if (response.role === 'ADMIN') {
+          // Redirect admin users to the admin dashboard
+          this.router.navigate(['/admin/dashboard']);
+        } else if (response.role === 'USER') {
+          // For users, go to home or profile
+          this.router.navigate(['/profile']);
+        } else if (response.role === 'AGENT') {
+          // For agents
+          this.router.navigate(['/profile']);
+        } else {
+          // Default redirect
+          this.router.navigate(['/']);
+        }
+      } else {
+        this.showError(response.message || "Login failed");
       }
     } catch (error: any) {
-      this.showError(error.message)
+      console.error('Login error:', error);
+      this.showError(error.message || "An error occurred during login");
     }
-
   }
 
   showError(mess: string) {

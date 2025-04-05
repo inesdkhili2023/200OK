@@ -74,13 +74,13 @@ public class UserManagementController {
 
 
     @GetMapping("/adminuser/get-users/{userId}")
-    public ResponseEntity<ReqRes> getUSerByID(@PathVariable Integer userId){
+    public ResponseEntity<ReqRes> getUSerByID(@PathVariable Long userId){
         return ResponseEntity.ok(usersManagementService.getUsersById(userId));
 
     }
 
     @PutMapping("/adminuser/update/{userId}")
-    public ResponseEntity<ReqRes> updateUser(@PathVariable Integer userId, @RequestPart OurUsers reqres, @RequestPart(value = "imageFile", required = false) MultipartFile imageFile){
+    public ResponseEntity<ReqRes> updateUser(@PathVariable Long userId, @RequestPart OurUsers reqres, @RequestPart(value = "imageFile", required = false) MultipartFile imageFile){
         return ResponseEntity.ok(usersManagementService.updateUser(userId, reqres,imageFile));
     }
 
@@ -101,9 +101,12 @@ public class UserManagementController {
     }
 
     @DeleteMapping("/admin/delete/{userId}")
-    public ResponseEntity<ReqRes> deleteUSer(@PathVariable Integer userId){
+    public ResponseEntity<ReqRes> deleteUSer(@PathVariable Long userId){
         return ResponseEntity.ok(usersManagementService.deleteUser(userId));
     }
 
-
+    @PostMapping("/admin/{userId}/assign-to-agency/{agencyId}")
+    public ResponseEntity<ReqRes> assignAgencyToUser(@PathVariable Long userId, @PathVariable Long agencyId) {
+        return ResponseEntity.ok(usersManagementService.assignAgencyToUser(userId, agencyId));
+    }
 }

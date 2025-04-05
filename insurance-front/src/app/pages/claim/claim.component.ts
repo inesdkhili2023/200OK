@@ -6,19 +6,19 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OurUsers } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
+import { UsersService } from 'src/app/services/users.service';
 import { ChangeDetectorRef } from '@angular/core';
-
 
 @Component({
   selector: 'app-claim',
   templateUrl: './claim.component.html',
   styleUrls: ['./claim.component.css']
 })
-export class ClaimComponent implements OnInit{
+export class ClaimComponent implements OnInit {
 
   isCreateClaim: boolean = true;
   users: OurUsers[] = [];
-  selectedUserId?: number;
+  currentUser: any = null;
   
   claim: Claim = {
     claimId: 0,
@@ -26,33 +26,39 @@ export class ClaimComponent implements OnInit{
     dateCreation: '',
     claimStatus: ClaimStatus.UNTREATED,
     claimType: ClaimType.CLAIM,
-    user: undefined  };
-
-
+    user: undefined  
+  };
     
   claimTypes = Object.values(ClaimType);
   claimStatuses = Object.values(ClaimStatus);
   adminMode: boolean = false;
-  constructor(private claimService: ClaimService,
+
+  constructor(
+    private claimService: ClaimService,
     private userService: UserService,
+    private usersService: UsersService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private cdr: ChangeDetectorRef) {
-
-  }
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
-    this.userService.getUsers().subscribe(
-      (res: OurUsers[]) => {
-        this.users = res;
-        //console.log("Users loaded:", this.users); 
-      },
-      (err: HttpErrorResponse) => {
-        console.error("Error loading users:", err); //
-      }
-    );
-   
-
+    // Load the current user profile
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.usersService.getYourProfile(token).then((response) => {
+        if (response && response.ourUsers) {
+          this.currentUser = response.ourUsers;
+          console.log('Current user:', this.currentUser);
+        }
+      }).catch((error) => {
+        console.error('Error loading current user:', error);
+      });
+    } else {
+      // Redirect to login if not logged in
+      this.router.navigate(['/login']);
+      return;
+    }
 
     this.activatedRoute.paramMap.subscribe(params => {
       const claimId = params.get("claimId");
@@ -76,53 +82,28 @@ export class ClaimComponent implements OnInit{
       } else {
         // New claim
         this.isCreateClaim = true;
-             }
+      }
     });
   }
-  logSelectedUserId() {
-    console.log('Selected User ID:', this.selectedUserId);
-  }
+
   saveClaim(ClaimForm: NgForm): void {
-    console.log('Selected User ID before saving:', this.selectedUserId);
-    console.log('Users array:', this.users);
-  
-    if (!this.selectedUserId) {
-      console.error('User ID is required');
-      return;
-    }
-  
-    // Ensure the users array is populated
-    if (this.users.length === 0) {
-      console.error('Users array is empty');
-      alert('Users data is still loading. Please try again.');
-      return;
-    }
-  
-    // Log all user IDs for debugging
-    console.log('User IDs:', this.users.map(user => user.iduser));
-  
-    // Find the selected user
-    const selectedUser = this.users.find(user => user.iduser === Number(this.selectedUserId));
-    console.log('Selected User:', selectedUser);
-  
-    if (!selectedUser) {
-      console.error('Selected user not found in the users array');
-      alert('Selected user not found. Please try again.');
+    // Check if we have the current user
+    if (!this.currentUser || !this.currentUser.iduser) {
+      console.error('Current user information not available');
+      alert('Please log in to submit a claim.');
+      this.router.navigate(['/login']);
       return;
     }
   
     // Set the creation date
     this.claim.dateCreation = new Date().toISOString();
   
-    // Set the user object
-    this.claim.user = selectedUser;
-  
     // Log the claim being saved
-    console.log('Saving claim:', this.claim);
+    console.log('Saving claim for user ID:', this.currentUser.iduser);
   
     // Save or update the claim
     const observable = this.isCreateClaim
-      ? this.claimService.saveClaim(this.selectedUserId, this.claim)
+      ? this.claimService.saveClaim(this.currentUser.iduser, this.claim)
       : this.claimService.updateClaim(this.claim);
   
     observable.subscribe({
@@ -137,10 +118,17 @@ export class ClaimComponent implements OnInit{
       }
     });
   }
+
   clearForm(ClaimForm: NgForm): void {
     ClaimForm.reset();
+    this.claim = {
+      claimId: 0,
+      description: '',
+      dateCreation: '',
+      claimStatus: ClaimStatus.UNTREATED,
+      claimType: ClaimType.CLAIM,
+      user: undefined  
+    };
     this.router.navigate(['/claim']);
   }
-
-
 }

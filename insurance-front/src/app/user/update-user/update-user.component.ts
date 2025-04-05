@@ -43,7 +43,7 @@ export class UpdateUserComponent implements OnInit {
 
       // Vérifier et construire l'URL complète de l'image
       if (userDataResponse.ourUsers.image && !userDataResponse.ourUsers.image.startsWith('http')) {
-        userDataResponse.ourUsers.image = `http://localhost:1010/uploads/${userDataResponse.ourUsers.image}`;
+        userDataResponse.ourUsers.image = `http://localhost:9090/uploads/${userDataResponse.ourUsers.image}`;
       }
 
       this.userData = userDataResponse.ourUsers;

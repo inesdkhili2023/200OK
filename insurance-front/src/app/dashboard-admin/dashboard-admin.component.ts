@@ -23,15 +23,30 @@ export class DashboardAdminComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.initializeRevenueChart();
+    // Check authentication status
     this.isAuthenticated = this.userService.isAuthenticated();
     this.isAdmin = this.userService.isAdmin();
     this.isUser = this.userService.isUser();
     this.isAgent = this.userService.isAgent();
+    
+    // Redirect non-admin users to home
+    if (!this.isAuthenticated || !this.isAdmin) {
+      console.log('Unauthorized access attempt to admin dashboard');
+      this.router.navigate(['/login']);
+      return;
+    }
+    
+    // Initialize charts for admin dashboard
+    this.initializeRevenueChart();
   }
 
   private initializeRevenueChart(): void {
     const ctx = document.getElementById('revenueChart') as HTMLCanvasElement;
+    if (!ctx) {
+      console.error('Canvas element not found');
+      return;
+    }
+    
     this.chart = new Chart(ctx, {
       type: 'line',
       data: {
@@ -40,7 +55,7 @@ export class DashboardAdminComponent implements OnInit {
           label: 'Revenue',
           data: [12000, 19000, 15000, 25000, 22000, 30000],
           fill: false,
-          borderColor: '#f38F1D',
+          borderColor: '#1a237e',
           tension: 0.1
         }]
       },
@@ -73,15 +88,17 @@ export class DashboardAdminComponent implements OnInit {
   }
 
   addUser(): void {
-    console.log('Add user clicked');
+    console.log('Navigating to add user page');
+    this.router.navigate(['/admin/users'], { queryParams: { action: 'new' } });
   }
 
   createNewPolicy(): void {
-    console.log('Create new policy clicked');
+    console.log('Navigating to create policy page');
+    this.router.navigate(['/admin/policies/new']);
   }
 
   generateReport(): void {
-    console.log('Generate report clicked');
+    console.log('Generating report');
   }
 
   handleSearch(searchTerm: string): void {

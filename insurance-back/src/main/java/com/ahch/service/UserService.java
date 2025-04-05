@@ -1,7 +1,6 @@
 package com.ahch.service;
 
 import com.ahch.Repo.UserRepo;
-import com.ahch.entity.Claim;
 import com.ahch.entity.OurUsers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

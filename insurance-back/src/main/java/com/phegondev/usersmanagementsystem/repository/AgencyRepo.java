@@ -1,6 +1,6 @@
-package com.ahch.Repo;
+package com.phegondev.usersmanagementsystem.repository;
 
-import com.ahch.entity.Agency;
+import com.phegondev.usersmanagementsystem.entity.Agency;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

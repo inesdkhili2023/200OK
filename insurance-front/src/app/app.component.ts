@@ -9,20 +9,20 @@ import { filter } from 'rxjs/operators';
 })
 export class AppComponent implements OnInit{
   title = 'InsuranceProject';
-  isDashboard = false;
   showHeaderFooter = true;
+  
   constructor(private router: Router) {
     // Listen to route changes
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        // Check if the current route is the dashboard admin
-        this.showHeaderFooter = !event.url.includes('/admin/dashboard');
-      }
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      // Hide header and footer on all admin routes
+      this.showHeaderFooter = !event.url.includes('/admin');
     });
   }
 
   ngOnInit(): void {
-    // Initial check if the current route is the dashboard admin
-    this.showHeaderFooter = !this.router.url.includes('/admin/dashboard');
+    // Initial check for admin routes
+    this.showHeaderFooter = !this.router.url.includes('/admin');
   }
 }

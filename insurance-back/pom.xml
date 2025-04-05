@@ -5,8 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-<<<<<<< HEAD
-		<version>3.3.1</version>
+		<version>3.4.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.ahch</groupId>
@@ -27,35 +26,17 @@
 		<tag/>
 		<url/>
 	</scm>
-=======
-		<version>3.4.2</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
-	<groupId>com.phegondev</groupId>
-	<artifactId>usersmanagementsystem</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>usersmanagementsystem</name>
-	<description>Demo project for Spring Boot</description>
-	<properties>
-		<java.version>17</java.version>
-	</properties>
->>>>>>> c9305956a030b291610f62d4a496788fd831d8e1
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
-<<<<<<< HEAD
 				<version>${spring-cloud.version}</version>
-=======
-				<version>2023.0.0</version>
->>>>>>> c9305956a030b291610f62d4a496788fd831d8e1
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-<<<<<<< HEAD
 
 	<properties>
 		<java.version>17</java.version>
@@ -76,21 +57,16 @@
 		</repository>
 	</repositories>
 	<dependencies>
-		<!--jpa dependency-->
-=======
-	<dependencies>
+
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
->>>>>>> c9305956a030b291610f62d4a496788fd831d8e1
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-<<<<<<< HEAD
 		<!-- spring dependency for restful api's-->
-=======
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
@@ -110,48 +86,36 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
->>>>>>> c9305956a030b291610f62d4a496788fd831d8e1
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-<<<<<<< HEAD
 		<!-- mysql dependency-->
-=======
 
->>>>>>> c9305956a030b291610f62d4a496788fd831d8e1
 		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-<<<<<<< HEAD
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
 
-=======
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
->>>>>>> c9305956a030b291610f62d4a496788fd831d8e1
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 
-<<<<<<< HEAD
 
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-		</dependency>
-=======
+
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
@@ -186,16 +150,14 @@
 		</dependency>
 
 
->>>>>>> c9305956a030b291610f62d4a496788fd831d8e1
 	</dependencies>
+
 
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-<<<<<<< HEAD
-=======
 				<configuration>
 					<excludes>
 						<exclude>
@@ -204,7 +166,6 @@
 						</exclude>
 					</excludes>
 				</configuration>
->>>>>>> c9305956a030b291610f62d4a496788fd831d8e1
 			</plugin>
 		</plugins>
 	</build>

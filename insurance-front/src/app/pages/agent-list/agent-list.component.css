@@ -1,116 +1,82 @@
-/* General container styling */
-.agent-list-container {
-    display: flex;
-    min-height: 100vh;
-    background-color: #f9f9f9;
+.container {
+  max-width: 80%;
+  margin: 150px auto;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
-  /* Sidebar styling */
-  .sidebar {
-    width: 250px;
-    background-color: #455a70; /* Dark blue */
-    color: #ffffff;
-    padding: 20px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  .container h2 {
+  font-size: 30px;
+  margin-bottom: 20px;
+  color: #343a40;
+  text-align: center;
   }
   
-  /* Main content styling */
-  .main-content {
-    flex: 1;
-    padding: 20px;
-    background-color: #ffffff;
+  .reg-button {
+  display: block;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #E07000;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
   }
   
-  /* Header styling */
-  .header {
-    color: #455a70; /* Dark blue */
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
+  .reg-button:hover {
+  background-color: #E07000;
   }
   
-  /* Table container styling */
-  .table-container {
-    overflow-x: auto;
+  table {
+  width: 100%;
+  border-collapse: collapse;
   }
   
-  /* Table styling */
-  .agent-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #ffffff;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  table th,
+  table td {
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 1px solid #dee2e6;
+  color: #495057;
   }
   
-  .agent-table th {
-    background-color: #455a70; /* Dark blue */
-    color: #ffffff;
-    padding: 12px 15px;
-    text-align: left;
-    font-weight: 600;
+  table th {
+  background-color: #e9ecef;
+  font-weight: bold;
   }
   
-  .agent-table td {
-    padding: 12px 15px;
-    border-bottom: 1px solid #e0e0e0;
-    color: #333333;
+  .delete-button,
+  .update-button {
+  padding: 9px;
+  margin: 0px 2px;
+  font-size: 14px;
+  color: #fff;
+  background-color: #dc3545;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
   }
   
-  .agent-table tbody tr:nth-child(even) {
-    background-color: #f8f8f8;
+  .update-button{
+  background-color: #007bff;
   }
   
-  .agent-table tbody tr:hover {
-    background-color: #f1f1f1;
+  .delete-button:hover{
+  background-color: #c82333;
   }
   
-  /* Agency name styling */
-  .agency-name {
-    color: #455a70; /* Dark blue */
-    font-weight: 500;
+  .update-button:hover {
+  background-color: #012750;
+  
   }
-  
-  /* Assign button styling */
-  .assign-button {
-    background-color: #f38F1D; /* Orange */
-    color: #ffffff;
-    border: none;
-    border-radius: 4px;
-    padding: 8px 16px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .assign-button:hover {
-    background-color: #e07d1a; /* Darker orange on hover */
-  }
-  
-  /* Responsive design for smaller screens */
-  @media (max-width: 768px) {
-    .agent-list-container {
-      flex-direction: column;
-    }
-  
-    .sidebar {
-      width: 100%;
-      padding: 10px;
-    }
-  
-    .main-content {
-      padding: 10px;
-    }
-  
-    .agent-table th,
-    .agent-table td {
-      padding: 10px;
-      font-size: 14px;
-    }
-  
-    .assign-button {
-      padding: 6px 12px;
-      font-size: 12px;
-    }
+  .error-message {
+  color: #dc3545;
+  font-size: 20px;
+  margin: 10px;
+  text-align: center;
   }

@@ -1,41 +1,33 @@
-<div class="agent-list-container">
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <app-side-bar></app-side-bar>
+<div class="container">
+    <h2>Liste d'Agents</h2>
+    
+    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+    <div *ngIf="isLoading">Loading agents...</div>
+  
+    <table *ngIf="agents.length > 0 && !isLoading">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Prenom</th>
+          <th>Nom</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let agent of agents">
+          <td>{{ agent.iduser }}</td>
+          <td>{{ agent.name }}</td>
+          <td>{{ agent.lastname }}</td>
+          <td>{{ agent.email }}</td>
+          <td>{{ agent.role }}</td>
+          <td>
+            <button (click)="openAssignDialog(agent)">Assign Agency</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <p *ngIf="agents.length === 0 && !isLoading">No agents found.</p>
   </div>
-
-  <!-- Main Content -->
-  <div class="main-content">
-    <h2 class="header">Agent List</h2>
-
-    <div class="table-container">
-      <table class="agent-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Agency</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let agent of agents">
-            <td>{{ agent.iduser }}</td>
-            <td>{{ agent.name }} {{ agent.lastname }}</td>
-            <td>{{ agent.email }}</td>
-            <td>
-              <span *ngIf="agent.agency?.agencyName; else assignButton" class="agency-name">
-                {{ agent.agency?.agencyName }}
-              </span>
-              <ng-template #assignButton>
-                <button mat-button class="assign-button" (click)="openAssignDialog(agent)">
-                  Assign Agency
-                </button>
-              </ng-template>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>

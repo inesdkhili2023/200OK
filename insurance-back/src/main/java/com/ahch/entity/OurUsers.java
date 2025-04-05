@@ -1,13 +1,12 @@
 package com.ahch.entity;
 
 
-import com.ahch.entity.Civility;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.phegondev.usersmanagementsystem.entity.Claim;
 import jakarta.persistence.*;
 
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -47,6 +46,14 @@ public class OurUsers  {
 
     private String city;
     private String role;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public String getLastname() {
         return lastname;

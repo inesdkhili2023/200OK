@@ -33,8 +33,10 @@ import { UpdateUserComponent } from './user/update-user/update-user.component';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { RegisterComponent } from './user/register/register.component';
 import { ProfileComponent } from './user/profile/profile.component';
-import { LoginComponent } from './user/login/login.component'; // <-- add this import
+import { LoginComponent } from './user/login/login.component';
 import { SignupComponent } from './user/signup/signup.component';
+import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.component';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -64,7 +66,8 @@ import { SignupComponent } from './user/signup/signup.component';
     UserListComponent,
     RegisterComponent,
     ProfileComponent,
-    LoginComponent  // Add this line
+    LoginComponent,
+    AdminLayoutComponent
   ],
   imports: [
     BrowserModule,
@@ -79,7 +82,9 @@ import { SignupComponent } from './user/signup/signup.component';
     MatButtonModule,  
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

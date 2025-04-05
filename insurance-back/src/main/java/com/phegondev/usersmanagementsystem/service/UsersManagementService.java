@@ -3,13 +3,16 @@ package com.phegondev.usersmanagementsystem.service;
 import com.phegondev.usersmanagementsystem.config.JWTAuthFilter;
 import com.phegondev.usersmanagementsystem.dto.ReqRes;
 import com.phegondev.usersmanagementsystem.email.EmailSender;
+import com.phegondev.usersmanagementsystem.entity.Agency;
 import com.phegondev.usersmanagementsystem.entity.Civility;
 import com.phegondev.usersmanagementsystem.entity.ConfirmationToken;
 import com.phegondev.usersmanagementsystem.entity.OurUsers;
+import com.phegondev.usersmanagementsystem.repository.AgencyRepo;
 import com.phegondev.usersmanagementsystem.repository.UsersRepo;
 import io.jsonwebtoken.Jwts;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -32,23 +35,38 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-@AllArgsConstructor
 public class UsersManagementService {
 
+    private final UsersRepo usersRepo;
+    private final JWTUtils jwtUtils;
+    private final AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
+    private final EmailValidator emailValidator;
+    private final ConfirmationTokenService confirmationTokenService;
+    private final EmailSender emailSender;
+    private final AgencyRepo agencyRepo;
+    private final String uploadDir;
+
     @Autowired
-    private UsersRepo usersRepo;
-    @Autowired
-    private JWTUtils jwtUtils;
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private  EmailValidator emailValidator;
-    @Autowired
-    private ConfirmationTokenService confirmationTokenService;
-@Autowired
-private EmailSender emailSender;
+    public UsersManagementService(UsersRepo usersRepo,
+                                 JWTUtils jwtUtils,
+                                 AuthenticationManager authenticationManager,
+                                 PasswordEncoder passwordEncoder,
+                                 EmailValidator emailValidator,
+                                 ConfirmationTokenService confirmationTokenService,
+                                 EmailSender emailSender,
+                                 AgencyRepo agencyRepo,
+                                 @Value("${app.upload.dir}") String uploadDir) {
+        this.usersRepo = usersRepo;
+        this.jwtUtils = jwtUtils;
+        this.authenticationManager = authenticationManager;
+        this.passwordEncoder = passwordEncoder;
+        this.emailValidator = emailValidator;
+        this.confirmationTokenService = confirmationTokenService;
+        this.emailSender = emailSender;
+        this.agencyRepo = agencyRepo;
+        this.uploadDir = uploadDir;
+    }
 
     public ReqRes register(ReqRes registrationRequest, MultipartFile imageFile){
         ReqRes resp = new ReqRes();
@@ -66,12 +84,9 @@ private EmailSender emailSender;
 
             ourUser.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
             if (imageFile != null && !imageFile.isEmpty()) {
-                String uploadDir = "C:\\Users\\user\\Desktop\\front+back\\insurance-back\\uploads";
                 File uploadFolder = new File(uploadDir);
                 if (!uploadFolder.exists()) {
                     uploadFolder.mkdirs();
-
-
                 }
 
                 String fileName = System.currentTimeMillis() + "_" + imageFile.getOriginalFilename();
@@ -81,7 +96,7 @@ private EmailSender emailSender;
                 ourUser.setImage(fileName);
             }
             OurUsers ourUsersResult = usersRepo.save(ourUser);
-            if (ourUsersResult.getId()>0) {
+            if (ourUsersResult.getIduser() > 0) {
                 resp.setOurUsers((ourUsersResult));
                 resp.setMessage("Admin add User or Agent Successfully");
                 resp.setStatusCode(200);
@@ -123,12 +138,9 @@ private EmailSender emailSender;
                 ourUser.setRole("USER"); // Valeur par défaut
             }
             if (imageFile != null && !imageFile.isEmpty()) {
-                String uploadDir = "C:\\Users\\user\\Desktop\\front+back\\insurance-back\\uploads";
                 File uploadFolder = new File(uploadDir);
                 if (!uploadFolder.exists()) {
                     uploadFolder.mkdirs();
-
-
                 }
 
                 String fileName = System.currentTimeMillis() + "_" + imageFile.getOriginalFilename();
@@ -148,10 +160,10 @@ private EmailSender emailSender;
             );
             confirmationTokenService.saveConfirmationToken(confirmationToken);
 
-            String link = "http://localhost:1010/auth/signup/confirm?token=" + token;
+            String link = "http://localhost:9090/auth/signup/confirm?token=" + token;
             emailSender.send(registrationRequest.getEmail(), buildEmail(registrationRequest.getName(), link));
 
-            if (ourUsersResult.getId() > 0) {
+            if (ourUsersResult.getIduser() > 0) {
                 resp.setOurUsers((ourUsersResult));
                 resp.setMessage("User added Successfully. Please check your email to confirm your account.");
                 resp.setStatusCode(200);
@@ -346,7 +358,7 @@ private EmailSender emailSender;
     }
 
 
-    public ReqRes getUsersById(Integer id) {
+    public ReqRes getUsersById(Long id) {
         ReqRes reqRes = new ReqRes();
         try {
             OurUsers usersById = usersRepo.findById(id).orElseThrow(() -> new RuntimeException("User Not found"));
@@ -361,7 +373,7 @@ private EmailSender emailSender;
     }
 
 
-    public ReqRes deleteUser(Integer userId) {
+    public ReqRes deleteUser(Long userId) {
         ReqRes reqRes = new ReqRes();
         try {
             Optional<OurUsers> userOptional = usersRepo.findById(userId);
@@ -380,7 +392,7 @@ private EmailSender emailSender;
         return reqRes;
     }
 
-    public ReqRes updateUser(Integer userId, OurUsers updatedUser, MultipartFile newImageFile) {
+    public ReqRes updateUser(Long userId, OurUsers updatedUser, MultipartFile newImageFile) {
         ReqRes reqRes = new ReqRes();
         try {
             Optional<OurUsers> userOptional = usersRepo.findById(userId);
@@ -398,11 +410,8 @@ private EmailSender emailSender;
 
                 // Gestion de la nouvelle image
                 if (newImageFile != null && !newImageFile.isEmpty()) {
-                    // Chemin absolu du dossier uploads
-                    String uploadDir = "C:\\Users\\user\\Desktop\\front+back\\insurance-back\\uploads";
+                    // Check if the uploads directory exists
                     File uploadFolder = new File(uploadDir);
-
-                    // Créer le dossier s'il n'existe pas
                     if (!uploadFolder.exists()) {
                         uploadFolder.mkdirs();
                     }
@@ -455,7 +464,7 @@ private EmailSender emailSender;
 
                 // Vérifier si l'image existe et ajouter l'URL complète
                 if (user.getImage() != null && !user.getImage().isEmpty()) {
-                    String imageUrl = "http://localhost:1010/uploads/" + user.getImage();
+                    String imageUrl = "http://localhost:9090/uploads/" + user.getImage();
                     user.setImage(imageUrl);
                 }
 
@@ -469,6 +478,39 @@ private EmailSender emailSender;
         } catch (Exception e) {
             reqRes.setStatusCode(500);
             reqRes.setMessage("Error: " + e.getMessage());
+        }
+        return reqRes;
+    }
+
+    public ReqRes assignAgencyToUser(Long userId, Long agencyId) {
+        ReqRes reqRes = new ReqRes();
+        try {
+            Optional<OurUsers> userOptional = usersRepo.findById(userId);
+            Optional<Agency> agencyOptional = agencyRepo.findById(agencyId);
+            
+            if (userOptional.isPresent() && agencyOptional.isPresent()) {
+                OurUsers user = userOptional.get();
+                Agency agency = agencyOptional.get();
+                
+                // Assign agency to user
+                user.setAgency(agency);
+                OurUsers updatedUser = usersRepo.save(user);
+                
+                reqRes.setOurUsers(updatedUser);
+                reqRes.setStatusCode(200);
+                reqRes.setMessage("Agency assigned to user successfully");
+            } else {
+                if (!userOptional.isPresent()) {
+                    reqRes.setStatusCode(404);
+                    reqRes.setMessage("User not found");
+                } else {
+                    reqRes.setStatusCode(404);
+                    reqRes.setMessage("Agency not found");
+                }
+            }
+        } catch (Exception e) {
+            reqRes.setStatusCode(500);
+            reqRes.setMessage("Error occurred while assigning agency to user: " + e.getMessage());
         }
         return reqRes;
     }

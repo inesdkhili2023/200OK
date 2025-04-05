@@ -1,7 +1,6 @@
 package com.ahch.controller;
 
 
-import com.ahch.entity.Claim;
 import com.ahch.entity.OurUsers;
 import com.ahch.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

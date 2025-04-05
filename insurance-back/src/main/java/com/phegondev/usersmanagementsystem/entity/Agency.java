@@ -1,15 +1,13 @@
-package com.ahch.entity;
+package com.phegondev.usersmanagementsystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import java.time.LocalDateTime;
-
-
+import java.util.List;
 
 @Entity
 @Table(name = "Agency")
-
 public class Agency {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +20,18 @@ public class Agency {
     String Email;
     String openingHour;  // Example: "08:00"
     String closingHour;
+
+    @OneToMany(mappedBy = "agency", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<OurUsers> users;
+
+    public List<OurUsers> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<OurUsers> users) {
+        this.users = users;
+    }
 
     public String getOpeningHour() {
         return openingHour;
@@ -94,6 +104,4 @@ public class Agency {
     public void setTelephone(Integer telephone) {
         this.telephone = telephone;
     }
-
-
 }

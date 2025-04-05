@@ -30,10 +30,10 @@ export class MapComponent implements OnInit, AfterViewInit {
   private map!: L.Map;
 
   private customIcon = L.icon({
-    iconUrl: 'assets/images/work.png', // Path to your custom marker image
-    iconSize: [40, 40],       // Size of the icon
-    iconAnchor: [20, 40],     // The anchor point of the icon
-    popupAnchor: [0, -35]     // Popup offset
+    iconUrl: 'assets/images/work.png', 
+    iconSize: [40, 40],       
+    iconAnchor: [20, 40],     
+    popupAnchor: [0, -35]     
   });
  constructor(private agencyService: AgencyService, private router: Router, private activatedRoute: ActivatedRoute) {}
 

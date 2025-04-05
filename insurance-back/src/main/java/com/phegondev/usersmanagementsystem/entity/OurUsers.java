@@ -1,6 +1,7 @@
 package com.phegondev.usersmanagementsystem.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -19,7 +20,7 @@ public class OurUsers implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long iduser;
     private String email;
     private String name;
     private String lastname;
@@ -34,10 +35,19 @@ public class OurUsers implements UserDetails {
     private boolean locked=false;
     private boolean enabled=false;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "agency_id")
+    private Agency agency;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role));
     }
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Claim> claims;
+
 
     @Override
     public String getUsername() {

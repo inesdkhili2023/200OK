@@ -1,7 +1,7 @@
-package com.ahch.service;
+package com.phegondev.usersmanagementsystem.service;
 
-import com.ahch.Repo.AgencyRepo;
-import com.ahch.entity.Agency;
+import com.phegondev.usersmanagementsystem.repository.AgencyRepo;
+import com.phegondev.usersmanagementsystem.entity.Agency;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
