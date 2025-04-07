@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 <div class="claim-container">
   <div class="claim-card">
     <div class="claim-header">
@@ -98,7 +100,7 @@
         
       </div>
 
-      <!-- User Information (admin view) -->
+
       <div class="user-info-section" *ngIf="adminMode && claim.user">
         <h3>Submitted By</h3>
         <div class="user-details">
@@ -134,9 +136,6 @@
     </form>
 
     <div class="claim-footer">
-      <button class="btn btn-outline" routerLink="/claim-list">
-        <i class="fas fa-history"></i> View Claims History
-      </button>
     </div>
   </div>
 </div>

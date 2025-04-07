@@ -1,236 +1,241 @@
-/* Ensure proper spacing from navbar */
-.container {
-    margin-top: 0px; /* Adjust if necessary */
-    max-width: 600px; /* Keeps form centered and readable */
+/* Agency Container */
+.agency-container {
+  max-width: 800px;
+  margin: 6rem auto 3rem;
+  padding: 0 1.5rem;
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
 }
-.btny{
+
+/* Card Layout */
+.agency-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+/* Header Section */
+.agency-header {
+  padding: 2rem;
+  background: linear-gradient(135deg, #455a70, #3e4e63);
+  color: white;
+  position: relative;
+}
+
+.agency-header h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.agency-header .subtitle {
+  font-size: 1rem;
+  opacity: 0.8;
+  margin: 0;
+}
+
+/* Admin badge */
+.admin-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
   background-color: #f38F1D;
-  width: 150px;
-  height: 50px;
-  border-radius: 8px;
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(243, 143, 29, 0.3);
 }
 
-/* Card Styling */
-.card {
-    border-radius: 12px;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
-    background: #ffffff;
-    border: none;
+.admin-badge i {
+  margin-right: 0.4rem;
+  font-size: 0.9rem;
 }
 
-/* Form Fields */
+/* Form */
+.agency-form {
+  padding: 2rem;
+}
+
 .form-group {
-    margin-bottom: 10px;
-    height: 100px;
+  margin-bottom: 1.5rem;
 }
 
 .form-group label {
-    font-weight: 600;
-    color: #333;
-    margin-left: 10px;
- 
-    font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 0.6rem;
+  font-weight: 500;
+  color: #455a70;
+  display: flex;
+  align-items: center;
 }
 
-/* Input Fields */
+.form-group label i {
+  margin-right: 0.5rem;
+  color: #f38F1D;
+}
+
 .form-control {
-    border-radius: 8px;
-    border: 1px solid #ced4da;
-    padding: 12px;
-    margin-left: 10px;
-    font-size: 16px;
-    background-color: #f8f9fa;
-    transition: all 0.3s ease-in-out;
-    width: 540px;
-    height: 45px;
-}
-
-.form-control-desc {
-    border-radius: 8px;
-    border: 1px solid #ced4da;
-    padding: 10px;
-    margin-left: 10px;
-    font-size: 16px;
-    background-color: #f8f9fa;
-    transition: all 0.3s ease-in-out;
-    width: 540px;
-    height: 65px;
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background-color: #f8fafc;
+  transition: all 0.3s ease;
 }
 
 .form-control:focus {
-    border-color: #007bff;
-    background-color: #ffffff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+  outline: none;
+  border-color: #f38F1D;
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(243, 143, 29, 0.1);
 }
 
-/* Select Dropdown */
+.form-control:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  background-color: #f1f5f9;
+}
+
 select.form-control {
-    cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23455a70'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1.2rem;
+  padding-right: 2.5rem;
 }
 
-/* Buttons */
+/* Error Messages */
+.error-message {
+  color: #e53e3e;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+/* Section Headers */
+.coordinates-section h3,
+.contact-section h3,
+.hours-section h3 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+  color: #455a70;
+  display: flex;
+  align-items: center;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.coordinates-section h3 i,
+.contact-section h3 i,
+.hours-section h3 i {
+  margin-right: 0.5rem;
+  color: #f38F1D;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
 .btn {
-    font-size: 16px;
-    padding: 12px 10px;
-    border-radius: 8px;
-    transition: 0.3s;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.btn i {
+  margin-right: 0.5rem;
 }
 
 .btn-primary {
-    background-color: #007bff;
-    border: none;
-    font-weight: 600;
-    margin-left: 5px;
+  background-color: #f38F1D;
+  color: white;
 }
 
 .btn-primary:hover {
-    background-color: #0056b3;
+  background-color: #e07d1a;
+  transform: translateY(-2px);
 }
 
-.secondary {
-    
-    font-size: 16px;
-    padding: 12px 10px;
-    border-radius: 8px;
-    transition: 0.3s;
-    background-color: #6f6f6f;
-    border: none;
-    font-weight: 600;
-    margin-left: 5px;
-    width: 140px;
+.btn-primary:disabled {
+  background-color: #f8b667;
+  cursor: not-allowed;
+  transform: none;
 }
 
-.secondary:hover {
-    background-color: #0056b3;
+.btn-secondary {
+  background-color: #e2e8f0;
+  color: #475569;
 }
 
-
-/* Centering buttons */
-.text-center .btn {
-    width: 160px;
+.btn-secondary:hover {
+  background-color: #cbd5e1;
+  transform: translateY(-2px);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .container {
-        margin-top: 140px;
-    }
-    .btn {
-        width: 100%;
-    }
+.btn-outline {
+  background-color: transparent;
+  border: 2px solid #f38F1D;
+  color: #f38F1D;
 }
-.mb-3{
-    margin-top: 120px;
-    
+
+.btn-outline:hover {
+  background-color: #f38F1D;
+  color: white;
 }
-.btn-primary{
-    background-color: #f38F1D;
+
+/* Agency Footer */
+.agency-footer {
+  padding: 1.5rem 2rem;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: center;
 }
-.dashboard-container {
-    display: flex;
-    min-height: 100vh;
-    background-color: #f5f6fa;
+
+/* Map */
+.agency-map {
+  height: 400px;
+  width: 100%;
+  margin-top: 20px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 640px) {
+  .agency-container {
+    margin-top: 4rem;
   }
   
-  .dashboard-sidebar {
-    width: 250px;
-    background-color: #344659;
-    color: #fff;
-    padding: 20px 0;
+  .agency-header {
+    padding: 1.5rem;
   }
   
-  .sidebar-header {
-    padding: 0 20px;
-    margin-bottom: 30px;
+  .agency-header h2 {
+    font-size: 1.5rem;
   }
   
-  .sidebar-header h3 {
-    color: #fff;
-    margin: 0;
-    font-size: 24px;
+  .form-actions {
+    flex-direction: column;
   }
   
-  .sidebar-menu {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  .btn {
+    width: 100%;
   }
-  
-  .sidebar-menu li {
-    padding: 15px 20px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  .sidebar-menu li:hover, 
-  .sidebar-menu li.active {
-    background-color: #f38F1D;
-  }
-  
-  .sidebar-menu li i {
-    margin-right: 10px;
-  }
-  
-  .dashboard-main {
-    flex: 1;
-    padding: 20px;
-  }
-  
-  .dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-  
-  .header-search input {
-    padding: 8px 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    width: 300px;
-  }
-  
-  .header-profile {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .header-profile img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-  }
-  
-  .stats-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 20px;
-    margin-bottom: 30px;
-  }
-  
-  .stat-card {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-  
-  .stat-card h4 {
-    color: #344659;
-    margin: 0 0 10px 0;
-    font-size: 16px;
-  }
-  
-  .stat-number {
-    font-size: 24px;
-    font-weight: bold;
-    color: #f38F1D;
-  }
-  
+}

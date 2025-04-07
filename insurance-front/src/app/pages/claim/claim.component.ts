@@ -174,7 +174,7 @@ export class ClaimComponent implements OnInit {
         if (this.adminMode) {
           this.router.navigate(['/admin/claims']);
         } else {
-          this.router.navigate(['/claim-list']);
+          this.router.navigate(['/home']);
         }
       },
       error: (err: HttpErrorResponse) => {

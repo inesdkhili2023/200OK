@@ -107,8 +107,6 @@ export class ClaimAdminComponent implements OnInit {
     switch (status) {
       case ClaimStatus.UNTREATED:
         return 'claim-status-untreated';
-      case ClaimStatus.INPROGRESS:
-        return 'claim-status-inprogress';
       case ClaimStatus.TREATED:
         return 'claim-status-treated';
       default:

@@ -1,4 +1,5 @@
-<!-- Claims Table -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 <div class="claims-container">
   <div class="claims-header">
     <h2>Claims Management</h2>
@@ -63,7 +64,7 @@
           </div>
           <div class="claim-actions">
             <div class="quick-status-update">
-              <select [value]="claim.claimStatus" (change)="quickUpdateStatus(claim, $event)">
+              <select  *ngIf="claim.claimStatus === 'UNTREATED'" [value]="claim.claimStatus" (change)="quickUpdateStatus(claim, $event)">
                 <option *ngFor="let status of claimStatuses" [value]="status">{{ status }}</option>
               </select>
             </div>
@@ -90,15 +91,7 @@
       </div>
     </div>
     
-    <div class="stat-card">
-      <div class="stat-icon inprogress">
-        <i class="fas fa-sync-alt"></i>
-      </div>
-      <div class="stat-info">
-        <h3>In Progress</h3>
-        <p class="stat-count">{{ getStatusCount(ClaimStatus.INPROGRESS) }}</p>
-      </div>
-    </div>
+    
     
     <div class="stat-card">
       <div class="stat-icon treated">
