@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 @Repository
 public interface UsersRepo extends JpaRepository<OurUsers, Long> {
@@ -18,4 +19,6 @@ public interface UsersRepo extends JpaRepository<OurUsers, Long> {
     @Query("UPDATE OurUsers a " +
             "SET a.enabled = TRUE WHERE a.email = ?1")
     int enableOurUser(String email);
+
+    List<OurUsers> findByRole(String role);
 }

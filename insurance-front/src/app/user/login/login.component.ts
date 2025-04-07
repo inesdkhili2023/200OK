@@ -31,14 +31,21 @@ export class LoginComponent {
         // Clear any existing tokens first
         localStorage.removeItem('token');
         localStorage.removeItem('role');
+        localStorage.removeItem('userId');
         
-        // Store token and role
+        // Store token, role, and userId
         localStorage.setItem('token', response.token);
         localStorage.setItem('role', response.role);
+        
+        // Store user ID if available
+        if (response.userId) {
+          localStorage.setItem('userId', response.userId.toString());
+        }
         
         // Log token for debugging
         console.log('Role:', response.role);
         console.log('Token stored:', response.token);
+        console.log('User ID stored:', response.userId);
         
         // Check role and redirect accordingly
         if (response.role === 'ADMIN') {

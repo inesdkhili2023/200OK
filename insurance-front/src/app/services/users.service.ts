@@ -121,6 +121,7 @@ logOut():void{
   if(typeof localStorage !== 'undefined'){
     localStorage.removeItem('token')
     localStorage.removeItem('role')
+    localStorage.removeItem('userId')
   }
 }
 
@@ -158,6 +159,15 @@ isAgent(): boolean {
   }
   return false;
 
+}
+
+// Get the current user ID from localStorage
+getCurrentUserId(): number | null {
+  if(typeof localStorage !== 'undefined'){
+    const userId = localStorage.getItem('userId');
+    return userId ? parseInt(userId, 10) : null;
+  }
+  return null;
 }
 
 }

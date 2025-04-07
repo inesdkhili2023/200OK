@@ -17,7 +17,7 @@ export class AgencyComponent implements OnInit, AfterViewInit {
   isCreateAgency: boolean = true;
   agencies: Agency[] = [];
   agency: Agency = {
-    idAgency: 0,
+    idAgency: null as unknown as number,
     latitude: 0,
     longitude: 0,
     agencyName: '',
@@ -109,26 +109,30 @@ export class AgencyComponent implements OnInit, AfterViewInit {
   saveAgency(AgencyForm: NgForm): void {
     if (AgencyForm.valid) {
       console.log('Form Submitted!', this.agency);
+      
       if (this.isCreateAgency) {
         this.agencyService.saveAgency(this.agency).subscribe({
           next: (res: Agency) => {
-            console.log(res);
+            console.log('Agency saved successfully:', res);
             AgencyForm.reset();
-            this.router.navigate(['/agency-list']);
+            this.router.navigate(['/admin/agencies']);
             this.loadAgencies(); // Refresh markers after saving
           },
           error: (err: HttpErrorResponse) => {
-            console.log(err);
+            console.log('Error saving agency:', err);
+            this.showErrorPopup('Failed to save agency. Please check your permissions and try again.');
           }
         });
       } else {
         this.agencyService.updateAgency(this.agency).subscribe({
           next: (res: Agency) => {
-            this.router.navigate(['/agency-list']);
+            console.log('Agency updated successfully:', res);
+            this.router.navigate(['/admin/agencies']);
             this.loadAgencies(); // Refresh markers after updating
           },
           error: (err: HttpErrorResponse) => {
-            console.log(err);
+            console.log('Error updating agency:', err);
+            this.showErrorPopup('Failed to update agency. Please check your permissions and try again.');
           }
         });
       }
@@ -139,13 +143,24 @@ export class AgencyComponent implements OnInit, AfterViewInit {
 
   clearForm(AgencyForm: NgForm): void {
     AgencyForm.reset();
-    this.router.navigate(['/agency']);
+    this.router.navigate(['/admin/agencies']);
   }
 
   showValidationPopup() {
     const dialogRef = this.dialog.open(ValidationPopupComponent, {
       width: '300px',
       data: { message: 'Please fill in all required fields correctly.' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  showErrorPopup(message: string) {
+    const dialogRef = this.dialog.open(ValidationPopupComponent, {
+      width: '300px',
+      data: { message }
     });
 
     dialogRef.afterClosed().subscribe(result => {

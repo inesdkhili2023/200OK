@@ -21,6 +21,7 @@ import { UserListComponent } from './user/user-list/user-list.component';
 import { SignupComponent } from './user/signup/signup.component';
 import { AdminGuard } from './guards/admin.guard';
 import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.component';
+import { RatingListComponent } from './components/rating-list/rating-list.component';
 
 const routes: Routes = [
   // Public routes
@@ -50,6 +51,7 @@ const routes: Routes = [
       { path: 'profile', component: ProfileComponent },
       { path: 'register', component: RegisterComponent },
       { path: 'update/:id', component: UpdateUserComponent },
+      { path: 'ratings', component: RatingListComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   },

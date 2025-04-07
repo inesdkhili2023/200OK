@@ -15,7 +15,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   isCreateAgency: boolean = true;
   agencies: Agency[] = [];
   agency: Agency = {
-    idAgency: 0,
+    idAgency: null as unknown as number,
     latitude: 0,
     longitude: 0,
     agencyName: '',

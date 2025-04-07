@@ -13,6 +13,7 @@ export class AgencyService {
 
   private getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
+    console.log('Auth token:', token ? token.substring(0, 20) + '...' : 'No token');
     return new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
@@ -20,8 +21,29 @@ export class AgencyService {
   }
 
   public saveAgency(agency: Agency): Observable<Agency> {
-    const headers = this.getAuthHeaders();
-    return this.http.post<Agency>(`${this.apiUrl}/allRole/save/Agency`, agency, { headers })
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    
+    // Clean up the agency data - Omit idAgency for new entities
+    const cleanAgency = {
+      // Only include idAgency if it's a valid ID (not 0, not null)
+      ...(agency.idAgency && agency.idAgency > 0 ? { idAgency: agency.idAgency } : {}),
+      latitude: typeof agency.latitude === 'string' ? parseFloat(agency.latitude) : agency.latitude,
+      longitude: typeof agency.longitude === 'string' ? parseFloat(agency.longitude) : agency.longitude,
+      agencyName: agency.agencyName,
+      location: agency.location,
+      telephone: agency.telephone,
+      email: agency.email,
+      openingHour: agency.openingHour,
+      closingHour: agency.closingHour
+    };
+    
+    console.log('Sending data:', JSON.stringify(cleanAgency));
+    
+    return this.http.post<Agency>(`${this.apiUrl}/admin/save/Agency`, cleanAgency, { headers })
       .pipe(
         catchError(error => {
           console.error('Error saving agency:', error);
@@ -65,7 +87,23 @@ export class AgencyService {
 
   public updateAgency(agency: Agency): Observable<Agency> {
     const headers = this.getAuthHeaders();
-    return this.http.put<Agency>(`${this.apiUrl}/allRole/update/Agency`, agency, { headers })
+    
+    // Clean up the agency data to avoid serialization issues
+    const cleanAgency = {
+      idAgency: agency.idAgency,
+      latitude: typeof agency.latitude === 'string' ? parseFloat(agency.latitude) : agency.latitude,
+      longitude: typeof agency.longitude === 'string' ? parseFloat(agency.longitude) : agency.longitude,
+      agencyName: agency.agencyName,
+      location: agency.location,
+      telephone: agency.telephone,
+      email: agency.email,
+      openingHour: agency.openingHour,
+      closingHour: agency.closingHour
+    };
+    
+    console.log('Sending update data:', JSON.stringify(cleanAgency));
+    
+    return this.http.put<Agency>(`${this.apiUrl}/allRole/update/Agency`, cleanAgency, { headers })
       .pipe(
         catchError(error => {
           console.error('Error updating agency:', error);

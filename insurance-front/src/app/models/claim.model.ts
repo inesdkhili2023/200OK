@@ -12,11 +12,11 @@ export enum ClaimStatus {
 }
 
 export interface Claim {
-    claimId: number;
+    claimId: number | null;
     description: string;
-    dateCreation: string; 
+    dateCreation: string | null; 
     claimStatus: ClaimStatus;
     claimType: ClaimType;
-    user?: OurUsers;
+    user?: OurUsers | null;
 }
 

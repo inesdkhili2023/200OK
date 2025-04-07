@@ -43,6 +43,9 @@
           <li *ngIf="isAdmin && false"><a routerLink="/users">Liste d'Utilisateurs</a></li>
           <li *ngIf="!isAuthenticated"><a routerLink="/login">Se Connecter</a></li>
           <li *ngIf="isAuthenticated && !isAdmin"><a routerLink="" (click)="logout()">Se déconnecter</a></li>
+          <li *ngIf="isAuthenticated" class="notification-menu-item">
+            <app-notifications></app-notifications>
+          </li>
         </ul>
       </div>
     </div>

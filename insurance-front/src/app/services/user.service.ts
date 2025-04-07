@@ -19,7 +19,7 @@ export class UserService {
   }
 
   getAgents(): Observable<OurUsers[]> {
-    return this.httpClient.get<OurUsers[]>(`${this.api}/users/agents`);
+    return this.httpClient.get<OurUsers[]>(`${this.api}/users/agents`, { headers: this.getHeaders() });
     // Or if your API filters by role, you might use:
     // return this.http.get<OurUsers[]>(`${this.apiUrl}/users?role=agent`);
   }

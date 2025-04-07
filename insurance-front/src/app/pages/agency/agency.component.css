@@ -1,6 +1,6 @@
 /* Ensure proper spacing from navbar */
 .container {
-    margin-top: 100px; /* Adjust if necessary */
+    margin-top: 0px; /* Adjust if necessary */
     max-width: 600px; /* Keeps form centered and readable */
 }
 .btny{

@@ -37,6 +37,10 @@ import { LoginComponent } from './user/login/login.component';
 import { SignupComponent } from './user/signup/signup.component';
 import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.component';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { RatingDialogComponent } from './components/rating-dialog/rating-dialog.component';
+import { RatingListComponent } from './components/rating-list/rating-list.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
+import { ClickOutsideDirective } from './directives/click-outside.directive';
 
 @NgModule({
   declarations: [
@@ -67,7 +71,11 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
     RegisterComponent,
     ProfileComponent,
     LoginComponent,
-    AdminLayoutComponent
+    AdminLayoutComponent,
+    RatingDialogComponent,
+    RatingListComponent,
+    NotificationsComponent,
+    ClickOutsideDirective
   ],
   imports: [
     BrowserModule,

@@ -29,9 +29,21 @@ export class ClaimService {
 
   public saveClaim(userId: number, claim: Claim): Observable<Claim> {
     const headers = this.getAuthHeaders();
+    
+    // Clean the claim object for submission
+    const cleanClaim = {
+      description: claim.description,
+      claimType: claim.claimType,
+      claimStatus: claim.claimStatus,
+      dateCreation: claim.dateCreation || new Date().toISOString()
+      // Don't send claimId or user, backend will handle those
+    };
+    
+    console.log('Sending claim data:', JSON.stringify(cleanClaim));
+    
     return this.http.post<Claim>(
       `${this.apiUrl}/allRole/save/Claim/${userId}`, 
-      claim, 
+      cleanClaim, 
       { headers }
     ).pipe(
       catchError(error => {
@@ -52,7 +64,11 @@ export class ClaimService {
       );
   }
   
-  public deleteClaim(claimId: number): Observable<any> {
+  public deleteClaim(claimId: number | null): Observable<any> {
+    if (!claimId) {
+      return throwError(() => new Error('Invalid claim ID'));
+    }
+    
     const headers = this.getAuthHeaders();
     return this.http.delete(`${this.apiUrl}/allRole/delete/Claim/${claimId}`, { headers })
       .pipe(
@@ -63,7 +79,11 @@ export class ClaimService {
       );
   }
   
-  public getClaim(claimId: number): Observable<Claim> {
+  public getClaim(claimId: number | null): Observable<Claim> {
+    if (!claimId) {
+      return throwError(() => new Error('Invalid claim ID'));
+    }
+    
     const headers = this.getAuthHeaders();
     return this.http.get<Claim>(`${this.apiUrl}/allRole/get/Claim/${claimId}`, { headers })
       .pipe(
@@ -76,7 +96,22 @@ export class ClaimService {
   
   public updateClaim(claim: Claim): Observable<Claim> {
     const headers = this.getAuthHeaders();
-    return this.http.put<Claim>(`${this.apiUrl}/allRole/update/Claim`, claim, { headers })
+    
+    // Clean up the claim object to avoid sending user authorities
+    // which causes JSON serialization issues with Spring Security
+    const cleanClaim = {
+      claimId: claim.claimId,
+      description: claim.description,
+      dateCreation: claim.dateCreation,
+      claimStatus: claim.claimStatus,
+      claimType: claim.claimType,
+      // If we need to include user reference, only send the ID
+      userId: claim.user?.iduser
+    };
+    
+    console.log('Sending update data:', JSON.stringify(cleanClaim));
+    
+    return this.http.put<Claim>(`${this.apiUrl}/allRole/update/Claim`, cleanClaim, { headers })
       .pipe(
         catchError(error => {
           console.error('Error updating claim:', error);

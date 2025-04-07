@@ -1,88 +1,85 @@
 <div class="dashboard-container">
-    <div class="col-md-3">
-      <app-side-bar></app-side-bar>
-    </div>
-  
-    <!-- Main Content -->
-    <div class="dashboard-main">
-      <div class="mb-3">
-        <button class="btny" routerLink="/agency-list">Go to Agency list</button>
-      </div>
-      <div class="container">
-        <div align="right">
-          <button class="btn-primary" routerLink="/agency-list">Go to Agency List client</button>
-          <button class="btn-primary" routerLink="/Agency-admin">Go to Agency List admin</button>
-        </div>
-  
-        <div class="card p-5 mt-2">
-          <form #AgencyForm="ngForm" (ngSubmit)="saveAgency(AgencyForm)">
-            <!-- Latitude -->
-            <div class="form-group">
-              <label for="Latitude" [ngClass]="{'text-danger': latitude.invalid && (latitude.dirty || latitude.touched)}">Latitude</label>
-              <input class="form-control-desc" id="Latitude" placeholder="Latitude" name="Latitude" [(ngModel)]="agency.latitude"
-                     required pattern="^-?[0-9]+\.[0-9]+$" #latitude="ngModel" />
-            </div>
-  
-            <!-- Longitude -->
-            <div class="form-group">
-              <label for="Longitude" [ngClass]="{'text-danger': longitude.invalid && (longitude.dirty || longitude.touched)}">Longitude</label>
-              <input class="form-control-desc" id="Longitude" placeholder="Longitude" name="Longitude" [(ngModel)]="agency.longitude"
-                     required pattern="^-?[0-9]+\.[0-9]+$" #longitude="ngModel" />
-            </div>
-  
-            <!-- Agency Name -->
-            <div class="form-group">
-              <label for="AgencyName" [ngClass]="{'text-danger': agencyName.invalid && (agencyName.dirty || agencyName.touched)}">Agency Name</label>
-              <input class="form-control-desc" id="AgencyName" placeholder="Agency Name" name="AgencyName" [(ngModel)]="agency.agencyName"
-                     required minlength="3" maxlength="100" #agencyName="ngModel" />
-            </div>
-  
-            <!-- Location -->
-            <div class="form-group">
-              <label for="Location" [ngClass]="{'text-danger': location.invalid && (location.dirty || location.touched)}">Location</label>
-              <input class="form-control-desc" id="Location" placeholder="Location" name="Location" [(ngModel)]="agency.location"
-                     required minlength="4" maxlength="100" #location="ngModel" />
-            </div>
-  
-            <!-- Email -->
-            <div class="form-group">
-              <label for="email" [ngClass]="{'text-danger': email.invalid && (email.dirty || email.touched)}">Email</label>
-              <input class="form-control-desc" id="email" placeholder="Email" name="email" [(ngModel)]="agency.email"
-                     required email #email="ngModel" />
-            </div>
-  
-            <!-- Telephone -->
-            <div class="form-group">
-              <label for="telephone" [ngClass]="{'text-danger': telephone.invalid && (telephone.dirty || telephone.touched)}">Telephone</label>
-              <input class="form-control-desc" id="telephone" placeholder="Telephone" name="telephone" [(ngModel)]="agency.telephone"
-                     required pattern="[0-9]{8}" #telephone="ngModel" />
-            </div>
-  
-            <!-- Opening Hour -->
-            <div class="form-group">
-              <label for="openingHour" [ngClass]="{'text-danger': openingHour.invalid && (openingHour.dirty || openingHour.touched)}">Opening Hour</label>
-              <input class="form-control-desc" id="openingHour" placeholder="Opening Hour" name="openingHour" [(ngModel)]="agency.openingHour"
-                     required #openingHour="ngModel" />
-            </div>
-  
-            <!-- Closing Hour -->
-            <div class="form-group">
-              <label for="closingHour" [ngClass]="{'text-danger': closingHour.invalid && (closingHour.dirty || closingHour.touched)}">Closing Hour</label>
-              <input class="form-control-desc" id="closingHour" placeholder="Closing Hour" name="closingHour" [(ngModel)]="agency.closingHour"
-                     required #closingHour="ngModel" />
-            </div>
-  
-            <hr>
-  
-            <div class="text-center mt-3">
-              <button class="secondary" type="button" (click)="clearForm(AgencyForm)">Clear</button>
-              <button class="btn btn-primary m-2" type="submit">Save</button>
-            </div>
-          </form>
-        </div>
-  
 
-        <div id="map" style="height: 400px; width: 100%; margin-top: 20px;"></div>
+
+  <!-- Main Content -->
+  <div class="dashboard-main">
+    <div class="mb-3">
+      <button class="btny" routerLink="/admin/agencies">Go to Agency list</button>
+    </div>
+    <div class="container">
+      <div align="right">
+        <button class="btn-primary" routerLink="/admin/agencies">Go to Agency List</button>
       </div>
-    </div> <!-- Closing dashboard-main -->
-  </div> <!-- Closing dashboard-container -->
+
+      <div class="card p-5 mt-2">
+        <form #AgencyForm="ngForm" (ngSubmit)="saveAgency(AgencyForm)">
+          <!-- Latitude -->
+          <div class="form-group">
+            <label for="Latitude" [ngClass]="{'text-danger': latitude.invalid && (latitude.dirty || latitude.touched)}">Latitude</label>
+            <input class="form-control-desc" id="Latitude" placeholder="Latitude" name="Latitude" [(ngModel)]="agency.latitude"
+                   required pattern="^-?[0-9]+\.[0-9]+$" #latitude="ngModel" />
+          </div>
+
+          <!-- Longitude -->
+          <div class="form-group">
+            <label for="Longitude" [ngClass]="{'text-danger': longitude.invalid && (longitude.dirty || longitude.touched)}">Longitude</label>
+            <input class="form-control-desc" id="Longitude" placeholder="Longitude" name="Longitude" [(ngModel)]="agency.longitude"
+                   required pattern="^-?[0-9]+\.[0-9]+$" #longitude="ngModel" />
+          </div>
+
+          <!-- Agency Name -->
+          <div class="form-group">
+            <label for="AgencyName" [ngClass]="{'text-danger': agencyName.invalid && (agencyName.dirty || agencyName.touched)}">Agency Name</label>
+            <input class="form-control-desc" id="AgencyName" placeholder="Agency Name" name="AgencyName" [(ngModel)]="agency.agencyName"
+                   required minlength="3" maxlength="100" #agencyName="ngModel" />
+          </div>
+
+          <!-- Location -->
+          <div class="form-group">
+            <label for="Location" [ngClass]="{'text-danger': location.invalid && (location.dirty || location.touched)}">Location</label>
+            <input class="form-control-desc" id="Location" placeholder="Location" name="Location" [(ngModel)]="agency.location"
+                   required minlength="4" maxlength="100" #location="ngModel" />
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label for="email" [ngClass]="{'text-danger': email.invalid && (email.dirty || email.touched)}">Email</label>
+            <input class="form-control-desc" id="email" placeholder="Email" name="email" [(ngModel)]="agency.email"
+                   required email #email="ngModel" />
+          </div>
+
+          <!-- Telephone -->
+          <div class="form-group">
+            <label for="telephone" [ngClass]="{'text-danger': telephone.invalid && (telephone.dirty || telephone.touched)}">Telephone</label>
+            <input class="form-control-desc" id="telephone" placeholder="Telephone" name="telephone" [(ngModel)]="agency.telephone"
+                   required pattern="[0-9]{8}" #telephone="ngModel" />
+          </div>
+
+          <!-- Opening Hour -->
+          <div class="form-group">
+            <label for="openingHour" [ngClass]="{'text-danger': openingHour.invalid && (openingHour.dirty || openingHour.touched)}">Opening Hour</label>
+            <input class="form-control-desc" id="openingHour" placeholder="Opening Hour" name="openingHour" [(ngModel)]="agency.openingHour"
+                   required #openingHour="ngModel" />
+          </div>
+
+          <!-- Closing Hour -->
+          <div class="form-group">
+            <label for="closingHour" [ngClass]="{'text-danger': closingHour.invalid && (closingHour.dirty || closingHour.touched)}">Closing Hour</label>
+            <input class="form-control-desc" id="closingHour" placeholder="Closing Hour" name="closingHour" [(ngModel)]="agency.closingHour"
+                   required #closingHour="ngModel" />
+          </div>
+
+          <hr>
+
+          <div class="text-center mt-3">
+            <button class="secondary" type="button" (click)="clearForm(AgencyForm)">Clear</button>
+            <button class="btn btn-primary m-2" type="submit">Save</button>
+          </div>
+        </form>
+      </div>
+
+
+      <div id="map" style="height: 400px; width: 100%; margin-top: 20px;"></div>
+    </div>
+  </div> <!-- Closing dashboard-main -->
+</div> <!-- Closing dashboard-container -->

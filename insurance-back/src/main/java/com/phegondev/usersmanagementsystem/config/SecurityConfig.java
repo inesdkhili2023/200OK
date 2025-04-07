@@ -41,7 +41,8 @@ public class SecurityConfig {
                         .requestMatchers("/adminagent/**").hasAnyAuthority("ADMIN", "AGENT")
                         .requestMatchers("/agentuser/**").hasAnyAuthority("AGENT", "USER")
                         // Update these lines:
-                        .requestMatchers("/get/Users").hasAnyAuthority("ADMIN", "AGENT") // Add this line
+                        .requestMatchers("/get/Users").hasAnyAuthority("ADMIN", "AGENT")
+                        .requestMatchers("/allRole/get/user-claims/**").hasAnyAuthority("ADMIN", "USER", "AGENT")// Add this line
                         .requestMatchers("/allRole/**").hasAnyAuthority("ADMIN", "USER", "AGENT")
                         .anyRequest().authenticated())
                 .sessionManagement(manager->manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

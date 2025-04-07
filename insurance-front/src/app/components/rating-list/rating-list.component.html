@@ -1,0 +1,90 @@
+<div class="ratings-container">
+    <div class="ratings-header">
+      <h2>Customer Ratings</h2>
+      <p class="subtitle">Review feedback from your customers</p>
+      
+      <div class="overall-rating" *ngIf="ratings.length > 0">
+        <div class="rating-value">
+          <span class="average">{{ averageRating | number:'1.1-1' }}</span>
+          <span class="out-of">/5</span>
+        </div>
+        <div class="stars">
+          <span *ngFor="let star of getRatingStars(Math.round(averageRating))" class="star filled">
+            <i class="fas fa-star"></i>
+          </span>
+          <span *ngFor="let star of getEmptyStars(Math.round(averageRating))" class="star">
+            <i class="fas fa-star"></i>
+          </span>
+        </div>
+        <div class="total-count">
+          Based on {{ ratings.length }} rating{{ ratings.length !== 1 ? 's' : '' }}
+        </div>
+      </div>
+    </div>
+  
+    <!-- Loading State -->
+    <div class="loading-state" *ngIf="isLoading">
+      <div class="spinner"></div>
+      <p>Loading ratings...</p>
+    </div>
+  
+    <!-- Error State -->
+    <div class="error-state" *ngIf="errorMessage">
+      <i class="fas fa-exclamation-circle"></i>
+      <p>{{ errorMessage }}</p>
+      <button (click)="loadRatings()" class="retry-button">
+        Try Again
+      </button>
+    </div>
+  
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="!isLoading && !errorMessage && ratings.length === 0">
+      <i class="fas fa-star"></i>
+      <h3>No Ratings Yet</h3>
+      <p>When customers submit ratings for their claims, they will appear here.</p>
+    </div>
+  
+    <!-- Ratings List -->
+    <div class="ratings-list" *ngIf="!isLoading && !errorMessage && ratings.length > 0">
+      <div class="rating-card" *ngFor="let rating of ratings">
+        <div class="rating-header">
+          <div class="user-info">
+            <i class="fas fa-user-circle"></i>
+            <div class="user-details">
+              <h4>{{ rating.userName }}</h4>
+              <span class="email">{{ rating.userEmail }}</span>
+            </div>
+          </div>
+          <div class="date">
+            {{ formatDate(rating.createdAt) }}
+          </div>
+        </div>
+        
+        <div class="rating-stars">
+          <span *ngFor="let star of getRatingStars(rating.rating)" class="star filled">
+            <i class="fas fa-star"></i>
+          </span>
+          <span *ngFor="let star of getEmptyStars(rating.rating)" class="star">
+            <i class="fas fa-star"></i>
+          </span>
+        </div>
+        
+        <div class="claim-info">
+          <div class="claim-label">
+            <i class="fas fa-file-alt"></i> Claim
+          </div>
+          <div class="claim-id">ID: {{ rating.claimId }}</div>
+          <div class="claim-description" *ngIf="rating.claimDescription">
+            <q>{{ rating.claimDescription.length > 100 ? (rating.claimDescription | slice:0:100) + '...' : rating.claimDescription }}</q>
+          </div>
+        </div>
+        
+        <div class="feedback" *ngIf="rating.feedback">
+          <div class="feedback-label">
+            <i class="fas fa-comment"></i> Feedback
+          </div>
+          <p>{{ rating.feedback }}</p>
+        </div>
+      </div>
+    </div>
+  </div>

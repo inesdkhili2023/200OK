@@ -1,37 +1,68 @@
-<div class="container">
-
-
-
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-
-                <th>Description</th>
-                <th>Status</th>
-                <th>Claim Type</th>
-                <th>Date</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let element of dataSource">
-
-                <td>{{element.description}}</td>
-                <td>{{element.claimStatus}}</td>
-                <td>{{element.claimType}}</td>
-                <td>{{element.dateCreation}}</td>
-              
-                <td>
-                    <button class="btn btn-danger" (click)="deleteClaim(element.claimId)">
-                        Delete
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="mb-3">
-        <button class="btn btn-primary" routerLink="/claim">Back</button>
+<div class="claims-container">
+    <div class="claims-header">
+      <h2>Your Claims History</h2>
+      <p class="subtitle">Track and manage all your submitted claims</p>
     </div>
-
-</div>
+  
+    <div class="claims-filter">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search claims..." (input)="filterClaims($event)">
+      </div>
+      <div class="action-buttons">
+        <button class="btn btn-primary" routerLink="/claim">
+          <i class="fas fa-plus"></i> New Claim
+        </button>
+      </div>
+    </div>
+  
+    <div class="claims-content">
+      <div *ngIf="isLoading" class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading your claims...</p>
+      </div>
+  
+      <div *ngIf="!isLoading && filteredDataSource.length === 0" class="no-claims">
+        <i class="fas fa-folder-open empty-icon"></i>
+        <p>You haven't submitted any claims yet.</p>
+        <button class="btn btn-primary" routerLink="/claim">Submit Your First Claim</button>
+      </div>
+  
+      <div *ngIf="!isLoading && filteredDataSource.length > 0" class="claims-list">
+        <div *ngFor="let claim of filteredDataSource" class="claim-card" [ngClass]="getStatusClass(claim.claimStatus)">
+          <div class="claim-card-header">
+            <div class="claim-type">
+              <i [ngClass]="getClaimTypeIcon(claim.claimType)"></i>
+              <span>{{ claim.claimType }}</span>
+            </div>
+            <div class="claim-status">
+              <span class="status-badge">{{ claim.claimStatus }}</span>
+            </div>
+          </div>
+          
+          <div class="claim-card-body">
+            <p class="claim-description">{{ claim.description }}</p>
+          </div>
+          
+          <div class="claim-card-footer">
+            <div class="claim-date">
+              <i class="far fa-calendar-alt"></i>
+             
+            </div>
+            <div class="claim-actions">
+              <button class="btn-icon btn-view" title="View Details">
+                <i class="fas fa-eye"></i>
+              </button>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="claims-footer">
+      <button class="btn btn-outline" routerLink="/claim">
+        <i class="fas fa-arrow-left"></i> Back to Claims Form
+      </button>
+    </div>
+  </div>

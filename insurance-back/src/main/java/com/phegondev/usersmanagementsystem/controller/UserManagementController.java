@@ -15,6 +15,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.http.MediaType;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -32,7 +33,7 @@ public class UserManagementController {
     }
     @GetMapping("/auth/signup/confirm")
     public String confirm(@RequestParam("token") String token) {
-         return usersManagementService.confirmToken(token);
+        return usersManagementService.confirmToken(token);
 
     }
     @GetMapping("/uploads/{filename}")
@@ -108,5 +109,10 @@ public class UserManagementController {
     @PostMapping("/admin/{userId}/assign-to-agency/{agencyId}")
     public ResponseEntity<ReqRes> assignAgencyToUser(@PathVariable Long userId, @PathVariable Long agencyId) {
         return ResponseEntity.ok(usersManagementService.assignAgencyToUser(userId, agencyId));
+    }
+
+    @GetMapping("/users/agents")
+    public ResponseEntity<List<OurUsers>> getAgents() {
+        return ResponseEntity.ok(usersManagementService.getUsersByRole("AGENT"));
     }
 }

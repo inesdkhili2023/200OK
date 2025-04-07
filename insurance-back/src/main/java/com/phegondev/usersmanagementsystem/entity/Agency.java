@@ -1,6 +1,7 @@
 package com.phegondev.usersmanagementsystem.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
@@ -11,14 +12,31 @@ import java.util.List;
 public class Agency {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("idAgency")
     Long IdAgency;
-    Double  Latitude;
-    Double  Longitude;
+
+    @JsonProperty("latitude")
+    Double Latitude;
+
+    @JsonProperty("longitude")
+    Double Longitude;
+
+    @JsonProperty("agencyName")
     String AgencyName;
+
+    @JsonProperty("location")
     String Location;
+
+    @JsonProperty("telephone")
     Integer telephone;
+
+    @JsonProperty("email")
     String Email;
+
+    @JsonProperty("openingHour")
     String openingHour;  // Example: "08:00"
+
+    @JsonProperty("closingHour")
     String closingHour;
 
     @OneToMany(mappedBy = "agency", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

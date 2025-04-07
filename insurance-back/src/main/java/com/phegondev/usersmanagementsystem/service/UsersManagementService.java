@@ -514,5 +514,8 @@ public class UsersManagementService {
         }
         return reqRes;
     }
+    public List<OurUsers> getUsersByRole(String role) {
+        return usersRepo.findByRole(role);
+    }
 
 }

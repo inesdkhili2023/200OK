@@ -1,0 +1,9 @@
+.notification-menu-item {
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
+  }
+  
+  .navbar-right > li.notification-menu-item > a {
+    padding: 0;
+  }
