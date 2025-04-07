@@ -49,13 +49,14 @@ public class JobApplicationController {
     private JavaMailSender mailSender;
     @PostMapping("add")
     public ResponseEntity<JobApplication> createJobApplication(@RequestBody JobApplication jobApplication) {
+
         JobApplication savedJobApplication = jobApplicationService.saveJobApplication(jobApplication);
         System.out.println("Données reçues : " + jobApplication);
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("malekfeki18@gmail.com"); // Remplace par ton email
         message.setTo(jobApplication.getEmail());
-        message.setSubject("Confirmation de votre candidature - " + jobApplication.getJobOffer().getTitle());
+        message.setSubject("Confirmation de votre candidature " );
 
         String emailContent = String.format(
                 "Cher(e) %s %s,\n\n"
@@ -147,8 +148,8 @@ public class JobApplicationController {
             }
 
             // Sauvegarder les fichiers et obtenir les chemins
-            String resumePath = jobApplicationService.storeFile(resume);
-            String lettreMotivationPath = jobApplicationService.storeFile(lettreMotivation);
+            String resumePath = jobApplicationService.saveFile(resume);
+            String lettreMotivationPath = jobApplicationService.saveFile(lettreMotivation);
 
             // Assigner les chemins aux objets
             jobApplication.setResume(resumePath);
@@ -156,7 +157,27 @@ public class JobApplicationController {
 
             // Sauvegarder l'application en base de données
             jobApplicationRepository.save(jobApplication);
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom("malekfeki18@gmail.com"); // Remplace par ton email
+            message.setTo(jobApplication.getEmail());
+            message.setSubject("Confirmation de votre candidature - " );
 
+            String emailContent = String.format(
+                    "Cher(e) %s %s,\n\n"
+                            + "Nous vous remercions pour votre candidature au poste de référence %s. "
+                            + "Nous avons bien reçu votre dossier et notre équipe de recrutement l'examinera avec attention.\n\n"
+                            + "Si votre profil correspond à nos attentes, nous vous contacterons prochainement pour la suite du processus.\n\n"
+                            + "En attendant, n’hésitez pas à consulter notre site pour découvrir nos dernières actualités.\n\n"
+                            + "Bonne chance et à bientôt !\n\n"
+                            + "Cordialement,\n"
+                            + "L'équipe RH d'assurances Maghrebia",
+                    jobApplication.getFirstName(),
+                    jobApplication.getLastName(),
+                    jobApplication.getJobOffer().getJobOfferId()
+            );
+
+            message.setText(emailContent);
+            mailSender.send(message);
             return ResponseEntity.ok(Collections.singletonMap("message", "Candidature envoyée avec succès !"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur lors de l'envoi de la candidature.");
