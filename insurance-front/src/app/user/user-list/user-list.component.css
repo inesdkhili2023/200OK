@@ -167,6 +167,28 @@ tbody tr:hover {
     transform: scale(1.05);
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
+.status-button {
+    padding: 10px 15px;
+    font-size: 14px;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .status-button.active {
+    background: linear-gradient(135deg, #28a745, #5cb85c); /* Vert */
+  }
+  
+  .status-button.blocked {
+    background: linear-gradient(135deg, #dc3545, #ff4d4d); /* Rouge */
+  }
+  
+  .status-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  }
  
 .error-message {
     color: #dc3545;

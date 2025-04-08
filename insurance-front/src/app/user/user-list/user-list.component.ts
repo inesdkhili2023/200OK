@@ -10,6 +10,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class UserListComponent implements OnInit {
   users: any[] = []; // Liste complète des utilisateurs
+  admins: any[] = [];
+  agents: any[] = [];
   filteredUsers: any[] = []; // Liste filtrée des utilisateurs
   errorMessage: string = '';
   isLoading: boolean = false;
@@ -19,6 +21,7 @@ export class UserListComponent implements OnInit {
   totalPages: number = 1; // Nombre total de pages
   isAdmin: boolean = false;
   isUser: boolean = false;
+  isAgent: boolean = false;
   constructor(
     private readonly userService: UsersService,
     private readonly router: Router,
@@ -29,6 +32,7 @@ export class UserListComponent implements OnInit {
   ngOnInit(): void {
     this.isAdmin = this.userService.isAdmin();
     this.isUser = this.userService.isUser();
+    this.isAgent = this.userService.isAgent();
     this.loadUsers();
   }
 
@@ -39,10 +43,16 @@ export class UserListComponent implements OnInit {
       const response = await this.userService.getAllUsers(token);
       if (response && response.statusCode === 200 && response.ourUsersList) {
         this.users = response.ourUsersList;
-        this.filteredUsers = this.users; // Initialise la liste filtrée
-        this.calculateTotalPages(); // Calcule le nombre total de pages
+        this.filteredUsers = this.users;
+  
+        // Division par rôle
+        this.admins = this.users.filter(user => user.role === 'ADMIN');
+        this.filteredUsers = this.users.filter(user => user.role === 'USER'); // pour filtrage textuel
+        this.agents = this.users.filter(user => user.role === 'AGENT');
+  
+        this.calculateTotalPages();
       } else {
-        this.toastr.error('No users found.');
+        this.toastr.error('Aucun utilisateur trouvé.');
       }
     } catch (error: any) {
       this.toastr.error(error.message);
@@ -54,25 +64,68 @@ export class UserListComponent implements OnInit {
     this.totalPages = Math.ceil(this.filteredUsers.length / this.pageSize);
   }
 
-  // Retourne les utilisateurs paginés
-  get paginatedUsers(): any[] {
-    const startIndex = (this.currentPage - 1) * this.pageSize;
-    return this.filteredUsers.slice(startIndex, startIndex + this.pageSize);
+  adminsPage = 1;
+  usersPage = 1;
+  agentsPage = 1;
+  
+  get paginatedAdmins() {
+    const start = (this.adminsPage - 1) * this.pageSize;
+    return this.admins.slice(start, start + this.pageSize);
+  }
+  
+  get paginatedUsers() {
+    const start = (this.usersPage - 1) * this.pageSize;
+    return this.users.slice(start, start + this.pageSize);
+  }
+  
+  get paginatedAgents() {
+    const start = (this.agentsPage - 1) * this.pageSize;
+    return this.agents.slice(start, start + this.pageSize);
   }
 
-  // Passe à la page suivante
-  nextPage(): void {
-    if (this.currentPage < this.totalPages) {
-      this.currentPage++;
-    }
+  get totalPagesAdmins(): number {
+    return Math.ceil(this.admins.length / this.pageSize);
   }
+  
+  get totalPagesAgents(): number {
+    return Math.ceil(this.agents.length / this.pageSize);
+  }
+  
+  get totalPagesUsers(): number {
+    return Math.ceil(this.filteredUsers.length / this.pageSize); // attention filtered ici
+  }
+  
 
-  // Revient à la page précédente
-  previousPage(): void {
-    if (this.currentPage > 1) {
-      this.currentPage--;
+  changePageAgents(direction: 'next' | 'prev') {
+    const totalPages = Math.ceil(this.agents.length / this.pageSize);
+  
+    if (direction === 'next' && this.agentsPage < totalPages) {
+      this.agentsPage++;
+    }
+    if (direction === 'prev' && this.agentsPage > 1) {
+      this.agentsPage--;
     }
   }
+  changePageAdmins(direction: 'next' | 'prev') {
+    const totalPages = Math.ceil(this.admins.length / this.pageSize);
+  
+    if (direction === 'next' && this.adminsPage < totalPages) {
+      this.adminsPage++;
+    }
+    if (direction === 'prev' && this.adminsPage > 1) {
+      this.adminsPage--;
+    }
+  } 
+  changePageUsers(direction: 'next' | 'prev') {
+    const totalPages = Math.ceil(this.users.length / this.pageSize);
+  
+    if (direction === 'next' && this.usersPage < totalPages) {
+      this.usersPage++;
+    }
+    if (direction === 'prev' && this.usersPage > 1) {
+      this.usersPage--;
+    }
+  }  
 
   // Filtre les utilisateurs en fonction de la recherche
   filterUsers(): void {
@@ -109,50 +162,25 @@ export class UserListComponent implements OnInit {
     }
   }
 
-  // Bloque un utilisateur
-  async blockUser(userId: string) {
-    this.toastr.warning('Are you sure you want to block this user?', 'Block User', {
-      timeOut: 5000,
-      positionClass: 'toast-bottom-right',
-      closeButton: true,
-      progressBar: true
-    }).onTap.pipe().subscribe(() => {
-      this.blockUserConfirmed(userId);
-    });
-  }
-
-  async blockUserConfirmed(userId: string) {
+ 
+  async toggleUserStatus(user: any) {
+    const token: any = localStorage.getItem('token');
     try {
-      const token: any = localStorage.getItem('token');
-      await this.userService.blockUser(userId, token);
-      this.toastr.success('User blocked successfully', 'Success');
-      this.loadUsers(); // Recharge la liste des utilisateurs
+      if (user.enabled) {
+        await this.userService.blockUser(user.id, token);
+        this.toastr.success('Utilisateur bloqué avec succès');
+      } else {
+        await this.userService.deblockUser(user.id, token);
+        this.toastr.success('Utilisateur débloqué avec succès');
+      }
+      this.loadUsers(); // recharge les données
     } catch (error: any) {
-      this.toastr.error(error.message);
+      this.toastr.error(error.message || 'Une erreur est survenue');
     }
   }
-
-  // Débloque un utilisateur
-  async deblockUser(userId: string) {
-    this.toastr.warning('Are you sure you want to unblock this user?', 'Unblock User', {
-      timeOut: 5000,
-      closeButton: true,
-      progressBar: true
-    }).onTap.pipe().subscribe(() => {
-      this.deblockUserConfirmed(userId);
-    });
-  }
-
-  async deblockUserConfirmed(userId: string) {
-    try {
-      const token: any = localStorage.getItem('token');
-      await this.userService.deblockUser(userId, token);
-      this.toastr.success('User unblocked successfully', 'Success');
-      this.loadUsers(); // Recharge la liste des utilisateurs
-    } catch (error: any) {
-      this.toastr.error(error.message);
-    }
-  }
+  
+  
+ 
 
   // Redirige vers la page de mise à jour
   navigateToUpdate(userId: string) {

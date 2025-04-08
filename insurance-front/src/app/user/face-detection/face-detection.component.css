@@ -1,13 +1,14 @@
 * {
   font-family: 'Poppins', sans-serif;
   letter-spacing: 0.3px;
+  
 }
 
 .detection-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 90vh;
+  min-height: 10vh;
   background: linear-gradient(to right, #f0f2f5, #dfe6e9);
   padding: 20px;
 }

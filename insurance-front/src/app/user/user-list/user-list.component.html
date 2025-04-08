@@ -13,53 +13,88 @@
     </div>
 
     <button routerLink="/register" class="reg-button">Ajouter un utilisateur</button>
-
+    <ng-container *ngTemplateOutlet="userTable; context: {
+        title: '👤 Tous les Utilisateurs',
+        users: paginatedUsers,
+        page: usersPage,
+        total: totalPagesUsers,
+        changePage: changePageUsers
+      }"></ng-container>
+    <ng-container *ngTemplateOutlet="userTable; context: {
+        title: '🛡️ Administrateurs',
+        users: paginatedAdmins,
+        page: adminsPage,
+        total: totalPagesAdmins,
+        changePage: changePageAdmins
+      }"></ng-container>
+    <ng-container *ngTemplateOutlet="userTable; context: {
+        title: '🧑‍💼 Agents',
+        users: paginatedAgents,
+        page: agentsPage,
+        total: totalPagesAgents,
+        changePage: changePageAgents
+      }"></ng-container>
+      
+      
+      
+     
+      
     <!-- Tableau des utilisateurs -->
-    <table>
-        <thead>
+    <ng-template #userTable let-title="title" let-users="users" let-page="page" let-total="total" let-changePage="changePage">
+        <h3>{{ title }}</h3>
+      
+        <table *ngIf="users.length > 0">
+          <thead>
             <tr>
-                <th>ID</th>
-                <th>Prénom</th>
-                <th>Nom</th>
-                <th>Date de naissance</th>
-                <th>CIN</th>
-                <th>Email</th>
-                <th>Civilité</th>
-                <th>Ville</th>
-                <th>Activé</th>
-                <th>Rôle</th>
-                <th>Bloquer</th>
-                <th>Modifier</th>
-                <th>débliquer</th>
+              <th>ID</th>
+              <th>Prénom</th>
+              <th>Nom</th>
+              <th>Date de naissance</th>
+              <th>CIN</th>
+              <th>Email</th>
+              <th>Civilité</th>
+              <th>Ville</th>
+              <th>Activé</th>
+              <th>Rôle</th>
+              <th>Bloquer</th>
+              <th>Modifier</th>
+              
             </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let user of paginatedUsers" key="user.id">
-                <td>{{ user.id }}</td>
-                <td>{{ user.name }}</td>
-                <td>{{ user.lastname }}</td>
-                <td>{{ user.dnaiss }}</td>
-                <td>{{ user.cin }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.civility }}</td>
-                <td>{{ user.city }}</td>
-                <td>{{ user.enabled ? 'Oui' : 'Non' }}</td>
-                <td>{{ user.role }}</td>
-                <td>
-                    <button class="delete-button" (click)="blockUser(user.id)">Bloquer</button></td>
-                   <td> <button class="update-button" (click)="navigateToUpdate(user.id)">Modifier</button></td>
-                   <td> <button class="debloque-button" (click)="deblockUser(user.id)">Débloquer</button>
-                </td>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td>{{ user.id }}</td>
+              <td>{{ user.name }}</td>
+              <td>{{ user.lastname }}</td>
+              <td>{{ user.dnaiss }}</td>
+              <td>{{ user.cin }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.civility }}</td>
+              <td>{{ user.city }}</td>
+              <td>{{ user.enabled ? 'Oui' : 'Non' }}</td>
+              <td>{{ user.role }}</td>
+              <td>
+                <button
+                  [ngClass]="user.enabled ? 'status-button active' : 'status-button blocked'"
+                  (click)="toggleUserStatus(user)"
+                >
+                  {{ user.enabled ? '🟢 Activé' : '🔴 Bloqué' }}
+                </button>
+              </td>
+              <td><button  class="update-button" (click)="navigateToUpdate(user.id)">Modifier</button></td>
+             
             </tr>
-        </tbody>
-    </table>
-
-    <!-- Contrôles de pagination -->
-    <div class="pagination-controls">
-        <button (click)="previousPage()" [disabled]="currentPage === 1">Précédent</button>
-        <span>Page {{ currentPage }} sur {{ totalPages }}</span>
-        <button (click)="nextPage()" [disabled]="currentPage === totalPages">Suivant</button>
-    </div>
+          </tbody>
+        </table>
+      
+        <div class="pagination-controls" *ngIf="users.length > 0">
+          <button (click)="changePage('prev')">Précédent</button>
+          <span>Page {{ page }} / {{ total }}</span>
+          <button (click)="changePage('next')">Suivant</button>
+        </div>
+      </ng-template>
+      
+          
     <a routerLink="/admin/dashboard" *ngIf="isAdmin"><- dashboard</a>
     <a routerLink="/dashboard" *ngIf="isUser"><- dashboard</a>
 </div>

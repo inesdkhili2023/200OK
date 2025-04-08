@@ -31,7 +31,7 @@ const routes: Routes = [
   { path: 'loginface', component: LoginAttentanceComponent },
   { path: 'blog-details', component: BlogDetailsComponent },
   { path: 'contact-us', component: ContactUsComponent },
-  { path: 'admin/dashboard', component: DashboardAdminComponent, canActivate: [AuthGuard, RoleGuard] },
+  { path: 'admin/dashboard', component: DashboardAdminComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'insurances', component: InsurancesComponent },
   {path: 'login', component: LoginComponent},

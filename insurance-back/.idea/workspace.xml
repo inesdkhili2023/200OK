@@ -5,87 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ab9635e-0de9-4c65-97cf-22720ebfb597" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/service/FaceRecognitionService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/haarcascade_frontalface_alt.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/UsersmanagementsystemApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/UsersmanagementsystemApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/controller/UserManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/controller/UserManagementController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/dto/ReqRes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/dto/ReqRes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/entity/OurUsers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/entity/OurUsers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/service/JWTUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/service/JWTUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/service/UsersManagementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/service/UsersManagementService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/phegondev/usersmanagementsystem/UsersmanagementsystemApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/phegondev/usersmanagementsystem/UsersmanagementsystemApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/phegondev/usersmanagementsystem/config/JWTAuthFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/phegondev/usersmanagementsystem/config/JWTAuthFilter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/phegondev/usersmanagementsystem/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/phegondev/usersmanagementsystem/config/SecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/phegondev/usersmanagementsystem/controller/UserManagementController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/phegondev/usersmanagementsystem/controller/UserManagementController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/phegondev/usersmanagementsystem/dto/ReqRes.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/phegondev/usersmanagementsystem/dto/ReqRes.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/phegondev/usersmanagementsystem/entity/ConfirmationToken.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/phegondev/usersmanagementsystem/entity/ConfirmationToken.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/phegondev/usersmanagementsystem/entity/OurUsers.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/phegondev/usersmanagementsystem/entity/OurUsers.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/phegondev/usersmanagementsystem/service/JWTUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/phegondev/usersmanagementsystem/service/JWTUtils.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/phegondev/usersmanagementsystem/service/UsersManagementService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/phegondev/usersmanagementsystem/service/UsersManagementService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.phegondev.usersmanagementsystem.UsersmanagementsystemApplicationTests.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.phegondev.usersmanagementsystem.UsersmanagementsystemApplicationTests.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/usersmanagementsystem-0.0.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/usersmanagementsystem-0.0.1-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/usersmanagementsystem-0.0.1-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/usersmanagementsystem-0.0.1-SNAPSHOT.jar.original" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/1740004610658_profile-pic (5).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/1740059623165_profile-pic (5).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/1740344584585_concept-art-sunset-city.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/1740344617635_animegenius_fd2b20bd79487123bb3ce74f800e7d0c.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/1740503618400_concept-art-sunset-city.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/1740517094515_concept-art-sunset-city.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/1740517644244_animegenius_fd2b20bd79487123bb3ce74f800e7d0c.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/1740519706426_animegenius_fd2b20bd79487123bb3ce74f800e7d0c.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/1740519825450_animegenius_640419458df412c4968a207302a60b79.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/1740524411158_concept-art-sunset-city.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/1740587613524_japan-background-digital-art.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/1740609228391_animegenius_fd2b20bd79487123bb3ce74f800e7d0c.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/1740609435678_animegenius_640419458df412c4968a207302a60b79.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/1740609632901_animegenius_640419458df412c4968a207302a60b79.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/1740610331542_animegenius_640419458df412c4968a207302a60b79.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/1740610491426_animegenius_640419458df412c4968a207302a60b79.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/1740610855917_animegenius_640419458df412c4968a207302a60b79.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/1740653939914_japan-background-digital-art.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/1740661031546_animegenius_fd2b20bd79487123bb3ce74f800e7d0c.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/1740661295640_concept-art-sunset-city.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/1740661665806_animegenius_fd2b20bd79487123bb3ce74f800e7d0c.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/1740857473420_profile-pic (5).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/1741011694625_Capture d'écran 2025-03-03 092206.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/1741011899143_Capture d'écran 2025-03-03 104501.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/angular.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/node_modules/.package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/app-routing.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/app.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/dashboard-admin/dashboard-admin.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/dashboard-admin/dashboard-admin.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/dashboard-admin/dashboard-admin.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/dashboard-admin/dashboard-admin.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/dashboard-admin/dashboard-admin.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/dashboard-admin/dashboard-admin.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/pages/nav-bar/nav-bar.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/pages/nav-bar/nav-bar.component.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/pages/nav-bar/nav-bar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/pages/nav-bar/nav-bar.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/services/insurance.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/services/insurance.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/services/users.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/services/users.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/user/face-detection/face-detection.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/user/face-detection/face-detection.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/user/login-attentance/login-attentance.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/user/login-attentance/login-attentance.component.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/user/login/login.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/user/login/login.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/user/login/login.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/user/login/login.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/user/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/user/login/login.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/user/profile/profile.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/user/profile/profile.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/user/profile/profile.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/user/profile/profile.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/user/profile/profile.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/user/profile/profile.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/user/register/register.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/user/register/register.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/user/signup/signup.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/user/signup/signup.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/user/signup/signup.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/user/signup/signup.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/user/signup/signup.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/user/signup/signup.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/user/update-user/update-user.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/user/update-user/update-user.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/user/update-user/update-user.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/user/update-user/update-user.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/user/user-list/user-list.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/user/user-list/user-list.component.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/user/user-list/user-list.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/user/user-list/user-list.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/user/user-list/user-list.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/user/user-list/user-list.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/src/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/assets/css/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -181,6 +114,8 @@
       <workItem from="1743627890934" duration="4307000" />
       <workItem from="1743672393290" duration="8923000" />
       <workItem from="1743761819765" duration="1886000" />
+      <workItem from="1743848106731" duration="3293000" />
+      <workItem from="1744109132735" duration="948000" />
     </task>
     <servers />
   </component>

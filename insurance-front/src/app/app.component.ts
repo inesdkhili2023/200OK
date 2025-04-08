@@ -7,22 +7,20 @@ import { filter } from 'rxjs/operators';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
-  title = 'InsuranceProject';
-  isDashboard = false;
+export class AppComponent {
   showHeaderFooter = true;
+
   constructor(private router: Router) {
-    // Listen to route changes
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        // Check if the current route is the dashboard admin
-        this.showHeaderFooter = !event.url.includes('/admin/dashboard');
+        const hiddenRoutes = [
+          '/admin/dashboard',
+          '/dashboard',
+          '/agent/dashboard'
+        ];
+
+        this.showHeaderFooter = !hiddenRoutes.some(route => event.url.includes(route));
       }
     });
-  }
-
-  ngOnInit(): void {
-    // Initial check if the current route is the dashboard admin
-    this.showHeaderFooter = !this.router.url.includes('/admin/dashboard');
   }
 }
