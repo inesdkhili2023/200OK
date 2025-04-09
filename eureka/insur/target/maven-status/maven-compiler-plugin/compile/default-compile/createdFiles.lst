@@ -1,0 +1,11 @@
+com\ahch\entity\ClaimType.class
+com\ahch\entity\Agency.class
+com\ahch\service\AgencyService.class
+com\ahch\Repo\ClaimRepo.class
+com\ahch\CrudApplication.class
+com\ahch\Repo\AgencyRepo.class
+com\ahch\entity\Claim.class
+com\ahch\entity\ClaimStatus.class
+com\ahch\service\ClaimService.class
+com\ahch\controller\AgencyController.class
+com\ahch\controller\ClaimController.class

@@ -1,0 +1,13 @@
+{
+  "projects": {
+    "InsuranceProject": {
+      "architect": {
+        "serve": {
+          "options": {
+            "proxyConfig": "proxy.conf.json"
+          }
+        }
+      }
+    }
+  }
+}
