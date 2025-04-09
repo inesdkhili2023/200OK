@@ -6,19 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="8ab9635e-0de9-4c65-97cf-22720ebfb597" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/app-routing.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/app.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/dashboard-admin/dashboard-admin.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/dashboard-admin/dashboard-admin.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/pages/nav-bar/nav-bar.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/pages/nav-bar/nav-bar.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/pages/nav-bar/nav-bar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/pages/nav-bar/nav-bar.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/user/face-detection/face-detection.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/user/face-detection/face-detection.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/user/login-attentance/login-attentance.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/user/login-attentance/login-attentance.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/user/login/login.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/user/login/login.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/user/profile/profile.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/user/profile/profile.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/user/user-list/user-list.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/user/user-list/user-list.component.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/user/user-list/user-list.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/user/user-list/user-list.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/user/user-list/user-list.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/user/user-list/user-list.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../insurance-front/src/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/assets/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/dashboard-admin/dashboard-admin.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/dashboard-admin/dashboard-admin.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/dashboard-admin/dashboard-admin.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/dashboard-admin/dashboard-admin.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/user/login-attentance/login-attentance.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/user/login-attentance/login-attentance.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +54,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;onsgu&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/user/Desktop/front+back/insurance-back&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/user/Downloads/testt/front+back/ApiGateway_pi&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -116,6 +108,8 @@
       <workItem from="1743761819765" duration="1886000" />
       <workItem from="1743848106731" duration="3293000" />
       <workItem from="1744109132735" duration="948000" />
+      <workItem from="1744189661907" duration="1536000" />
+      <workItem from="1744217037639" duration="1380000" />
     </task>
     <servers />
   </component>

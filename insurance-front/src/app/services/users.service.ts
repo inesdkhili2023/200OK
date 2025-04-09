@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Chart } from 'chart.js';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -196,6 +197,8 @@ deblockUser(userId: string, token: string): Promise<any> {
       throw error;
     });
 }
+
+
 //login with google et github
 /*loginWithGoogle() {
   window.location.href = `${this.BASE_URL}/oauth2/authorization/google`;

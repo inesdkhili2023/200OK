@@ -4,6 +4,30 @@
   min-height: 100vh;
   background-color: #f5f6fa;
 }
+.submenu {
+  list-style: none;
+  padding-left: 20px;
+  background: #3b4a5a;
+  transition: all 0.3s;
+}
+
+.submenu li {
+  padding: 10px 20px;
+  color: #ecf0f1;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.submenu li:hover {
+  background-color: #f38f1d;
+  color: white;
+}
+
+.submenu .logout {
+  color: #e74c3c;
+}
+
 
 .dashboard-sidebar {
   width: 250px;
@@ -69,15 +93,102 @@
 }
 
 .header-profile {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 10px;
+  background-color: #f7f9fc;
+  padding: 10px 15px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.header-profile:hover {
+  background-color: #e6eefa;
 }
 
-.header-profile img {
+.profile-img {
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-text {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.user-name {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.user-role {
+  font-size: 12px;
+  color: #7f8c8d;
+}
+
+.chevron-icon {
+  margin-left: auto;
+  color: #7f8c8d;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 180px;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.profile-dropdown ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.sidebar-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: white;
+  border-radius: 12px;
+  margin: 0 auto 20px auto;
+  width: 80%;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+
+.sidebar-logo img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+
+.profile-dropdown li {
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.profile-dropdown li:hover {
+  background-color: #f2f2f2;
+}
+
+.profile-dropdown .logout {
+  color: #e74c3c;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .stats-container {

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,19 +7,29 @@ import { Router } from '@angular/router';
   templateUrl: './login-attentance.component.html',
   styleUrls: ['./login-attentance.component.css']
 })
-export class LoginAttentanceComponent {
+export class LoginAttentanceComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild('video') videoRef!: ElementRef;
   @ViewChild('canvas') canvasRef!: ElementRef;
 
+  private videoStream: MediaStream | null = null;
   loginMessage = '';
 
   constructor(private http: HttpClient, private router: Router) {}
 
   ngAfterViewInit() {
     navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+      this.videoStream = stream;
       this.videoRef.nativeElement.srcObject = stream;
     });
+  }
+  
+  ngOnDestroy() {
+    // Fermer la caméra quand le composant est détruit
+    if (this.videoStream) {
+      this.videoStream.getTracks().forEach(track => track.stop());
+      this.videoStream = null;
+    }
   }
 
   captureAndLogin() {
