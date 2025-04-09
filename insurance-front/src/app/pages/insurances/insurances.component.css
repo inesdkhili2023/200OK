@@ -1,66 +1,66 @@
 .breadcrumb {
-    background-color: #f8f9fa;
-    padding: 1rem 0;
-    margin-bottom: 2rem;
-  }
-  
-  .card {
-    margin-bottom: 2rem;
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-  }
-  
-  .card-header {
-    padding: 1rem;
-  }
-  
-  .form-group label {
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-  }
-  
-  .form-control {
-    border-radius: 0.25rem;
-  }
-  
-  .form-control:focus {
-    border-color: #80bdff;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-  }
-  
-  .is-invalid {
-    border-color: #dc3545;
-  }
-  
-  .invalid-feedback {
-    display: block;
-    width: 100%;
-    margin-top: 0.25rem;
-    font-size: 80%;
-    color: #dc3545;
-  }
-  
-  textarea.form-control {
-    resize: vertical;
-    min-height: 100px;
-  }
-  
-  .btn {
-    border-radius: 0.25rem;
-  }
-  
-  .btn-sm {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.875rem;
-  }
-  
-  .me-2 {
-    margin-right: 0.5rem;
-  }
-  
-  .table {
-    margin-bottom: 0;
-  }
-  
-  .table th {
-    background-color: #f8f9fa;
-  }
+  background-color: #f8f9fa;
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+}
+
+.card {
+  margin-bottom: 2rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card-header {
+  padding: 1rem;
+}
+
+.form-group label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.form-control {
+  border-radius: 0.25rem;
+}
+
+.form-control:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.is-invalid {
+  border-color: #dc3545;
+}
+
+.invalid-feedback {
+  display: block;
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: #dc3545;
+}
+
+textarea.form-control {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.btn {
+  border-radius: 0.25rem;
+}
+
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+.me-2 {
+  margin-right: 0.5rem;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.table th {
+  background-color: #f8f9fa;
+}

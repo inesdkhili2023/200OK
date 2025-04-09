@@ -11,7 +11,7 @@ import { FooterComponent } from './pages/footer/footer.component';
 import { DashboardAdminComponent } from './dashboard-admin/dashboard-admin.component';
 import { InsurancesComponent } from './pages/insurances/insurances.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http'; // <-- add this import
+import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SinistersComponent } from './pages/sinisters/sinisters.component';
 import { AdminSinistersListComponent } from './pages/admin-sinisters-list/admin-sinisters-list.component';
@@ -24,6 +24,9 @@ import { AgentTowingService } from './services/agent-towing.service';
 import { AgentEspaceComponent } from './pages/agent-espace/agent-espace.component';
 import { ChatComponent } from './pages/chat/chat.component';
 import { AdminExportComponent } from './pages/admin-export/admin-export.component';
+import { QRCodeComponent } from './pages/qr-code/qr-code.component';
+import { EmergencyTowingComponent } from './pages/emergency-towing/emergency-towing.component';
+import { TowingRequestComponent } from './pages/towing-request/towing-request.component';
 
 @NgModule({
   declarations: [
@@ -42,18 +45,20 @@ import { AdminExportComponent } from './pages/admin-export/admin-export.componen
     TowingComponent,
     AdminSinistersListComponent,
     AgentEspaceComponent,
-    AdminExportComponent  // Add this line
-       
+    AdminExportComponent,
+    QRCodeComponent,
+    EmergencyTowingComponent,    TowingRequestComponent
+
   ],
   imports: [
-    BrowserModule,ChatComponent,
+    BrowserModule,
     AppRoutingModule,
     FormsModule,
-    CommonModule,     ChatComponent,
-
-    HttpClientModule ,
+    ChatComponent,
+    CommonModule,
+    HttpClientModule,
     ReactiveFormsModule,
-    NgxPaginationModule  
+    NgxPaginationModule
   ],
   providers: [AgentTowingService],
   bootstrap: [AppComponent]

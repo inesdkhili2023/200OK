@@ -16,7 +16,8 @@
             "outputPath": "dist/insurance-project",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "allowedCommonJsDependencies": ["moment","leaflet"],
+            "allowedCommonJsDependencies": ["moment","leaflet","@tensorflow/tfjs-core",
+              "@stomp/stompjs"],
             "polyfills": [
               "zone.js"
             ],

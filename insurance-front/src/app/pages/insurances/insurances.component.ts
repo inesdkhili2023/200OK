@@ -25,6 +25,8 @@ export class InsurancesComponent implements OnInit {
     endDate: '',
     description: ''
   };
+  isOfflineMode = false;
+  errorMessage = '';
 
   constructor(private insuranceService: InsuranceService) {}
 
@@ -72,8 +74,20 @@ export class InsurancesComponent implements OnInit {
 
   loadInsurances() {
     this.insuranceService.getAllInsurances().subscribe(
-      data => this.insurances = data,
-      error => console.error('Error loading insurances:', error)
+      data => {
+        this.insurances = data;
+        this.isOfflineMode = false;
+        this.errorMessage = '';
+      },
+      error => {
+        console.error('Error loading insurances:', error);
+        this.isOfflineMode = true;
+        this.errorMessage = 'Unable to load insurances. Using demo data.';
+        // Handle offline mode or error state
+        if (error.error && error.error.mockData) {
+          this.insurances = error.error.data || [];
+        }
+      }
     );
   }
 
@@ -94,7 +108,10 @@ export class InsurancesComponent implements OnInit {
         };
         this.submitted = false;
       },
-      error => console.error('Error creating insurance:', error)
+      error => {
+        console.error('Error creating insurance:', error);
+        this.errorMessage = 'Failed to create insurance. Please try again.';
+      }
     );
   }
 
@@ -112,7 +129,10 @@ export class InsurancesComponent implements OnInit {
         this.loadInsurances();
         this.cancelEdit();
       },
-      error => console.error('Error updating insurance:', error)
+      error => {
+        console.error('Error updating insurance:', error);
+        this.errorMessage = 'Failed to update insurance. Please try again.';
+      }
     );
   }
 
@@ -120,7 +140,10 @@ export class InsurancesComponent implements OnInit {
     if (confirm('Are you sure you want to delete this insurance?')) {
       this.insuranceService.deleteInsurance(insuranceId).subscribe(
         () => this.loadInsurances(),
-        error => console.error('Error deleting insurance:', error)
+        error => {
+          console.error('Error deleting insurance:', error);
+          this.errorMessage = 'Failed to delete insurance. Please try again.';
+        }
       );
     }
   }
@@ -135,5 +158,9 @@ export class InsurancesComponent implements OnInit {
     this.isEditing = false;
     this.editSubmitted = false;
     this.selectedInsurance = {};
+  }
+
+  retryConnection() {
+    this.loadInsurances();
   }
 }

@@ -12,6 +12,9 @@ import { RecommendationComponent } from './pages/recommendation/recommendation.c
 import { AgentTowingComponent } from './pages/agent-towing/agent-towing.component';
 import { TowingComponent } from './pages/towing/towing.component';
 import { AgentEspaceComponent } from './pages/agent-espace/agent-espace.component';
+import { EmergencyTowingComponent } from './pages/emergency-towing/emergency-towing.component';
+import { TowingRequestComponent } from './pages/towing-request/towing-request.component';
+
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -27,6 +30,10 @@ const routes: Routes = [
   { path: 'agents-espace', component: AgentEspaceComponent },
   { path: 'towings', component: TowingComponent },
   { path: 'sinisters', component: SinistersComponent }, 
+  { path: 'insurances', component: InsurancesComponent },
+  { path: 'emergency-towing', component: EmergencyTowingComponent },
+  { path: 'towing-request', component: TowingRequestComponent },
+
   { path: '**', redirectTo: 'home' } ,
   
 ];

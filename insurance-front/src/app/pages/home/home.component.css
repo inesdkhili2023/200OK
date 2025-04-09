@@ -1,84 +1,84 @@
 .flexslider {
-    margin: 0;
-    padding: 0;
-    position: relative;
-    height: 450px;
-    top: 0;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  height: 450px;
+  top: 0;
 }
 
 .flexslider img {
-    transition: all 0.3s ease;
-    width: 100%;
-    height: 450px;
-    object-fit: cover;
-    display: block;
-    position: relative;
-    top: -100px; /* Adjust this value to remove the gap */
+  transition: all 0.3s ease;
+  width: 100%;
+  height: 450px;
+  object-fit: cover;
+  display: block;
+  position: relative;
+  top: -100px; /* Adjust this value to remove the gap */
 }
 
 .slide-info {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 100%;
-    padding: 0 15px;
-    z-index: 2; /* Ensure content appears above image */
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  padding: 0 15px;
+  z-index: 2; /* Ensure content appears above image */
 }
 
 .slide-con {
-    transition: all 0.3s ease;
-    max-width: 1170px;
-    margin: 0 auto;
+  transition: all 0.3s ease;
+  max-width: 1170px;
+  margin: 0 auto;
 }
 
 .ti-arrow-right {
-    cursor: pointer;
-    position: relative;
-    z-index: 3; /* Ensure arrow is clickable */
+  cursor: pointer;
+  position: relative;
+  z-index: 3; /* Ensure arrow is clickable */
 }
 
 /* Adjust navbar bottom margin */
 .navbar-fixed-top {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 /* Remove any potential body padding */
 body {
-    padding-top: 0;
+  padding-top: 0;
 }
 
 .modern-card {
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  overflow: hidden;
-  margin-bottom: 20px;
-  transition: transform 0.3s, box-shadow 0.3s;
+background: #fff;
+border-radius: 8px;
+box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+overflow: hidden;
+margin-bottom: 20px;
+transition: transform 0.3s, box-shadow 0.3s;
 }
 .modern-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+transform: translateY(-5px);
+box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 .card-image {
-  height: 200px;
-  background-size: cover;
-  background-position: center;
+height: 200px;
+background-size: cover;
+background-position: center;
 }
 .card-content {
-  padding: 15px;
+padding: 15px;
 }
 .card-title {
-  font-size: 18px;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 10px;
+font-size: 18px;
+font-weight: 600;
+color: #333;
+margin-bottom: 10px;
 }
 .card-text {
-  font-size: 14px;
-  color: #666;
-  margin: 0;
+font-size: 14px;
+color: #666;
+margin: 0;
 }
 .modern-title {
-  font-family: 'Open Sans', sans-serif;
-  color: #333;
+font-family: 'Open Sans', sans-serif;
+color: #333;
 }
