@@ -2,7 +2,10 @@ package com.ahch.controller;
 
 import com.ahch.entity.Contrat;
 import com.ahch.service.ContratService;
+import com.ahch.service.QrCodeService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +32,11 @@ public class ContratController {
 
     @Autowired
     private ContratService contratService;
+    @Autowired
+    private QrCodeService qrCodeService;
+
+    @Value("${app.base-url}")
+    private String baseUrl;
 
     @GetMapping
     public ResponseEntity<List<Contrat>> getAllContrats() {
@@ -83,4 +91,8 @@ public class ContratController {
                 .headers(headers)
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(new InputStreamResource(in));
-    }}
+    }
+
+
+
+}

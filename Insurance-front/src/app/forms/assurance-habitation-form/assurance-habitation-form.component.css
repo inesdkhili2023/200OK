@@ -1,59 +1,181 @@
+/* Styles pour les packs d'assurance - Taille de texte augmentée */
 .packs-container {
-    text-align: center;
-    h2 {
-      color: #d18501;
-    }
+  max-width: 1200px;
+  margin: 3rem auto; /* Marge augmentée */
+  padding: 0 1.5rem; /* Padding augmenté */
+}
+
+.main-title {
+  text-align: center;
+  color: #283593;
+  font-size: 2.5rem; /* Taille augmentée (anciennement 2rem) */
+  margin-bottom: 1rem; /* Marge augmentée */
+  font-weight: 600;
+}
+
+.subtitle {
+  text-align: center;
+  color: #757575;
+  font-size: 1.4rem; /* Taille augmentée (anciennement 1.1rem) */
+  margin-bottom: 3rem; /* Marge augmentée */
+  line-height: 1.6;
+}
+
+.packs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Largeur minimale augmentée */
+  gap: 2.5rem; /* Espacement augmenté */
+  margin-top: 2.5rem;
+}
+
+.pack-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: 10px; /* Bordure plus arrondie */
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Ombre plus prononcée */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pack-card:hover {
+  transform: translateY(-8px); /* Effet de levée augmenté */
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.pack-header {
+  background-color: #e8eaf6;
+  padding: 2rem; /* Padding augmenté */
+  text-align: center;
+}
+
+.pack-header h2 {
+  margin: 0;
+  color: #283593;
+  font-size: 2rem; /* Taille augmentée (anciennement 1.5rem) */
+  font-weight: 600;
+}
+
+.pack-description {
+  color: #757575;
+  margin: 1.5rem 0; /* Marge augmentée */
+  font-size: 1.1rem; /* Taille augmentée (anciennement 0.95rem) */
+  line-height: 1.7; /* Interligne augmenté */
+  padding: 0 1.5rem; /* Padding ajouté */
+}
+
+.price-section {
+  text-align: center;
+  margin: 2rem 0; /* Marge augmentée */
+}
+
+.standard-price {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  margin-bottom: 1rem; /* Marge augmentée */
+}
+
+.standard-price .price-amount {
+  font-size: 2.5rem; /* Taille augmentée (anciennement 2rem) */
+  font-weight: 700; /* Gras augmenté */
+  color: #283593;
+  margin-right: 0.5rem; /* Marge augmentée */
+}
+
+.standard-price .price-currency {
+  font-size: 1.4rem; /* Taille augmentée (anciennement 1.1rem) */
+  color: #757575;
+}
+
+.green-price {
+  font-size: 1.1rem; /* Taille augmentée (anciennement 0.9rem) */
+  color: #2e7d32;
+  background-color: rgba(200, 230, 201, 0.5);
+  padding: 0.5rem 1rem; /* Padding augmenté */
+  border-radius: 6px; /* Bordure plus arrondie */
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
+.garanties-title {
+  color: #283593;
+  font-size: 1.4rem; /* Taille augmentée (anciennement 1.1rem) */
+  margin: 1.5rem 0 1rem; /* Marge augmentée */
+  padding: 0 1.5rem; /* Padding ajouté */
+  font-weight: 600;
+}
+
+.garanties-list {
+  margin: 1.5rem 0; /* Marge augmentée */
+  padding: 0 1.5rem; /* Padding ajouté */
+}
+
+.garantie-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1.25rem; /* Marge augmentée */
+}
+
+.check-icon {
+  color: #4caf50;
+  font-size: 1.4rem; /* Taille augmentée (anciennement 1.1rem) */
+  margin-right: 0.75rem; /* Marge augmentée */
+  margin-top: 0.25rem;
+}
+
+.garantie-content {
+  flex: 1;
+}
+
+.garantie-content .garantie-title {
+  font-weight: 500;
+  font-size: 1.1rem; /* Taille augmentée (anciennement 0.95rem) */
+  margin-bottom: 0.25rem;
+}
+
+.garantie-content .garantie-limit {
+  font-size: 1rem; /* Taille augmentée (anciennement 0.85rem) */
+  color: #757575;
+}
+
+mat-card-actions {
+  padding: 1.5rem; /* Padding augmenté */
+  margin-top: auto;
+}
+
+mat-card-actions .discover-btn {
+  width: 100%;
+  font-weight: 500;
+  padding: 0.75rem 1.5rem; /* Padding augmenté */
+  font-size: 1.1rem; /* Taille augmentée */
+}
+
+mat-card-actions .discover-btn mat-icon {
+  margin-left: 0.75rem; /* Marge augmentée */
+  font-size: 1.4rem; /* Taille des icônes augmentée */
+}
+
+/* Styles pour le dialog */
+.insurance-dialog .mat-dialog-container {
+  padding: 0;
+  overflow: hidden;
+  border-radius: 16px; /* Bordure plus arrondie */
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .packs-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
   }
   
-  .packs {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
+  .main-title {
+    font-size: 2.2rem;
   }
   
-  .pack-card {
-    width: 300px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: transform 0.3s;
-    cursor: pointer;
-    background: #fff;
-    padding: 15px;
-    text-align: center;
-  
-    &:hover {
-      transform: scale(1.05);
-    }
-  
-    img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-    }
-  
-    h3 {
-      color: #333;
-    }
-  
-    p {
-      font-size: 14px;
-      color: #666;
-    }
-  
-    .eco-price {
-      font-weight: bold;
-      color: green;
-      span {
-        font-size: 16px;
-      }
-    }
-  
-    .discover-btn {
-      background-color: #d18501;
-      color: white;
-      margin-top: 10px;
-    }
+  .subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
   }
-  
+}

@@ -32,7 +32,8 @@ public class PaiementService {
         if (optionalContrat.isEmpty()) {
             throw new RuntimeException("Numéro de contrat invalide.");
         }
-        paiement.setContrat(optionalContrat.get());
+        Contrat contrat = optionalContrat.get();
+        paiement.setContrat(contrat);
 
         Paiement savedPaiement = paiementRepository.save(paiement);
 

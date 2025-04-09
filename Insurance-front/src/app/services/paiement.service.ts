@@ -11,6 +11,7 @@ export interface Paiement {
   confirmationMail: string;
   datePaiement?: string;
   contrat: { numContrat: number };
+  rib: string; 
 }
 @Injectable({
   providedIn: 'root'

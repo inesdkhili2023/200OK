@@ -44,7 +44,7 @@ import { ContratsComponent } from './contrats/contrats.component';
 import { FacturesComponent } from './factures/factures.component';
 import { FactureService } from './services/facture.service'; // Importez votre service
 import { AssuranceVoyageFormComponent } from './forms/assurance-voyage-form/assurance-voyage-form.component';
-
+import { RecaptchaModule } from 'ng-recaptcha';
 
 
 
@@ -89,6 +89,8 @@ import { AssuranceVoyageFormComponent } from './forms/assurance-voyage-form/assu
     MatIconModule,
     MatButtonModule,
     RouterModule ,
+    RecaptchaModule
+    
   ],
   providers: [    FactureService],
   bootstrap: [AppComponent]

@@ -1,22 +1,41 @@
-.form-group {
+.container {
+  padding: 20px;
+}
+
+.form-box {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+mat-form-field {
+  width: 100%;
   margin-bottom: 15px;
 }
 
-.form-control {
+.error-message {
+  color: #f44336;
+  margin-top: 10px;
+}
+
+button[mat-raised-button] {
+  margin-top: 20px;
   width: 100%;
+}
+#card-element {
+  border: 1px solid #ccc;
   padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.text-danger {
+  color: #dc3545;
   font-size: 14px;
+  margin-top: 5px;
 }
 
-.btn {
-  padding: 10px 20px;
-  font-size: 16px;
-}
-
-.form-check-label {
-  font-size: 14px;
-}
-
-a {
-  color: #007bff;
+.mt-3 {
+  margin-top: 1rem;
 }

@@ -99,7 +99,8 @@ public class DataLoader implements CommandLineRunner {
             "nomPrenom",
             "numeroTelephone",
             "email",
-            "acceptConditions"
+            "acceptConditions",
+                    "captchaToken"
             ));
 
             // ✅ Ajout de Capitalisation avec les champs sous forme de liste

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccidentService } from 'src/app/services/accident.service';
+import { RecaptchaModule } from 'ng-recaptcha';
 
 @Component({
   selector: 'app-assurance-accidents-form',
@@ -15,6 +16,7 @@ export class AssuranceAccidentsFormComponent {
   professions = ["ADMINISTRATEUR DE SOCIETE", "EMPLOYÉ", "CHEF D'ENTREPRISE"];
   franchises = ["AUCUNE", "7 jours", "15 jours"];
   fraisTraitement = ["500 TND", "1000 TND", "1500 TND"];
+  captchaToken: string = '';
 
   constructor(private fb: FormBuilder, private accidentService: AccidentService) {
     // Formulaire 1
@@ -34,8 +36,8 @@ export class AssuranceAccidentsFormComponent {
       email: ['', [Validators.required, Validators.email]],
       confirmEmail: ['', [Validators.required, Validators.email]],
       telephone: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]],
-      captcha: ['', Validators.required],
-      conditions: [false, Validators.requiredTrue]
+      conditions: [false, Validators.requiredTrue],
+      
     });
   }
 
@@ -45,31 +47,37 @@ export class AssuranceAccidentsFormComponent {
       this.showForm2 = true;
     }
   }
+  
 
-  // Validation et soumission du second formulaire
+  onCaptchaResolved(token: string) {
+    this.captchaToken = token;
+    console.log('Captcha token:', token);
+  }
+  
   onSubmitForm2() {
-    if (this.form2.valid) {
-      // Créez le payload avec toutes les données des formulaires
+    if (this.form2.valid && this.captchaToken) {  // This checks for both truthy and non-null
+     // Set a maximum length for the captcha token
+    const maxLength = 255; // Adjust based on column length
+    const truncatedCaptchaToken = this.captchaToken?.substring(0, maxLength); // Truncate if necessary
       const payload = {
-        typeAssuranceId: 7, // L'ID d'assurance est fixé automatiquement à 7
+        typeAssuranceId: 7,
         details: {
-          // Données du formulaire 1
           profession: this.form1.value.profession,
           capitalDeces: this.form1.value.capitalDeces,
           capitalIPP: this.form1.value.capitalIPP,
           rente: this.form1.value.rente,
           franchise: this.form1.value.franchise,
           fraisTraitement: this.form1.value.fraisTraitement,
-
-          // Données du formulaire 2
+      
           nomPrenom: this.form2.value.nom + ' ' + this.form2.value.prenom,
           numeroTelephone: this.form2.value.telephone,
           email: this.form2.value.email,
-          acceptConditions: this.form2.value.conditions
+          acceptConditions: this.form2.value.conditions,
+      
+         
         }
       };
-
-      // Appel du service pour envoyer les données
+    
       this.accidentService.sendInsuranceData(payload).subscribe(
         response => {
           console.log('Devis envoyé avec succès', response);
@@ -80,6 +88,9 @@ export class AssuranceAccidentsFormComponent {
           alert('Une erreur est survenue. Veuillez réessayer.');
         }
       );
+    } else {
+      alert("Veuillez compléter tous les champs et valider le reCAPTCHA.");
     }
   }
+
 }

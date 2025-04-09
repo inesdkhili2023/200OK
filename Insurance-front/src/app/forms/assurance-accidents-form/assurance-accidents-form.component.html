@@ -41,10 +41,14 @@
         <input type="email" placeholder="Confirmer votre E-mail" formControlName="confirmEmail">
         <input type="tel" placeholder="Téléphone" formControlName="telephone">
         
-        <div>
-          <input type="text" placeholder="Recopier le code" formControlName="captcha">
-          <img src="captcha.png" alt="Captcha">
+        <div style="margin-top: 20px;">
+          <re-captcha 
+          [siteKey]="'6LcWNwsrAAAAAFw51xVXqUO1U-G1xm01ZwMzKvlu'" 
+          (resolved)="onCaptchaResolved($event!)">  <!-- Note the ! operator -->
+        </re-captcha>
         </div>
+        
+        
   
         <label>
           <input type="checkbox" formControlName="conditions">

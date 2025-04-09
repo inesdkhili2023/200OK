@@ -11,6 +11,8 @@ import com.ahch.entity.Facture;
 import com.ahch.entity.Paiement;
 import com.ahch.entity.TypeAssurance;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailAuthenticationException;
+import org.springframework.mail.MailSendException;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 import java.util.Optional;
@@ -34,30 +36,68 @@ public class DevisService {
     @Autowired
     private FactureRepository factureRepository;
 
+    @Autowired
+    private EmailService emailService;
+
 
     public Devis createDevis(Map<String, Object> payload) {
         Devis devis = new Devis();
 
-        // Associer le type d'assurance
+        // 1. Extract type assurance
         Long typeAssuranceId = Long.valueOf(payload.get("typeAssuranceId").toString());
         TypeAssurance typeAssurance = typeAssuranceRepository.findById(typeAssuranceId)
                 .orElseThrow(() -> new RuntimeException("TypeAssurance introuvable"));
         devis.setTypeAssurance(typeAssurance);
 
-        // Extraire les champs dynamiques (sauf typeAssuranceId)
+        // 2. Extract details from nested map
+        Map<String, Object> detailsMap = (Map<String, Object>) payload.get("details");
         Map<String, String> details = new HashMap<>();
-        for (Map.Entry<String, Object> entry : payload.entrySet()) {
-            if (!entry.getKey().equals("typeAssuranceId")) {
-                details.put(entry.getKey(), entry.getValue().toString());
-            }
+
+        for (Map.Entry<String, Object> entry : detailsMap.entrySet()) {
+            details.put(entry.getKey(), entry.getValue() != null ? entry.getValue().toString() : null);
         }
         devis.setDetails(details);
 
-        return devisRepository.save(devis);
+        // 3. Save the devis
+        System.out.println("🟢 Starting to save devis...");
+        Devis savedDevis = devisRepository.save(devis);
+        System.out.println("🟢 Devis saved with ID: " + savedDevis.getId());
+
+        // 4. Send email (using values from detailsMap directly)
+        String email = (String) detailsMap.get("email");
+        String nom = (String) detailsMap.get("nom");
+        String prenom = (String) detailsMap.get("prenom");
+
+        System.out.println("📧 Email sending parameters:");
+        System.out.println("  - Email: " + email);
+        System.out.println("  - Nom: " + nom);
+        System.out.println("  - Prenom: " + prenom);
+
+        if (email != null && nom != null && prenom != null) {
+            try {
+                System.out.println("🔄 Attempting to send email...");
+                emailService.envoyerMailConfirmation(email, nom, prenom);
+                System.out.println("✅ Email sent successfully!");
+            } catch (Exception e) {
+                System.err.println("❌ Email sending failed!");
+                System.err.println("Error message: " + e.getMessage());
+                e.printStackTrace();
+
+                if (e instanceof MailAuthenticationException) {
+                    System.err.println("🔐 Authentication failed - check credentials");
+                } else if (e instanceof MailSendException) {
+                    System.err.println("📤 SMTP transmission failed");
+                }
+            }
+        } else {
+            System.err.println("⚠️ Missing required email parameters!");
+            if (email == null) System.err.println("  - Email is null");
+            if (nom == null) System.err.println("  - Nom is null");
+            if (prenom == null) System.err.println("  - Prenom is null");
+        }
+
+        return savedDevis;
     }
-
-
-
 
     // 🔹 Récupération d'un devis par ID
     public Devis getDevisById(Long id) {
@@ -108,7 +148,7 @@ public class DevisService {
 
         // ✅ 4. Génération automatique d'une facture
         String numFacture = "FAC-" + UUID.randomUUID().toString().substring(0, 8);
-        Facture facture = new Facture(numFacture, paiement, montant);
+        Facture facture = new Facture(numFacture, paiement, montant); // Ajoutez le contrat comme 4ème paramètre
         factureRepository.save(facture);
     }
 }

@@ -24,6 +24,15 @@
 <input type="text" formControlName="mail" placeholder="Email" />
 <input type="text" formControlName="confirmationMail" placeholder="Confirmer Email" />
 
+<mat-form-field>
+  <input matInput placeholder="Montant" formControlName="montant" type="number" min="1" required />
+</mat-form-field>
+
+
+
+  <input matInput formControlName="rib"formControlName="rib" placeholder="rib">
+
+
         
 
               <div class="form-group form-check">
@@ -35,8 +44,7 @@
               </div>
 
               <div class="text-center">
-                <button type="submit" class="btn-default" (click)="onSubmit(contactForm) " title="Soumettre le formulaire">Soumettre</button>
-              </div>
+                <button mat-raised-button color="primary" type="submit">Payer</button>              </div>
   
           
 
