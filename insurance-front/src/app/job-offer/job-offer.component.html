@@ -1,5 +1,4 @@
 <div class="banner" style="background-image: url('assets/images/carrieres.jpg'); background-size: cover; background-position: center; height: 250px; display: flex; align-items: center; justify-content: center; color: darkblue;">
-  <h1>Rejoignez-nous !</h1>
 </div>
 <section class="breadcrumb">
   <div class="container">
@@ -10,28 +9,31 @@
     </ul>
   </div>
 </section>
- <!-- Filtres -->
- <div class="filter">
-  
-  <button mat-icon-button [matMenuTriggerFor]="filterMenu">
-    <mat-icon>filter_list</mat-icon>
-  </button>
-  <mat-menu #filterMenu="matMenu">
-    <button mat-menu-item (click)="sortJobs('recent')">
-      <mat-icon>arrow_downward</mat-icon> Du plus récent
-    </button>
-    <button mat-menu-item (click)="sortJobs('oldest')">
-      <mat-icon>arrow_upward</mat-icon> Du plus ancien
-    </button>
-  </mat-menu>
-</div>
+
 
 
 <div class="container py-5">
-  <h2 class="text-center text-primary mb-4 ">Offres d'emploi</h2>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+
+  <h2 class="text-center text-primary m-0 " ><mat-icon>work</mat-icon> Offres d'emploi</h2> <!-- Filtres -->
+  <div class="filter m-0">
+   
+   <button mat-icon-button [matMenuTriggerFor]="filterMenu">
+     <mat-icon>filter_list</mat-icon>
+   </button>
+   <mat-menu #filterMenu="matMenu">
+     <button mat-menu-item (click)="sortJobs('recent')">
+       <mat-icon>arrow_downward</mat-icon> Du plus récent
+     </button>
+     <button mat-menu-item (click)="sortJobs('oldest')">
+       <mat-icon>arrow_upward</mat-icon> Du plus ancien
+     </button>
+   </mat-menu>
+ </div>
+  </div>
   <div class="row">
     <div class="col-md-4" *ngFor="let job of paginatedJobOffers">
-      <div class="card shadow-lg rounded-lg border-0 bg-light job-card">
+      <div class="card shadow-lg rounded-lg bg-light job-card">
         <div class="card-body">
           <h5 class="card-title text-primary font-weight-bold">{{job.title}} </h5>
           <p class="card-subtitle mb-2 text-muted"> Assurances Maghrebia recrute un <strong>{{job.title}}</strong>.</p>

@@ -53,7 +53,8 @@ import { format } from 'date-fns';
 import { AvailabilityAdminComponent } from './availability-admin/availability-admin.component';
 import { WeatherComponent } from './weather/weather.component';
 import { AvailabilityEditComponent } from './availability-edit/availability-edit.component';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 @NgModule({
   declarations: [
     AppComponent,
@@ -110,6 +111,7 @@ import { AvailabilityEditComponent } from './availability-edit/availability-edit
     RecaptchaFormsModule,
     MatProgressBarModule,
     NgxMaterialTimepickerModule,
+    MatSnackBarModule
     
     
   ],

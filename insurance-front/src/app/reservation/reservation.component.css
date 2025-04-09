@@ -106,6 +106,22 @@ h2 {
     cursor: pointer;
     transition: 0.3s;
 }
+/* Styles pour Angular Material 16+ */
+.mdc-snackbar__surface {
+  background-color: var(--mdc-snackbar-container-color) !important;
+}
+
+.error-snackbar {
+  --mdc-snackbar-container-color: #f44336;
+  --mat-mdc-snack-bar-button-color: #fff;
+  --mdc-snackbar-supporting-text-color: #fff;
+}
+
+.success-snackbar {
+  --mdc-snackbar-container-color: #4caf50;
+  --mat-mdc-snack-bar-button-color: #fff;
+  --mdc-snackbar-supporting-text-color: #fff;
+}
 
 .confirm-btn:hover {
     background: #28a745;

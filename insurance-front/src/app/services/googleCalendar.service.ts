@@ -8,7 +8,7 @@ declare var gapi: any;
   providedIn: 'root'
 })
 export class GoogleCalendarService {
-  private CLIENT_ID = '247289513383-8aee7278b1atk4svh80cajcddsirjhjl.apps.googleusercontent.com';
+  private CLIENT_ID = '247289513383-8aee7278b1atk4svh80cajcddsirjhjl';
   private API_KEY = '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';
   private SCOPES = 'https://www.googleapis.com/auth/calendar';
 

@@ -115,4 +115,8 @@ tr.mat-row:hover {
   transform: scale(1.02); /* Effet léger d'agrandissement */
   cursor: pointer;
 }
+table th{
+  background-color: #344659;
+  color: #e3f2fd;
+}
 

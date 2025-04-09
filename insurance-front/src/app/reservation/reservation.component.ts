@@ -4,6 +4,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import { AppointmentService } from '../services/appointment.service';
 import { AvailabilityService } from '../services/availability.service';
 import { GoogleCalendarService } from '../services/googleCalendar.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 declare var gapi: any;
 
 @Component({
@@ -32,7 +33,8 @@ export class ReservationComponent implements OnInit {
   constructor(
     private appointmentService: AppointmentService,
     private availabilityService: AvailabilityService,
-    private googleCalendarService:GoogleCalendarService
+    private googleCalendarService:GoogleCalendarService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -47,7 +49,39 @@ export class ReservationComponent implements OnInit {
     }
 
   }
+  showNotification(message: string, action: string = 'Fermer') {
+    this.snackBar.open(message, action, {
+      duration: 3000 // 3 secondes
+    });
+  }
+  // Méthodes helper pour les notifications
+private showErrorNotification(message: string) {
+  this.snackBar.open(message, 'Fermer', {
+    duration: 5000,
+    panelClass: ['error-snackbar'],
+    horizontalPosition: 'center',
+    verticalPosition: 'top'
+  });
+}
 
+private showWarningNotification(message: string) {
+  this.snackBar.open(message, 'Fermer', {
+    duration: 4000,
+    panelClass: ['warning-snackbar'],
+    horizontalPosition: 'center',
+    verticalPosition: 'top'
+  });
+}
+
+// Optionnel: Ajoutez aussi pour les succès si besoin
+private showSuccessNotification(message: string) {
+  this.snackBar.open(message, 'OK', {
+    duration: 3000,
+    panelClass: ['success-snackbar'],
+    horizontalPosition: 'center',
+    verticalPosition: 'top'
+  });
+}
   loadAvailabilities() {
     this.availabilityService.getAvailabilities().subscribe(
       (availabilities: any[]) => { // Ici on reçoit bien les données de l'API

@@ -16,7 +16,7 @@
   margin-top: 60px;
 }
 .job-card {
-  border: 2px solid #cf8e33;  /* Couleur de la bordure */
+  border: 3px solid #cf8e33;  /* Couleur de la bordure */
   border-radius: 10px;         /* Coins arrondis */
   padding: 10px;               /* Espacement interne */
 }
@@ -31,6 +31,5 @@
 }
 .filter{
   text-align: right;
-  margin-right: 200px;
 }
 

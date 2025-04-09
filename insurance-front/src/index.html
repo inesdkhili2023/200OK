@@ -7,9 +7,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="">
   <meta name="author" content="">
-  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com https://www.gstatic.com https://www.google.com; object-src 'none'; frame-src 'self' https://accounts.google.com https://www.google.com;">
-  <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin">
+  <base href="/">
+  <meta http-equiv="Content-Security-Policy" content="
+  script-src 'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com https://www.gstatic.com https://www.google.com;
+  object-src 'none';
+  frame-src 'self' https://accounts.google.com https://www.google.com https://content.googleapis.com https://*.googleusercontent.com;">
+  <meta http-equiv="Cross-Origin-Opener-Policy" content="unsafe-none">
   <meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp">
+
+
   <title>Insurance - Press</title>
   <link rel="shortcut icon" href="/assets/images/favicon.png" />
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css">
