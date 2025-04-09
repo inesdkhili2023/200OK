@@ -238,7 +238,9 @@ public class TowingService {
 
         return updatedTowing;
     }
-
+    public Towing save(Towing towing) {
+        return towingRepository.save(towing);
+    }
     public void deleteTowing(Long id) {
         Towing towing = towingRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Towing not found with ID: " + id));
