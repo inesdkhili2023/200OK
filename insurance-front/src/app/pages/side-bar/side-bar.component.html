@@ -1,0 +1,76 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<div class="dashboard-sidebar">
+
+  <div class="sidebar-menu-container">
+    <h5 class="menu-category">MAIN NAVIGATION</h5>
+    <ul class="sidebar-menu">
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a routerLink="/admin/dashboard">
+          <i class="fas fa-tachometer-alt"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      
+      <h5 class="menu-category">USER MANAGEMENT</h5>
+      <li routerLinkActive="active">
+        <a routerLink="/admin/users">
+          <i class="fas fa-users"></i>
+          <span>Users List</span>
+        </a>
+      </li>
+      <li routerLinkActive="active">
+        <a routerLink="/admin/agents">
+          <i class="fas fa-user-tie"></i>
+          <span>Agents</span>
+        </a>
+      </li>
+      <li routerLinkActive="active">
+        <a routerLink="/admin/profile">
+          <i class="fas fa-user"></i>
+          <span>My Profile</span>
+        </a>
+      </li>
+      
+      <h5 class="menu-category">BUSINESS</h5>
+      <li routerLinkActive="active">
+        <a routerLink="/admin/claims">
+          <i class="fas fa-file-alt"></i>
+          <span>Claims</span>
+        </a>
+      </li>
+      <li routerLinkActive="active">
+        <a routerLink="/admin/ratings">
+          <i class="fas fa-star"></i>
+          <span>Customer Ratings</span>
+        </a>
+      </li>
+      <li routerLinkActive="active">
+        <a routerLink="/admin/agencies">
+          <i class="fas fa-building"></i>
+          <span>Agencies</span>
+        </a>
+      </li>
+      <li routerLinkActive="active">
+        <a>
+          <i class="fas fa-shield-alt"></i>
+          <span>Policies</span>
+        </a>
+      </li>
+      
+      <h5 class="menu-category">SYSTEM</h5>
+      <li routerLinkActive="active">
+        <a>
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </a>
+      </li>
+      <li>
+        <a (click)="logout()" class="logout-btn">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

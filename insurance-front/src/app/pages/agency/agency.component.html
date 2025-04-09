@@ -1,0 +1,223 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<div class="agency-container">
+  <div class="agency-card">
+    <div class="agency-header">
+      <h2>Please provide the details of the agency below</h2>
+     
+      
+    
+    </div>
+
+    <form #AgencyForm="ngForm" (ngSubmit)="saveAgency(AgencyForm)" class="agency-form">
+      <!-- Agency ID (read-only if editing) -->
+      <div class="form-group" *ngIf="!isCreateAgency">
+        <label for="agencyId">
+          <i class="fas fa-hashtag"></i> Agency ID
+        </label>
+        <input 
+          type="text" 
+          class="form-control" 
+          id="agencyId" 
+          [value]="agency.idAgency" 
+          readonly
+          disabled>
+      </div>
+
+      <!-- Agency Name -->
+      <div class="form-group">
+        <label for="AgencyName">
+          <i class="fas fa-building"></i> Agency Name
+        </label>
+        <input 
+          class="form-control" 
+          id="AgencyName" 
+          placeholder="Agency Name" 
+          name="AgencyName" 
+          [(ngModel)]="agency.agencyName"
+          required 
+          minlength="3" 
+          maxlength="100" 
+          #agencyName="ngModel" />
+        <div *ngIf="agencyName.invalid && (agencyName.dirty || agencyName.touched)" class="error-message">
+          <div *ngIf="agencyName.errors?.['required']">Agency name is required</div>
+          <div *ngIf="agencyName.errors?.['minlength']">Agency name must be at least 3 characters</div>
+          <div *ngIf="agencyName.errors?.['maxlength']">Agency name must be less than 100 characters</div>
+        </div>
+      </div>
+
+      <!-- Location -->
+      <div class="form-group">
+        <label for="Location">
+          <i class="fas fa-map-marker-alt"></i> Location
+        </label>
+        <input 
+          class="form-control" 
+          id="Location" 
+          placeholder="Location" 
+          name="Location" 
+          [(ngModel)]="agency.location"
+          required 
+          minlength="4" 
+          maxlength="100" 
+          #location="ngModel" />
+        <div *ngIf="location.invalid && (location.dirty || location.touched)" class="error-message">
+          <div *ngIf="location.errors?.['required']">Location is required</div>
+          <div *ngIf="location.errors?.['minlength']">Location must be at least 4 characters</div>
+        </div>
+      </div>
+
+      <!-- Coordinates Section -->
+      <div class="coordinates-section">
+        <h3><i class="fas fa-map-pin"></i> Coordinates</h3>
+        
+        <!-- Latitude -->
+        <div class="form-group">
+          <label for="Latitude">
+            <i class="fas fa-globe"></i> Latitude
+          </label>
+          <input 
+            class="form-control" 
+            id="Latitude" 
+            placeholder="Latitude" 
+            name="Latitude" 
+            [(ngModel)]="agency.latitude"
+            required 
+            pattern="^-?[0-9]+\.[0-9]+$" 
+            #latitude="ngModel" />
+          <div *ngIf="latitude.invalid && (latitude.dirty || latitude.touched)" class="error-message">
+            <div *ngIf="latitude.errors?.['required']">Latitude is required</div>
+            <div *ngIf="latitude.errors?.['pattern']">Please enter a valid latitude (e.g., 36.8065)</div>
+          </div>
+        </div>
+
+        <!-- Longitude -->
+        <div class="form-group">
+          <label for="Longitude">
+            <i class="fas fa-globe"></i> Longitude
+          </label>
+          <input 
+            class="form-control" 
+            id="Longitude" 
+            placeholder="Longitude" 
+            name="Longitude" 
+            [(ngModel)]="agency.longitude"
+            required 
+            pattern="^-?[0-9]+\.[0-9]+$" 
+            #longitude="ngModel" />
+          <div *ngIf="longitude.invalid && (longitude.dirty || longitude.touched)" class="error-message">
+            <div *ngIf="longitude.errors?.['required']">Longitude is required</div>
+            <div *ngIf="longitude.errors?.['pattern']">Please enter a valid longitude (e.g., 10.1815)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Information Section -->
+      <div class="contact-section">
+        <h3><i class="fas fa-address-book"></i> Contact Information</h3>
+        
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email">
+            <i class="fas fa-envelope"></i> Email
+          </label>
+          <input 
+            class="form-control" 
+            id="email" 
+            placeholder="Email" 
+            name="email" 
+            [(ngModel)]="agency.email"
+            required 
+            email 
+            #email="ngModel" />
+          <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error-message">
+            <div *ngIf="email.errors?.['required']">Email is required</div>
+            <div *ngIf="email.errors?.['email']">Please enter a valid email address</div>
+          </div>
+        </div>
+
+        <!-- Telephone -->
+        <div class="form-group">
+          <label for="telephone">
+            <i class="fas fa-phone"></i> Telephone
+          </label>
+          <input 
+            class="form-control" 
+            id="telephone" 
+            placeholder="Telephone" 
+            name="telephone" 
+            [(ngModel)]="agency.telephone"
+            required 
+            pattern="[0-9]{8}" 
+            #telephone="ngModel" />
+          <div *ngIf="telephone.invalid && (telephone.dirty || telephone.touched)" class="error-message">
+            <div *ngIf="telephone.errors?.['required']">Telephone is required</div>
+            <div *ngIf="telephone.errors?.['pattern']">Please enter a valid 8-digit phone number</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Working Hours Section -->
+      <div class="hours-section">
+        <h3><i class="fas fa-clock"></i> Working Hours</h3>
+        
+        <!-- Opening Hour -->
+        <div class="form-group">
+          <label for="openingHour">
+            <i class="fas fa-door-open"></i> Opening Hour
+          </label>
+          <input 
+            class="form-control" 
+            id="openingHour" 
+            placeholder="Opening Hour" 
+            name="openingHour" 
+            [(ngModel)]="agency.openingHour"
+            required 
+            #openingHour="ngModel" />
+          <div *ngIf="openingHour.invalid && (openingHour.dirty || openingHour.touched)" class="error-message">
+            <div *ngIf="openingHour.errors?.['required']">Opening hour is required</div>
+          </div>
+        </div>
+
+        <!-- Closing Hour -->
+        <div class="form-group">
+          <label for="closingHour">
+            <i class="fas fa-door-closed"></i> Closing Hour
+          </label>
+          <input 
+            class="form-control" 
+            id="closingHour" 
+            placeholder="Closing Hour" 
+            name="closingHour" 
+            [(ngModel)]="agency.closingHour"
+            required 
+            #closingHour="ngModel" />
+          <div *ngIf="closingHour.invalid && (closingHour.dirty || closingHour.touched)" class="error-message">
+            <div *ngIf="closingHour.errors?.['required']">Closing hour is required</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+       
+        <button 
+          type="submit" 
+          class="btn btn-primary" 
+          >
+          <i class="fas fa-save"></i> 
+          <span *ngIf="isCreateAgency">Create Agency</span>
+          <span *ngIf="!isCreateAgency">Update Agency</span>
+        </button>
+      </div>
+    </form>
+
+    <div class="agency-footer">
+      <button class="btn btn-outline" routerLink="/admin/agencies">
+        <i class="fas fa-list"></i> View Agencies List
+      </button>
+    </div>
+
+   
+  </div>
+</div>

@@ -1,0 +1,41 @@
+<div class="agent-list-container">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <app-side-bar></app-side-bar>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <h2 class="header">Agent List</h2>
+
+    <div class="table-container">
+      <table class="agent-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Agency</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let agent of agents">
+            <td>{{ agent.iduser }}</td>
+            <td>{{ agent.name }} {{ agent.lastname }}</td>
+            <td>{{ agent.email }}</td>
+            <td>
+              <span *ngIf="agent.agency?.agencyName; else assignButton" class="agency-name">
+                {{ agent.agency?.agencyName }}
+              </span>
+              <ng-template #assignButton>
+                <button mat-button class="assign-button" (click)="openAssignDialog(agent)">
+                  Assign Agency
+                </button>
+              </ng-template>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
