@@ -14,6 +14,7 @@ import { catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit } from '@angular/core';
 import { loadStripe } from '@stripe/stripe-js';
+import { HttpHeaders } from '@angular/common/http'; // Ajoutez HttpHeaders
 
 interface LineItem {
   price_data: {
@@ -49,27 +50,26 @@ export class PaymentComponent implements OnInit {
   paiements: Paiement[] = [];
   contactForm: FormGroup;
   apiUrl: string = 'http://localhost:8011/paiements/create';
-  stripePromise = loadStripe('pk_test_51QzaZjAlOaBjJnq5f1pMTZVmNXfu4N0yeVlPsG3CsVpq6tYiTxDip0gwpdIKDlNeEMvvkXb9TMkXwvKxEjdnJSzN00afZtFVJ9'); // Remplace par ta clé publique
-  
+  private stripePromise = loadStripe('pk_test_51QzaZjAlOaBjJnq5f1pMTZVmNXfu4N0yeVlPsG3CsVpq6tYiTxDip0gwpdIKDlNeEMvvkXb9TMkXwvKxEjdnJSzN00afZtFVJ9');
+  private elements: any;
+  private stripe: any;
+  cardElement: any;
 
 
 
-  constructor(private paiementService: PaiementService,private http: HttpClient) {
+  constructor(private paiementService: PaiementService, private http: HttpClient) {
     this.contactForm = new FormGroup({
       numContrat: new FormControl('', Validators.required),
-      montant: new FormControl('', [Validators.required, Validators.min(1)]), // ✅ champ montant
-      rib: new FormControl('', [Validators.required, Validators.pattern('[0-9]{20,30}')]), // ✅ champ RIB
+      montant: new FormControl('', [Validators.required, Validators.min(1)]),
+      rib: new FormControl('', [Validators.required, Validators.pattern('[0-9]{20,30}')]),
       numtel: new FormControl('', [Validators.required, Validators.pattern('[0-9]{8}')]),
       mail: new FormControl('', [Validators.required, Validators.email]),
       confirmationMail: new FormControl('', [Validators.required, Validators.email]),
       terms: new FormControl(false, Validators.requiredTrue)
-    });
-    
+    }, { validators: this.emailMatchValidator }); // <-- Ajoutez le validateur ici
   }
 
-  ngOnInit() {
-    this.getPaiements();
-  }
+
 
   getPaiements() {
     this.paiementService.getAllPaiements().subscribe(data => {
@@ -90,7 +90,7 @@ export class PaymentComponent implements OnInit {
     console.log("🛒 Stripe prêt ! En attente du paiement...");
   
     // Envoi du montant au backend pour créer un PaymentIntent
-    this.http.post('http://localhost:8011/paiements/stripe-payment-intent', { montant })
+    this.http.post('http://localhost:8011/paiements/create-payment-intent', { montant })
       .subscribe(async (response: any) => {
         const clientSecret = response.clientSecret;  // Récupérer le clientSecret retourné
   
@@ -136,44 +136,67 @@ export class PaymentComponent implements OnInit {
       //})
     //);
   //}
-  onSubmit(contactForm: any) {
-    console.log("Formulaire soumis !"); // Ajoute ce log pour vérifier que la méthode est bien appelée.
-    console.log("Données du formulaire:", this.contactForm.value); 
-
-    if (this.contactForm.valid) {
-      const paiementData = {
-        montant: this.contactForm.value.montant,
-        rib: this.contactForm.value.rib,
-        numContrat: this.contactForm.value.numContrat,
-        numtel: this.contactForm.value.numtel,
-        mail: this.contactForm.value.mail,
-        confirmationMail: this.contactForm.value.confirmationMail,
-        contrat: { numContrat: this.contactForm.value.numContrat }
-      };
-  
-      console.log("📤 Données envoyées :", paiementData); // Log les données envoyées au backend.
-      
-      // Envoi des données au backend pour créer le paiement
-      this.http.post('http://localhost:8011/paiements/create', paiementData)
-        .subscribe({
-          next: (response: any) => {
-            console.log("Réponse reçue du backend :", response);
-            const clientSecret = response.clientSecret;
-            this.payerAvecStripe(clientSecret);
-          },
-          error: (error) => {
-            console.error("❌ Erreur :", error);
-          }
-        });
+  async ngOnInit() {
+    await this.initializeStripe();
+    this.getPaiements();
+  }
+  async ngAfterViewInit() {
+    const stripe = await this.stripePromise;
+    if (stripe) { // Correction 2
+      const elements = stripe.elements();
+      this.cardElement = elements.create('card');
+      this.cardElement.mount('#card-element');
     }
   }
-  
-  
+
+  private async initializeStripe() {
+    this.stripe = await this.stripePromise;
+    if (this.stripe) {
+      this.elements = this.stripe.elements();
+      const cardElement = this.elements.create('card');
+      cardElement.mount('#card-element');
+    }
+  }
+
+  async onSubmit() {
+    try {
+      const stripe = await this.stripePromise;
+      if (!stripe) { // Correction 2
+        throw new Error('Stripe non initialisé');
+      }
+
+      const headers = new HttpHeaders({ 'Content-Type': 'application/json' }); // Correction 1
+
+      const response = await this.http.post<any>(
+        'http://localhost:8011/paiements/create-payment-intent',
+        { montant: 25 },
+        { headers }
+      ).toPromise();
+
+      const { error, paymentIntent } = await stripe.confirmCardPayment(
+        response.clientSecret, {
+          payment_method: {
+            card: this.cardElement, // Maintenant reconnu
+            billing_details: {
+              name: 'Nom du client'
+            }
+          }
+        }
+      );
+
+      if (error) throw error;
+      console.log('Paiement réussi:', paymentIntent);
+      
+    } catch (error) {
+      console.error('Erreur:', error);
+    }
+  }
   private emailMatchValidator(control: AbstractControl) {
-    const email = control.get('email')?.value;
-    const confirmEmail = control.get('confirmEmail')?.value;
+    const email = control.get('mail')?.value;
+    const confirmEmail = control.get('confirmationMail')?.value;
     return email === confirmEmail ? null : { emailMismatch: true };
   }
+
 
   
   }

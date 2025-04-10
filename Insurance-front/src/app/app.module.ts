@@ -9,7 +9,7 @@ import { ContactUsComponent } from './pages/contact-us/contact-us.component';
 import { NavBarComponent } from './pages/nav-bar/nav-bar.component';
 import { FooterComponent } from './pages/footer/footer.component';
 import { DashboardAdminComponent } from './dashboard-admin/dashboard-admin.component';
-import { InsurancesComponent } from './pages/insurances/insurances.component';
+
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { PaymentComponent } from './pages/payment/payment.component';
@@ -45,6 +45,9 @@ import { FacturesComponent } from './factures/factures.component';
 import { FactureService } from './services/facture.service'; // Importez votre service
 import { AssuranceVoyageFormComponent } from './forms/assurance-voyage-form/assurance-voyage-form.component';
 import { RecaptchaModule } from 'ng-recaptcha';
+import { PaymentSuccessComponent } from './payment-success/payment-success.component';
+
+
 
 
 
@@ -59,7 +62,6 @@ import { RecaptchaModule } from 'ng-recaptcha';
     NavBarComponent,
     FooterComponent,
     DashboardAdminComponent,
-    InsurancesComponent,
      AssuranceHabitationFormComponent,
      AssuranceVoyageFormComponent ,
     SanteFormComponent,
@@ -72,6 +74,7 @@ import { RecaptchaModule } from 'ng-recaptcha';
     PackModalComponentComponent,
     ContratsComponent,
     FacturesComponent
+   
 ],
   imports: [
     BrowserModule,

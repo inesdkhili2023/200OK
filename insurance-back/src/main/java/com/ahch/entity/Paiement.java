@@ -10,11 +10,12 @@ public class Paiement {
     private Long id;
 
     private Long numContrat;
-    private double montant;
+    private Double montant;
     private String numtel; // ✅ Changement de int à String
     private String mail;
     private String confirmationMail;
     private LocalDate datePaiement;
+    private String stripePaymentId;
 
     @ManyToOne
     @JoinColumn(name = "contrat_id", nullable = false)
@@ -24,10 +25,18 @@ public class Paiement {
         this.datePaiement = LocalDate.now(); // Date automatique
     }
 
-    public Paiement(double montant, Contrat contrat) {
+
+    public Paiement(Double montant, Contrat contrat) { // Changé double à Double
         this.montant = montant;
         this.contrat = contrat;
         this.datePaiement = LocalDate.now();
+    }
+    public String getStripePaymentId() {
+        return stripePaymentId;
+    }
+
+    public void setStripePaymentId(String stripePaymentId) {
+        this.stripePaymentId = stripePaymentId;
     }
 
     public Long getId() { return id; }
@@ -41,8 +50,8 @@ public class Paiement {
     public String getNumtel() { return numtel; } // ✅ Corrigé
     public void setNumtel(String numtel) { this.numtel = numtel; } // ✅ Corrigé
 
-    public double getMontant() { return montant; }
-    public void setMontant(double montant) { this.montant = montant; }
+    public Double getMontant() { return montant; } // Changé double à Double
+    public void setMontant(Double montant) { this.montant = montant; } // Changé double à Double
 
     public LocalDate getDatePaiement() { return datePaiement; }
     public void setDatePaiement(LocalDate datePaiement) { this.datePaiement = datePaiement; }

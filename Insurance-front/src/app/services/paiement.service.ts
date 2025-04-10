@@ -4,14 +4,14 @@ import { Observable } from 'rxjs';
 
 export interface Paiement {
   id?: number;
-  numContrat: number;
+  numContrat: string;
   montant: number;
-  numtel: number;
+  rib: string;
+  numtel: string;
   mail: string;
   confirmationMail: string;
-  datePaiement?: string;
-  contrat: { numContrat: number };
-  rib: string; 
+  stripePaymentId?: string;
+  contrat?: { numContrat: string };
 }
 @Injectable({
   providedIn: 'root'

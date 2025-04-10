@@ -6,7 +6,12 @@ import com.ahch.Repo.PaiementRepository;
 import com.ahch.entity.Contrat;
 import com.ahch.entity.Facture;
 import com.ahch.entity.Paiement;
+import com.stripe.Stripe;
+import com.stripe.exception.StripeException;
+import com.stripe.model.PaymentIntent;
+import com.stripe.param.PaymentIntentCreateParams;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +26,8 @@ public class PaiementService {
     private ContratRepository contratRepository;
     @Autowired
     private FactureRepository factureRepository;
+    @Value("${stripe.api.key}")
+    private String stripeApiKey;
 
 
     public Paiement createPaiement(Paiement paiement) {
@@ -28,13 +35,10 @@ public class PaiementService {
             throw new IllegalArgumentException("Le paiement doit être lié à un contrat valide.");
         }
 
-        Optional<Contrat> optionalContrat = contratRepository.findByNumContrat(paiement.getContrat().getNumContrat());
-        if (optionalContrat.isEmpty()) {
-            throw new RuntimeException("Numéro de contrat invalide.");
-        }
-        Contrat contrat = optionalContrat.get();
-        paiement.setContrat(contrat);
+        Contrat contrat = contratRepository.findByNumContrat(paiement.getContrat().getNumContrat())
+                .orElseThrow(() -> new RuntimeException("Numéro de contrat invalide."));
 
+        paiement.setContrat(contrat);
         Paiement savedPaiement = paiementRepository.save(paiement);
 
         // Générer une facture
@@ -43,6 +47,21 @@ public class PaiementService {
         factureRepository.save(facture);
 
         return savedPaiement;
+    }
+
+    public Paiement createPaiementWithStripe(Paiement paiement, String paymentIntentId) {
+        try {
+            Stripe.apiKey = stripeApiKey;
+            PaymentIntent intent = PaymentIntent.retrieve(paymentIntentId);
+
+            if ("succeeded".equals(intent.getStatus())) {
+                paiement.setStripePaymentId(paymentIntentId);
+                return this.createPaiement(paiement);
+            }
+            throw new RuntimeException("Paiement non confirmé avec Stripe");
+        } catch (StripeException e) {
+            throw new RuntimeException("Erreur Stripe: " + e.getMessage());
+        }
     }
 
 

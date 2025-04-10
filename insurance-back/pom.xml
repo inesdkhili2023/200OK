@@ -67,12 +67,12 @@
 			<version>7.2.5</version>
 		</dependency>
 		<!-- pour Maven -->
+
 		<dependency>
 			<groupId>com.stripe</groupId>
 			<artifactId>stripe-java</artifactId>
-			<version>24.3.0</version> <!-- ou autre version récente -->
+			<version>24.4.0</version>
 		</dependency>
-
 
 
 		<dependency>
