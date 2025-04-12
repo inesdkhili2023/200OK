@@ -32,4 +32,20 @@
 .filter{
   text-align: right;
 }
+.card-title{
+  font-weight: bold;
+  font-size: 18px;
+
+}
+.btn-dark {
+  background-color: #cf8e33;
+  color: white;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-dark:hover {
+  background-color: orange;
+  color: white;
+}
+
 

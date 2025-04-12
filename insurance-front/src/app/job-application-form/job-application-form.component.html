@@ -1,9 +1,9 @@
 <div class="">
-
   <h1>Rejoignez-nous !</h1>
 </div>
+
 <section class="breadcrumb">
-  <div class="container">
+  <div class="container-fluid px-0">
     <h2>Carrières</h2>
     <ul>
       <li><a routerLink="/joinus">Rejoignez-nous</a> ></li>
@@ -11,32 +11,30 @@
     </ul>
   </div>
 </section>
-<p *ngIf="selectedJob?.title" style="margin-left: 40px;">Vous souhaitez proposer votre candidature pour un poste de <strong>{{ selectedJob.title }}</strong></p>
+
+<p *ngIf="selectedJob?.title" style="text-align: center;">Vous souhaitez proposer votre candidature pour un poste de <strong>{{ selectedJob.title }}</strong></p>
+
 <form [formGroup]="jobApplicationForm" (ngSubmit)="submitApplication()">
   <h3 class="mb-4">A propos de vous</h3>
   <div class="row">
-
-    <div class="col-md-6 ">
+    <div class="col-md-6">
       <label>Civilité</label>
       <select formControlName="civilite" class="form-control" required>
         <option value="Mr">Monsieur</option>
         <option value="Mme">Madame</option>
         <option value="Mlle">Mademoiselle</option>
       </select>
-      <div *ngIf="jobApplicationForm.controls['civilite'].invalid && submitted"
-        class="text-danger">
+      <div *ngIf="jobApplicationForm.controls['civilite'].invalid && submitted" class="text-danger">
         Ce champ est obligatoire.
       </div>
     </div>
 
-    <div class="col-md-6 ">
+    <div class="col-md-6">
       <label>Nom</label>
       <input type="text" formControlName="nom" class="form-control" placeholder="Votre nom" required>
-      <div *ngIf="jobApplicationForm.controls['nom'].invalid && submitted"
-        class="text-danger">
+      <div *ngIf="jobApplicationForm.controls['nom'].invalid && submitted" class="text-danger">
         <span *ngIf="jobApplicationForm.controls['nom'].errors?.['required']">Ce champ est obligatoire.</span>
-        <span *ngIf="jobApplicationForm.controls['nom'].errors?.['minlength']">Le nom doit contenir au moins 2
-          caractères.</span>
+        <span *ngIf="jobApplicationForm.controls['nom'].errors?.['minlength']">Le nom doit contenir au moins 2 caractères.</span>
       </div>
     </div>
   </div>
@@ -44,16 +42,12 @@
   <div class="row">
     <div class="col-md-6">
       <label for="prenom">Prénom</label>
-      <input type="text" id="prenom" name="prenom" formControlName="prenom" placeholder="Votre prenom" required
-        class="form-control">
-        <div *ngIf="jobApplicationForm.controls['prenom'].invalid && submitted"
-        class="text-danger">
+      <input type="text" id="prenom" name="prenom" formControlName="prenom" placeholder="Votre prénom" required class="form-control">
+      <div *ngIf="jobApplicationForm.controls['prenom'].invalid && submitted" class="text-danger">
         <span *ngIf="jobApplicationForm.controls['prenom'].errors?.['required']">Ce champ est obligatoire.</span>
-        <span *ngIf="jobApplicationForm.controls['prenom'].errors?.['minlength']">Le nom doit contenir au moins 2
-          caractères.</span>
+        <span *ngIf="jobApplicationForm.controls['prenom'].errors?.['minlength']">Le prénom doit contenir au moins 2 caractères.</span>
       </div>
     </div>
-    
 
     <div class="col-md-6">
       <label for="dateNaissance">Date de naissance</label>
@@ -65,44 +59,38 @@
     </div>
   </div>
 
-  <div class="row ">
+  <div class="row">
     <div class="col-md-6">
       <label for="email">Email</label>
       <input type="email" id="email" formControlName="email" class="form-control" placeholder="Votre email" required>
-      <div class="error-message" *ngIf="jobApplicationForm.controls['email'].invalid && submitted "class="text-danger">
+      <div *ngIf="jobApplicationForm.controls['email'].invalid && submitted" class="text-danger">
         <span *ngIf="jobApplicationForm.controls['email'].errors?.['required']"> L'email est requis.</span>
         <span *ngIf="jobApplicationForm.controls['email'].errors?.['email']"> Format d'email invalide.</span>
+      </div>
     </div>
-    </div>    
 
     <div class="col-md-6">
       <label for="confirmEmail">Confirmer votre Email</label>
-      <input type="email" id="confirmEmail" formControlName="confirmEmail" class="form-control"
-        placeholder="Confirmez votre email" required>
-        <div class="error-message" *ngIf="jobApplicationForm.controls['confirmEmail'].invalid && submitted"class="text-danger">
-          <span *ngIf="jobApplicationForm.controls['confirmEmail'].errors?.['required']"> La confirmation d'email est requise.</span>
-          <span *ngIf="jobApplicationForm.controls['confirmEmail'].errors?.['email']"> Format d'email invalide.</span>
-        </div>
+      <input type="email" id="confirmEmail" formControlName="confirmEmail" class="form-control" placeholder="Confirmez votre email" required>
+      <div *ngIf="jobApplicationForm.controls['confirmEmail'].invalid && submitted" class="text-danger">
+        <span *ngIf="jobApplicationForm.controls['confirmEmail'].errors?.['required']"> La confirmation d'email est requise.</span>
+        <span *ngIf="jobApplicationForm.controls['confirmEmail'].errors?.['email']"> Format d'email invalide.</span>
+      </div>
     </div>
   </div>
-  <span class="error-message" *ngIf="jobApplicationForm.errors?.['emailMismatch'] && submitted"class="text-danger">
+  <span class="error-message" *ngIf="jobApplicationForm.errors?.['emailMismatch'] && submitted" class="text-danger">
     Les adresses e-mail ne correspondent pas.
   </span>
- 
-  
-  
+
   <br>
-  <div class="row ">
+
+  <div class="row">
     <div class="col-md-6">
       <label>Téléphone</label>
       <input type="tel" formControlName="telephone" class="form-control" placeholder="Votre téléphone" required>
       <div *ngIf="jobApplicationForm.controls['telephone'].invalid && submitted" class="text-danger">
-        <span *ngIf="jobApplicationForm.controls['telephone'].errors?.['required']">
-           Numéro de téléphone requis.
-        </span>
-        <span *ngIf="jobApplicationForm.controls['telephone'].errors?.['pattern']">
-          Le numéro doit contenir exactement 8 chiffres.
-        </span>
+        <span *ngIf="jobApplicationForm.controls['telephone'].errors?.['required']">Numéro de téléphone requis.</span>
+        <span *ngIf="jobApplicationForm.controls['telephone'].errors?.['pattern']">Le numéro doit contenir exactement 8 chiffres.</span>
       </div>
     </div>
 
@@ -110,10 +98,8 @@
       <label for="adresse">Adresse</label>
       <input type="text" id="adresse" formControlName="adresse" class="form-control" placeholder="Votre adresse" required>
       <div *ngIf="jobApplicationForm.controls['adresse'].invalid && submitted" class="text-danger">
-        <span *ngIf="jobApplicationForm.controls['adresse'].errors?.['required']">
-           Adresse requise.
-        </span>
-        </div>
+        <span *ngIf="jobApplicationForm.controls['adresse'].errors?.['required']">Adresse requise.</span>
+      </div>
     </div>
   </div>
 
@@ -122,24 +108,17 @@
       <label for="ville">Ville</label>
       <input type="text" id="ville" formControlName="ville" class="form-control" placeholder="Votre ville" required>
       <div *ngIf="jobApplicationForm.controls['ville'].invalid && submitted" class="text-danger">
-        <span *ngIf="jobApplicationForm.controls['ville'].errors?.['required']">
-           Ville requise.
-        </span>
-        </div>
+        <span *ngIf="jobApplicationForm.controls['ville'].errors?.['required']">Ville requise.</span>
+      </div>
     </div>
 
     <div class="col-md-6">
       <label for="codePostal">Code postal</label>
-      <input type="text" id="codePostal" formControlName="codePostal" class="form-control"
-        placeholder="Votre code postal" required>
-        <div *ngIf="jobApplicationForm.controls['codePostal'].invalid && submitted" class="text-danger">
-          <span *ngIf="jobApplicationForm.controls['codePostal'].errors?.['required']">
-            Le code postal est requis.
-          </span>
-          <span *ngIf="jobApplicationForm.controls['codePostal'].errors?.['pattern']">
-            Le code postal doit contenir 4 ou 5 chiffres.
-          </span>
-        </div>
+      <input type="text" id="codePostal" formControlName="codePostal" class="form-control" placeholder="Votre code postal" required>
+      <div *ngIf="jobApplicationForm.controls['codePostal'].invalid && submitted" class="text-danger">
+        <span *ngIf="jobApplicationForm.controls['codePostal'].errors?.['required']">Le code postal est requis.</span>
+        <span *ngIf="jobApplicationForm.controls['codePostal'].errors?.['pattern']">Le code postal doit contenir 4 ou 5 chiffres.</span>
+      </div>
     </div>
   </div>
 
@@ -154,7 +133,7 @@
         <option value="Doctorat">Doctorat</option>
       </select>
       <div *ngIf="jobApplicationForm.controls['niveauEtudes'].invalid && submitted" class="text-danger">
-         Veuillez sélectionner un niveau d’études.
+        Veuillez sélectionner un niveau d’études.
       </div>
     </div>
     <div class="col-md-6">
@@ -166,7 +145,7 @@
       </select>
       <div *ngIf="jobApplicationForm.controls['typePoste'].invalid && submitted" class="text-danger">
         Veuillez sélectionner un type de poste.
-     </div>
+      </div>
     </div>
   </div>
 
@@ -180,7 +159,7 @@
       </select>
       <div *ngIf="jobApplicationForm.controls['niveauExperience'].invalid && submitted" class="text-danger">
         Veuillez sélectionner un niveau d'expérience.
-     </div>
+      </div>
     </div>
     <div class="col-md-6">
       <label for="disponibilite">Disponibilité immédiate</label>
@@ -188,9 +167,9 @@
         <option value="True">Oui</option>
         <option value="False">Non</option>
       </select>
-      <div *ngIf="jobApplicationForm.controls['disponibilite'].invalid  && submitted" class="text-danger">
+      <div *ngIf="jobApplicationForm.controls['disponibilite'].invalid && submitted" class="text-danger">
         Veuillez sélectionner votre disponibilité.
-     </div>
+      </div>
     </div>
   </div>
 
@@ -198,11 +177,9 @@
     <div class="col-md-6">
       <label for="specialiteEtude">Spécialité d’étude</label>
       <input type="text" id="specialiteEtude" formControlName="specialiteEtude" class="form-control" required>
-      <div *ngIf="jobApplicationForm.controls['specialiteEtude'].invalid  && submitted" class="text-danger">
-        <span *ngIf="jobApplicationForm.controls['specialiteEtude'].errors?.['required']">
-           Spécialité d'étude requise.
-        </span>
-        </div>
+      <div *ngIf="jobApplicationForm.controls['specialiteEtude'].invalid && submitted" class="text-danger">
+        Spécialité d'étude requise.
+      </div>
     </div>
 
     <div class="col-md-6">
@@ -215,20 +192,14 @@
         <option value="Italien">Italien</option>
         <option value="Autres">Autres</option>
       </select>
-      <div *ngIf="jobApplicationForm.controls['languages'].invalid  && submitted" class="text-danger">
+      <div *ngIf="jobApplicationForm.controls['languages'].invalid && submitted" class="text-danger">
         Veuillez sélectionner vos langues.
-     </div>
+      </div>
     </div>
   </div>
 
   <h3 class="mb-3">Commentaires</h3>
-  <textarea formControlName="commentaire" class="form-control" placeholder="Votre commentaire" rows="3" >
-    
-  </textarea>
-  
- 
- 
-  
+  <textarea formControlName="commentaire" class="form-control" placeholder="Commentaires supplémentaires" rows="4"></textarea>
   <h3 class="mb-3">Fichiers</h3>
   <div class="mb-3">
     <label>Ajoutez votre lettre de motivation</label>
@@ -244,17 +215,12 @@
       </span>
       </div>
   </div>
-
-
+<br>
   <re-captcha 
   (resolved)="handleCaptcha($event)"
   siteKey="6Le5S-MqAAAAALSbrYTUmV1IgrBQPBExN4zJpBVq">
 </re-captcha>
-
-
-
-  
-  
+<br>
 
   <div class="form-check mt-3">
     <input class="form-check-input" type="checkbox" formControlName="consent">
@@ -266,10 +232,8 @@
    </div>
   </div>
 
-  <div class="row text-center mt-3">
-    <div class="col">
-      <button type="submit" class="btn btn-success" >Envoyer</button>
-      <button type="button" class="btn btn-danger ml-2" (click)="closeForm()">Annuler</button>
-    </div>
+  <div class="mt-3 text-center" >
+    <button type="submit" [disabled]="jobApplicationForm.invalid" class="btn btn-primary"style="margin-right: 5px;">Soumettre</button>
+    <button type="button" class="btn btn-danger ml-2" (click)="closeForm()">Annuler</button>
   </div>
 </form>

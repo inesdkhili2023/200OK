@@ -6,7 +6,7 @@ import { AvailabilityService } from '../services/availability.service';
 import { GoogleCalendarService } from '../services/googleCalendar.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 declare var gapi: any;
-
+declare var createGoogleEvent: any;
 @Component({
   selector: 'app-reservation',
   templateUrl: './reservation.component.html',
@@ -81,6 +81,26 @@ private showSuccessNotification(message: string) {
     horizontalPosition: 'center',
     verticalPosition: 'top'
   });
+}
+scheduleMeeting() {
+  let appointmentTime = new Date(this.selectedDate);
+  // Convert the date to the desired format with a custom offset (e.g., -07:00)
+  const startTime = appointmentTime.toISOString().slice(0, 18) + '-07:00';
+  const endTime = this.getEndTime(appointmentTime);
+  const eventDetails = {
+    email: "malekfeki18@gmail.com",
+    startTime: startTime,
+    endTime: endTime,
+  };
+  console.info(eventDetails);
+  //this.generateICSFile()
+  createGoogleEvent(eventDetails);
+}
+getEndTime(appointmentTime: Date) {
+  // Add one hour to the date
+  appointmentTime.setHours(appointmentTime.getHours() + 1);
+  const endTime = appointmentTime.toISOString().slice(0, 18) + '-07:00';
+  return endTime;
 }
   loadAvailabilities() {
     this.availabilityService.getAvailabilities().subscribe(
@@ -191,6 +211,7 @@ private showSuccessNotification(message: string) {
         this.isLoading = false;
       }
     );
+    this.scheduleMeeting();
   }
 
 
