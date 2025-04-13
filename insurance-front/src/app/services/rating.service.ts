@@ -5,6 +5,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 export interface Rating {
   id?: number;
   claimId: number;
+  userId?: number;
   rating: number;
   feedback?: string;
   createdAt?: string;

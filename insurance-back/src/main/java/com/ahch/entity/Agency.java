@@ -1,10 +1,11 @@
 package com.ahch.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.time.LocalDateTime;
-
+import java.util.List;
 
 
 @Entity
@@ -22,6 +23,11 @@ public class Agency {
     String Email;
     String openingHour;  // Example: "08:00"
     String closingHour;
+
+
+    @OneToMany(mappedBy = "agency", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<OurUsers> users;
 
     public String getOpeningHour() {
         return openingHour;

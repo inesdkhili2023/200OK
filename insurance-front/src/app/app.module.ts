@@ -28,13 +28,12 @@ import { AgentListComponent } from './pages/agent-list/agent-list.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
-import { AssignAgencyDialog } from './pages/agent-list/agent-list.component';  
 import { UsersService } from './services/users.service';
-import { AdminLayoutComponent } from './pages/layout/admin-layout/admin-layout.component';
 import { RatingDialogComponent } from './components/rating-dialog/rating-dialog.component';
 import { CommonModule } from '@angular/common';
 import { RatingService } from './services/rating.service'
 import { RatingListComponent } from './components/rating-list/rating-list.component';
+import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 
 @NgModule({
   declarations: [
@@ -55,13 +54,10 @@ import { RatingListComponent } from './components/rating-list/rating-list.compon
     ClaimListComponent,
     ValidationPopupComponent,
     AgentListComponent,
-    AssignAgencyDialog,
     SideBarComponent,
-    AdminLayoutComponent,
     RatingDialogComponent,
-    RatingListComponent
-    
-  
+    RatingListComponent,
+    MainLayoutComponent
   ],
   imports: [
     BrowserModule,

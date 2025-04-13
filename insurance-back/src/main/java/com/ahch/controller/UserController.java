@@ -1,6 +1,7 @@
 package com.ahch.controller;
 
 
+import com.ahch.Repo.UserRepo;
 import com.ahch.entity.Claim;
 import com.ahch.entity.OurUsers;
 import com.ahch.service.UserService;
@@ -18,6 +19,7 @@ public class UserController {
 
     @Autowired
     UserService userService;
+    UserRepo userRepo;
 
     @GetMapping("/get/Users")
     public List<OurUsers> getUsers() {
@@ -28,5 +30,13 @@ public class UserController {
     public OurUsers getUser(@PathVariable Long iduser) {
         return userService.getuser(iduser);
     }
+
+    @GetMapping("/get/Agents")
+    public List<OurUsers> getAgents() {
+        return userRepo.findByRole("agent");
+    }
+
+
+
 
 }

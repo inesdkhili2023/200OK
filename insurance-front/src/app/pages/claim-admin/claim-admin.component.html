@@ -32,6 +32,39 @@
       <p>No claims found matching your criteria.</p>
       <button class="btn btn-primary" (click)="resetFilters()">Reset Filters</button>
     </div>
+    <div class="claims-stats" *ngIf="!isLoading && dataSource.length > 0">
+      <div class="stat-card">
+        <div class="stat-icon untreated">
+          <i class="fas fa-hourglass-half"></i>
+        </div>
+        <div class="stat-info">
+          <h3>Untreated</h3>
+          <p class="stat-count">{{ getStatusCount(ClaimStatus.UNTREATED) }}</p>
+        </div>
+      </div>
+      
+      
+      
+      <div class="stat-card">
+        <div class="stat-icon treated">
+          <i class="fas fa-check"></i>
+        </div>
+        <div class="stat-info">
+          <h3>Treated</h3>
+          <p class="stat-count">{{ getStatusCount(ClaimStatus.TREATED) }}</p>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon total">
+          <i class="fas fa-folder-open"></i>
+        </div>
+        <div class="stat-info">
+          <h3>Total Claims</h3>
+          <p class="stat-count">{{ dataSource.length }}</p>
+        </div>
+      </div>
+    </div>
 
     <div *ngIf="!isLoading && filteredClaims.length > 0" class="claims-list">
       <div *ngFor="let claim of filteredClaims" class="claim-card" [ngClass]="getStatusClass(claim.claimStatus)">
@@ -47,6 +80,8 @@
             <span class="status-badge">{{ claim.claimStatus }}</span>
           </div>
         </div>
+
+        
         
         <div class="claim-card-body">
           <div class="claim-user">
@@ -80,37 +115,5 @@
     </div>
   </div>
 
-  <div class="claims-stats" *ngIf="!isLoading && dataSource.length > 0">
-    <div class="stat-card">
-      <div class="stat-icon untreated">
-        <i class="fas fa-hourglass-half"></i>
-      </div>
-      <div class="stat-info">
-        <h3>Untreated</h3>
-        <p class="stat-count">{{ getStatusCount(ClaimStatus.UNTREATED) }}</p>
-      </div>
-    </div>
-    
-    
-    
-    <div class="stat-card">
-      <div class="stat-icon treated">
-        <i class="fas fa-check"></i>
-      </div>
-      <div class="stat-info">
-        <h3>Treated</h3>
-        <p class="stat-count">{{ getStatusCount(ClaimStatus.TREATED) }}</p>
-      </div>
-    </div>
-    
-    <div class="stat-card">
-      <div class="stat-icon total">
-        <i class="fas fa-folder-open"></i>
-      </div>
-      <div class="stat-info">
-        <h3>Total Claims</h3>
-        <p class="stat-count">{{ dataSource.length }}</p>
-      </div>
-    </div>
-  </div>
+  
 </div>

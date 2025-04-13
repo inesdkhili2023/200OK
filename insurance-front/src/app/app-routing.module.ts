@@ -13,38 +13,44 @@ import { AgencyComponent } from './pages/agency/agency.component';
 import { AgencyListComponent } from './pages/agency-list/agency-list.component';
 import { MapComponent } from './pages/map/map.component';
 import { AgentListComponent } from './pages/agent-list/agent-list.component';
-import { AdminLayoutComponent } from './pages/layout/admin-layout/admin-layout.component';
-import { AdminGuard } from './guards/admin.guard';
-
+import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
+import { RatingListComponent } from './components/rating-list/rating-list.component';
 
 const routes: Routes = [
+  // Public routes without sidebar
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'blog', component: BlogComponent },
   { path: 'blog-details', component: BlogDetailsComponent },
   { path: 'contact-us', component: ContactUsComponent },
-  { path: 'admin/dashboard', component: DashboardAdminComponent },
-  { path: 'insurances', component: InsurancesComponent },
-  { path: 'claim', component: ClaimComponent},
-  { path: 'claim-list', component: ClaimListComponent},
-  { path: 'claim-admin', component: ClaimAdminComponent},
-  { path: 'agency', component: AgencyComponent},
-  { path: 'agency-list', component: AgencyListComponent},
-  { path: 'agent-list', component: AgentListComponent},
-  { path: '**', redirectTo: 'home' } ,
+  { path: 'claim', component: ClaimComponent },
+  
+  // Routes with sidebar using MainLayoutComponent
   { 
-    path: 'admin',
-    component: AdminLayoutComponent,
-    canActivate: [AdminGuard],
+    path: 'admin', 
+    component: MainLayoutComponent,
     children: [
       { path: 'dashboard', component: DashboardAdminComponent },
-      { path: 'claims', component: ClaimAdminComponent },
-      { path: 'agency', component: AgencyComponent },
-      { path: 'agencies', component: AgencyListComponent },
-      { path: 'agents', component: AgentListComponent },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   },
+  { 
+    path: '', 
+    component: MainLayoutComponent,
+    children: [
+      { path: 'claim-admin', component: ClaimAdminComponent },
+      { path: 'claim-list', component: ClaimListComponent },
+      
+      { path: 'agency', component: AgencyComponent },
+      { path: 'agency-list', component: AgencyListComponent },
+      { path: 'agent-list', component: AgentListComponent },
+      { path: 'insurances', component: InsurancesComponent },
+      { path: 'rating-list', component: RatingListComponent },
+    ]
+  },
+  
+  // Fallback route
+  { path: '**', redirectTo: 'home' }
 ];
 
 @NgModule({

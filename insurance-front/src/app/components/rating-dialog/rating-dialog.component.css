@@ -1,8 +1,8 @@
 .rating-dialog {
-    width: 400px;
+    width: 450px;
     max-width: 100%;
     background-color: #fff;
-    border-radius: 12px;
+    border-radius: 2px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
     overflow: hidden;
@@ -13,6 +13,7 @@
     background: linear-gradient(135deg, #455a70, #3e4e63);
     color: white;
     text-align: center;
+    border-radius: 2px;
   }
   
   .rating-header h2 {

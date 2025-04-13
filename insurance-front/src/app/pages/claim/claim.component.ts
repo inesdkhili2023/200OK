@@ -7,7 +7,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { OurUsers } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { ChangeDetectorRef } from '@angular/core';
-
+import { MatDialog } from '@angular/material/dialog';
+import { RatingDialogComponent } from 'src/app/components/rating-dialog/rating-dialog.component';
+import { RatingService, Rating } from 'src/app/services/rating.service';
 
 @Component({
   selector: 'app-claim',
@@ -37,7 +39,9 @@ export class ClaimComponent implements OnInit{
     private userService: UserService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private cdr: ChangeDetectorRef) {
+    private cdr: ChangeDetectorRef,
+    private dialog: MatDialog,
+    private ratingService: RatingService) {
 
   }
 
@@ -81,6 +85,43 @@ export class ClaimComponent implements OnInit{
   }
   logSelectedUserId() {
     console.log('Selected User ID:', this.selectedUserId);
+  }
+  openRatingDialog(user: OurUsers, claimId: number) {
+    const dialogRef = this.dialog.open(RatingDialogComponent, {
+      width: '450px',
+      data: { 
+        userName: `${user.name} ${user.lastname}`,
+        userId: user.iduser
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Save rating immediately with the claim ID
+        const rating: Rating = {
+          claimId: claimId,
+          rating: result.rating,
+          feedback: result.feedback,
+          userId: user.iduser
+        };
+        
+        this.ratingService.saveRating(rating).subscribe({
+          next: (savedRating) => {
+            console.log('Rating saved successfully:', savedRating);
+            // After saving rating, navigate to claim list
+            this.router.navigate(['/claim-list']);
+          },
+          error: (err) => {
+            console.error('Error saving rating:', err);
+            // Even if rating fails, still navigate
+            this.router.navigate(['/claim-list']);
+          }
+        });
+      } else {
+        // If user cancels rating, still navigate
+        this.router.navigate(['/claim-list']);
+      }
+    });
   }
   saveClaim(ClaimForm: NgForm): void {
     console.log('Selected User ID before saving:', this.selectedUserId);
@@ -128,8 +169,16 @@ export class ClaimComponent implements OnInit{
     observable.subscribe({
       next: (res: Claim) => {
         console.log('Claim saved/updated successfully:', res);
+        
         ClaimForm.reset();
-        this.router.navigate(['/claim-list']);
+        
+        // If it's a new claim, show the rating dialog
+        if (this.isCreateClaim && selectedUser) {
+          this.openRatingDialog(selectedUser, res.claimId);
+        } else {
+          // If it's just an update, navigate directly
+          this.router.navigate(['/claim-list']);
+        }
       },
       error: (err: HttpErrorResponse) => {
         console.error('Error saving/updating claim:', err);

@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("http://localhost:4200")
-public class ClaimController {
+public class  ClaimController {
 
     @Autowired
     private ClaimService ClaimService;

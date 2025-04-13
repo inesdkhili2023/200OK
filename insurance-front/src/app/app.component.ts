@@ -9,13 +9,25 @@ import { filter } from 'rxjs/operators';
 })
 export class AppComponent {
   title = 'InsuranceProject';
-  isDashboard = false;
+  showHeaderFooter = true;
 
   constructor(private router: Router) {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
-      this.isDashboard = event.url.includes('/admin/dashboard');
+      // Check if current URL is an admin page or a page that uses the main layout
+      const isAdminPage = event.url.includes('/admin/');
+      const isMainLayoutPage = [
+        '/claim-admin',
+        '/claim-list',
+        '/agency',
+        '/agency-list',
+        '/agent-list',
+        '/insurances',
+        '/rating-list'
+      ].some(path => event.url.includes(path));
+      
+      this.showHeaderFooter = !(isAdminPage || isMainLayoutPage);
     });
   }
 }
