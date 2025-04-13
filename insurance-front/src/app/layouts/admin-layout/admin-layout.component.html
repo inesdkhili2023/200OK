@@ -1,0 +1,82 @@
+<!-- admin-layout.component.html -->
+<div class="dashboard-container">
+
+    <!-- SIDEBAR -->
+    <div class="dashboard-sidebar">
+      <div class="sidebar-logo">
+        <img src="/assets/images/maghrebia.png" alt="Logo Assurance" />
+      </div>
+  
+      <ul class="sidebar-menu">
+        <li (click)="navigate('admin/dashboardAdmin')">
+          <i class="fas fa-chart-pie"></i>
+          <span>Dashboard</span>
+        </li>
+        <li (click)="navigate('/admin/contrat')">
+          <i class="fas fa-file-signature"></i>
+          <span>Contrat</span>
+        </li>
+        <li (click)="navigate('/admin/assurance')">
+          <i class="fas fa-shield-alt"></i>
+          <span>Assurance</span>
+        </li>
+        <li (click)="navigate('/admin/reclamation')">
+          <i class="fas fa-comment-dots"></i>
+          <span>Réclamation</span>
+        </li>
+        <li (click)="navigate('/admin/users')">
+          <i class="fas fa-users"></i>
+          <span>Liste d'utilisateurs</span>
+        </li>
+        <li (click)="toggleMenu()" [class.active]="isMenuOpen">
+          <i class="fas fa-cogs"></i>
+          <span>Paramètres</span>
+        </li>
+  
+        <ul *ngIf="isMenuOpen" class="submenu">
+          <li (click)="navigate('/admin/profile')">
+            <i class="fas fa-id-card"></i> Profil
+          </li>
+          <li (click)="updateProfile(Info?.ourUsers?.id)">
+            <i class="fas fa-user-edit"></i> Modifier Profil
+          </li>
+          <li (click)="logout()" class="logout">
+            <i class="fas fa-sign-out-alt"></i> Se déconnecter
+          </li>
+        </ul>
+      </ul>
+    </div>
+  
+    <!-- MAIN SECTION -->
+    <div class="dashboard-main">
+      <!-- HEADER -->
+      <div class="dashboard-header">
+        <div class="header-search">
+          <input type="text" placeholder="Search..." class="search-input" />
+          <i class="fas fa-search search-icon"></i>
+        </div>
+        <div class="header-profile" (click)="toggleMenu()" tabindex="0">
+          <img [src]="userImage" alt="User" class="profile-img" />
+          <div class="profile-text">
+            <span class="user-name">{{ userName }}</span>
+            <small class="user-role">{{ role }}</small>
+          </div>
+          <i class="fas fa-chevron-down chevron-icon"></i>
+  
+          <div *ngIf="isMenuOpen" class="profile-dropdown">
+            <ul>
+              <li (click)="navigate('/admin/profile')">Profil</li>
+              <li (click)="updateProfile(Info?.ourUsers?.id)">Modifier Profil</li>
+              <li (click)="logout()" class="logout">Se déconnecter</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+  
+      <!-- CONTENT -->
+      <div class="dashboard-content">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+  

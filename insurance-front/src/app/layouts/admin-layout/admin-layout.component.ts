@@ -1,33 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { Chart, registerables } from 'chart.js';
-import { UsersService } from '../services/users.service';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
-  selector: 'app-dashboard-admin',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  selector: 'app-admin-layout',
+  templateUrl: './admin-layout.component.html',
+  styleUrls: ['./admin-layout.component.css']
 })
-export class DashboardComponent implements OnInit {
-  chart: any;
+export class AdminLayoutComponent {
   showSettingsList: boolean = false;
   isMenuOpen = false;
-
   isAuthenticated: boolean = false;
   isAdmin: boolean = false;
   isUser: boolean = false;
   isAgent: boolean = false;
   Info: any;
+  role: string = '';
   userName: string = ''; // Nom de l'utilisateur
-  userImage: string = 'assets/images/avatar-placeholder.png'; // Image de l'utilisateur
+  userImage: string = 'assets/images/avatar-placeholder.png'; 
   errorMessage: string = '';
-
+  
   constructor(private readonly userService: UsersService, private router: Router) {
-    Chart.register(...registerables);
   }
-
+ 
   async ngOnInit(): Promise<void> {
-    this.initializeRevenueChart();
+
+    await this.loadUserStatistics();
     this.isAuthenticated = this.userService.isAuthenticated();
     this.isAdmin = this.userService.isAdmin();
     this.isUser = this.userService.isUser();
@@ -47,6 +45,7 @@ export class DashboardComponent implements OnInit {
       // Mettre à jour les propriétés userName et userImage
       if (this.Info && this.Info.ourUsers) {
         this.userName = this.Info.ourUsers.name;
+        this.role = this.Info.ourUsers.role;
         this.userImage = this.Info.ourUsers.image || 'assets/images/avatar-placeholder.png';
       }
     } catch (error: any) {
@@ -60,38 +59,25 @@ export class DashboardComponent implements OnInit {
       this.errorMessage = '';
     }, 3000);
   }
-
-  private initializeRevenueChart(): void {
-    const ctx = document.getElementById('revenueChart') as HTMLCanvasElement;
-    this.chart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-        datasets: [{
-          label: 'Revenue',
-          data: [12000, 19000, 15000, 25000, 22000, 30000],
-          fill: false,
-          borderColor: '#f38F1D',
-          tension: 0.1
-        }]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
+  async loadUserStatistics() {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await this.userService.getAllUsers(token!);
+      console.log("Utilisateurs récupérés :", response);
+      const allUsers = response.ourUsersList;
+      console.log("Liste des utilisateurs :", allUsers);
+  
+    } catch (error) {
+      console.error('Erreur lors du chargement des utilisateurs :', error);
+      this.showError('Erreur lors du chargement des utilisateurs');
+    }
   }
-
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
   updateProfile(id: string){
-    this.router.navigate(['/user/update', id])
+    this.router.navigate(['admin/update', id])
 }
 
   logout(): void {
@@ -104,6 +90,7 @@ export class DashboardComponent implements OnInit {
   }
 
   addUser(): void {
+    this.loadUserStatistics();
     console.log('Add user clicked');
   }
 

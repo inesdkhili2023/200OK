@@ -34,10 +34,9 @@
           <li><a routerLink="/home">Accueil</a></li>
           <li><a routerLink="/contact-us">Contact</a></li>
           <li><a routerLink="/buy-pro" class="btn-default">souscrire une assurance</a></li>
-          <li *ngIf="isUser"><a routerLink="/dashboard">Dashboard</a></li>
+          <li *ngIf="isUser"><a routerLink="/user/dashboard">Espace client</a></li>
           <li><a routerLink="/insurances">Insurances</a></li>
           <li *ngIf = "!isAuthenticated"><a routerLink = "/signup">S'inscrire</a></li>
-          <li *ngIf = "isAuthenticated"><a routerLink = "/profile">Profil</a></li>
           <li *ngIf = "!isAuthenticated"><a routerLink = "/login">Se Connecter</a></li>
           <li *ngIf = "isAuthenticated"><a routerLink = "" (click)="logout()">Se déconnecter</a></li>
         </ul>

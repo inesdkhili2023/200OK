@@ -1,5 +1,5 @@
 <div class="container">
-    <h2>Liste d'utilisateurs</h2>
+    <h2>Liste d'tilisateurs</h2>
     <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
 
     <!-- Barre de recherche -->
@@ -11,9 +11,9 @@
             placeholder="Rechercher un utilisateur..."
         />
     </div>
-    <button routerLink="/register" class="reg-button">Ajouter un utilisateur</button>
+    <button routerLink="/admin/register" class="reg-button">Ajouter un utilisateur</button>
     <ng-container *ngTemplateOutlet="userTable; context: {
-        title: '👤 Tous les Utilisateurs',
+        title: '👤 Utilisateurs',
         users: paginatedUsers,
         page: usersPage,
         total: totalPagesUsers,
@@ -53,9 +53,9 @@
               <th>Email</th>
               <th>Civilité</th>
               <th>Ville</th>
-              <th>Activé</th>
+              <th>Image</th>
               <th>Rôle</th>
-              <th>Bloquer</th>
+              <th>Status</th>
               <th>Modifier</th>
               
             </tr>
@@ -70,7 +70,13 @@
               <td>{{ user.email }}</td>
               <td>{{ user.civility }}</td>
               <td>{{ user.city }}</td>
-              <td>{{ user.enabled ? 'Oui' : 'Non' }}</td>
+              <td>
+                <img
+                  *ngIf="user.image"
+                  [src]="'http://localhost:1010/uploads/' + user.image"
+                  alt="Image utilisateur"
+                  class="user-avatar"
+                />
               <td>{{ user.role }}</td>
               <td>
                 <button
@@ -93,7 +99,5 @@
         </div>
       </ng-template>
       
-          
-    <a routerLink="/admin/dashboard" *ngIf="isAdmin"><- dashboard</a>
-    <a routerLink="/dashboard" *ngIf="isUser"><- dashboard</a>
+      <a routerLink="/dashboard" *ngIf="isUser"><- dashboard</a>
 </div>

@@ -33,6 +33,8 @@ import { ConfirmDialogComponent } from './user/confirm-dialog/confirm-dialog.com
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { ConfirmSnackbarComponent } from './notif/confirm-snackbar/confirm-snackbar.component';
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { UserLayoutComponent } from './layouts/user-layout/user-layout.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +63,8 @@ import { ConfirmSnackbarComponent } from './notif/confirm-snackbar/confirm-snack
     FaceDetectionComponent,
     ConfirmDialogComponent,
     ConfirmSnackbarComponent,
+    AdminLayoutComponent,
+    UserLayoutComponent,
   ],
   imports: [
     BrowserModule,

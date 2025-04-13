@@ -66,9 +66,9 @@ export class LoginComponent {
         this.usersService.setCurrentUser(response.user);
 
         if (this.usersService.isAdmin()) {
-          this.router.navigate(['/admin/dashboard']);
+          this.router.navigate(['/dashboardAdmin']);
         } else {
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/home']);
         }
       } else {
         this.showError(response.message);

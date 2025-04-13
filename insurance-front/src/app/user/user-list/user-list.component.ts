@@ -13,6 +13,8 @@ export class UserListComponent implements OnInit {
   admins: any[] = [];
   agents: any[] = [];
   filteredUsers: any[] = []; // Liste filtrée des utilisateurs
+  filteredAdmins: any[] = [];
+  filteredAgents: any[] = [];
   errorMessage: string = '';
   isLoading: boolean = false;
   searchQuery: string = '';
@@ -45,12 +47,16 @@ export class UserListComponent implements OnInit {
       const response = await this.userService.getAllUsers(token);
       if (response && response.statusCode === 200 && response.ourUsersList) {
         this.users = response.ourUsersList;
-        this.filteredUsers = this.users;
   
         // Division par rôle
         this.admins = this.users.filter(user => user.role === 'ADMIN');
-        this.filteredUsers = this.users.filter(user => user.role === 'USER'); // pour filtrage textuel
         this.agents = this.users.filter(user => user.role === 'AGENT');
+        const allUsers = this.users.filter(user => user.role === 'USER');
+  
+        // Initialiser les listes filtrées
+        this.filteredAdmins = [...this.admins];
+        this.filteredAgents = [...this.agents];
+        this.filteredUsers = [...allUsers];
   
         this.calculateTotalPages();
       } else {
@@ -60,6 +66,7 @@ export class UserListComponent implements OnInit {
       this.toastr.error(error.message);
     }
   }
+  
 
   // Calcule le nombre total de pages
   calculateTotalPages(): void {
@@ -70,31 +77,28 @@ export class UserListComponent implements OnInit {
   usersPage = 1;
   agentsPage = 1;
   
-  get paginatedAdmins() {
-    const start = (this.adminsPage - 1) * this.pageSize;
-    return this.admins.slice(start, start + this.pageSize);
-  }
-  
   get paginatedUsers() {
     const start = (this.usersPage - 1) * this.pageSize;
-    return this.users.slice(start, start + this.pageSize);
+    return this.filteredUsers.slice(start, start + this.pageSize);
+  }
+  
+  get paginatedAdmins() {
+    const start = (this.adminsPage - 1) * this.pageSize;
+    return this.filteredAdmins.slice(start, start + this.pageSize);
   }
   
   get paginatedAgents() {
     const start = (this.agentsPage - 1) * this.pageSize;
-    return this.agents.slice(start, start + this.pageSize);
+    return this.filteredAgents.slice(start, start + this.pageSize);
   }
-
-  get totalPagesAdmins(): number {
-    return Math.ceil(this.admins.length / this.pageSize);
-  }
-  
-  get totalPagesAgents(): number {
-    return Math.ceil(this.agents.length / this.pageSize);
-  }
-  
   get totalPagesUsers(): number {
-    return Math.ceil(this.filteredUsers.length / this.pageSize); // attention filtered ici
+    return Math.ceil(this.filteredUsers.length / this.pageSize);
+  }
+  get totalPagesAdmins(): number {
+    return Math.ceil(this.filteredAdmins.length / this.pageSize);
+  }
+  get totalPagesAgents(): number {
+    return Math.ceil(this.filteredAgents.length / this.pageSize);
   }
   
 
@@ -131,14 +135,36 @@ export class UserListComponent implements OnInit {
 
   // Filtre les utilisateurs en fonction de la recherche
   filterUsers(): void {
-    this.filteredUsers = this.users.filter(user =>
-      user.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-      user.lastname.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-      user.email.toLowerCase().includes(this.searchQuery.toLowerCase())
+    const query = this.searchQuery.toLowerCase().trim();
+  
+    this.filteredUsers = this.users.filter(
+      u => u.role === 'USER' && (
+        u.name.toLowerCase().includes(query) ||
+        u.lastname.toLowerCase().includes(query) ||
+        u.email.toLowerCase().includes(query)
+      )
     );
-    this.calculateTotalPages(); // Recalcule le nombre total de pages après le filtrage
-    this.currentPage = 1; // Réinitialise la page actuelle à 1
+    this.filteredAdmins = this.users.filter(
+      u => u.role === 'ADMIN' && (
+        u.name.toLowerCase().includes(query) ||
+        u.lastname.toLowerCase().includes(query) ||
+        u.email.toLowerCase().includes(query)
+      )
+    );
+    this.filteredAgents = this.users.filter(
+      u => u.role === 'AGENT' && (
+        u.name.toLowerCase().includes(query) ||
+        u.lastname.toLowerCase().includes(query) ||
+        u.email.toLowerCase().includes(query)
+      )
+    );
+  
+    // Reset pages
+    this.usersPage = 1;
+    this.adminsPage = 1;
+    this.agentsPage = 1;
   }
+  
 
   // Supprime un utilisateur
   async deleteUser(userId: string) {
@@ -186,6 +212,6 @@ export class UserListComponent implements OnInit {
 
   // Redirige vers la page de mise à jour
   navigateToUpdate(userId: string) {
-    this.router.navigate(['/update', userId]);
+    this.router.navigate(['/admin/update', userId]);
   }
 }

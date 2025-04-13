@@ -11,16 +11,18 @@ export class AppComponent {
   showHeaderFooter = true;
 
   constructor(private router: Router) {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        const hiddenRoutes = [
-          '/admin/dashboard',
-          '/dashboard',
-          '/agent/dashboard'
-        ];
-
-        this.showHeaderFooter = !hiddenRoutes.some(route => event.url.includes(route));
-      }
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd)
+    ).subscribe((event) => {
+      const url = event.urlAfterRedirects;
+      this.showHeaderFooter = !(
+        url.startsWith('/admin') || 
+        url.startsWith('/agent') || 
+        url.startsWith('/user') ||
+        url === '/dashboard'
+      );
     });
+    
+    
   }
 }

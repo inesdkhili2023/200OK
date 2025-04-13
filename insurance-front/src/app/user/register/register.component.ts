@@ -129,7 +129,7 @@ export class RegisterComponent {
         const response = await this.userService.register(formDataToSend, token);
         if (response.statusCode === 200) {
           this.toastr.success('Utilisateur ajouté avec succès');
-          this.router.navigate(['/users']);
+          this.router.navigate(['/admin/users']);
         } else if (response.statusCode === 409) {
           this.toastr.error(response.message); // ✅ Affiche le message du backend
         } else {

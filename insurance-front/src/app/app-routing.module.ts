@@ -22,6 +22,8 @@ import { FaceDetectionComponent } from './user/face-detection/face-detection.com
 import { FaceDetectionGuard } from './guards/face-detection.guard';
 import { AuthGuard } from './guards/auth.guard';
 import { RoleGuard } from './guards/role.guard';
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { UserLayoutComponent } from './layouts/user-layout/user-layout.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -31,19 +33,41 @@ const routes: Routes = [
   { path: 'loginface', component: LoginAttentanceComponent },
   { path: 'blog-details', component: BlogDetailsComponent },
   { path: 'contact-us', component: ContactUsComponent },
-  { path: 'admin/dashboard', component: DashboardAdminComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'insurances', component: InsurancesComponent },
   {path: 'login', component: LoginComponent},
-  {path: 'register', component: RegisterComponent},
   {path: 'profile', component: ProfileComponent},
   {path: 'update/:id', component: UpdateUserComponent},
-  {path: 'users', component: UserListComponent},
   {path: 'signup', component: SignupComponent, canActivate: [FaceDetectionGuard]},
   {path: 'sendemail', component: SendemailComponent},
   {path: 'google', component: LogingoogleComponent},
   {path: 'facial', component: FaceLoginComponent},
   {path: 'resetpassword', component: ResetpasswordComponent},
+  
+  {
+    path: 'admin',
+    component: AdminLayoutComponent, 
+    children: [
+      { path: 'dashboardAdmin', component: DashboardAdminComponent },
+      { path: 'users', component: UserListComponent },
+      {path: 'profile', component: ProfileComponent},
+      {path: 'update/:id', component: UpdateUserComponent},
+      {path: 'register', component: RegisterComponent},
+     
+      
+    ]
+  },
+  {
+    path: 'user',
+    component: UserLayoutComponent, 
+    children: [
+      { path: 'dashboard', component: DashboardAdminComponent },
+      {path: 'profile', component: ProfileComponent},
+      {path: 'update/:id', component: UpdateUserComponent},
+     
+      
+    ]
+  },
   { path: '**', redirectTo: 'home' } 
 ];
 

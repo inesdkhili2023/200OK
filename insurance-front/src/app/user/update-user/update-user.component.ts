@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { ConfirmSnackbarComponent } from 'src/app/notif/confirm-snackbar/confirm-snackbar.component';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -15,12 +17,16 @@ export class UpdateUserComponent implements OnInit {
   userId: any;
   userData: any = {};
   errorMessage: string = '';
-
+  validationErrors: any = {
+    cin: '',
+    email: '',
+  };
   constructor(
     private readonly userService: UsersService,
     private readonly router: Router,
     private readonly route: ActivatedRoute,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -55,52 +61,77 @@ export class UpdateUserComponent implements OnInit {
       this.showError(error.message);
     }
   }
-
+  validateCin() {
+    const cin = this.userData.cin;
+    if (!/^[0-9]{8}$/.test(cin)) {
+      this.validationErrors.cin = 'Le CIN doit contenir exactement 8 chiffres';
+    } else {
+      this.validationErrors.cin = '';
+    }
+  }
+  validateEmail() {
+    const email = this.userData.email;
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+      this.validationErrors.email = "Format de l'email invalide";
+    } else {
+      this.validationErrors.email = '';
+    }
+  }
   async updateUser() {
-    const confirmUpdate = this.toastr.success("Utilisateur est modifiée");
-    if (!confirmUpdate) return;
-
-    try {
+    this.validateCin();
+    this.validateEmail();
+  
+    if (this.validationErrors.cin || this.validationErrors.email) {
+      this.toastr.error("Veuillez corriger les erreurs de validation");
+      return;
+    }
+  
+    const snackRef = this.snackBar.openFromComponent(ConfirmSnackbarComponent, {
+      panelClass: ['custom-snackbar-overlay'],
+      data: { message: `Êtes-vous sûr de modifier cet utilisateur ?` }
+    });
+  
+    snackRef.onAction().subscribe(async () => {
+      try {
         const token = localStorage.getItem('token');
-        if (!token) {
-            throw new Error("Token not found");
-        }
-
-        // Créer un nouvel objet sans le champ `authorities`
+        if (!token) throw new Error("Token not found");
+  
         const userDataToSend = {
-            name: this.userData.name,
-            email: this.userData.email,
-            city: this.userData.city,
-            role: this.userData.role,
-            lastname: this.userData.lastname,
-            dnaiss: this.userData.dnaiss,
-            civility: this.userData.civility,
-            cin: this.userData.cin,
-            image: this.userData.image,
-            password: this.userData.password // Si nécessaire
+          name: this.userData.name,
+          email: this.userData.email,
+          city: this.userData.city,
+          role: this.userData.role,
+          lastname: this.userData.lastname,
+          dnaiss: this.userData.dnaiss,
+          civility: this.userData.civility,
+          cin: this.userData.cin,
+          image: this.userData.image,
         };
-
+  
         const formDataToSend = new FormData();
         formDataToSend.append('reqres', new Blob([JSON.stringify(userDataToSend)], { type: 'application/json' }));
-
         if (this.selectedFile) {
-            formDataToSend.append('imageFile', this.selectedFile);
+          formDataToSend.append('imageFile', this.selectedFile);
         }
-
+  
         const res = await this.userService.updateUser(this.userId, formDataToSend, token);
-        console.log(res);
-
+  
         if (res.statusCode === 200 && this.isAdmin) {
-            this.router.navigate(['/users']);
+          this.toastr.success("Mise à jour réussie");
+          this.router.navigate(['/admin/users']);
         } else if (res.statusCode === 200) {
-            this.router.navigate(['/profile']);
+          this.toastr.success("Mise à jour réussie");
+          this.router.navigate(['/profile']);
         } else {
-            this.showError(res.message);
+          this.showError(res.message);
         }
-    } catch (error: any) {
+  
+      } catch (error: any) {
         this.showError(error.message);
-    }
-}
+      }
+    });
+  }
+  
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
 

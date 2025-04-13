@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import {  ToastrService } from 'ngx-toastr';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -9,7 +10,8 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class ProfileComponent implements OnInit  {
   constructor(private readonly userService:UsersService,
-    private readonly router: Router){}
+    private readonly router: Router,
+  private readonly toastr:ToastrService){}
 
     isAdmin:boolean = false;
     isUser:boolean = false;
@@ -35,10 +37,16 @@ export class ProfileComponent implements OnInit  {
   }
 
 
-  updateProfile(id: string){
-      this.router.navigate(['/update', id])
+  updateProfile(id: string) {
+    if (this.isAdmin) {
+      this.router.navigate(['/admin/update', id]);
+    } else if (this.isUser) {
+      this.router.navigate(['/user/update', id]);
+    } else {
+      this.toastr.error("Type d'utilisateur non reconnu");
+    }
   }
-
+  
 
   showError(mess: string) {
     this.errorMessage = mess;
