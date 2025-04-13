@@ -21,6 +21,12 @@ body {
   background-color: #f9fafb;
 }
 
+/* Notification Bell Styling */
+app-notification-bell {
+  display: block;
+  position: relative;
+}
+
 /* Container Styling */
 .agent-space-container {
   padding: 30px 0;

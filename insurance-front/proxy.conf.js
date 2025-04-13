@@ -39,10 +39,19 @@ const PROXY_CONFIG = {
         mockData: true
       }, null, 2));
     }
+  },
+  
+  '/ws': {
+    target: 'http://localhost:8081',
+    secure: false,
+    ws: true,
+    logLevel: 'debug',
+    changeOrigin: true
   }
 };
 
 console.log('Proxy configuration loaded:');
 console.log('- /api/examen -> http://localhost:8081/api');
+console.log('- /ws -> http://localhost:8081/ws (WebSocket)');
 
 module.exports = PROXY_CONFIG; 

@@ -4,29 +4,73 @@
       <h3>Admin Dashboard</h3>
     </div>
     <ul class="sidebar-menu">
-      <li class="active">
+      <li routerLink="/admin/dashboard" routerLinkActive="active">
         <i class="fas fa-tachometer-alt"></i>
         <span>Dashboard</span>
+      </li>
+      <li routerLink="/admin/sinisters" routerLinkActive="active">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span>Sinisters</span>
+      </li>
+      
+      <!-- Towing Management Section -->
+      <li class="section-title">
+        <span>Towing Management</span>
+      </li>
+      <li routerLink="/towings" routerLinkActive="active">
+        <i class="fas fa-truck"></i>
+        <span>Towing Services</span>
+      </li>
+      <li routerLink="/agents" routerLinkActive="active">
+        <i class="fas fa-user-tie"></i>
+        <span>Towing Agents</span>
+      </li>
+      <li routerLink="/agents-espace" routerLinkActive="active">
+        <i class="fas fa-user-clock"></i>
+        <span>Agent Workspace</span>
+      </li>
+      
+      <!-- Insurance Management Section -->
+      <li class="section-title">
+        <span>Insurance Management</span>
+      </li>
+      <li routerLink="/recommendations" routerLinkActive="active">
+        <i class="fas fa-thumbs-up"></i>
+        <span>Recommendations</span>
+      </li>
+      <li>
+        <i class="fas fa-file-alt"></i>
+        <span>Claims</span>
+      </li>
+      <li>
+        <i class="fas fa-shield-alt"></i>
+        <span>Policies</span>
+      </li>
+      
+      <!-- Notifications Section -->
+      <li class="section-title">
+        <span>Notifications</span>
+      </li>
+      <li routerLink="/admin/notifications" routerLinkActive="active">
+        <i class="fas fa-bell"></i>
+        <span>All Notifications</span>
+      </li>
+      
+      <!-- System Section -->
+      <li class="section-title">
+        <span>System</span>
       </li>
       <li>
         <i class="fas fa-users"></i>
         <span>Users</span>
       </li>
       <li>
-        <i class="fas fa-file-alt"></i>
-        <span>Claims</span>
-      </li>
-      <li [routerLink]="['/admin/sinisters']" routerLinkActive="active">
-        <i class="fas fa-exclamation-triangle"></i>
-        <span>Sinisters List</span>
-      </li>
-      <li>
-        <i class="fas fa-shield-alt"></i>
-        <span>Policies</span>
-      </li>
-      <li>
         <i class="fas fa-cog"></i>
         <span>Settings</span>
+      </li>
+      <li routerLink="/home">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Back to Site</span>
       </li>
     </ul>
   </div>
@@ -38,30 +82,18 @@
         <i class="fas fa-search search-icon"></i>
       </div>
       <div class="header-profile">
-        <div class="notifications">
-          <i class="fas fa-bell"></i>
-          <span class="badge">3</span>
-        </div>
+        <app-notification-bell [showAllAgents]="true"></app-notification-bell>
         <div class="profile-info">
           <img src="assets/images/avatar-placeholder.png" alt="Admin Profile">
-          <span>Admin Name</span>
+          <span>Admin</span>
           <i class="fas fa-chevron-down"></i>
         </div>
       </div>
     </div>
 
     <div class="dashboard-content">
-      <!-- Router outlet for displaying sinisters list -->
+      <!-- Router outlet for all dashboard content -->
       <router-outlet></router-outlet>
-
-      <!-- Original dashboard content -->
-      <div class="stats-container">
-        <!-- ... existing stat cards ... -->
-      </div>
-
-      <div class="dashboard-grid">
-        <!-- ... existing dashboard grid content ... -->
-      </div>
     </div>
   </div>
 </div>

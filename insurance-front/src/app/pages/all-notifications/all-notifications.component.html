@@ -1,0 +1,88 @@
+<div class="all-notifications-container">
+  <div class="page-header">
+    <h2>All System Notifications</h2>
+    <div class="action-buttons">
+      <button class="btn btn-primary" (click)="refreshNotifications()">
+        <i class="fas fa-sync-alt"></i> Refresh
+      </button>
+      <button class="btn btn-secondary" (click)="markAllAsRead()">
+        <i class="fas fa-check-double"></i> Mark All Read
+      </button>
+    </div>
+  </div>
+
+  <div class="filters-container">
+    <div class="filter-group">
+      <label for="status-filter">Status:</label>
+      <select id="status-filter" class="form-select" [(ngModel)]="statusFilter" (change)="applyFilters()" aria-label="Filter by status">
+        <option value="all">All Statuses</option>
+        <option value="new">New</option>
+        <option value="in-progress">In Progress</option>
+        <option value="completed">Completed</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label for="agent-filter">Agent:</label>
+      <select id="agent-filter" class="form-select" [(ngModel)]="agentFilter" (change)="applyFilters()" aria-label="Filter by agent">
+        <option value="all">All Agents</option>
+        <option *ngFor="let agentId of uniqueAgentIds" [value]="agentId">
+          Agent #{{ agentId }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="notifications-list">
+    <div class="notification-count">
+      Displaying {{ filteredNotifications.length }} of {{ notifications.length }} notifications
+    </div>
+
+    <div class="notification-table-container">
+      <table class="table notification-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Agent</th>
+            <th>Policy</th>
+            <th>Message</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Read</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let notification of filteredNotifications" [class.read]="notification.read">
+            <td>{{ notification.id }}</td>
+            <td>
+              <span class="agent-badge" *ngIf="notification.agentId">
+                #{{ notification.agentId }}
+              </span>
+              <span *ngIf="!notification.agentId">System</span>
+            </td>
+            <td>{{ notification.policyNumber }}</td>
+            <td>{{ notification.message }}</td>
+            <td>
+              <span class="badge" [ngClass]="getStatusClass(notification.status)">
+                {{ notification.status | titlecase }}
+              </span>
+            </td>
+            <td>{{ formatDate(notification.date) }}</td>
+            <td>
+              <i class="fas" [class.fa-check-circle]="notification.read" 
+                [class.fa-circle]="!notification.read"
+                [class.text-success]="notification.read"
+                [class.text-muted]="!notification.read">
+              </i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="no-notifications" *ngIf="filteredNotifications.length === 0">
+      <i class="fas fa-bell-slash"></i>
+      <p>No notifications match your current filters.</p>
+    </div>
+  </div>
+</div> 

@@ -18,10 +18,11 @@
       </div>
     </div>
   </div>
+  
   <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
     <div class="container">
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse" title="Toggle navigation">
           <i class="fa fa-bars"></i>
         </button>
         <a class="navbar-brand" routerLink="/home">
@@ -29,26 +30,21 @@
         </a>
         <p>Call Us Now <b>+215 (362) 4579</b></p>
       </div>
+      
       <div class="collapse navbar-collapse navbar-main-collapse">
         <ul class="nav navbar-nav navbar-right">
-          <li><a routerLink="/home">Home</a></li>
-          <li><a routerLink="/blog">Blog</a></li>
-          <li><a routerLink="/blog-details">Blog Details</a></li>
-          <li><a routerLink="/contact-us">Contact</a></li>
-          <li><a routerLink="/buy-pro" class="btn-default">Buy Pro Version</a></li>
-          <li><a routerLink="/admin/dashboard">Admin Dashboard</a></li>
-          <li><a routerLink="/insurances">Insurances</a></li>
-          <li><a routerLink="/towings">Towing</a></li>
-          <li><a routerLink="/agents">Agent-Towing</a></li>
-          <li><a routerLink="/agents-espace">Agent-espace</a></li>
-          <li><a routerLink="/emergency-towing">Emergency-calling</a></li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/towing-request">
-              <i class="fas fa-truck-pickup me-1"></i> Emergency Towing
+          <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
+          <li><a routerLink="/insurances" routerLinkActive="active">Insurances</a></li>
+          <li><a routerLink="/sinisters" routerLinkActive="active">Sinisters</a></li>
+          <li><a routerLink="/emergency-towing" routerLinkActive="active">Emergency Services</a></li>
+          <li><a routerLink="/blog" routerLinkActive="active">Blog</a></li>
+          <li><a routerLink="/contact-us" routerLinkActive="active">Contact</a></li>
+          <li><a routerLink="/admin/dashboard" routerLinkActive="active">Admin</a></li>
+          <li>
+            <a routerLink="/towing-request" routerLinkActive="active" class="emergency-btn">
+              <i class="fas fa-truck-pickup"></i> Emergency Help
             </a>
           </li>
-          <li><a routerLink="/recommendations">Recommendations</a></li>
-          <a routerLink="/sinisters" routerLinkActive="active">Sinisters</a>
         </ul>
       </div>
     </div>

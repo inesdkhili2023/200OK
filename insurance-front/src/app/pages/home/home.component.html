@@ -57,7 +57,7 @@
     <section class="flexslider">
       <ul class="slides">
         <li>
-          <img [src]="images[currentImageIndex].src" />
+          <img [src]="images[currentImageIndex].src" alt="{{images[currentImageIndex].title}} insurance image" />
           <div class="slide-info">
             <div class="slide-con">
               <b>{{images[currentImageIndex].category}}</b>
@@ -111,7 +111,7 @@
               </div>
               <div class="form-select">
                 <span></span>
-                <select>
+                <select title="Select Insurance Product">
                   <option>Product</option>
                 </select>
               </div>
@@ -259,6 +259,14 @@
             <h3>Understandable Terms</h3>
             <p>Lorem ipsum dolor sit amet, consectetur</p>
           </div>
+          <div class="col-sm-3 services-dtl highlight-service">
+            <span class="ti-thumb-up"></span>
+            <h3>Make a Recommendation</h3>
+            <p>We value your feedback! Tell us what improvements or new insurance products you'd like to see</p>
+            <button (click)="openRecommendationModal()" class="btn-service">
+              <i class="fa fa-lightbulb-o"></i> Share Your Ideas
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -368,7 +376,7 @@
               <h3><a href="#">Free Sound Effects for Games, Apps & UI</a></h3>
               <p>24 Dec 2015</p>
               <div class="news-by">
-                <a href="#"><img src="/assets/images/people-03.jpg" /></a>
+                <a href="#"><img src="/assets/images/people-03.jpg" alt="Linda's profile picture" /></a>
                 <a href="#">By Linda</a>
               </div>
             </div>
@@ -379,7 +387,7 @@
               <h3><a href="#">Free Sound Effects for Games, Apps & UI</a></h3>
               <p>24 Dec 2015</p>
               <div class="news-by">
-                <a href="#"><img src="/assets/images/people-03.jpg" /></a>
+                <a href="#"><img src="/assets/images/people-03.jpg" alt="Linda's profile picture" /></a>
                 <a href="#">By Linda</a>
               </div>
             </div>
@@ -390,7 +398,7 @@
               <h3><a href="#">Free Sound Effects for Games, Apps & UI</a></h3>
               <p>24 Dec 2015</p>
               <div class="news-by">
-                <a href="#"><img src="/assets/images/people-03.jpg" /></a>
+                <a href="#"><img src="/assets/images/people-03.jpg" alt="Linda's profile picture" /></a>
                 <a href="#">By Linda</a>
               </div>
             </div>
@@ -401,7 +409,7 @@
               <h3><a href="#">Free Sound Effects for Games, Apps & UI</a></h3>
               <p>24 Dec 2015</p>
               <div class="news-by">
-                <a href="#"><img src="/assets/images/people-03.jpg" /></a>
+                <a href="#"><img src="/assets/images/people-03.jpg" alt="Linda's profile picture" /></a>
                 <a href="#">By Linda</a>
               </div>
             </div>
@@ -438,6 +446,76 @@
   <script src="assets/js/easyResponsiveTabs.js"></script>
   <script src="assets/js/owl.carousel.js"></script>
   <script src="assets/js/custom.js"></script>
+
+  <!-- Recommendation Modal Popup -->
+  <div class="recommendation-modal" [class.show-modal]="showRecommendationModal">
+    <div class="recommendation-modal-content">
+      <div class="recommendation-modal-header">
+        <h2><i class="fa fa-thumbs-up me-2"></i>Create Recommendation</h2>
+        <span class="close-modal" (click)="closeRecommendationModal()">&times;</span>
+      </div>
+      <div class="recommendation-modal-body">
+        <!-- Success Message -->
+        <div *ngIf="recommendationSuccess" class="alert alert-success">
+          <i class="fa fa-check-circle"></i> Thank you! Your recommendation has been submitted successfully.
+        </div>
+        
+        <!-- Error Message -->
+        <div *ngIf="recommendationError" class="alert alert-danger">
+          <i class="fa fa-exclamation-circle"></i> {{errorMessage}}
+        </div>
+        
+        <form (ngSubmit)="submitRecommendation()" #recommendationForm="ngForm" *ngIf="!recommendationSuccess">
+          <div class="form-group">
+            <label for="userPreferences"><i class="fa fa-tag me-2"></i>Your Preferences</label>
+            <select 
+              id="userPreferences" 
+              name="userPreferences" 
+              [(ngModel)]="newRecommendation.userPreferences" 
+              class="form-control" 
+              required
+              [disabled]="submittingRecommendation"
+              title="Insurance Preference"
+            >
+              <option value="" disabled selected>Select an insurance type</option>
+              <option value="Health Insurance">Health Insurance</option>
+              <option value="Life Insurance">Life Insurance</option>
+              <option value="Car Insurance">Car Insurance</option>
+              <option value="Home Insurance">Home Insurance</option>
+              <option value="Travel Insurance">Travel Insurance</option>
+              <option value="Business Insurance">Business Insurance</option>
+              <option value="Other">Other</option>
+            </select>
+            <small *ngIf="!newRecommendation.userPreferences" class="form-hint">Please select the type of insurance you're interested in</small>
+          </div>
+          
+          <div class="form-group">
+            <label for="description"><i class="fa fa-comment-alt me-2"></i>Your Recommendation</label>
+            <textarea 
+              id="description" 
+              name="description" 
+              [(ngModel)]="newRecommendation.description" 
+              class="form-control" 
+              rows="4" 
+              placeholder="Please describe what you'd like to recommend..." 
+              required
+              [disabled]="submittingRecommendation"
+            ></textarea>
+            <small *ngIf="!newRecommendation.description" class="form-hint">Tell us what you'd like to see improved or added to our services</small>
+          </div>
+          
+          <div class="form-actions">
+            <button type="button" class="btn-cancel" (click)="closeRecommendationModal()" [disabled]="submittingRecommendation">Cancel</button>
+            <button type="submit" class="btn-submit" [disabled]="!recommendationForm.form.valid || submittingRecommendation">
+              <i class="fa fa-spinner fa-spin" *ngIf="submittingRecommendation"></i>
+              <i class="fa fa-paper-plane" *ngIf="!submittingRecommendation"></i>
+              {{submittingRecommendation ? 'Submitting...' : 'Submit Recommendation'}}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
 

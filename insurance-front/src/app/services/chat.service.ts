@@ -5,7 +5,7 @@ import { Observable, Subject, BehaviorSubject, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Client } from '@stomp/stompjs';
 
-// Use a workaround for SockJS type issues
+// Use declaration for SockJS since it doesn't have proper TypeScript types
 declare var SockJS: any;
 
 export interface ChatMessage {
@@ -14,8 +14,10 @@ export interface ChatMessage {
   senderName: string;
   content: string;
   timestamp: Date;
-  type: 'text' | 'request' | 'status';
+  type: 'text' | 'request' | 'status' | 'notification';
   requestId?: number;
+  receiverId?: number;
+  read?: boolean;
 }
 
 @Injectable({
@@ -27,29 +29,20 @@ export class ChatService implements OnDestroy {
   private newMessageSubject = new Subject<ChatMessage>();
   private connectionStatusSubject = new BehaviorSubject<boolean>(false);
   
-  // Fix API path - use the environment variable for API calls
-  private apiUrl = `${environment.apiUrl}/chat`;
-  private wsUrl = environment.wsUrl || 'ws://localhost:8081/api/examen';
+  private apiUrl = environment.apiBaseUrl + '/chat';
+  private wsUrl = environment.wsUrl || 'http://localhost:8081';
   private STORAGE_KEY = 'chat_messages';
   private connected = false;
   private connectionAttempts = 0;
   private MAX_RECONNECT_ATTEMPTS = 5;
-  private useMockData = true; // Use mock data until server is fixed
+  private useMockData = false;
+  private fallbackToDirectConnection = false;
 
   constructor(private http: HttpClient) {
     this.loadMessagesFromStorage();
-    
-    // Only attempt to connect if not in mock mode
-    if (!this.useMockData) {
-      this.connect();
-    } else {
-      console.log('Using mock data - WebSocket connection disabled');
-      // Add some initial mock messages
-      this.addMockMessages();
-    }
+    this.connect();
   }
 
-  // New method to add mock messages
   private addMockMessages(): void {
     const mockMessages: ChatMessage[] = [
       {
@@ -74,22 +67,29 @@ export class ChatService implements OnDestroy {
   }
 
   private connect(): void {
+    if (this.useMockData) {
+      console.log('Using mock data - WebSocket connection disabled');
+      this.addMockMessages();
+      this.connectionStatusSubject.next(true);
+      return;
+    }
+
     if (this.connectionAttempts >= this.MAX_RECONNECT_ATTEMPTS) {
       console.warn('Max reconnection attempts reached. Stopped trying to reconnect WebSocket.');
       return;
     }
 
     try {
-      // Load SockJS from CDN
+      // Ensure SockJS is available
       if (typeof SockJS === 'undefined') {
+        // Dynamically load SockJS if not available
         const script = document.createElement('script');
         script.src = 'https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js';
-        document.head.appendChild(script);
-        
         script.onload = () => {
           console.log('SockJS loaded successfully');
           this.initializeStompClient();
         };
+        document.head.appendChild(script);
       } else {
         this.initializeStompClient();
       }
@@ -103,17 +103,19 @@ export class ChatService implements OnDestroy {
     try {
       console.log('Initializing STOMP client...');
       
-      // Use the full URL (including port) to the WebSocket endpoint
-      const socketUrl = `${this.wsUrl}/ws`;
-      console.log('Connecting to WebSocket at:', socketUrl);
+      // Use the full URL to the WebSocket endpoint
+      const socketUrl = this.fallbackToDirectConnection 
+        ? `${this.wsUrl}/api/ws` 
+        : `${this.wsUrl}/ws`;
+        
+      console.log('📡 Connecting to WebSocket at:', socketUrl);
       
-      // Create SockJS instance
+      // Create SockJS instance using the global variable (not import)
       const socket = new SockJS(socketUrl);
       
       this.stompClient = new Client({
         webSocketFactory: () => socket,
         debug: function(str) {
-          // Enable for debugging
           console.log('STOMP:', str);
         },
         reconnectDelay: 5000,
@@ -134,17 +136,20 @@ export class ChatService implements OnDestroy {
     if (!this.stompClient) return;
     
     this.stompClient.onConnect = (frame) => {
-      console.log('Connected to WebSocket:', frame);
+      console.log('✅ Connected to WebSocket:', frame);
       this.connected = true;
       this.connectionStatusSubject.next(true);
       this.connectionAttempts = 0;
+      this.fallbackToDirectConnection = false;
       
       // Subscribe to public channel
       this.stompClient?.subscribe('/topic/public', (message) => {
         console.log('Received message on /topic/public:', message);
         const chatMessage = JSON.parse(message.body) as ChatMessage;
-        // Convert timestamp string to Date object
-        chatMessage.timestamp = new Date(chatMessage.timestamp);
+        // Convert timestamp string to Date object if needed
+        if (typeof chatMessage.timestamp === 'string') {
+          chatMessage.timestamp = new Date(chatMessage.timestamp);
+        }
         this.handleNewMessage(chatMessage);
       });
       
@@ -169,15 +174,34 @@ export class ChatService implements OnDestroy {
     };
     
     this.stompClient.onStompError = (frame) => {
-      console.error('WebSocket STOMP error:', frame);
+      console.error('❌ WebSocket STOMP error:', frame);
       this.connected = false;
       this.connectionStatusSubject.next(false);
+      
+      // Try alternative endpoint if first one fails
+      if (!this.fallbackToDirectConnection) {
+        console.log("⚠️ Trying alternative WebSocket endpoint...");
+        this.fallbackToDirectConnection = true;
+        this.connect();
+        return;
+      }
+      
+      this.reconnectLater();
     };
     
     this.stompClient.onWebSocketError = (error) => {
-      console.error('WebSocket connection error:', error);
+      console.error('❌ WebSocket connection error:', error);
       this.connected = false;
       this.connectionStatusSubject.next(false);
+      
+      // Try alternative endpoint if first one fails
+      if (!this.fallbackToDirectConnection) {
+        console.log("⚠️ Trying alternative WebSocket endpoint...");
+        this.fallbackToDirectConnection = true;
+        this.connect();
+        return;
+      }
+      
       this.connectionAttempts++;
       this.reconnectLater();
     };
@@ -253,29 +277,42 @@ export class ChatService implements OnDestroy {
         destination: '/app/chat.sendMessage',
         body: JSON.stringify(message)
       });
-    } else {
+    } else if (this.useMockData) {
       console.warn('WebSocket not connected. Message saved locally only.');
       // Add message locally anyway
       this.handleNewMessage(message);
       
       // In mock mode, simulate a response
-      if (this.useMockData) {
-        setTimeout(() => {
-          const response: ChatMessage = {
-            senderId: 2,
-            senderName: 'Support',
-            content: `Thank you for your message. This is an automated response in mock mode.`,
-            timestamp: new Date(),
-            type: 'text'
-          };
-          this.handleNewMessage(response);
-        }, 1000);
-      }
+      setTimeout(() => {
+        const response: ChatMessage = {
+          senderId: 2,
+          senderName: 'Support',
+          content: `Thank you for your message. This is an automated response in mock mode.`,
+          timestamp: new Date(),
+          type: 'text'
+        };
+        this.handleNewMessage(response);
+      }, 1000);
+    } else {
+      // Not in mock mode but WebSocket not connected, try to send via HTTP
+      console.warn('WebSocket not connected. Trying to send via HTTP API...');
       
-      // Try reconnecting if not in mock mode
-      if (!this.connected && this.connectionAttempts < this.MAX_RECONNECT_ATTEMPTS && !this.useMockData) {
-        this.connect();
-      }
+      // Try to send via REST API
+      this.http.post<ChatMessage>(`${this.apiUrl}/chat/send`, message).subscribe({
+        next: (response) => {
+          console.log('Message sent via HTTP:', response);
+          this.handleNewMessage(response);
+        },
+        error: (error) => {
+          console.error('Error sending message via HTTP:', error);
+          // Still add the message locally
+          this.handleNewMessage(message);
+          // Try reconnecting WebSocket
+          if (this.connectionAttempts < this.MAX_RECONNECT_ATTEMPTS) {
+            this.connect();
+          }
+        }
+      });
     }
   }
 
@@ -347,6 +384,7 @@ export class ChatService implements OnDestroy {
       }
     }
     this.connected = false;
+    this.connectionStatusSubject.next(false);
   }
 
   ngOnDestroy(): void {

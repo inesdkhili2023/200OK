@@ -21,12 +21,13 @@ import { TowingComponent } from './pages/towing/towing.component';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AgentTowingService } from './services/agent-towing.service';
-import { AgentEspaceComponent } from './pages/agent-espace/agent-espace.component';
 import { ChatComponent } from './pages/chat/chat.component';
 import { AdminExportComponent } from './pages/admin-export/admin-export.component';
 import { QRCodeComponent } from './pages/qr-code/qr-code.component';
 import { EmergencyTowingComponent } from './pages/emergency-towing/emergency-towing.component';
 import { TowingRequestComponent } from './pages/towing-request/towing-request.component';
+import { NotificationBellComponent } from './pages/notification/notification-bell.component';
+import { AllNotificationsComponent } from './pages/all-notifications/all-notifications.component';
 
 @NgModule({
   declarations: [
@@ -37,24 +38,25 @@ import { TowingRequestComponent } from './pages/towing-request/towing-request.co
     ContactUsComponent,
     NavBarComponent,
     FooterComponent,
-    DashboardAdminComponent,
     InsurancesComponent,
     SinistersComponent,
     RecommendationComponent,
     AgentTowingComponent,
     TowingComponent,
     AdminSinistersListComponent,
-    AgentEspaceComponent,
     AdminExportComponent,
     QRCodeComponent,
-    EmergencyTowingComponent,    TowingRequestComponent
-
+    EmergencyTowingComponent,
+    TowingRequestComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    AllNotificationsComponent,
+    ChatComponent,        DashboardAdminComponent,
+
+    NotificationBellComponent,
     FormsModule,
-    ChatComponent,
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,

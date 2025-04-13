@@ -1,62 +1,76 @@
 <div class="chat-container">
   <div class="chat-header">
-    <h3><i class="fas fa-comments me-2"></i>Agent Chat</h3>
-    <div class="connection-status" [ngClass]="{'connected': isConnected, 'disconnected': !isConnected}">
-      <span *ngIf="isConnected"><i class="fas fa-circle"></i> Connected</span>
-      <span *ngIf="!isConnected"><i class="fas fa-circle"></i> Disconnected</span>
-    </div>
+    <h3>
+      Chat
+      <span class="connection-status" [ngClass]="{'connected': isConnected, 'disconnected': !isConnected}">
+        <i class="fa" [ngClass]="{'fa-circle': true, 'text-success': isConnected, 'text-danger': !isConnected}"></i>
+        {{ isConnected ? 'Connected' : 'Disconnected' }}
+      </span>
+    </h3>
     <div class="header-actions">
-      <button class="btn btn-sm btn-success me-2" data-bs-toggle="modal" data-bs-target="#towingRequestModal">
-        <i class="fas fa-truck me-1"></i> New Towing
+      <button class="btn btn-outline-secondary btn-sm" (click)="testConnection()">
+        <i class="fa fa-refresh"></i> Test Connection
       </button>
-      <button class="btn btn-sm btn-outline-secondary" (click)="clearChat()">
-        <i class="fas fa-trash"></i> Clear
-      </button>
-      <button class="btn btn-sm btn-outline-primary ms-2" (click)="testConnection()">
-        <i class="fas fa-sync"></i> Test Connection
+      <button class="btn btn-outline-danger btn-sm" (click)="clearChat()">
+        <i class="fa fa-trash"></i> Clear
       </button>
     </div>
   </div>
-  
-  <div class="chat-messages" #chatContainer>
+
+  <div class="chat-messages" #chatMessages>
     <div *ngIf="messages.length === 0" class="empty-messages">
-      <p>No messages yet. Start a conversation!</p>
+      No messages yet. Start a conversation!
     </div>
-    
+
     <div *ngFor="let message of messages" 
-         class="message" 
-         [ngClass]="{'message-sent': isCurrentUser(message), 'message-received': !isCurrentUser(message), 'message-system': message.senderId === 0}">
+         [ngClass]="{'message': true, 
+                    'message-sent': isCurrentUser(message), 
+                    'message-received': !isCurrentUser(message) && message.type === 'text', 
+                    'message-system': message.type === 'status'}">
+      
+      <!-- Avatar for the message -->
+      <div class="message-avatar">
+        <div class="avatar-circle" [ngClass]="{'current-user': isCurrentUser(message), 'system': message.type === 'status'}">
+          <i *ngIf="message.type === 'status'" class="fa fa-info"></i>
+          <span *ngIf="message.type !== 'status'">{{ (isCurrentUser(message) ? 'Y' : message.senderName?.charAt(0) || 'U') | uppercase }}</span>
+        </div>
+      </div>
+
+      <!-- Message content -->
       <div class="message-content">
+        <!-- Message header with sender name and timestamp -->
         <div class="message-header">
-          <span class="sender-name">{{ message.senderName }}</span>
+          <span class="sender-name">
+            {{ isCurrentUser(message) ? 'You' : (message.type === 'status' ? 'System' : message.senderName || 'Unknown User') }}
+          </span>
           <span class="timestamp">{{ formatTime(message.timestamp) }}</span>
         </div>
+
+        <!-- Message body -->
         <div class="message-body">
-          <ng-container [ngSwitch]="message.type">
-            <span *ngSwitchCase="'text'">{{ message.content }}</span>
-            <div *ngSwitchCase="'request'" class="request-message">
-              <i class="fas fa-truck me-2"></i>
-              <span>New towing request at {{ message.content }}</span>
-              <div *ngIf="isCurrentUser(message)" class="request-actions mt-2">
-                <span class="badge bg-info">Your request</span>
-              </div>
-              <div *ngIf="!isCurrentUser(message)" class="request-actions mt-2">
-                <button class="btn btn-sm btn-outline-primary me-2">
-                  <i class="fas fa-check"></i> Accept
-                </button>
-                <button class="btn btn-sm btn-outline-danger">
-                  <i class="fas fa-times"></i> Decline
-                </button>
-              </div>
+          <!-- Regular text message -->
+          <div *ngIf="message.type === 'text'">
+            {{ message.content }}
+          </div>
+
+          <!-- System message -->
+          <div *ngIf="message.type === 'status'" class="status-message">
+            {{ message.content }}
+          </div>
+
+          <!-- Request message -->
+          <div *ngIf="message.type === 'request'" class="request-message">
+            <div>{{ message.content }}</div>
+            <div class="request-actions mt-2" *ngIf="!isCurrentUser(message)">
+              <button class="btn btn-outline-primary btn-sm">Accept</button>
+              <button class="btn btn-outline-danger btn-sm">Decline</button>
             </div>
-            <div *ngSwitchCase="'status'" class="status-message">
-              <i class="fas fa-info-circle me-2"></i>
-              <span>{{ message.content }}</span>
-              <a *ngIf="message.requestId" [routerLink]="['/towing', message.requestId]" class="ms-2 text-primary">
-                <small><i class="fas fa-external-link-alt"></i> View</small>
-              </a>
-            </div>
-          </ng-container>
+          </div>
+
+          <!-- Notification message -->
+          <div *ngIf="message.type === 'notification'" class="notification-message">
+            <i class="fa fa-exclamation-circle"></i> {{ message.content }}
+          </div>
         </div>
       </div>
     </div>
@@ -64,13 +78,18 @@
 
   <div class="chat-input">
     <div class="input-group">
-      <input type="text" 
-             [(ngModel)]="newMessage" 
-             (keyup.enter)="sendMessage()"
-             placeholder="Type your message..."
-             class="form-control">
-      <button class="btn btn-primary" (click)="sendMessage()" aria-label="Send message">
-        <i class="fas fa-paper-plane"></i>
+      <input 
+        type="text" 
+        class="form-control" 
+        placeholder="Type a message..." 
+        [(ngModel)]="newMessage" 
+        (keyup.enter)="sendMessage()"
+      >
+      <button class="btn btn-primary" (click)="sendMessage()">
+        <i class="fa fa-paper-plane"></i> Send
+      </button>
+      <button class="btn btn-info ms-2" data-bs-toggle="modal" data-bs-target="#towingRequestModal">
+        <i class="fa fa-map-marker"></i> Request Location
       </button>
     </div>
   </div>

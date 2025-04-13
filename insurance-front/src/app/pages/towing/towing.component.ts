@@ -4,6 +4,7 @@ import { Towing } from '../../models/towing.model';
 import { TowingService } from '../../services/towing.service';
 import moment from 'moment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-towing',
@@ -20,6 +21,7 @@ export class TowingComponent implements OnInit {
   users: any[] = [];
   selectedTowing: Towing | null = null;
   page: number = 1;
+  isLoading: boolean = true;
 
   constructor(
     private fb: FormBuilder,
@@ -37,10 +39,57 @@ export class TowingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadTowings();
-    this.loadAgents();
-    this.loadUsers();
+    // Load all data in parallel to prevent timing issues
+    this.isLoading = true;
+    forkJoin({
+      agents: this.towingService.getAgents(),
+      users: this.towingService.getUsers(),
+      towings: this.towingService.getAllTowings()
+    }).subscribe({
+      next: (results) => {
+        this.agents = results.agents;
+        this.users = results.users;
+        this.towings = results.towings;
+        
+        // Map agent and user IDs to their respective objects
+        this.processTowings();
+        this.filteredTowings = [...this.towings];
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error loading data:', error);
+        this.isLoading = false;
+      }
+    });
   }
+
+  // Process towings to add agent and user objects
+  processTowings(): void {
+    this.towings.forEach(towing => {
+      // For each towing request, find the associated agent and user
+      const agent = this.agents.find(a => {
+        return a.idAgent === towing.idAgent || 
+              (towing.agent && a.idAgent === towing.agent.id);
+      });
+      
+      const user = this.users.find(u => {
+        return u.idUser === towing.idUser || 
+              (towing.user && u.idUser === towing.user.id);
+      });
+      
+      // Add agent and user data to the towing object
+      if (agent) {
+        towing.agent = { id: agent.idAgent, name: agent.name };
+        towing.idAgent = agent.idAgent; // Ensure idAgent is set
+      }
+      
+      if (user) {
+        towing.user = { id: user.idUser, name: user.name };
+        towing.idUser = user.idUser; // Ensure idUser is set
+      }
+    });
+  }
+
   exportPDF(): void {
     this.towingService.exportPDF().subscribe({
       next: (blob: Blob) => {
@@ -57,16 +106,21 @@ export class TowingComponent implements OnInit {
       }
     });
   }
+
   loadTowings(): void {
-    this.towingService.getAllTowings().subscribe(
-      (data: Towing[]) => {
+    this.isLoading = true;
+    this.towingService.getAllTowings().subscribe({
+      next: (data: Towing[]) => {
         this.towings = data;
-        this.filteredTowings = data;
+        this.processTowings();
+        this.filteredTowings = [...this.towings];
+        this.isLoading = false;
       },
-      (error: any) => {
+      error: (error: any) => {
         console.error('Error loading towings:', error);
+        this.isLoading = false;
       }
-    );
+    });
   }
 
   filterTowings(): void {
@@ -77,21 +131,9 @@ export class TowingComponent implements OnInit {
     const search = this.searchText.toLowerCase();
     this.filteredTowings = this.towings.filter(towing =>
       towing.location.toLowerCase().includes(search) ||
-      towing.status.toLowerCase().includes(search) 
-    );
-  }
-
-  loadAgents(): void {
-    this.towingService.getAgents().subscribe(
-      (data: any[]) => { this.agents = data; },
-      (error: any) => { console.error('Error loading agents:', error); }
-    );
-  }
-
-  loadUsers(): void {
-    this.towingService.getUsers().subscribe(
-      (data: any[]) => { this.users = data; },
-      (error: any) => { console.error('Error loading users:', error); }
+      towing.status.toLowerCase().includes(search) ||
+      (towing.agent?.name?.toLowerCase().includes(search) || '') ||
+      (towing.user?.name?.toLowerCase().includes(search) || '')
     );
   }
 
@@ -99,6 +141,10 @@ export class TowingComponent implements OnInit {
    * Gets the name of the agent for a towing request
    */
   getAgentName(towing: Towing): string {
+    if (towing.agent && towing.agent.name) {
+      return towing.agent.name;
+    }
+    
     const agent = this.agents.find(a => a.idAgent === towing.idAgent);
     return agent ? agent.name : 'N/A';
   }
@@ -107,14 +153,18 @@ export class TowingComponent implements OnInit {
    * Gets the initial letter of the agent's name for the avatar
    */
   getAgentInitial(towing: Towing): string {
-    const agent = this.agents.find(a => a.idAgent === towing.idAgent);
-    return agent && agent.name ? agent.name.charAt(0).toUpperCase() : '?';
+    const agentName = this.getAgentName(towing);
+    return agentName && agentName !== 'N/A' ? agentName.charAt(0).toUpperCase() : '?';
   }
 
   /**
    * Gets the name of the user for a towing request
    */
   getUserName(towing: Towing): string {
+    if (towing.user && towing.user.name) {
+      return towing.user.name;
+    }
+    
     const user = this.users.find(u => u.idUser === towing.idUser);
     return user ? user.name : 'N/A';
   }
@@ -125,10 +175,17 @@ export class TowingComponent implements OnInit {
     this.towingForm.patchValue({
       status: towing.status,
       location: towing.location,
-      requestDate: towing.requestDate,  // Adjust format if needed
-      idAgent: towing.idAgent,
-      idUser: towing.idUser
+      requestDate: this.formatDateForInput(towing.requestDate),
+      idAgent: towing.idAgent || (towing.agent ? towing.agent.id : ''),
+      idUser: towing.idUser || (towing.user ? towing.user.id : '')
     });
+  }
+  
+  // Format date string to datetime-local input format
+  formatDateForInput(dateString: string): string {
+    if (!dateString) return '';
+    const date = moment(dateString);
+    return date.isValid() ? date.format('YYYY-MM-DDTHH:mm') : '';
   }
 
   updateTowing(): void {
@@ -156,8 +213,17 @@ export class TowingComponent implements OnInit {
       requestDate: formattedDate.format("YYYY-MM-DD HH:mm:ss"),
       idAgent: Number(formValue.idAgent),
       idUser: Number(formValue.idUser),
-      latitude: 0,
-      longitude: 0
+      latitude: this.selectedTowing.latitude || 0,
+      longitude: this.selectedTowing.longitude || 0,
+      // Include agent and user objects
+      agent: {
+        id: Number(formValue.idAgent),
+        name: this.agents.find(a => a.idAgent === Number(formValue.idAgent))?.name || 'Unknown'
+      },
+      user: {
+        id: Number(formValue.idUser),
+        name: this.users.find(u => u.idUser === Number(formValue.idUser))?.name || 'Unknown'
+      }
     };
 
     this.towingService.updateTowing(towingData).subscribe(
@@ -215,6 +281,10 @@ export class TowingComponent implements OnInit {
   }
 
   deleteTowing(id: number): void {
+    if (!confirm('Are you sure you want to delete this towing request?')) {
+      return;
+    }
+    
     this.towingService.deleteTowing(id).subscribe(
       (response) => {
         console.log("Towing deleted successfully");

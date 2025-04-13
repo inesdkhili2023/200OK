@@ -23,7 +23,10 @@
       <h2>Welcome, {{ authService.agent?.name }}</h2>
       <p>Your car type: <strong>{{ authService.agent?.vehicleType }}</strong></p>
     </div>
-    <button class="btn btn-secondary" (click)="logout()">Logout</button>
+    <div class="d-flex align-items-center">
+      <app-notification-bell class="me-3"></app-notification-bell>
+      <button class="btn btn-secondary" (click)="logout()">Logout</button>
+    </div>
   </div>
 
   <!-- Map Section -->

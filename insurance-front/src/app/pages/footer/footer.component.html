@@ -39,29 +39,7 @@
         </div>
       </div>
     
-      <!-- Recommendation Submission Form in Footer -->
-      <div class="row" style="margin-top: 30px;">
-        <div class="col-md-12">
-          <h3 style="text-align: center;">Submit Your Recommendation</h3>
-          <form [formGroup]="recommendationForm" (ngSubmit)="submitRecommendation()">
-            <div class="form-group">
-              <label for="recDescription">Recommendation</label>
-              <input type="text" id="recDescription" class="form-control" formControlName="description" placeholder="Enter your recommendation">
-              <div *ngIf="recommendationForm.get('description')?.invalid && recommendationForm.get('description')?.touched" class="text-danger">
-                <small>Please enter your recommendation.</small>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="recPrefs">Preferences</label>
-              <input type="text" id="recPrefs" class="form-control" formControlName="userPreferences" placeholder="Enter your preferences">
-              <div *ngIf="recommendationForm.get('userPreferences')?.invalid && recommendationForm.get('userPreferences')?.touched" class="text-danger">
-                <small>Please enter your preferences.</small>
-              </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit Recommendation</button>
-          </form>
-        </div>
-      </div>
+     
     
       <div class="row">
         <div class="col-md-8 col-lg-8">

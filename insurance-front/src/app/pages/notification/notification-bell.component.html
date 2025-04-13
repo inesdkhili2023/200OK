@@ -1,0 +1,40 @@
+<div class="notification-container">
+  <div class="notification-bell" (click)="toggleDropdown()">
+    <i class="fa fa-bell"></i>
+    <span class="notification-badge" *ngIf="notificationCount > 0">{{ notificationCount }}</span>
+  </div>
+
+  <div class="notification-dropdown" *ngIf="showDropdown">
+    <div class="notification-header">
+      <span class="notification-title">Notifications</span>
+      <button class="mark-all-read" (click)="markAllAsRead()" [disabled]="notificationCount === 0">
+        Mark all as read
+      </button>
+    </div>
+
+    <div class="notification-list" *ngIf="hasNotifications()">
+      <div class="notification-item" 
+           *ngFor="let notification of notifications" 
+           [class.unread]="!notification.read"
+           (click)="markAsRead(notification)">
+        <div class="notification-content">
+          <div class="notification-icon">
+            <i [class]="getNotificationIcon(notification)"></i>
+          </div>
+          <div class="notification-message">
+            <div class="message-text" [innerHTML]="getNotificationText(notification)"></div>
+            <div class="agent-badge" *ngIf="showAllAgents && notification.agentId">
+              Agent #{{ notification.agentId }}
+            </div>
+            <div class="notification-time">{{ getFormattedTime(notification.date) }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="notification-empty" *ngIf="!hasNotifications()">
+      <i class="fa fa-bell-slash"></i>
+      <p>No notifications yet</p>
+    </div>
+  </div>
+</div>

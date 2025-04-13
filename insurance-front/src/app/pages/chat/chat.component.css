@@ -70,10 +70,14 @@
 .message {
   max-width: 80%;
   margin-bottom: 10px;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
 }
 
 .message-sent {
   align-self: flex-end;
+  flex-direction: row-reverse;
 }
 
 .message-received {
@@ -83,12 +87,43 @@
 .message-system {
   align-self: center;
   max-width: 90%;
+  flex-direction: row; /* Always show system icon on the left */
+}
+
+/* Avatar styling */
+.message-avatar {
+  flex-shrink: 0;
+}
+
+.avatar-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #f1f1f1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: #6c757d;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.avatar-circle.current-user {
+  background-color: #e3f2fd;
+  color: #007bff;
+}
+
+.avatar-circle.system {
+  background-color: #f8f9fa;
+  color: #6c757d;
+  border: 1px solid #dee2e6;
 }
 
 .message-content {
   padding: 10px 15px;
   border-radius: 18px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  flex-grow: 0;
 }
 
 .message-sent .message-content {
@@ -108,6 +143,7 @@
   color: #495057;
   border-radius: 10px;
   border-left: 4px solid #6c757d;
+  max-width: 100%;
 }
 
 .message-header {
@@ -115,6 +151,17 @@
   justify-content: space-between;
   margin-bottom: 5px;
   font-size: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.sender-name {
+  font-weight: 600;
+}
+
+.timestamp {
+  opacity: 0.8;
+  margin-left: 8px;
+  white-space: nowrap;
 }
 
 .message-sent .message-header {
@@ -130,9 +177,14 @@
   word-break: break-word;
 }
 
-.request-message, .status-message {
+.request-message, .status-message, .notification-message {
   display: flex;
   flex-direction: column;
+}
+
+.notification-message {
+  color: #dc3545;
+  font-weight: 500;
 }
 
 .request-actions {
@@ -158,6 +210,27 @@
 .input-group button {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .message {
+    max-width: 90%;
+  }
+  
+  .message-system {
+    max-width: 100%;
+  }
+  
+  .timestamp {
+    font-size: 0.7rem;
+  }
+  
+  .avatar-circle {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+  }
 }
 
 /* Custom scrollbar */

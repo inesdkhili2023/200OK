@@ -66,29 +66,34 @@ body {
 
 /* Card Styling */
 .card {
-  border-radius: var(--border-radius);
-  overflow: hidden;
-  box-shadow: var(--box-shadow);
   border: none;
-  transition: var(--transition);
-  margin-bottom: 25px;
-  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
 }
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-.card-header {
-  font-weight: 600;
-  font-size: 1.2rem;
-  padding: 18px 20px;
-  border-bottom: none;
 }
 
 .card-body {
-  padding: 25px;
+  padding: 1.5rem;
+}
+
+.card-title {
+  color: #6c757d;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.text-primary {
+  color: #007bff !important;
+}
+
+.text-muted {
+  color: #6c757d !important;
 }
 
 /* Table Styling */

@@ -11,10 +11,10 @@ import { SinistersComponent } from './pages/sinisters/sinisters.component';
 import { RecommendationComponent } from './pages/recommendation/recommendation.component';
 import { AgentTowingComponent } from './pages/agent-towing/agent-towing.component';
 import { TowingComponent } from './pages/towing/towing.component';
-import { AgentEspaceComponent } from './pages/agent-espace/agent-espace.component';
 import { EmergencyTowingComponent } from './pages/emergency-towing/emergency-towing.component';
 import { TowingRequestComponent } from './pages/towing-request/towing-request.component';
-
+import { AgentEspaceComponent } from './pages/agent-espace/agent-espace.component';
+import { AllNotificationsComponent } from './pages/all-notifications/all-notifications.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -26,16 +26,17 @@ const routes: Routes = [
   { path: 'admin/sinisters', component: AdminSinistersListComponent },
   { path: 'insurances', component: InsurancesComponent },
   { path: 'recommendations', component: RecommendationComponent },
+  { path: 'admin/notifications', component: AllNotificationsComponent },
+
   { path: 'agents', component: AgentTowingComponent },
-  { path: 'agents-espace', component: AgentEspaceComponent },
+  { 
+    path: 'agents-espace',component : AgentEspaceComponent
+  },
   { path: 'towings', component: TowingComponent },
-  { path: 'sinisters', component: SinistersComponent }, 
-  { path: 'insurances', component: InsurancesComponent },
+  { path: 'sinisters', component: SinistersComponent },
   { path: 'emergency-towing', component: EmergencyTowingComponent },
   { path: 'towing-request', component: TowingRequestComponent },
-
-  { path: '**', redirectTo: 'home' } ,
-  
+  { path: '**', redirectTo: 'home' }
 ];
 
 @NgModule({

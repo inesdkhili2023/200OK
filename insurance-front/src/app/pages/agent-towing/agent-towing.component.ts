@@ -37,6 +37,7 @@ export class AgentTowingComponent implements OnInit {
     averageRating: 0,
     totalRequests: 0
   };
+  isLoading: boolean = false;
 
   constructor(
     private fb: FormBuilder, 
@@ -45,18 +46,32 @@ export class AgentTowingComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.loadAgents();
-    this.displayCurrentLocation();
+    this.isLoading = true;
+    
+    // First initialize the map
     this.initMap();
-    setTimeout(() => {
-      this.loadTowings();
-    }, 500);
+    
+    // Set up the form
     this.agentForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       contactInfo: ['', [Validators.required, Validators.pattern("^[0-9+()-]{8,15}$")]],
       availability: [true, Validators.required],
       vehicleType: ['', Validators.required]
     });
+    
+    // Load data after map initialization
+    setTimeout(() => {
+      // First get current location
+      this.displayCurrentLocation();
+      
+      // Load agents data
+      this.loadAgents();
+      
+      // Load towing data
+      setTimeout(() => {
+        this.loadTowings();
+      }, 300);
+    }, 500);
   }
 
   displayCurrentLocation(): void {
@@ -66,17 +81,29 @@ export class AgentTowingComponent implements OnInit {
           const lat = position.coords.latitude;
           const lng = position.coords.longitude;
           this.currentLocation = { lat, lng };
-          this.map.setView([lat, lng], 13);
-          this.currentLocationMarker = L.marker([lat, lng], {
-            icon: L.icon({
-              iconUrl: 'assets/images/current-location.png',
-              iconSize: [32, 32]
-            })
-          }).addTo(this.map)
-            .bindPopup('Your current location')
-            .openPopup();
           
-          this.findNearestAndFarthestAgents();
+          if (this.map) {
+            this.map.setView([lat, lng], 13);
+            
+            // Remove existing marker if it exists
+            if (this.currentLocationMarker) {
+              this.currentLocationMarker.remove();
+            }
+            
+            this.currentLocationMarker = L.marker([lat, lng], {
+              icon: L.icon({
+                iconUrl: 'assets/images/current-location.png',
+                iconSize: [32, 32]
+              })
+            }).addTo(this.map)
+              .bindPopup('Your current location')
+              .openPopup();
+            
+            // Find nearest and farthest agents after location is set
+            if (this.agents && this.agents.length > 0) {
+              this.findNearestAndFarthestAgents();
+            }
+          }
         },
         (error) => {
           console.error('Error fetching geolocation:', error);
@@ -88,15 +115,21 @@ export class AgentTowingComponent implements OnInit {
   }
 
   findNearestAndFarthestAgents(): void {
-    if (!this.currentLocation || !this.agents.length) return;
+    if (!this.currentLocation || !this.agents || this.agents.length === 0) {
+      console.warn('Cannot find nearest/farthest: missing current location or no agents loaded');
+      return;
+    }
 
-    let nearest = this.agents[0];
-    let farthest = this.agents[0];
+    console.log('Finding nearest and farthest agents from', this.currentLocation);
+    console.log('Total agents to check:', this.agents.length);
+
+    let nearest = null;
+    let farthest = null;
     let minDistance = Infinity;
     let maxDistance = 0;
 
     this.agents.forEach(agent => {
-      if (agent.latitude && agent.longitude) {
+      if (agent && agent.latitude && agent.longitude) {
         const distance = this.calculateDistance(
           this.currentLocation!.lat,
           this.currentLocation!.lng,
@@ -104,20 +137,30 @@ export class AgentTowingComponent implements OnInit {
           agent.longitude
         );
 
+        console.log(`Agent ${agent.name} distance: ${distance.toFixed(2)} km`);
+
         if (distance < minDistance) {
           minDistance = distance;
           nearest = agent;
+          console.log(`New nearest agent: ${agent.name} (${distance.toFixed(2)} km)`);
         }
 
         if (distance > maxDistance) {
           maxDistance = distance;
           farthest = agent;
+          console.log(`New farthest agent: ${agent.name} (${distance.toFixed(2)} km)`);
         }
+      } else {
+        console.warn(`Agent missing coordinates:`, agent);
       }
     });
 
     this.nearestAgent = nearest;
     this.farthestAgent = farthest;
+    
+    console.log('Nearest agent:', this.nearestAgent ? (this.nearestAgent as AgentTowing).name : 'None');
+    console.log('Farthest agent:', this.farthestAgent ? (this.farthestAgent as AgentTowing).name : 'None');
+    
     this.updateAgentMarkers();
   }
 
@@ -138,9 +181,16 @@ export class AgentTowingComponent implements OnInit {
   }
 
   updateAgentMarkers(): void {
-    // Clear existing markers
+    console.log("Updating agent markers");
+    
+    // Clear existing markers (except current location)
     this.markers.forEach(marker => marker.remove());
     this.markers = [];
+
+    if (!this.map) {
+      console.error("❌ Map not initialized yet, cannot add markers");
+      return;
+    }
 
     // Add markers for all agents
     this.agents.forEach(agent => {
@@ -148,36 +198,82 @@ export class AgentTowingComponent implements OnInit {
         const isNearest = agent === this.nearestAgent;
         const isFarthest = agent === this.farthestAgent;
         
-        const customIcon = L.icon({
-          iconUrl: isNearest ? 'assets/images/nearest-agent.png' : 
-                   isFarthest ? 'assets/images/farthest-agent.png' : 
-                   'assets/images/agent.png',
-          iconSize: [32, 32]
-        });
+        let iconUrl = 'assets/images/agent.png';
+        if (isNearest) iconUrl = 'assets/images/nearest-agent.png';
+        if (isFarthest) iconUrl = 'assets/images/farthest-agent.png';
+        
+        try {
+          const customIcon = L.icon({
+            iconUrl: iconUrl,
+            iconSize: [32, 32]
+          });
 
-        const marker = L.marker([agent.latitude, agent.longitude], { icon: customIcon })
-          .addTo(this.map)
-          .bindPopup(`
-            <b>${agent.name}</b><br>
-            ${isNearest ? '🏆 Nearest Agent' : ''}
-            ${isFarthest ? '🎯 Farthest Agent' : ''}<br>
-            Status: ${agent.availability ? 'Available' : 'Busy'}<br>
-            Vehicle: ${agent.vehicleType}
-          `);
+          let distance = 0;
+          if (this.currentLocation) {
+            distance = this.calculateDistance(
+              this.currentLocation.lat,
+              this.currentLocation.lng,
+              agent.latitude,
+              agent.longitude
+            );
+          }
 
-        this.markers.push(marker);
+          const marker = L.marker([agent.latitude, agent.longitude], { icon: customIcon })
+            .addTo(this.map)
+            .bindPopup(`
+              <div style="text-align: center;">
+                <strong>${agent.name}</strong><br>
+                ${isNearest ? '<span style="color: green; font-weight: bold;">🏆 Nearest Agent</span><br>' : ''}
+                ${isFarthest ? '<span style="color: orange; font-weight: bold;">🎯 Farthest Agent</span><br>' : ''}
+                <span>${distance.toFixed(2)} km away</span><br>
+                <span>Status: ${agent.availability ? '<span style="color: green;">Available</span>' : '<span style="color: red;">Busy</span>'}</span><br>
+                <span>Vehicle: ${agent.vehicleType}</span>
+              </div>
+            `);
+
+          this.markers.push(marker);
+          
+          if (isNearest || isFarthest) {
+            marker.openPopup();
+          }
+        } catch (error) {
+          console.error(`❌ Error creating marker for agent ${agent.name}:`, error);
+        }
       }
     });
+    
+    console.log(`✅ Updated ${this.markers.length} agent markers on map`);
   }
 
   loadAgents() {
     this.agentService.getAllAgents().subscribe(
       (data) => {
-        this.agents = data;
-        this.filteredAgents = data;
+        // Filter out agents without coordinates or add mock coordinates for debugging
+        this.agents = data.map(agent => {
+          // If agent is missing coordinates, log it
+          if (!agent.latitude || !agent.longitude) {
+            console.warn(`Agent ${agent.name} is missing coordinates, adding default coordinates for testing`);
+            // Add placeholder coordinates for testing - in real production, you'd want to fix the data
+            agent.latitude = 36.8065 + (Math.random() * 0.2 - 0.1); // Random coordinates near Tunisia
+            agent.longitude = 10.1815 + (Math.random() * 0.2 - 0.1);
+          }
+          return agent;
+        });
+        
+        this.filteredAgents = [...this.agents];
         this.calculateAgentStats();
+        
+        // If we already have location, find nearest/farthest agents
+        if (this.currentLocation && this.map) {
+          this.findNearestAndFarthestAgents();
+        }
+        
+        console.log(`✅ Loaded ${this.agents.length} agents with coordinates`);
       },
-      (error) => console.error('Error loading agents:', error)
+      (error) => {
+        console.error('❌ Error loading agents:', error);
+        this.isLoading = false;
+      }
     );
   }
 
@@ -201,13 +297,17 @@ export class AgentTowingComponent implements OnInit {
       return;
     }
 
-    this.map = L.map('map').setView([36.8065, 10.1815], 6); // Default Tunisia view
+    try {
+      this.map = L.map('map').setView([36.8065, 10.1815], 6); // Default Tunisia view
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(this.map);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(this.map);
 
-    console.log("✅ Map initialized successfully!");
+      console.log("✅ Map initialized successfully!");
+    } catch (error) {
+      console.error("❌ Error initializing map:", error);
+    }
   }
 
   exportPDF(): void {
@@ -231,8 +331,13 @@ export class AgentTowingComponent implements OnInit {
       (data) => {
         this.towings = data;
         this.addMarkers();
+        this.calculateAgentStats();
+        this.isLoading = false;
       },
-      (error) => console.error('❌ Error loading towing requests:', error)
+      (error) => {
+        console.error('❌ Error loading towing requests:', error);
+        this.isLoading = false;
+      }
     );
   }
 
@@ -326,5 +431,30 @@ export class AgentTowingComponent implements OnInit {
 
   resetForm() {
     this.newAgent = { name: '', contactInfo: '', availability: true, vehicleType: '' };
+  }
+
+  refreshData() {
+    this.isLoading = true;
+    Promise.all([
+      new Promise<void>((resolve) => {
+        this.loadAgents();
+        resolve();
+      }),
+      new Promise<void>((resolve) => {
+        this.loadTowings();
+        resolve();
+      })
+    ]).then(() => {
+      this.isLoading = false;
+      this.calculateAgentStats();
+      if (this.currentLocation) {
+        this.findNearestAndFarthestAgents();
+      }
+    });
+  }
+
+  getTowingCountForAgent(agentId: number | undefined): number {
+    if (!agentId || !this.towings) return 0;
+    return this.towings.filter(towing => towing.agent?.id === agentId).length;
   }
 }

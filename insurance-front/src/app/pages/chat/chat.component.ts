@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-chat',
@@ -17,23 +18,32 @@ import { environment } from '../../../environments/environment';
 export class ChatComponent implements OnInit, AfterViewChecked, OnDestroy {
   @Input() agentId?: number = 1; // Default to agent ID 1 for testing
   @ViewChild('chatContainer') private chatContainer!: ElementRef;
+  private apiUrl = 'http://localhost:8081';
 
   messages: ChatMessage[] = [];
   newMessage: string = '';
   shouldScroll = false;
   isConnected = false;
+  agentName: string = '';
   private subscriptions: Subscription[] = [];
 
   constructor(
     private chatService: ChatService,
-    private http: HttpClient
+    private http: HttpClient,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    // Get the agent information
+    if (this.authService.isLoggedIn()) {
+      this.agentId = this.authService.agent.idAgent;
+      this.agentName = this.authService.agent.name || 'Agent';
+    }
+
     if (this.agentId) {
       // Add mock mode message
       this.addSystemMessage('⚠️ Chat is running in mock mode. Messages are stored locally only.');
-      this.addSystemMessage(`Server at ${environment.apiUrl} is not connected.`);
+      this.addSystemMessage(`Server at ${this.apiUrl} is not connected.`);
       
       // Load chat history
       const historySub = this.chatService.getChatHistory(this.agentId).subscribe(messages => {
@@ -69,7 +79,7 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     const message: ChatMessage = {
       senderId: this.agentId,
-      senderName: 'Agent', // You might want to get this from a user service
+      senderName: this.agentName, // Use the agent's actual name
       content: this.newMessage,
       timestamp: new Date(),
       type: 'text'
@@ -84,7 +94,7 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     const message: ChatMessage = {
       senderId: this.agentId,
-      senderName: 'Agent', // You might want to get this from a user service
+      senderName: this.agentName, // Use the agent's actual name
       content: location,
       timestamp: new Date(),
       type: 'request'
@@ -95,15 +105,15 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   testConnection(): void {
     // Use full URL for API calls - no proxy in mock mode
-    this.addSystemMessage('Testing connection to ' + environment.apiUrl + '/chat/test');
+    this.addSystemMessage('Testing connection to ' + this.apiUrl + '/chat/test');
     
-    this.http.get(`${environment.apiUrl}/chat/test`).subscribe({
+    this.http.get(`${this.apiUrl }/chat/test`).subscribe({
       next: (response) => {
         console.log('API test successful:', response);
         this.addSystemMessage('API connection test successful.');
         
         // Test WebSocket by sending a test message
-        this.http.get(`${environment.apiUrl}/chat/send-test`).subscribe({
+        this.http.get(`${this.apiUrl }/chat/send-test`).subscribe({
           next: (response) => {
             console.log('WebSocket test message sent:', response);
             this.addSystemMessage('WebSocket test message sent. If WebSocket is working, you should see another message soon.');
@@ -117,7 +127,7 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnDestroy {
       error: (error) => {
         console.error('API test failed:', error);
         this.addSystemMessage('API connection test failed. Check console for details.');
-        this.addSystemMessage('💡 Tip: Make sure your Spring Boot server is running at ' + environment.apiUrl);
+        this.addSystemMessage('💡 Tip: Make sure your Spring Boot server is running at ' + this.apiUrl);
         this.addSystemMessage('Check browser network tab for specific error details');
       }
     });
