@@ -57,47 +57,64 @@ public class UsersManagementService {
         ReqRes resp = new ReqRes();
 
         try {
+            // Champs obligatoires
+            if (registrationRequest.getEmail() == null ||
+                    registrationRequest.getPassword() == null ||
+                    registrationRequest.getCin() == null ||
+                    registrationRequest.getCivility() == null ||
+                    registrationRequest.getRole() == null) {
+                resp.setStatusCode(400);
+                resp.setMessage("Champs obligatoires manquants.");
+                return resp;
+            }
+
             OurUsers ourUser = new OurUsers();
             ourUser.setEmail(registrationRequest.getEmail());
-            ourUser.setCity(registrationRequest.getCity());
+            ourUser.setCity(registrationRequest.getCity()); // optionnel
             ourUser.setRole(registrationRequest.getRole());
-            ourUser.setName(registrationRequest.getName());
-            ourUser.setLastname(registrationRequest.getLastname());
-            ourUser.setDnaiss(registrationRequest.getDnaiss());
-            ourUser.setCivility(registrationRequest.getCivility());
+            ourUser.setName(registrationRequest.getName()); // optionnel
+            ourUser.setLastname(registrationRequest.getLastname()); // optionnel
+            ourUser.setDnaiss(registrationRequest.getDnaiss()); // optionnel
+            ourUser.setCivility(registrationRequest.getCivility()); // optionnel
             ourUser.setCin(registrationRequest.getCin());
             ourUser.setEnabled(true);
-
             ourUser.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
+
             if (imageFile != null && !imageFile.isEmpty()) {
                 String uploadDir = "C:\\Users\\user\\Desktop\\front+back\\insurance-back\\uploads";
                 File uploadFolder = new File(uploadDir);
-                if (!uploadFolder.exists()) {
-                    uploadFolder.mkdirs();
-
-
-                }
+                if (!uploadFolder.exists()) uploadFolder.mkdirs();
 
                 String fileName = System.currentTimeMillis() + "_" + imageFile.getOriginalFilename();
                 File file = new File(uploadDir + File.separator + fileName);
-
                 imageFile.transferTo(file);
                 ourUser.setImage(fileName);
             }
-            OurUsers ourUsersResult = usersRepo.save(ourUser);
-            if (ourUsersResult.getId()>0) {
-                resp.setOurUsers((ourUsersResult));
-                resp.setMessage("Admin add User or Agent Successfully");
+            if (usersRepo.existsByEmail(ourUser.getEmail())) {
+                resp.setStatusCode(409); // Conflit
+                resp.setMessage("Email déjà utilisé");
+                return resp;
+            }
+
+            if (usersRepo.existsByCin(ourUser.getCin())) {
+                resp.setStatusCode(409);
+                resp.setMessage("CIN déjà utilisé");
+                return resp;
+            }
+            OurUsers savedUser = usersRepo.save(ourUser);
+            if (savedUser.getId() > 0) {
+                resp.setOurUsers(savedUser);
+                resp.setMessage("Utilisateur ajouté avec succès.");
                 resp.setStatusCode(200);
             }
 
-
-        }catch (Exception e){
+        } catch (Exception e) {
             resp.setStatusCode(500);
             resp.setError(e.getMessage());
         }
         return resp;
     }
+
 
     public ReqRes signup(ReqRes registrationRequest, MultipartFile imageFile){
         ReqRes resp = new ReqRes();

@@ -21,7 +21,7 @@
 
 /* En-tête avec l'image */
 .profile-header {
-    background: linear-gradient(135deg, #344659, #FF5733);
+    background: linear-gradient(135deg, #344659, #d89946);
     padding: 30px;
 }
 
@@ -50,7 +50,7 @@
 }
 
 .profile-body strong {
-    color: #FF5733;
+    color: #d89946;
 }
 
 /* Pied de page avec le bouton */
@@ -71,7 +71,7 @@
 }
 
 .profile-footer button:hover {
-    background: #FF5733;
+    background: #d89946;
 }
 
 /* Animation d’apparition */
@@ -88,7 +88,7 @@
 
 /* Message d'erreur */
 .error-message {
-    color: #dc3545;
+    color: #d89946;
     font-size: 16px;
     text-align: center;
     margin-bottom: 10px;

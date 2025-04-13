@@ -1,61 +1,80 @@
-<div class="container" >
-    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
-    <h2>Registration</h2>
-    <form (submit)="handleSubmit()">
-      <div class="form-group">
-        <label>Prenom:</label>
-        <input type="text" name="name" [(ngModel)]="formData.name" required />
-      </div>
-      <div class="form-group">
-        <label>Nom:</label>
-        <input type="text" name="lastname" [(ngModel)]="formData.lastname" required />
-      </div>
-      <div class="form-group">
-        <label>Date de naissance:</label>
-        <input type="date" name="dnaiss" [(ngModel)]="formData.dnaiss" required />
-      </div>
-      <div class="form-group">
-        <label>Cin:</label>
-        <input type="text" name="cin" [(ngModel)]="formData.cin" required />
-      </div>
-      <div class="form-group">
-        <label>Civility:</label>
-        <select name="civility" [(ngModel)]="formData.civility" required>
-          <option value="">Selectionner civilite</option>
-          <option value="DIVORCED">SINGLE</option>
-          <option value="MARRIED">MARRIED</option>
-          <option value="DIVORCED">DIVORCED</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>City:</label>
-        <input type="text" name="city" [(ngModel)]="formData.city" required />
-      </div>
-      <div class="form-group">
-        <label>Email:</label>
-        <input type="email" name="email" [(ngModel)]="formData.email" required />
-      </div>
-      <div class="form-group">
-        <label>Password:</label>
-        <input type="password" name="password" [(ngModel)]="formData.password" required />
-      </div>
-      <div class="form-group">
-        <label>Role:</label>
-        <select name="role" [(ngModel)]="formData.role" required>
-          <option value="">Select Role</option>
-          <option value="ADMIN">ADMIN</option>
-          <option value="USER">USER</option>
-          <option value="AGENT">AGENT</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Image:</label>
-        <input type="file" (change)="onFileSelected($event)">
-      </div>
-      <img *ngIf="formData.image" [src]="formData.image" alt="Selected Image" width="150">
-  
-      
-      <button type="submit">Register</button>
-    </form>
-  </div>
-  
+<!-- register.component.html -->
+<div class="container">
+  <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+  <h2>Registration</h2>
+  <form (submit)="handleSubmit()">
+    <div class="form-group">
+      <label>Prenom:</label>
+      <input type="text" name="name" [(ngModel)]="formData.name" />
+    </div>
+
+    <div class="form-group">
+      <label>Nom:</label>
+      <input type="text" name="lastname" [(ngModel)]="formData.lastname" />
+    </div>
+
+    <div class="form-group">
+      <label>Date de naissance:</label>
+      <input type="date" name="dnaiss" [(ngModel)]="formData.dnaiss" />
+    </div>
+
+    <div class="form-group">
+      <label>Cin:</label>
+      <input type="text" name="cin" [(ngModel)]="formData.cin" (blur)="validateCin()" required />
+      <div class="error" *ngIf="validationErrors.cin">{{ validationErrors.cin }}</div>
+    </div>
+
+    <div class="form-group">
+      <label>Civility:</label>
+      <select name="civility" [(ngModel)]="formData.civility" (blur)="validateCivility()" required>
+        <option value="">Selectionner civilite</option>
+        <option value="DIVORCED">SINGLE</option>
+        <option value="MARRIED">MARRIED</option>
+        <option value="DIVORCED">DIVORCED</option>
+      </select>
+      <div class="error" *ngIf="validationErrors.civility">{{ validationErrors.civility }}</div>
+    </div>
+
+    <div class="form-group">
+      <label>City:</label>
+      <input type="text" name="city" [(ngModel)]="formData.city" />
+    </div>
+
+    <div class="form-group">
+      <label>Email:</label>
+      <input type="email" name="email" [(ngModel)]="formData.email" (blur)="validateEmail()" required />
+      <div class="error" *ngIf="validationErrors.email">{{ validationErrors.email }}</div>
+    </div>
+
+    <div class="form-group">
+      <label>Password:</label>
+      <input type="password" name="password" [(ngModel)]="formData.password" (blur)="validatePassword()" required />
+      <div class="error" *ngIf="validationErrors.password">{{ validationErrors.password }}</div>
+    
+    </div>
+
+    <div class="form-group">
+      <label>Role:</label>
+      <select name="role" [(ngModel)]="formData.role" (blur)="validateRole()" required>
+        <option value="">Selectionner role</option>
+        <option value="ADMIN">ADMIN</option>
+        <option value="USER">USER</option>
+        <option value="AGENT">AGENT</option>
+      </select>
+      <div class="error" *ngIf="validationErrors.role">{{ validationErrors.role }}</div>
+    </div>
+
+    <div class="form-group">
+      <label>Image:</label>
+      <input type="file" (change)="onFileSelected($event)" />
+    </div>
+    <img *ngIf="formData.image" [src]="formData.image" alt="Selected Image" width="150" />
+
+    <button type="submit">Registrer</button>
+    <div class="dashboard-nav">
+      <a routerLink="/admin/dashboard" class="back-dashboard">← Dashboard</a>
+      <a routerLink="/users" class="back-dashboard">Utilisateurs →</a>
+    </div>
+    
+  </form>
+</div>

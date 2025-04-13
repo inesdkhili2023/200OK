@@ -18,4 +18,8 @@ public interface UsersRepo extends JpaRepository<OurUsers, Integer> {
     @Query("UPDATE OurUsers a " +
             "SET a.enabled = TRUE WHERE a.email = ?1")
     int enableOurUser(String email);
+
+    boolean existsByEmail(String email);
+
+    boolean existsByCin(String cin);
 }

@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastrModule, ToastrService } from 'ngx-toastr';
+import {  ToastrService } from 'ngx-toastr';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -31,10 +31,11 @@ export class SignupComponent {
   emailVerified: boolean = false;
   cityVerified:boolean=false;
   passwordVerified: boolean = false;
+  
   constructor(
     private readonly userService: UsersService,
     private readonly router: Router,
-    private toastr:ToastrService
+    private toastr: ToastrService
   ) {}
   ngAfterViewInit(): void {
     if (this.webcamActive) this.startWebcam();
@@ -58,7 +59,7 @@ export class SignupComponent {
 
       const response = await this.userService.signup(formDataToSend);
       if (response.statusCode === 200) {
-        this.toastr.warning("Accéder à votre email pour vérifier votre compte ")
+        this.toastr.success('Accédez à votre email pour vérifier votre compte');
         this.router.navigate(['/login']);
       } else {
         this.showError(response.message);
@@ -103,7 +104,7 @@ export class SignupComponent {
   }
   
   validateEmail() {
-    const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     if (!this.formData.email.match(emailPattern)) {
       this.emailError = 'Email invalide';
       this.emailVerified = false;
@@ -112,6 +113,7 @@ export class SignupComponent {
       this.emailVerified = true;
     }
   }
+  
   validatecity() {
     // Vérification de la ville
     if (this.formData.city.trim().length === 0) {
@@ -215,7 +217,7 @@ const mime = mimeMatch[1];
   showError(message: string) {
     this.errorMessage = message;
     setTimeout(() => {
-      this.errorMessage = '';
+      this.errorMessage = ''; 
     }, 3000);
   }
 

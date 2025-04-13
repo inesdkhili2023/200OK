@@ -26,6 +26,7 @@ export class UserListComponent implements OnInit {
     private readonly userService: UsersService,
     private readonly router: Router,
     private toastr: ToastrService
+   
   ) {}
 
 
@@ -35,7 +36,8 @@ export class UserListComponent implements OnInit {
     this.isAgent = this.userService.isAgent();
     this.loadUsers();
   }
-
+  
+ 
   // Charge la liste des utilisateurs
   async loadUsers() {
     try {
@@ -168,7 +170,7 @@ export class UserListComponent implements OnInit {
     try {
       if (user.enabled) {
         await this.userService.blockUser(user.id, token);
-        this.toastr.success('Utilisateur bloqué avec succès');
+        this.toastr.error('Utilisateur bloqué avec succès');
       } else {
         await this.userService.deblockUser(user.id, token);
         this.toastr.success('Utilisateur débloqué avec succès');

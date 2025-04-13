@@ -11,7 +11,6 @@
             placeholder="Rechercher un utilisateur..."
         />
     </div>
-
     <button routerLink="/register" class="reg-button">Ajouter un utilisateur</button>
     <ng-container *ngTemplateOutlet="userTable; context: {
         title: '👤 Tous les Utilisateurs',
@@ -46,7 +45,7 @@
         <table *ngIf="users.length > 0">
           <thead>
             <tr>
-              <th>ID</th>
+              
               <th>Prénom</th>
               <th>Nom</th>
               <th>Date de naissance</th>
@@ -63,7 +62,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let user of users">
-              <td>{{ user.id }}</td>
+              
               <td>{{ user.name }}</td>
               <td>{{ user.lastname }}</td>
               <td>{{ user.dnaiss }}</td>

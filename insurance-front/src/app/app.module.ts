@@ -28,6 +28,11 @@ import { ToastrModule } from 'ngx-toastr';
 import { FaceLoginComponent } from './user/face-login/face-login.component';
 import { LoginAttentanceComponent } from './user/login-attentance/login-attentance.component';
 import { FaceDetectionComponent } from './user/face-detection/face-detection.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ConfirmDialogComponent } from './user/confirm-dialog/confirm-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { ConfirmSnackbarComponent } from './notif/confirm-snackbar/confirm-snackbar.component';
 
 @NgModule({
   declarations: [
@@ -54,19 +59,21 @@ import { FaceDetectionComponent } from './user/face-detection/face-detection.com
     FaceLoginComponent,
     LoginAttentanceComponent,
     FaceDetectionComponent,
+    ConfirmDialogComponent,
+    ConfirmSnackbarComponent,
   ],
   imports: [
     BrowserModule,
+    MatSnackBarModule,
     BrowserAnimationsModule, 
-    ToastrModule.forRoot({
-      positionClass: 'toast-bottom-right', // Ou 'toast-top-right', selon ce que vous préférez
-      timeOut: 3000, // Durée de la notification
-      extendedTimeOut: 1000
-    }),
+    MatDialogModule,
+    MatButtonModule,
+    ToastrModule.forRoot(),
     AppRoutingModule,
     FormsModule,
     HttpClientModule    // <-- add this module
   ],
+  
   providers: [],
   bootstrap: [AppComponent]
 })
