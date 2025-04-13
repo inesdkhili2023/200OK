@@ -35,6 +35,9 @@ public class TowingService {
     @Autowired
     private ApplicationContext applicationContext;
 
+    @Autowired
+    private NotificationService notificationService;
+
     public TowingService(SimpMessagingTemplate messagingTemplate,TowingRepository towingRepository, AgentTowingRepository agentRepository, UserRepository userRepository) {
         this.messagingTemplate = messagingTemplate;
         this.towingRepository = towingRepository;
@@ -104,6 +107,13 @@ public class TowingService {
         // ✅ Save Towing Request
         Towing savedTowing = towingRepository.save(towing);
 
+        // Generate policy number-like identifier for the notification
+        String policyRef = "POL-" + savedTowing.getId() + user.getIdUser() + "T";
+
+        // 🚀 Send Notification to the agent through NotificationService
+        String notificationMessage = "New towing request " + policyRef + " assigned at " + towing.getLocation() + " (Status: " + towing.getStatus() + ")";
+        notificationService.notifyAgent(agent.getIdAgent(), notificationMessage);
+
         // 🚀 Send WebSocket Notification to the agent
         messagingTemplate.convertAndSend("/topic/agent-" + agent.getIdAgent(),
                 "New towing request assigned at " + towing.getLocation() + " (Status: " + towing.getStatus() + ")");
@@ -116,6 +126,7 @@ public class TowingService {
         chatNotification.put("agentId", agent.getIdAgent());
         chatNotification.put("agentName", agent.getName());
         chatNotification.put("timestamp", LocalDateTime.now().toString());
+        chatNotification.put("policyRef", policyRef);
 
         messagingTemplate.convertAndSend("/topic/towing", chatNotification);
 
@@ -141,8 +152,19 @@ public class TowingService {
         // ✅ Save updated towing request
         Towing updatedTowing = towingRepository.save(towing);
 
-        // Status change event - notify webhooks
+        // Status change event - notify webhooks and send notification
         if (!oldStatus.equals(updatedTowing.getStatus())) {
+            // Generate policy number-like identifier for the notification
+            String policyRef = "POL-" + updatedTowing.getId() + updatedTowing.getUser().getIdUser() + "T";
+
+            // Send notification to agent
+            AgentTowing agent = updatedTowing.getAgent();
+            if (agent != null) {
+                String notificationMessage = "Towing request " + policyRef + " status changed from " + oldStatus +
+                        " to " + updatedTowing.getStatus() + " at " + updatedTowing.getLocation();
+                notificationService.notifyAgent(agent.getIdAgent(), notificationMessage);
+            }
+
             try {
                 // If WebhookService is available, trigger webhooks
                 if (applicationContext.containsBean("webhookService")) {
@@ -154,6 +176,7 @@ public class TowingService {
                     payload.put("newStatus", updatedTowing.getStatus());
                     payload.put("location", updatedTowing.getLocation());
                     payload.put("timestamp", LocalDateTime.now().toString());
+                    payload.put("policyRef", policyRef);
 
                     // Agent info
                     if (updatedTowing.getAgent() != null) {
@@ -209,6 +232,16 @@ public class TowingService {
         towing.setRating(rating);
         Towing updatedTowing = towingRepository.save(towing);
 
+        // Generate policy number-like identifier for the notification
+        String policyRef = "POL-" + updatedTowing.getId() + updatedTowing.getUser().getIdUser() + "T";
+
+        // Send notification to agent about the rating
+        AgentTowing agent = updatedTowing.getAgent();
+        if (agent != null) {
+            String ratingMessage = "Towing service " + policyRef + " has been rated " + rating + "/5.0";
+            notificationService.notifyAgent(agent.getIdAgent(), ratingMessage);
+        }
+
         // Trigger webhook for rating update
         try {
             if (applicationContext.containsBean("webhookService")) {
@@ -218,6 +251,7 @@ public class TowingService {
                 payload.put("towingId", updatedTowing.getId());
                 payload.put("rating", rating);
                 payload.put("timestamp", LocalDateTime.now().toString());
+                payload.put("policyRef", policyRef);
 
                 // Agent info
                 if (updatedTowing.getAgent() != null) {
@@ -245,6 +279,40 @@ public class TowingService {
         Towing towing = towingRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Towing not found with ID: " + id));
         towingRepository.delete(towing);
+    }
+
+    public Towing updateTowingStatus(Long towingId, String status, String location, Integer agentId) {
+        Towing towing = towingRepository.findById(towingId)
+                .orElseThrow(() -> new RuntimeException("Towing request not found"));
+
+        towing.setStatus(status);
+        if (location != null && !location.isEmpty()) {
+            towing.setLocation(location);
+        }
+
+        Towing updatedTowing = towingRepository.save(towing);
+
+        // Notify agent of status update
+        if (agentId != null) {
+            notificationService.notifyTowingUpdate(agentId, towingId, status, location);
+        }
+
+        return updatedTowing;
+    }
+
+    public Towing createTowingRequest(Towing towing) {
+        Towing savedTowing = towingRepository.save(towing);
+
+        // Notify assigned agent if present
+        if (towing.getAgent() != null && towing.getAgent().getId() != null) {
+            notificationService.notifyTowingRequest(
+                    towing.getAgent().getId(),
+                    savedTowing.getId(),
+                    towing.getLocation()
+            );
+        }
+
+        return savedTowing;
     }
 
 }

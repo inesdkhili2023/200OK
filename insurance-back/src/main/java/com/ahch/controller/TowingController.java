@@ -25,7 +25,7 @@ import java.util.Map;
 @RequestMapping("/api/towings")
 @CrossOrigin(origins = "http://localhost:4200")
 public class TowingController {
-private final TowingRepository towingRepository;
+    private final TowingRepository towingRepository;
     private final TowingService towingService;
     private final AgentTowingRepository agentRepository;
     private final UserRepository userRepository;
@@ -101,8 +101,21 @@ private final TowingRepository towingRepository;
         }
     }
 
-
-
+    @PutMapping("/{id}/status")
+    public ResponseEntity<Towing> updateTowingStatus(
+            @PathVariable("id") Long id,
+            @RequestParam String status,
+            @RequestParam(required = false) String location,
+            @RequestParam(required = false) Integer agentId) {
+        try {
+            Towing updatedTowing = towingService.updateTowingStatus(id, status, location, agentId);
+            return ResponseEntity.ok(updatedTowing);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateTowing(@PathVariable Long id, @RequestBody Towing towingDetails) {
@@ -134,8 +147,6 @@ private final TowingRepository towingRepository;
         }
     }
 
-
-
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Map<String, String>> deleteTowing(@PathVariable Long id) {
         try {
@@ -150,8 +161,6 @@ private final TowingRepository towingRepository;
         }
     }
 
-
-
     @GetMapping("/agents")
     public List<AgentTowing> getAllAgents() {
         return towingService.getAllAgents();
@@ -160,5 +169,16 @@ private final TowingRepository towingRepository;
     @GetMapping("/users")
     public List<User> getAllUsers() {
         return towingService.getAllUsers();
+    }
+
+    @GetMapping("/agent/{agentId}")
+    public ResponseEntity<?> getTowingsByAgentId(@PathVariable Integer agentId) {
+        try {
+            List<Towing> towings = towingRepository.findByAgentId(agentId);
+            return ResponseEntity.ok(towings);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.singletonMap("error", "Error fetching towing requests for agent: " + e.getMessage()));
+        }
     }
 }

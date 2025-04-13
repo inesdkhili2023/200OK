@@ -29,10 +29,37 @@ public class ChatService {
 
     @Transactional
     public ChatMessage saveMessage(ChatMessage message) {
+        // Set defaults for nullable fields to prevent errors
         if (message.getTimestamp() == null) {
             message.setTimestamp(LocalDateTime.now());
         }
-        return chatMessageRepository.save(message);
+
+        if (message.getType() == null) {
+            message.setType(ChatMessage.MessageType.TEXT);
+        }
+
+        // Ensure senderId and senderName are set to something reasonable
+        if (message.getSenderId() == null) {
+            message.setSenderId(0); // System
+        }
+
+        if (message.getSenderName() == null || message.getSenderName().isEmpty()) {
+            message.setSenderName("System");
+        }
+
+        // Ensure read is not null (use false as default)
+        if (message.getRead() == null) {
+            message.setRead(false);
+        }
+
+        try {
+            return chatMessageRepository.save(message);
+        } catch (Exception e) {
+            // Log the error
+            System.err.println("Error saving message: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     public List<ChatMessage> getConversation(Integer user1Id, Integer user2Id) {

@@ -6,7 +6,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class NotificationService {
@@ -18,6 +21,52 @@ public class NotificationService {
     }
 
     /**
+     * Get all notifications
+     * @return List of all notifications
+     */
+    public List<ChatMessage> getAllNotifications() {
+        try {
+            return chatMessageRepository.findAll().stream()
+                    .filter(msg -> msg != null && msg.getType() != null &&
+                            (msg.getType() == ChatMessage.MessageType.NOTIFICATION ||
+                                    msg.getType() == ChatMessage.MessageType.SYSTEM))
+                    .toList();
+        } catch (Exception e) {
+            // Log the error with stack trace
+            System.err.println("Error getting all notifications: " + e.getMessage());
+            e.printStackTrace();
+            // Return empty list instead of throwing
+            return new ArrayList<>();
+        }
+    }
+
+    /**
+     * Get all notifications for a specific agent (read and unread)
+     * @param agentId The ID of the agent
+     * @return List of notifications for the agent
+     */
+    public List<ChatMessage> getAgentNotifications(Integer agentId) {
+        if (agentId == null) {
+            return new ArrayList<>();
+        }
+
+        try {
+            return chatMessageRepository.findMessagesByAgentId(agentId).stream()
+                    .filter(msg -> msg != null &&
+                            msg.getType() != null &&
+                            (msg.getType() == ChatMessage.MessageType.NOTIFICATION ||
+                                    msg.getType() == ChatMessage.MessageType.SYSTEM))
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            // Log the error with stack trace
+            System.err.println("Error getting notifications for agent " + agentId + ": " + e.getMessage());
+            e.printStackTrace();
+            // Return empty list instead of throwing
+            return new ArrayList<>();
+        }
+    }
+
+    /**
      * Send a notification to an agent
      * @param agentId The ID of the agent to notify
      * @param message The notification message
@@ -26,8 +75,6 @@ public class NotificationService {
     @Transactional
     public ChatMessage notifyAgent(Integer agentId, String message) {
         ChatMessage notification = new ChatMessage();
-        notification.setSenderId(0); // System sender ID
-        notification.setSenderName("System");
         notification.setReceiverId(agentId);
         notification.setContent(message);
         notification.setTimestamp(LocalDateTime.now());
@@ -37,6 +84,19 @@ public class NotificationService {
         return chatMessageRepository.save(notification);
     }
 
+    public ChatMessage notifyTowingRequest(Integer agentId, Long towingId, String location) {
+        String message = String.format("New towing request POL-%dT at %s", towingId, location);
+        return notifyAgent(agentId, message);
+    }
+
+    public ChatMessage notifyTowingUpdate(Integer agentId, Long towingId, String status, String location) {
+        String message = String.format("Towing request POL-%dT status updated to %s", towingId, status);
+        if (location != null && !location.isEmpty()) {
+            message += String.format(" at %s", location);
+        }
+        return notifyAgent(agentId, message);
+    }
+
     /**
      * Get all unread notifications for an agent
      * @param agentId The ID of the agent
@@ -44,7 +104,8 @@ public class NotificationService {
      */
     public List<ChatMessage> getAgentUnreadNotifications(Integer agentId) {
         return chatMessageRepository.findAll().stream()
-                .filter(msg -> msg.getReceiverId().equals(agentId) &&
+                .filter(msg -> msg.getReceiverId() != null &&
+                        msg.getReceiverId().equals(agentId) &&
                         (msg.getType() == ChatMessage.MessageType.NOTIFICATION ||
                                 msg.getType() == ChatMessage.MessageType.SYSTEM) &&
                         !msg.isRead())

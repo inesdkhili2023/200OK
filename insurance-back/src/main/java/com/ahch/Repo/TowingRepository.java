@@ -8,4 +8,6 @@ import java.util.List;
 
 @Repository
 public interface TowingRepository extends JpaRepository<Towing, Long> {
+    List<Towing> findByAgentId(Integer agentId);
+
 }
