@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -26,8 +26,17 @@ updateAppointment(appointment: any): Observable<any> {
 }
 
 deleteAppointment(id: number): Observable<void> {
-  return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  return this.http.delete<void>(`${this.baseUrl}/${id}`).pipe(
+    // Log si besoin
+    tap(() => console.log(`Rendez-vous avec l'ID ${id} supprimé`)),
+    // Gérer les erreurs ici si nécessaire
+    catchError((error) => {
+      console.error(`Erreur lors de la suppression du rendez-vous ID ${id}:`, error);
+      return throwError(() => error); // Rejette l'erreur vers le composant
+    })
+  );
 }
+
 updateAppointmentStatus(id: number, newStatus: string): Observable<any> {
   return this.http.put(`${this.baseUrl}/${id}/status`, newStatus, { responseType: 'text' });
 }

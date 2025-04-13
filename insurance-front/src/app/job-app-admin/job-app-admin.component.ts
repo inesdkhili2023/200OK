@@ -7,6 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { HttpClient } from '@angular/common/http';
 import { JobOfferService } from '../services/job-offer.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-job-app-admin',
   templateUrl: './job-app-admin.component.html',
@@ -42,7 +43,8 @@ selectedDate: Date | null = null;
     private jobApplicationService: JobApplicationService,
     private jobOfferService:JobOfferService,
     public dialog: MatDialog,
-    private http: HttpClient
+    private http: HttpClient,
+    private snackBar: MatSnackBar
   ) {}
   ngOnInit(): void {
     this.getJobApplications();
@@ -76,13 +78,15 @@ selectedDate: Date | null = null;
   }
   // Afficher les détails d'une candidature
   viewApplication(application: any): void {
-    alert(
-      `Candidat: ${application.firstName} ${application.lastName}\nEmail: ${application.email}`
+    this.snackBar.open(
+      `Candidat: ${application.firstName} ${application.lastName} | Email: ${application.email}`,
+      'Fermer',
+      { duration: 5000 }
     );
   }
   openResume(resumePath: string): void {
     if (!resumePath) {
-      alert("Aucun CV disponible pour cette candidature.");
+      this.snackBar.open("Aucun CV disponible pour cette candidature.", 'Fermer', { duration: 4000 });
       return;
     }
   
@@ -97,17 +101,19 @@ selectedDate: Date | null = null;
 
   // Supprimer une candidature
   deleteApplication(applicationId: number): void {
-    if (confirm('Voulez-vous vraiment supprimer cette candidature ?')) {
+    if (this.snackBar.open('Voulez-vous vraiment supprimer cette candidature ?')) {
       this.jobApplicationService.deleteJobApplication(applicationId).subscribe(
         () => {
-          console.log('Candidature supprimée avec succès');
+          this.snackBar.open('Candidature supprimée avec succès.', 'OK', { duration: 4000 });
           this.getJobApplications(); // Recharger la liste après suppression
         },
         (error) => {
           console.error(
             'Erreur lors de la suppression de la candidature',
             error
-          );
+          );        
+          this.snackBar.open('Erreur lors de la suppression de la candidature.', 'Fermer', { duration: 4000 });
+
         }
       );
     }
@@ -115,6 +121,7 @@ selectedDate: Date | null = null;
   updateApplicationStatus(applicationId: number, newStatus: string): void {
     if (!applicationId || !newStatus) {
       console.warn("ID ou statut invalide pour la mise à jour");
+
       return;
     }
   
@@ -122,7 +129,8 @@ selectedDate: Date | null = null;
     this.jobApplicationService.updateJobApplicationStatus(applicationId, newStatus).subscribe(
       () => {
         console.log(`Statut mis à jour : ${newStatus}`);
-  
+        this.snackBar.open(`Statut mis à jour : ${this.getStatusLabel(newStatus)}`, 'OK', { duration: 3000 });
+
         // Trouver et mettre à jour le statut dans la liste des candidatures
         const application = this.jobApplications.find(app => app.jobApplicationId === applicationId);
         if (application) {
@@ -182,7 +190,7 @@ selectedDate: Date | null = null;
   
     console.log("Nom du fichier :", fileName); // Vérifier la valeur
     if (!fileName) {
-      alert("Le fichier CV est introuvable !");
+      this.snackBar.open("Le fichier CV est introuvable !", 'Fermer', { duration: 4000 });
       return;
     }
     window.open(`http://localhost:8081/jobapplications/files/${fileName}`, '_blank');

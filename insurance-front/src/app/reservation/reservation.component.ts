@@ -51,7 +51,7 @@ export class ReservationComponent implements OnInit {
   }
   showNotification(message: string, action: string = 'Fermer') {
     this.snackBar.open(message, action, {
-      duration: 3000 // 3 secondes
+      duration: 4000 // 3 secondes
     });
   }
   // Méthodes helper pour les notifications
@@ -59,27 +59,24 @@ private showErrorNotification(message: string) {
   this.snackBar.open(message, 'Fermer', {
     duration: 5000,
     panelClass: ['error-snackbar'],
-    horizontalPosition: 'center',
-    verticalPosition: 'top'
+  
   });
 }
 
 private showWarningNotification(message: string) {
   this.snackBar.open(message, 'Fermer', {
-    duration: 4000,
+    duration: 5000,
     panelClass: ['warning-snackbar'],
-    horizontalPosition: 'center',
-    verticalPosition: 'top'
+  
   });
 }
 
 // Optionnel: Ajoutez aussi pour les succès si besoin
 private showSuccessNotification(message: string) {
   this.snackBar.open(message, 'OK', {
-    duration: 3000,
+    duration: 6000,
     panelClass: ['success-snackbar'],
-    horizontalPosition: 'center',
-    verticalPosition: 'top'
+   
   });
 }
 scheduleMeeting() {
@@ -131,7 +128,7 @@ getEndTime(appointmentTime: Date) {
     const availability = this.availableDates.find(a => a.date === info.dateStr);
     if (availability) {
       if (availability.status.toUpperCase() === 'CANCELLED') {
-        alert("❌ Cette disponibilité est annulée. Vous ne pouvez plus réserver.");
+        this.showErrorNotification("❌ Cette disponibilité est annulée. Vous ne pouvez plus réserver.");
         this.selectedDate = '';
         this.availableTimes = [];
         return;
@@ -143,7 +140,7 @@ getEndTime(appointmentTime: Date) {
     } else {
       this.selectedDate = '';
       this.availableTimes = [];
-      alert("Aucune disponibilité pour cette date.");
+      this.showWarningNotification("Aucune disponibilité pour cette date.");
     }
   }
   
@@ -158,7 +155,7 @@ getEndTime(appointmentTime: Date) {
 
   confirmReservation() {
     if (!this.selectedDate || !this.selectedTime) {
-      alert('Veuillez sélectionner une date et une heure.');
+      this.showWarningNotification('Veuillez sélectionner une date et une heure.');
       return;
     }
   // Vérification que la date sélectionnée est dans le futur
@@ -166,12 +163,12 @@ getEndTime(appointmentTime: Date) {
   const currentDate = new Date();
 
   if (selectedDateObj < currentDate) {
-      alert("La date sélectionnée est dans le passé. Veuillez sélectionner une date future.");
-      return;
+    this.showWarningNotification("La date sélectionnée est dans le passé. Veuillez sélectionner une date future.");
+    return;
   }
     const selectedAvailability = this.availableDates.find(a => a.date === this.selectedDate);
     if (!selectedAvailability) {
-      alert("Aucune disponibilité trouvée pour cette date.");
+      this.showErrorNotification("Aucune disponibilité trouvée pour cette date.");
       return;
     }
     console.log("🔹 Disponibilité sélectionnée : ", selectedAvailability);  // Vérifiez ici la disponibilité
@@ -188,7 +185,7 @@ getEndTime(appointmentTime: Date) {
     this.appointmentService.createAppointment(appointment).subscribe(
       response => {
         console.log('✅ Rendez-vous confirmé :', response);
-        alert(`✅ Rendez-vous confirmé :\n📅 Date : ${this.selectedDate}\n🕒 Heure : ${this.selectedTime}`);
+        this.showSuccessNotification(`✅ Rendez-vous confirmé : 📅 ${this.selectedDate} - 🕒 ${this.selectedTime}`);
         // Now create the event in Google Calendar
         this.addToGoogleCalendar(appointment);
     // Add the selected slot to the confirmedSlots array
@@ -207,11 +204,11 @@ getEndTime(appointmentTime: Date) {
       },
       error => {
         console.error('❌ Erreur lors de la réservation :', error);
-        alert('❌ Une erreur est survenue lors de la réservation.');
+        this.showErrorNotification('❌ Une erreur est survenue lors de la réservation.');
         this.isLoading = false;
       }
     );
-    this.scheduleMeeting();
+    //this.scheduleMeeting();
   }
 
 

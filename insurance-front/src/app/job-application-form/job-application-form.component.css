@@ -77,3 +77,11 @@ button[type="button"] {
 button[type="button"]:hover {
   background-color: #c82333;
 }
+.snackbar-error {
+  background-color: #f44336;
+  color: white;
+}
+.snackbar-success {
+  background-color: #098521;
+  color: white;
+}

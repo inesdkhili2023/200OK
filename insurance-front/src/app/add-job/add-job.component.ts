@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { JobOfferService } from '../services/job-offer.service';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-add-job',
@@ -18,7 +19,7 @@ export class AddJobComponent {
     contractType: '',
     applicationDeadline: ''
   };
-  constructor(private fb: FormBuilder,private jobOfferService: JobOfferService,private dialogRef: MatDialogRef<AddJobComponent>) {
+  constructor(private fb: FormBuilder,private jobOfferService: JobOfferService,private dialogRef: MatDialogRef<AddJobComponent>, private snackBar:MatSnackBar) {
     this.jobForm = this.fb.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
@@ -60,11 +61,20 @@ export class AddJobComponent {
   addJobOffer(): void {
     this.jobOfferService.addJobOffer(this.jobOffer).subscribe(response => {
       console.log('Job Offer Added:', response);
-      alert('Job offer successfully added!');
+      this.snackBar.open('✅ Offre d\'emploi ajoutée avec succès !', 'Fermer', {
+        duration: 4000,
+        panelClass: ['success-snackbar'],
+      });
       this.jobForm.reset(); // Reset the form after submission
     }, error => {
       console.error('Error adding job offer:', error);
-    });
+      this.snackBar.open('❌ Une erreur est survenue lors de l\'ajout.', 'Fermer', {
+        duration: 4000,
+        panelClass: ['error-snackbar'],
+       
+      }); 
+     }
+    );
   }
   
   // Helper function to convert date from yyyy/mm/dd to YYYY-MM-DD

@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { AppointmentService } from '../services/appointment.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-appointment-management',
@@ -35,7 +36,7 @@ export class AppointmentManagementComponent implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   private timer: any; // For managing the dynamic timer update
 
-  constructor(private appointmentService: AppointmentService) { }
+  constructor(private appointmentService: AppointmentService, private snackBar:MatSnackBar) { }
 
   ngOnInit(): void {
     this.loadAppointments();
@@ -80,6 +81,33 @@ export class AppointmentManagementComponent implements AfterViewInit {
     }
   }
 
+  deleteAppointment(id: any): void {
+    this.appointmentService.deleteAppointment(id).subscribe(
+      () => {
+        // Mise à jour du tableau affiché
+        this.dataSource.data = this.dataSource.data.filter(app => app.id !== id);
+  
+        // Affichage de la confirmation
+        this.snackBar.open('Rendez-vous supprimé avec succès', 'Fermer', {
+          duration: 3000,
+          panelClass: ['snack-success']
+        });
+  
+        // Recalcul des stats
+        this.calculateStatusCounts();
+      },
+      (error) => {
+        console.error('Erreur lors de la suppression du rendez-vous:', error);
+        this.snackBar.open('Erreur lors de la suppression du rendez-vous', 'Fermer', {
+          duration: 3000,
+          panelClass: ['snack-error']
+        });
+      }
+    );
+  }
+  
+  
+  
   updateAppointmentStatus(id: number, newStatus: string): void {
     this.appointmentService.updateAppointmentStatus(id, newStatus).subscribe(
       () => {
@@ -152,19 +180,18 @@ onRowClick(row: any) {
   }
   
   getRemainingTime(appointmentDate: string): string {
-    const appointmentTime = new Date(appointmentDate).getTime(); // Get appointment time in ms
-    const currentTime = new Date().getTime(); // Get current time in ms
+    const appointmentTime = new Date(appointmentDate).getTime();
+    const currentTime = new Date().getTime();
     const remainingTime = appointmentTime - currentTime;
   
     if (remainingTime <= 0) {
       return 'Rendez-vous passé';
     }
   
-    const remainingMinutes = Math.floor(remainingTime / 60000); // Convert ms to minutes
-    const hours = Math.floor(remainingMinutes / 60); // Convert minutes to hours
-    const minutes = remainingMinutes % 60; // Remaining minutes
+    const remainingDays = Math.ceil(remainingTime / (1000 * 60 * 60 * 24)); // Convert to days
   
-    return `${hours}h ${minutes}m`;
+    return `${remainingDays} jour${remainingDays > 1 ? 's' : ''} restant${remainingDays > 1 ? 's' : ''}`;
   }
+  
   
 }

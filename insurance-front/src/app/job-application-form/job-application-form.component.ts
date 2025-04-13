@@ -7,6 +7,8 @@ import { JobOfferService } from '../services/job-offer.service';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { VoiceRecognitionService } from '../services/voice-recognition.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 interface IWindow extends Window {
   webkitSpeechRecognition: any;
 }
@@ -33,7 +35,7 @@ export class JobApplicationFormComponent  implements OnInit  {
 
     constructor(private fb: FormBuilder,
       private jobApplicationService: JobApplicationService, private jobOfferService:JobOfferService,private voiceRecognitionService: VoiceRecognitionService,
-      private route: ActivatedRoute, private location: Location,private router: Router,private http:HttpClient) {
+      private route: ActivatedRoute, private location: Location,private router: Router,private http:HttpClient,private snackBar: MatSnackBar) {
       this.router.events.subscribe((event) => {
         if (event instanceof NavigationEnd) {
           window.scrollTo(0, 0); // Remonte en haut de la page
@@ -232,10 +234,15 @@ submitApplication(): void {
  
   console.log("Données envoyées au backend :", mappedData);
   if (this.jobApplicationForm.invalid) {
-    alert('formulaire invalide');
+    this.snackBar.open('Le formulaire est invalide. Veuillez corriger les erreurs.', 'Fermer', {
+      duration: 4000,
+
+      panelClass: ['snackbar-error']
+    });
     console.log('Le formulaire est invalide', this.jobApplicationForm.errors);
     return;
   }
+  
 
 
 
@@ -243,8 +250,10 @@ submitApplication(): void {
   this.jobApplicationService.submitJobApplication(mappedData).subscribe(
     response => {
       console.log('Candidature envoyée avec succès', response);
-      alert('Votre candidature a bien été envoyée !');
-      this.location.back();
+      this.snackBar.open('Votre candidature a bien été envoyée !', 'Fermer', {
+        duration: 4000,
+        panelClass: ['snackbar-success']
+      });      this.location.back();
       // Récupérer l'email du candidat et appeler le backend pour envoyer l'email
       const candidatEmail = this.jobApplicationForm.value.email;
     },

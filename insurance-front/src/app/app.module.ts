@@ -11,7 +11,7 @@ import { FooterComponent } from './pages/footer/footer.component';
 import { DashboardAdminComponent } from './dashboard-admin/dashboard-admin.component';
 import { InsurancesComponent } from './pages/insurances/insurances.component';
 import { FormsModule ,ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http'; // <-- add this import
+import { HttpClientModule } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -53,7 +53,6 @@ import { format } from 'date-fns';
 import { AvailabilityAdminComponent } from './availability-admin/availability-admin.component';
 import { WeatherComponent } from './weather/weather.component';
 import { AvailabilityEditComponent } from './availability-edit/availability-edit.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 @NgModule({
   declarations: [
