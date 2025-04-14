@@ -25,7 +25,6 @@ import { LogingoogleComponent } from './user/logingoogle/logingoogle.component';
 import { ConfirmationComponentComponent } from './user/confirmation-component/confirmation-component.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-import { FaceLoginComponent } from './user/face-login/face-login.component';
 import { LoginAttentanceComponent } from './user/login-attentance/login-attentance.component';
 import { FaceDetectionComponent } from './user/face-detection/face-detection.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -35,6 +34,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { ConfirmSnackbarComponent } from './notif/confirm-snackbar/confirm-snackbar.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { UserLayoutComponent } from './layouts/user-layout/user-layout.component';
+import { AgentLayoutComponent } from './layouts/agent-layout/agent-layout.component';
+import { DashboardAgentComponent } from './dashboard-agent/dashboard-agent.component';
 
 @NgModule({
   declarations: [
@@ -58,13 +59,14 @@ import { UserLayoutComponent } from './layouts/user-layout/user-layout.component
     DashboardComponent,
     LogingoogleComponent,
     ConfirmationComponentComponent,
-    FaceLoginComponent,
     LoginAttentanceComponent,
     FaceDetectionComponent,
     ConfirmDialogComponent,
     ConfirmSnackbarComponent,
     AdminLayoutComponent,
     UserLayoutComponent,
+    AgentLayoutComponent,
+    DashboardAgentComponent,
   ],
   imports: [
     BrowserModule,

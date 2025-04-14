@@ -108,13 +108,13 @@ public class UserManagementController {
     }
 
 
-    @GetMapping("/adminuser/get-users/{userId}")
+    @GetMapping("/allRole/get-users/{userId}")
     public ResponseEntity<ReqRes> getUSerByID(@PathVariable Integer userId){
         return ResponseEntity.ok(usersManagementService.getUsersById(userId));
 
     }
 
-    @PutMapping("/adminuser/update/{userId}")
+    @PutMapping("/allRole/update/{userId}")
     public ResponseEntity<ReqRes> updateUser(@PathVariable Integer userId, @RequestPart OurUsers reqres, @RequestPart(value = "imageFile", required = false) MultipartFile imageFile){
         return ResponseEntity.ok(usersManagementService.updateUser(userId, reqres,imageFile));
     }

@@ -21,6 +21,8 @@
     <div class="container" >
      
       <div class="navbar-header">
+        <!-- Affichage du profil utilisateur si connecté -->
+
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
           <i class="fa fa-bars"></i>
         </button>
@@ -29,7 +31,9 @@
         </a>
         <p>Appelez-nous <b>+216 25 557 335</b></p>
       </div>
+    
       <div class="collapse navbar-collapse navbar-main-collapse">
+       
         <ul class="nav navbar-nav navbar-right">
           <li><a routerLink="/home">Accueil</a></li>
           <li><a routerLink="/contact-us">Contact</a></li>
@@ -39,6 +43,15 @@
           <li *ngIf = "!isAuthenticated"><a routerLink = "/signup">S'inscrire</a></li>
           <li *ngIf = "!isAuthenticated"><a routerLink = "/login">Se Connecter</a></li>
           <li *ngIf = "isAuthenticated"><a routerLink = "" (click)="logout()">Se déconnecter</a></li>
+          
+          <li *ngIf="isAuthenticated" class="navbar-user-info">
+            <img [src]="userImage" 
+                 alt="Avatar" 
+                 class="navbar-avatar"
+                 *ngIf="isAuthenticated">
+            <span class="navbar-username" *ngIf="userName">{{ userName }}</span>
+          </li>
+        
         </ul>
       </div>
     

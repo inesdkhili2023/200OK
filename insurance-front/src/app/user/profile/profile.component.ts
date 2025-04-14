@@ -15,6 +15,7 @@ export class ProfileComponent implements OnInit  {
 
     isAdmin:boolean = false;
     isUser:boolean = false;
+    isAgent:boolean = false;
     profileInfo: any;
     errorMessage: string = ''
 
@@ -23,6 +24,7 @@ export class ProfileComponent implements OnInit  {
   async ngOnInit() {
     this.isAdmin = this.userService.isAdmin();
     this.isUser = this.userService.isUser();
+    this.isAgent = this.userService.isAgent();
     try {
       const token = localStorage.getItem('token')
       if(!token){
@@ -42,6 +44,9 @@ export class ProfileComponent implements OnInit  {
       this.router.navigate(['/admin/update', id]);
     } else if (this.isUser) {
       this.router.navigate(['/user/update', id]);
+    } 
+    else if (this.isAgent) {
+      this.router.navigate(['/agent/update', id]);
     } else {
       this.toastr.error("Type d'utilisateur non reconnu");
     }

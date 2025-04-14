@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import * as faceapi from 'face-api.js';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-face-detection',
@@ -12,7 +13,7 @@ export class FaceDetectionComponent implements AfterViewInit,OnDestroy  {
   loadingModels = true;
   faceDetected = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router , private toastr : ToastrService) {}
   ngOnDestroy(): void {
     this.stopWebcam();
   }
@@ -26,6 +27,7 @@ export class FaceDetectionComponent implements AfterViewInit,OnDestroy  {
     
     this.router.navigate(['/signup']);
     //localStorage.removeItem('faceVerified'); 
+    this.toastr.success("Détection de visage avec succès");
   }
   async loadModels() {
     this.loadingModels = true;

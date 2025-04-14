@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
+import {  ToastrService } from 'ngx-toastr';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -12,11 +13,14 @@ export class SendemailComponent {
   showNotification: boolean = false;
   notificationMessage: string = '';
 
-  constructor(private userService: UsersService) {}
+  constructor(private userService: UsersService, 
+              private toastr: ToastrService
+  ) {}
 
   // Envoyer l'e-mail de réinitialisation
   async onSubmit() {
     try {
+      this.toastr.warning("cette opération prend un certain temps");
       const response = await this.userService.sendResetEmail(this.email);
       this.showNotification = true;
       this.notificationMessage = 'Un e-mail de réinitialisation a été envoyé à votre adresse e-mail.';

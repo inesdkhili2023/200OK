@@ -251,3 +251,34 @@
     outline: 0;
     background-color: transparent;
   }    
+  .navbar-user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: 20px;
+    padding-top: 6px;
+  }
+  
+  .navbar-avatar {
+    width: 48px;                  /* agrandir */
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2.5px solid #f38f1d;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+  }
+  
+  .navbar-avatar:hover {
+    transform: scale(1.05);       /* effet hover */
+  }
+  
+  .navbar-username {
+    font-weight: 600;
+    font-size: 16px;              /* plus grand */
+    color: #ffffff;
+    text-transform: capitalize;
+    margin-top: 2px;
+  }
+  
+  

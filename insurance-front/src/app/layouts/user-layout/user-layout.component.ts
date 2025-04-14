@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -20,13 +21,17 @@ export class UserLayoutComponent {
   userImage: string = 'assets/images/avatar-placeholder.png'; 
   errorMessage: string = '';
   
-  constructor(private readonly userService: UsersService, private router: Router) {
+  constructor(private readonly userService: UsersService, 
+    private router: Router,
+  private readonly toastr: ToastrService) {
   }
  
   async ngOnInit(): Promise<void> {
 
     await this.loadUserStatistics();
-    this.isAuthenticated = this.userService.isAuthenticated();
+    this.userService.isAuthenticated$.subscribe((value: boolean) => {
+      this.isAuthenticated = value;
+    });
     this.isAdmin = this.userService.isAdmin();
     this.isUser = this.userService.isUser();
     this.isAgent = this.userService.isAgent();
@@ -77,7 +82,7 @@ export class UserLayoutComponent {
   }
 
   updateProfile(id: string){
-    this.router.navigate(['user/update', id])
+    this.router.navigate(['/user/update', id])
 }
 
   logout(): void {
@@ -86,21 +91,11 @@ export class UserLayoutComponent {
     this.isAdmin = false;
     this.isUser = false;
     this.isAgent = false;
+    this.toastr.success('Déconnexion réussie');
     this.router.navigate(['/login']);
   }
 
-  addUser(): void {
-    this.loadUserStatistics();
-    console.log('Add user clicked');
-  }
-
-  createNewPolicy(): void {
-    console.log('Create new policy clicked');
-  }
-
-  generateReport(): void {
-    console.log('Generate report clicked');
-  }
+ 
 
   navigate(route: string): void {
     this.router.navigate([route]);

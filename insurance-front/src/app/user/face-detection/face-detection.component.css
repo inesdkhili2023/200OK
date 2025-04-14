@@ -11,6 +11,8 @@
   min-height: 10vh;
   background: linear-gradient(to right, #f0f2f5, #dfe6e9);
   padding: 20px;
+  animation: fadeIn 0.5s ease-in-out;
+
 }
 
 .detection-card {
@@ -85,4 +87,27 @@ video {
 
 .continue-btn:hover {
   background-color: #435a72;
+}
+/* Animations */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(-10px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  50% { transform: translateX(3px); }
+  75% { transform: translateX(-3px); }
 }

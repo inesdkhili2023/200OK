@@ -12,6 +12,11 @@ export class UsersService {
   }
 
   private BASE_URL="http://localhost:1010";
+  public isAuthenticated$ = new BehaviorSubject<boolean>(this.isAuthenticated());
+  public isUser$ = new BehaviorSubject<boolean>(this.isUser());
+  public isAdmin$ = new BehaviorSubject<boolean>(this.isAdmin());
+  public isAgent$ = new BehaviorSubject<boolean>(this.isAgent());
+  public currentUser$ = new BehaviorSubject<any>(null);
   currentUserData: any;
   private currentUserSubject = new BehaviorSubject<any>(null);
   constructor(private http:HttpClient  ) { }
@@ -25,15 +30,26 @@ getCurrentUser(): any {
 // Méthode pour définir l'utilisateur connecté
 setCurrentUser(user: any): void {
   this.currentUserSubject.next(user);
+  this.currentUser$.next(user);
+  this.isAuthenticated$.next(true);
  // Met à jour l'utilisateur actuel
 }
+initializeAuthStatus(): void {
+  const token = localStorage.getItem('token');
+  const role = localStorage.getItem('role');
 
+  this.isAuthenticated$.next(!!token);
+  this.isUser$.next(role === 'USER');
+  this.isAdmin$.next(role === 'ADMIN');
+  this.isAgent$.next(role === 'AGENT');
+}
   ///////////login////////
   async login(email:string,password:string):Promise<any>{
     const url=`${this.BASE_URL}/auth/login`
     try{
       const response=await this.http.post<any>(url,{email,password}).toPromise()
       this.setCurrentUser(response.user);
+      this.isAuthenticated$.next(true);
       console.log(response.user);
       return response;
     }catch(error){
@@ -41,6 +57,7 @@ setCurrentUser(user: any): void {
     }
     
   }
+
   ////////login google ///////
   
 
@@ -102,7 +119,7 @@ setCurrentUser(user: any): void {
   }
   //////////user by id /////////////
   async getUsersById(userId: string, token:string):Promise<any>{
-    const url = `${this.BASE_URL}/adminuser/get-users/${userId}`;
+    const url = `${this.BASE_URL}/allRole/get-users/${userId}`;
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     })
@@ -128,7 +145,7 @@ async deleteUser(userId: string, token:string):Promise<any>{
 }
 //////////////update user by id //////
 async updateUser(userId: string, userData: any, token:string):Promise<any>{
-  const url = `${this.BASE_URL}/adminuser/update/${userId}`;
+  const url = `${this.BASE_URL}/allRole/update/${userId}`;
   const headers = new HttpHeaders({
     'Authorization': `Bearer ${token}`
   })
@@ -145,6 +162,7 @@ logOut():void{
     localStorage.removeItem('token')
     localStorage.removeItem('role')
   }
+  this.isAuthenticated$.next(false);
 }
 /////////////send email reset mdp///////////
 async sendResetEmail(email: string): Promise<any> {

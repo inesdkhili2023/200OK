@@ -4,12 +4,12 @@ import { ToastrService } from 'ngx-toastr';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
-  selector: 'app-admin-layout',
-  templateUrl: './admin-layout.component.html',
-  styleUrls: ['./admin-layout.component.css']
+  selector: 'app-agent-layout',
+  templateUrl: './agent-layout.component.html',
+  styleUrls: ['./agent-layout.component.css']
 })
-export class AdminLayoutComponent {
-  showSettingsList: boolean = false;
+export class AgentLayoutComponent {
+showSettingsList: boolean = false;
   isMenuOpen = false;
   isAuthenticated: boolean = false;
   isAdmin: boolean = false;
@@ -21,10 +21,10 @@ export class AdminLayoutComponent {
   userImage: string = 'assets/images/avatar-placeholder.png'; 
   errorMessage: string = '';
   
-  constructor(private readonly userService: UsersService,
-     private router: Router,
-    private readonly toastr: ToastrService 
-  ) {
+  constructor(
+    private readonly userService: UsersService, 
+    private router: Router,
+  private readonly toastr: ToastrService) {
   }
  
   async ngOnInit(): Promise<void> {
@@ -81,12 +81,12 @@ export class AdminLayoutComponent {
   }
 
   updateProfile(id: string){
-    this.router.navigate(['admin/update', id])
+    this.router.navigate(['agent/update', id])
 }
 
   logout(): void {
     this.userService.logOut();
-    this.isAuthenticated = false;
+    this.isAuthenticated= false;
     this.isAdmin = false;
     this.isUser = false;
     this.isAgent = false;

@@ -14,6 +14,7 @@ export class UpdateUserComponent implements OnInit {
   selectedFile: File | null = null;
   isAdmin: boolean = false;
   isUser: boolean = false;
+  isAgent: boolean = false;
   userId: any;
   userData: any = {};
   errorMessage: string = '';
@@ -32,6 +33,7 @@ export class UpdateUserComponent implements OnInit {
   ngOnInit(): void {
     this.isAdmin = this.userService.isAdmin();
     this.isUser = this.userService.isUser();
+    this.isAgent = this.userService.isAgent();
     this.getUserById();
   }
 
@@ -119,9 +121,15 @@ export class UpdateUserComponent implements OnInit {
         if (res.statusCode === 200 && this.isAdmin) {
           this.toastr.success("Mise à jour réussie");
           this.router.navigate(['/admin/users']);
-        } else if (res.statusCode === 200) {
+        } else if (res.statusCode === 200 && this.isUser) {
           this.toastr.success("Mise à jour réussie");
-          this.router.navigate(['/profile']);
+          this.router.navigate(['/user/profile']);
+
+        }
+        else if (res.statusCode === 200 && this.isAgent) {
+          this.toastr.success("Mise à jour réussie");
+          this.router.navigate(['/agent/profile']);
+          
         } else {
           this.showError(res.message);
         }

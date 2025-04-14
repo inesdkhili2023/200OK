@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Chart, registerables } from 'chart.js';
 import { UsersService } from '../services/users.service';
 import { Router } from '@angular/router';
+import { Chart, registerables } from 'chart.js';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-dashboard-admin',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  selector: 'app-dashboard-agent',
+  templateUrl: './dashboard-agent.component.html',
+  styleUrls: ['./dashboard-agent.component.css']
 })
-export class DashboardComponent implements OnInit {
-  chart: any;
+export class DashboardAgentComponent implements OnInit {
+ chart: any;
   showSettingsList: boolean = false;
   isMenuOpen = false;
 
@@ -22,20 +23,17 @@ export class DashboardComponent implements OnInit {
   userImage: string = 'assets/images/avatar-placeholder.png'; // Image de l'utilisateur
   errorMessage: string = '';
 
-  constructor(private readonly userService: UsersService, private router: Router) {
+  constructor(private readonly userService: UsersService, private router: Router, private toastr: ToastrService) {
     Chart.register(...registerables);
   }
 
   async ngOnInit(): Promise<void> {
     this.initializeRevenueChart();
-    this.userService.isAuthenticated$.subscribe((value: boolean) => {
-      this.isAuthenticated = value;
-    });    
+    this.isAuthenticated = this.userService.isAuthenticated();
     this.isAdmin = this.userService.isAdmin();
     this.isUser = this.userService.isUser();
     this.isAgent = this.userService.isAgent();
 
-  
   }
 
   private initializeRevenueChart(): void {
@@ -63,5 +61,5 @@ export class DashboardComponent implements OnInit {
     });
   }
 
- 
+  
 }

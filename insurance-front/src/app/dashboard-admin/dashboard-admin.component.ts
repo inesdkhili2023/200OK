@@ -183,37 +183,6 @@ export class DashboardAdminComponent implements OnInit {
     });
   }
 
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
-  }
-
-  updateProfile(id: string){
-    this.router.navigate(['/update', id])
-}
-
-  logout(): void {
-    this.userService.logOut();
-    this.isAuthenticated = false;
-    this.isAdmin = false;
-    this.isUser = false;
-    this.isAgent = false;
-    this.router.navigate(['/login']);
-  }
-
-  addUser(): void {
-    this.loadUserStatistics();
-    console.log('Add user clicked');
-  }
-
-  createNewPolicy(): void {
-    console.log('Create new policy clicked');
-  }
-
-  generateReport(): void {
-    console.log('Generate report clicked');
-  }
-
-  navigate(route: string): void {
-    this.router.navigate([route]);
-  }
+  
+  
 }

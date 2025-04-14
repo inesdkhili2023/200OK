@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { UsersService } from './services/users.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,9 @@ import { filter } from 'rxjs/operators';
 export class AppComponent {
   showHeaderFooter = true;
 
-  constructor(private router: Router) {
+  constructor(private router: Router,
+    private userService: UsersService, // Assuming you have a UsersService to manage user state
+  ) {
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)
     ).subscribe((event) => {
@@ -23,6 +26,8 @@ export class AppComponent {
       );
     });
     
-    
+  }
+  ngOnInit(): void {
+    this.userService.initializeAuthStatus();
   }
 }

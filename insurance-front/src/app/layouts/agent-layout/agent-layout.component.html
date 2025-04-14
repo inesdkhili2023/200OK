@@ -5,26 +5,26 @@
     <div class="dashboard-sidebar">
         <div class="sidebar-top">
           <div class="sidebar-logo">
-            <a routerLink="/home">
+            
               <img src="/assets/images/maghrebia.png" alt="Logo Assurance" style="cursor: pointer;" />
-            </a>
+           
           </div>
           
   
       <ul class="sidebar-menu">
-        <li (click)="navigate('user/dashboard')">
+        <li (click)="navigate('agent/dashboardAgent')">
           <i class="fas fa-chart-pie"></i>
-          <span>Espace Client</span>
+          <span>Espace Agent</span>
         </li>
-        <li (click)="navigate('/user/contrat')">
+        <li (click)="navigate('/agent/contrat')">
           <i class="fas fa-file-signature"></i>
           <span>Contrat</span>
         </li>
-        <li (click)="navigate('/user/assurance')">
+        <li (click)="navigate('/agent/assurance')">
           <i class="fas fa-shield-alt"></i>
           <span>Assurance</span>
         </li>
-        <li (click)="navigate('/user/reclamation')">
+        <li (click)="navigate('/agent/reclamation')">
           <i class="fas fa-comment-dots"></i>
           <span>Réclamation</span>
         </li>
@@ -35,7 +35,7 @@
         </li>
   
         <ul *ngIf="isMenuOpen" class="submenu">
-          <li (click)="navigate('/user/profile')">
+          <li (click)="navigate('/agent/profile')">
             <i class="fas fa-id-card"></i> Profil
           </li>
           <li (click)="updateProfile(Info?.ourUsers?.id)">
@@ -46,11 +46,6 @@
           </li>
         </ul>
       </ul>
-      </div>
-      <div class="dashboard-home-link">
-        <a routerLink="/home" class="home-button">
-          <i class="fas fa-home"></i> Retour à l'accueil
-        </a>
       </div>
     </div>
   
@@ -71,7 +66,7 @@
   
           <div *ngIf="isMenuOpen" class="profile-dropdown">
             <ul>
-              <li (click)="navigate('/user/profile')">Profil</li>
+              <li (click)="navigate('/agent/profile')">Profil</li>
               <li (click)="updateProfile(Info?.ourUsers?.id)">Modifier Profil</li>
               <li (click)="logout()" class="logout">Se déconnecter</li>
             </ul>

@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import {  ToastrService } from 'ngx-toastr';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -18,7 +19,8 @@ export class ResetpasswordComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private userService: UsersService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
   ngOnInit(): void {
     // Extraire le token de l'URL
@@ -34,12 +36,15 @@ export class ResetpasswordComponent implements OnInit {
         return; // Arrêter l'exécution si les mots de passe ne correspondent pas
       }
     try {
+      this.toastr.warning("cette opération prend un peu de  temps");
       const response = await this.userService.resetPassword(this.token, this.newPassword);
       this.showNotification = true;
       this.notificationMessage = 'Votre mot de passe a été réinitialisé avec succès.';
+      
 
       // Rediriger vers la page de connexion après 3 secondes
       setTimeout(() => {
+        
         this.router.navigate(['/login']);
       }, 3000);
     } catch (error) {

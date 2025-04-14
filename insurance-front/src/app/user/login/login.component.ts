@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -20,7 +21,8 @@ export class LoginComponent {
 
   constructor(
     private readonly usersService: UsersService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   validateEmail() {
@@ -66,22 +68,21 @@ export class LoginComponent {
         this.usersService.setCurrentUser(response.user);
 
         if (this.usersService.isAdmin()) {
-          this.router.navigate(['/dashboardAdmin']);
-        } else {
+          this.toastr.success('Bienvenue Admin');
+          this.router.navigate(['/admin/dashboardAdmin']);
+        } else if (this.usersService.isUser()) {
+          this.toastr.success('Bienvenue utilisateur',this.email);
           this.router.navigate(['/home']);
         }
+        else if (this.usersService.isAgent()) {
+          this.toastr.success('Bienvenue Agent',this.email);
+          this.router.navigate(['/agent/dashboardAgent']);
+        }
       } else {
-        this.showError(response.message);
+        this.toastr.error(response.message);
       }
     } catch (error: any) {
-      this.showError(error.message);
+      this.toastr.error(error.message);
     }
-  }
-
-  showError(mess: string) {
-    this.errorMessage = mess;
-    setTimeout(() => {
-      this.errorMessage = '';
-    }, 3000);
   }
 }

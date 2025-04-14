@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class InsuranceService {
   // Use a relative URL so that proxy can forward to the Spring Boot backend
-  private apiUrl = '/api/examen';
+  private apiUrl = '/http://localhost:1010';
 
   constructor(private http: HttpClient) { }
 

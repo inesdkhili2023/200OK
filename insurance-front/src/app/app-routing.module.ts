@@ -16,7 +16,6 @@ import { SendemailComponent } from './user/sendemail/sendemail.component';
 import { ResetpasswordComponent } from './user/resetpassword/resetpassword.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LogingoogleComponent } from './user/logingoogle/logingoogle.component';
-import { FaceLoginComponent } from './user/face-login/face-login.component';
 import { LoginAttentanceComponent } from './user/login-attentance/login-attentance.component';
 import { FaceDetectionComponent } from './user/face-detection/face-detection.component';
 import { FaceDetectionGuard } from './guards/face-detection.guard';
@@ -24,29 +23,28 @@ import { AuthGuard } from './guards/auth.guard';
 import { RoleGuard } from './guards/role.guard';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { UserLayoutComponent } from './layouts/user-layout/user-layout.component';
+import { AgentLayoutComponent } from './layouts/agent-layout/agent-layout.component';
+import { DashboardAgentComponent } from './dashboard-agent/dashboard-agent.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
-  { path: 'detect-face', component: FaceDetectionComponent },
-  { path: 'blog', component: BlogComponent },
-  { path: 'loginface', component: LoginAttentanceComponent },
-  { path: 'blog-details', component: BlogDetailsComponent },
-  { path: 'contact-us', component: ContactUsComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'insurances', component: InsurancesComponent },
-  {path: 'login', component: LoginComponent},
-  {path: 'profile', component: ProfileComponent},
-  {path: 'update/:id', component: UpdateUserComponent},
-  {path: 'signup', component: SignupComponent, canActivate: [FaceDetectionGuard]},
-  {path: 'sendemail', component: SendemailComponent},
-  {path: 'google', component: LogingoogleComponent},
-  {path: 'facial', component: FaceLoginComponent},
-  {path: 'resetpassword', component: ResetpasswordComponent},
-  
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+{ path: 'blog', component: BlogComponent, canActivate: [AuthGuard] },
+{ path: 'blog-details', component: BlogDetailsComponent, canActivate: [AuthGuard] },
+{ path: 'contact-us', component: ContactUsComponent, canActivate: [AuthGuard] },
+{ path: 'insurances', component: InsurancesComponent, canActivate: [AuthGuard] },
+{ path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
+{ path: 'signup', component: SignupComponent, canActivate: [FaceDetectionGuard, AuthGuard] },
+{ path: 'sendemail', component: SendemailComponent, canActivate: [AuthGuard] },
+{ path: 'google', component: LogingoogleComponent, canActivate: [AuthGuard] },
+{ path: 'resetpassword', component: ResetpasswordComponent, canActivate: [AuthGuard] },
+{ path: 'detect-face', component: FaceDetectionComponent, canActivate: [AuthGuard] },
+{ path: 'loginface', component: LoginAttentanceComponent, canActivate: [AuthGuard] },
+
   {
     path: 'admin',
     component: AdminLayoutComponent, 
+    canActivate: [RoleGuard],     
     children: [
       { path: 'dashboardAdmin', component: DashboardAdminComponent },
       { path: 'users', component: UserListComponent },
@@ -59,9 +57,20 @@ const routes: Routes = [
   },
   {
     path: 'user',
-    component: UserLayoutComponent, 
+    component: UserLayoutComponent,
+    canActivate: [RoleGuard],        
     children: [
       { path: 'dashboard', component: DashboardAdminComponent },
+      { path: 'profile', component: ProfileComponent },
+      { path: 'update/:id', component: UpdateUserComponent },
+    ]
+  },
+  {
+    path: 'agent',
+    component: AgentLayoutComponent, 
+    canActivate: [RoleGuard],     
+    children: [
+      { path: 'dashboardAgent', component: DashboardAgentComponent },
       {path: 'profile', component: ProfileComponent},
       {path: 'update/:id', component: UpdateUserComponent},
      

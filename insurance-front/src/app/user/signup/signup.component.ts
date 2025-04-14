@@ -41,8 +41,15 @@ export class SignupComponent {
     if (this.webcamActive) this.startWebcam();
   }
   async handleSubmit() {
+     // Fermer la webcam avant tout
+  if (this.webcamActive) {
+    this.stopWebcam();
+  }
+
+  // Afficher le toast tout de suite
+  this.toastr.warning('Cette opération peut prendre quelques secondes...');
     if (!this.validateForm()) {
-      this.showError('Veuillez remplir correctement tous les champs.');
+      this.toastr.error('Veuillez remplir correctement tous les champs.');
       return;
     }
 
@@ -62,10 +69,10 @@ export class SignupComponent {
         this.toastr.success('Accédez à votre email pour vérifier votre compte');
         this.router.navigate(['/login']);
       } else {
-        this.showError(response.message);
+        this.toastr.error(response.message);
       }
     } catch (error: any) {
-      this.showError(error.message);
+      this.toastr.error(error.message);
     }
   }
   viewpass(){
