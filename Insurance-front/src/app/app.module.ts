@@ -30,7 +30,7 @@ import { RetraiteFormComponent } from './forms/retraite-form/retraite-form.compo
 import { AssuranceAccidentsFormComponent } from './forms/assurance-accidents-form/assurance-accidents-form.component';
 import { SacreCapitalisationFormComponent } from './forms/sacre-capitalisation-form/sacre-capitalisation-form.component';
 import { SacrePrevoyanceFormComponent } from './forms/sacre-prevoyance-form/sacre-prevoyance-form.component';
-import { AssuranceSanteInternationaleFormComponent } from './forms/assurance-sante-internationale-form/assurance-sante-internationale-form.component';
+
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PackModalComponentComponent } from './forms/pack-modal-component/pack-modal-component.component';
@@ -46,6 +46,8 @@ import { FactureService } from './services/facture.service'; // Importez votre s
 import { AssuranceVoyageFormComponent } from './forms/assurance-voyage-form/assurance-voyage-form.component';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { PaymentSuccessComponent } from './payment-success/payment-success.component';
+
+
 
 
 
@@ -70,7 +72,6 @@ import { PaymentSuccessComponent } from './payment-success/payment-success.compo
     AssuranceAccidentsFormComponent,
     SacreCapitalisationFormComponent,
     SacrePrevoyanceFormComponent,
-    AssuranceSanteInternationaleFormComponent,
     PackModalComponentComponent,
     ContratsComponent,
     FacturesComponent
@@ -95,7 +96,9 @@ import { PaymentSuccessComponent } from './payment-success/payment-success.compo
     RecaptchaModule
     
   ],
+  
   providers: [    FactureService],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

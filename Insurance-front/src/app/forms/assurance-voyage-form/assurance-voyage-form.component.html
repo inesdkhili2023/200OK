@@ -1,22 +1,29 @@
 <div class="container">
+  
   <h1 class="title">Mon Voyage</h1>
-
+  
+  <div class="content-wrapper">
+    <!-- Image à gauche -->
+    <div class="image-section">
+      <img src="assets/images/assurance-voyage.jpg" alt="Illustration" />
+    </div>
   <!-- Formulaire principal -->
-  <label for="duree">Durée du contrat:</label>
-  <select id="duree" [(ngModel)]="duree" [ngModelOptions]="{updateOn: 'change'}" (change)="calculerDateRetour()">
-    <option value="1">1 à 8 Jours</option>
-    <option value="9">9 à 16 Jours</option>
-    <option value="17">17 à 32 Jours</option>
-    <option value="33">33 à 60 Jours</option>
-    <option value="61">61 à 90 Jours</option>
-    <option value="365">Une Année</option>
-  </select>
-  
-  <label for="depart">Date de départ:</label>
-  <input type="date" id="depart" [(ngModel)]="dateDepart" [ngModelOptions]="{updateOn: 'change'}" (change)="calculerDateRetour()">
-  
-  <label for="retour">Date de retour:</label>
-  <input type="date" id="retour" [value]="dateRetour" readonly>
+  <div class="form-section">
+    <label for="duree">Durée du contrat:</label>
+    <select id="duree" [(ngModel)]="duree" [ngModelOptions]="{updateOn: 'change'}" (change)="calculerDateRetour()">
+      <option value="1">1 à 8 Jours</option>
+      <option value="9">9 à 16 Jours</option>
+      <option value="17">17 à 32 Jours</option>
+      <option value="33">33 à 60 Jours</option>
+      <option value="61">61 à 90 Jours</option>
+      <option value="365">Une Année</option>
+    </select>
+    
+    <label for="depart">Date de départ:</label>
+    <input type="date" id="depart" [(ngModel)]="dateDepart" [ngModelOptions]="{updateOn: 'change'}" (change)="calculerDateRetour()">
+    
+    <label for="retour">Date de retour:</label>
+    <input type="date" id="retour" [value]="dateRetour" readonly>
   
     
     <label>Zone de couverture:</label>
@@ -48,10 +55,10 @@
   <p>{{ totalPremium }} TND</p>
   <h3>Garanties couvertes</h3>
   <ul>
-    <li>Frais médicaux: Maximum 50 000 €</li>
-    <li>Transport en cas de maladie: Maximum 10 000 €</li>
-    <li>Transport du bénéficiaire décédé: Maximum 10 000 €</li>
-    <li>Perte de bagages: Maximum 600 €</li>
+    <li>Frais médicaux: Maximum 50%</li>
+    <li>Transport en cas de maladie: Maximum 10%</li>
+    <li>Transport du bénéficiaire décédé: Maximum 10%</li>
+    <li>Perte de bagages: Maximum 30%</li>
   </ul>
   <button type="button" (click)="buyInsurance()">Acheter maintenant</button>
 </div>
@@ -60,7 +67,7 @@
   <!-- Formulaire du souscripteur -->
   <div *ngIf="showSouscripteurForm" class="souscripteur-container">
     <div class="header">
-      <img src="assets/logo.png" alt="Mon Voyage Logo" class="logo">
+      
       <h2>Coordonnées du souscripteur</h2>
     </div>
   
@@ -109,7 +116,7 @@
         <button type="submit" class="submit-btn">Soumettre</button>
       </div>
     </form>
-  </div>
+    
   
   <!-- Boîte de dialogue d'information -->
   <mat-dialog-content *ngIf="showDialog" class="dialog-content">
@@ -120,4 +127,6 @@
     </p>
     <button (click)="closeDialog()" class="ok-btn">OK</button>
   </mat-dialog-content>
+</div>
+</div>
 </div>

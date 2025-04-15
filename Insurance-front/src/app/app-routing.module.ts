@@ -37,20 +37,13 @@ const routes: Routes = [
   { path: 'payment', component: PaymentComponent },
   { path: 'payment-success', component: PaymentSuccessComponent,title: 'Paiement confirmé' },
   {path: 'voyage',component:AssuranceVoyageFormComponent},
-  
-
-  // Route avec le menu latéral
-  {
-    path: '',
-    component: MenuLateralComponent, // Le layout principal avec le menu latéral
-    children: [
-      { path: 'home', component: HomeComponent },
-      { path: 'contrats', component: ContratsComponent },
-      { path: 'factures', component: FacturesComponent },
+  { path: 'home', component: HomeComponent },
+  { path: 'contrats', component: ContratsComponent },
+  { path: 'factures', component: FacturesComponent },
      
 
-    ]
-  },
+    
+  
 
   // Catch-all pour rediriger vers home si la route n'existe pas
   { path: '**', redirectTo: 'home' }

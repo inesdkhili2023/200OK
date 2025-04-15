@@ -1,79 +1,201 @@
-.payment-container {
-  max-width: 600px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
+form {
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 
-.payment-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
+  
+  .breadcrumb {
+    background: #f5f5f5;
+    padding: 2rem 1rem;
+    border-bottom: 1px solid #ddd;
 
-h2 {
-  color: #3f51b5;
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
+    .container {
+      max-width: 1200px;
+      margin: auto;
 
-mat-form-field {
-  width: 100%;
-}
+      h2 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        color: #333;
+        margin-top: 70px;
+      }
 
-.error-message {
-  color: #f44336;
-  padding: 1rem;
-  background: #ffebee;
-  border-radius: 4px;
-  margin-bottom: 1rem;
-}
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        font-size: 1rem;
+        color: #777;
 
-.terms-checkbox {
-  margin: 1rem 0;
-}
+        li {
+          margin-right: 0.5rem;
 
-.submit-button {
-  margin-top: 1rem;
-  height: 48px;
-}
+          a {
+            color: #0077cc;
+            text-decoration: none;
 
-.spinner {
-  display: inline-block;
-  margin-right: 8px;
-}
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+  }
 
-.error-snackbar {
-  background: #f44336;
-  color: white;
-}
-.error-message {
-  color: #f44336; /* Rouge Material */
-  font-size: 0.75em;
-  margin-top: -1em;
-  margin-bottom: 1em;
-}
-#card-element {
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 4px;
-  margin: 10px 0;
-}
+ 
+  .Paiement {
+    width: 100%;
+    min-height: 100vh;
+    background: #fafafa;
 
-.alert {
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 4px;
-}
+    .container {
+      display: flex;
+      flex-direction: row;
+      height: 100vh;
+      width: 100%;
 
-.alert-danger {
-  background-color: #f8d7da;
-  color: #721c24;
-}
+      .image-box {
+        flex: 1;
+        max-width: 50%;
+        overflow: hidden;
 
-.alert-warning {
-  background-color: #fff3cd;
-  color: #856404;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+      }
+
+      .row {
+        flex: 1;
+        display: flex;
+       
+        align-items: left;
+        padding: 2rem;
+        margin-left: -150px;
+
+        .form-box {
+          background-color: #ffffff;
+          border-radius: 1rem;
+          box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+          padding: 3rem;
+          width: 150%;
+          max-width: 600px;
+          height: 105%;
+       
+
+          .form-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+
+            input[type="text"],
+            input[type="number"] {
+              padding: 1rem 1.2rem;
+              border: 1px solid #ccc;
+              border-radius: 0.8rem;
+              font-size: 2rem;
+              transition: border-color 0.3s;
+
+              &:focus {
+                border-color: #0077cc;
+                outline: none;
+                box-shadow: 0 0 0 3px rgba(0, 119, 204, 0.1);
+              }
+            }
+
+            #card-element {
+              border: 1px solid #ccc;
+              padding: 1rem;
+              border-radius: 0.8rem;
+              background: #fff;
+            }
+
+            .form-group.form-check {
+              display: flex;
+              align-items: flex-start;
+              gap: 0.8rem;
+              font-size: 0.95rem;
+
+              input {
+                margin-top: 0.25rem;
+              }
+
+              label {
+                line-height: 1.4;
+
+                a {
+                  color: #0077cc;
+                  text-decoration: underline;
+
+                  &:hover {
+                    text-decoration: none;
+                  }
+                }
+              }
+            }
+
+            .text-center {
+              display: flex;
+              justify-content: center;
+
+              button {
+                padding: 1rem 2.5rem;
+                font-size: 1.1rem;
+                font-weight: 600;
+                border-radius: 0.8rem;
+                border: none;
+                background-color: #0077cc;
+                color: white;
+                transition: background-color 0.3s ease;
+
+                &:hover {
+                  background-color: #005fa3;
+                }
+
+                &:disabled {
+                  background-color: #cccccc;
+                  cursor: not-allowed;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+
+  @media (max-width: 992px) {
+    .Paiement .container {
+      flex-direction: column;
+
+      .image-box,
+      .row {
+        max-width: 100%;
+        flex: none;
+        height: auto;
+      }
+
+      .image-box img {
+        height: 250px;
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    .form-box {
+      padding: 2rem;
+    }
+
+    input,
+    button {
+      font-size: 1rem;
+    }
+  }
 }

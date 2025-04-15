@@ -148,7 +148,7 @@ public class DevisService {
 
         // ✅ 4. Génération automatique d'une facture
         String numFacture = "FAC-" + UUID.randomUUID().toString().substring(0, 8);
-        Facture facture = new Facture(numFacture, paiement, montant); // Ajoutez le contrat comme 4ème paramètre
+        Facture facture = new Facture(numFacture, paiement, montant);
         factureRepository.save(facture);
     }
 }

@@ -1,296 +1,129 @@
-/* Style général */
-body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f9f9f9;
-    margin: 0;
-    padding: 0;
+.formulaire-avec-image {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 2rem;
+  flex-wrap: wrap;
+  padding: 2rem;
+  background-color: #f7f7f7;
+  border-radius: 1rem;
+  margin-top: 60px
 }
 
-/* Breadcrumb */
-.breadcrumb {
-    background: linear-gradient(to right, #d18501, #8d1b06);
-    padding: 20px 0;
-    text-align: center;
-    color: #fff;
+.row-layout {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1200px;
+  align-items: stretch;
+}
+.garanties {
+  background-color: #fffdf6;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+.formule-details h3 {
+  font-size: 1.8rem;
+  color: #d18501;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #fceabd;
+  padding-bottom: 0.5rem;
 }
 
-.breadcrumb h2 {
-    font-size: 28px;
-    margin: 0;
-    text-transform: uppercase;
-    font-weight: bold;
+.formule-details p {
+  font-size: 1rem;
+  margin: 0.5rem 0;
 }
 
-.breadcrumb ul {
-    list-style: none;
-    padding: 0;
-    margin: 10px 0 0;
+.garanties h4 {
+  font-size: 1.5rem;
+  color: #8d1b06;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #f1d1c5;
+  padding-bottom: 0.5rem;
 }
 
-.breadcrumb ul li {
-    display: inline;
-    font-size: 18px;
+.garanties ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
 }
 
-.breadcrumb ul li a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: 500;
-    transition: 0.3s;
+.garanties li {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
 }
 
-.breadcrumb ul li a:hover {
-    text-decoration: underline;
-}
+.image-container {
+  flex: 1;
+  min-width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
 
-/* Stepper */
-mat-horizontal-stepper {
-    background: white;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin: 30px auto;
-    max-width: 800px;
-}
-
-/* Form Fields */
-mat-form-field {
+  img {
     width: 100%;
-    margin-bottom: 16px;
+    height: 100%; 
+    object-fit: cover;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
 }
 
-mat-form-field .mat-input-element {
-    font-size: 16px;
+.stepper-container {
+  flex: 2;
+  min-width: 400px;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
 }
 
-/* Buttons */
+input, select {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+
 button {
-    font-size: 16px;
-    font-weight: 600;
-    padding: 12px 20px;
-    border-radius: 8px;
-    transition: 0.3s;
+  padding: 0.75rem 1.5rem;
+  background-color: #d18501;
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-button[mat-flat-button] {
-    text-transform: uppercase;
+button:hover {
+  background-color: #b86d00;
 }
 
-button.mat-primary {
-    background: #d18501;
-    color: white;
+.form-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
 }
 
-button.mat-primary:hover {
-    background: #a66601;
-}
-
-button.mat-accent {
-    background: #8d1b06;
-    color: white;
-}
-
-button.mat-accent:hover {
-    background: #6e1404;
-}
-
-button.matStepperPrevious {
-    background: #ccc;
-    color: #333;
-}
-
-button.matStepperPrevious:hover {
-    background: #aaa;
-}
-
-/* Responsive */
 @media (max-width: 768px) {
-    .breadcrumb h2 {
-        font-size: 24px;
-    }
-    
-    .breadcrumb ul li {
-        font-size: 16px;
-    }
+  .row-layout {
+    flex-direction: column;
+    align-items: center;
+  }
 
-    mat-horizontal-stepper {
-        padding: 15px;
-        max-width: 95%;
-    }
-
-    button {
-        width: 100%;
-    }
+  .stepper-container {
+    width: 100%;
+  }
 }
-form div {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  input, select {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-  }
-  
-  button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
-  button:disabled {
-    background-color: #cccccc;
-  }
-  .simulation-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .form-group {
-    margin-bottom: 20px;
-  }
-  
-  .form-group label {
-    font-weight: bold;
-    margin-right: 10px;
-  }
-  
-  .form-group input {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .assurance-cards {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
-  
-  .card {
-    width: 48%;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .card h3 {
-    margin-top: 0;
-    color: #007bff;
-  }
-  
-  .card ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .card ul li {
-    margin-bottom: 10px;
-  }
-  
-  .montant {
-    font-weight: bold;
-    color: #28a745;
-  }
-  
-  button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  .validation-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-  
-  }
-  
-  .formule-details {
-    margin-bottom: 20px;
-    margin-top: 50px;
-  }
-  .Contenu{
-    margin-top: 50px;
-  }
-  
-  .formule-details h3 {
-    color: #007bff;
-  }
-  
-  .garanties ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .garanties ul li {
-    margin-bottom: 10px;
-  }
-  
-  .enfants-a-assurer {
-    margin-top: 20px;
-  }
-  
-  .enfants-a-assurer h5 {
-    margin-bottom: 10px;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  .form-group input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .form-actions {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
-  
-  .form-actions button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .form-actions button[type="button"] {
-    background-color: #6c757d;
-    color: white;
-  }
-  
-  .form-actions button[type="submit"] {
-    background-color: #28a745;
-    color: white;
-  }

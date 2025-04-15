@@ -1,7 +1,13 @@
 <div class="form-container">
     <h2>Sacre Capitalisation</h2>
+    <div class="row-layout">
+      <!-- Image à gauche -->
+      <div class="image-container">
+        <img src="assets/images/capitalisation.jpg" alt="Illustration" />
+      </div>
   
     <!-- Premier Formulaire -->
+    <div class="form-section">
     <form [formGroup]="capitalisationForm" (ngSubmit)="onSubmitFirstForm()">
       
       <label>Date d'effet</label>
@@ -43,4 +49,4 @@
       </form>
     </div>
   </div>
-  
+</div>

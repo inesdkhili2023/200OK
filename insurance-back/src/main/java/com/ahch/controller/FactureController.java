@@ -10,7 +10,9 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.draw.SolidLine;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.*;
+import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +23,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.itextpdf.io.image.ImageData;
-import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.layout.properties.HorizontalAlignment;
-import com.itextpdf.layout.properties.TextAlignment;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,8 +41,8 @@ public class FactureController {
     @Autowired
     private QrCodeService qrCodeService;
 
-    @Value("${app.company.logo.url}")
-    private String companyLogoUrl;
+    //@Value("${app.company.logo.url}")
+   // private String companyLogoUrl;
 
     @Value("${app.company.name}")
     private String companyName;
@@ -61,6 +58,7 @@ public class FactureController {
 
     @Value("${app.base-url}")
     private String baseUrl;
+
     @GetMapping
     public List<Facture> getAllFactures() {
         return factureService.getAllFactures();
@@ -88,17 +86,21 @@ public class FactureController {
             PdfDocument pdfDoc = new PdfDocument(writer);
             Document document = new Document(pdfDoc);
 
-            // Set document margins
             document.setMargins(50, 36, 36, 36);
 
-            // Add company logo
             addCompanyHeader(document);
-
-            // Add invoice title and info
             addInvoiceTitle(document, facture);
-
-            // Add QR Code linking to the contract
             addQrCodeToContract(document, facture);
+
+            // Footer
+            Paragraph footer = new Paragraph("Merci pour votre confiance.")
+                    .setTextAlignment(TextAlignment.CENTER)
+                    .setFontSize(10)
+                    .setFontColor(ColorConstants.WHITE)
+                    .setBackgroundColor(ColorConstants.DARK_GRAY)
+                    .setPadding(10)
+                    .setMarginTop(30);
+            document.add(footer);
 
             document.close();
         } catch (Exception e) {
@@ -116,47 +118,98 @@ public class FactureController {
                 .body(new InputStreamResource(in));
     }
 
+    private void addCompanyHeader(Document document) throws IOException {
+        Table headerTable = new Table(UnitValue.createPercentArray(new float[]{30, 70}))
+                .setWidth(UnitValue.createPercentValue(100));
+
+        try {
+            // Chargement de l'image locale
+            String imagePath = "C:\\Users\\NOUSSA\\OneDrive\\Bureau\\pi\\insurance-back\\src\\main\\resources/img.png"; // chemin relatif dans resources
+            URL imageUrl = getClass().getClassLoader().getResource(imagePath);
+            if (imageUrl != null) {
+                ImageData imageData = ImageDataFactory.create(imageUrl);
+                Image logo = new Image(imageData).setWidth(100).setAutoScale(true);
+                headerTable.addCell(new Cell().add(logo).setBorder(null));
+            } else {
+                headerTable.addCell(new Cell().add(new Paragraph("")).setBorder(null));
+            }
+        } catch (Exception e) {
+            headerTable.addCell(new Cell().add(new Paragraph("")).setBorder(null));
+        }
+
+        Cell companyInfoCell = new Cell()
+                .setBorder(null)
+                .setTextAlignment(TextAlignment.RIGHT)
+                .add(new Paragraph(companyName).setBold().setFontSize(16).setFontColor(ColorConstants.DARK_GRAY))
+                .add(new Paragraph(companyAddress).setFontSize(10).setFontColor(ColorConstants.GRAY))
+                .add(new Paragraph("Tél: " + companyPhone).setFontSize(10).setFontColor(ColorConstants.GRAY))
+                .add(new Paragraph("Email: " + companyEmail).setFontSize(10).setFontColor(ColorConstants.BLUE));
+
+        headerTable.addCell(companyInfoCell);
+        document.add(headerTable);
+        document.add(new LineSeparator(new SolidLine()).setMarginTop(10).setMarginBottom(20));
+    }
+
+
+    private void addInvoiceTitle(Document document, Facture facture) {
+        Paragraph title = new Paragraph("FACTURE")
+                .setTextAlignment(TextAlignment.CENTER)
+                .setBold()
+                .setFontSize(22)
+                .setFontColor(ColorConstants.BLACK)
+                .setBackgroundColor(ColorConstants.LIGHT_GRAY)
+                .setMarginBottom(30)
+                .setPadding(10);
+        document.add(title);
+
+        Paragraph invoiceNumber = new Paragraph("N°: " + facture.getNumFacture())
+                .setTextAlignment(TextAlignment.RIGHT)
+                .setBold()
+                .setFontSize(12)
+                .setFontColor(ColorConstants.DARK_GRAY)
+                .setMarginBottom(15);
+        document.add(invoiceNumber);
+    }
+
     private void addQrCodeToContract(Document document, Facture facture) {
         try {
-            // URL dynamique vers le contrat
             String contractUrl = baseUrl + "/api/contrats/" + facture.getPaiement().getContrat().getId() + "/pdf";
-
-            // Génération du QR code
             BufferedImage qrImage = qrCodeService.generateQRCodeImage(contractUrl, 200, 200);
-
-            // Conversion en image PDF
             ImageData imageData = ImageDataFactory.create(qrImage, null);
+
             Image qrCode = new Image(imageData)
                     .setWidth(120)
                     .setHeight(120)
-                    .setHorizontalAlignment(HorizontalAlignment.RIGHT)
-                    .setMarginTop(20)
+                    .setHorizontalAlignment(HorizontalAlignment.CENTER)
+                    .setMarginTop(10)
                     .setMarginBottom(10);
 
-            // Style amélioré pour la légende
             Paragraph qrDescription = new Paragraph()
                     .add(new Text("Scannez pour voir le contrat\n")
                             .setFontSize(11)
                             .setBold())
                     .add(new Text("Contrat N°: " + facture.getPaiement().getContrat().getNumContrat())
                             .setFontSize(10))
-                    .setTextAlignment(TextAlignment.RIGHT)
+                    .setTextAlignment(TextAlignment.CENTER)
                     .setMarginBottom(5);
 
-            // Ajout au document
-            document.add(new Paragraph("\n")); // Espacement
+            Div qrDiv = new Div()
+                    .add(qrCode)
+                    .setBorder(new SolidBorder(ColorConstants.LIGHT_GRAY, 1))
+                    .setPadding(10)
+                    .setMarginBottom(15)
+                    .setTextAlignment(TextAlignment.CENTER);
+
             document.add(qrDescription);
-            document.add(qrCode);
+            document.add(qrDiv);
 
         } catch (Exception e) {
-            // Solution de repli si le QR code échoue
             Paragraph errorMsg = new Paragraph("Impossible de générer le QR code")
                     .setTextAlignment(TextAlignment.RIGHT)
                     .setFontColor(ColorConstants.RED)
                     .setFontSize(10);
             document.add(errorMsg);
 
-            // Ajouter quand même le lien textuel
             Paragraph contractLink = new Paragraph()
                     .add("Contrat associé: ")
                     .add(new Text(baseUrl + "/api/contrats/" + facture.getPaiement().getContrat().getId() + "/pdf")
@@ -165,45 +218,5 @@ public class FactureController {
                     .setFontSize(10);
             document.add(contractLink);
         }
-    }
-
-    private void addCompanyHeader(Document document) throws IOException {
-        Table headerTable = new Table(UnitValue.createPercentArray(new float[]{30, 70}))
-                .setWidth(UnitValue.createPercentValue(100));
-
-        try {
-            ImageData imageData = ImageDataFactory.create(new URL(companyLogoUrl));
-            Image logo = new Image(imageData).setWidth(100).setAutoScale(true);
-            headerTable.addCell(new Cell().add(logo).setBorder(null));
-        } catch (Exception e) {
-            headerTable.addCell(new Cell().add(new Paragraph("")).setBorder(null));
-        }
-
-        Cell companyInfoCell = new Cell()
-                .setBorder(null)
-                .setTextAlignment(TextAlignment.RIGHT)
-                .add(new Paragraph(companyName).setBold().setFontSize(14))
-                .add(new Paragraph(companyAddress))
-                .add(new Paragraph("Tél: " + companyPhone))
-                .add(new Paragraph("Email: " + companyEmail));
-
-        headerTable.addCell(companyInfoCell);
-        document.add(headerTable);
-        document.add(new LineSeparator(new SolidLine()).setMarginTop(10).setMarginBottom(20));
-    }
-
-    private void addInvoiceTitle(Document document, Facture facture) {
-        Paragraph title = new Paragraph("FACTURE")
-                .setTextAlignment(TextAlignment.CENTER)
-                .setBold()
-                .setFontSize(18)
-                .setMarginBottom(20);
-        document.add(title);
-
-        Paragraph invoiceNumber = new Paragraph("N°: " + facture.getNumFacture())
-                .setTextAlignment(TextAlignment.RIGHT)
-                .setBold()
-                .setMarginBottom(10);
-        document.add(invoiceNumber);
     }
 }

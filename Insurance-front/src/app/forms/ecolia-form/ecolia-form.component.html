@@ -1,9 +1,17 @@
+<div class="formulaire-avec-image">
+  <div class="row-layout">
+    <!-- Image à gauche -->
+    <div class="image-container">
+      <img src="assets/images/ecolia.jpg" alt="Illustration" />
+    </div>
+  <div class="stepper-container">
+
 <mat-horizontal-stepper #stepper class="Contenu">
   
     <!-- Étape 1 -->
     <mat-step [stepControl]="step1Form">
       <form [formGroup]="step1Form" (ngSubmit)="onSubmit()">
-        <ng-template matStepLabel>Step 1</ng-template>
+        <ng-template matStepLabel>Parent / Tuteur</ng-template>
         <div>
           <label for="typePieceIdentite">Type de pièce d'identité :</label>
           <select id="typePieceIdentite" formControlName="typePieceIdentite">
@@ -48,7 +56,7 @@
     <!-- Étape 2 -->
     <mat-step [stepControl]="step2Form">
       <form [formGroup]="step2Form">
-        <ng-template matStepLabel>Step 2</ng-template>
+        <ng-template matStepLabel>Simulation</ng-template>
   
         <div class="form-group">
           <label for="nombreEnfants">Nombre d'enfant(s) :</label>
@@ -95,7 +103,7 @@
   
     <!-- Étape 3 -->
     <mat-step>
-      <ng-template matStepLabel>Step 3</ng-template>
+      <ng-template matStepLabel>Validation</ng-template>
       <div class="formule-details">
         <h3>FORMULE {{ formuleChoisie }}</h3>
         <p>Nombre d’enfant(s) : {{ nombreEnfants }}</p>
@@ -137,8 +145,10 @@
   
       <div class="form-actions">
         <button (click)="onPrevious()">Précédent</button>
-        <button title="Envoyer le formulaire" aria-label="Envoyer le formulaire" (click)="submitForm()">Je paie en ligne</button>
+        <button title="Envoyer le formulaire" aria-label="Envoyer le formulaire" (click)="submitForm()">Valider</button>
       </div>
     </mat-step>
   </mat-horizontal-stepper>
+ 
+</div>
   

@@ -1,7 +1,15 @@
 <div class="container">
-    <h2>Assurance contre les accidents</h2>
+  
+      <h2>Assurance contre les accidents</h2>
+      
+      <div class="content-wrapper">
+        <!-- Image à gauche -->
+        <div class="image-section">
+          <img src="assets/images/accident.jpg" alt="Illustration" />
+        </div>
   
     <!-- Premier formulaire -->
+    <div class="form-section">
     <form [formGroup]="form1" (ngSubmit)="onSubmitForm1()">
       <label>Classe Profession</label>
       <select formControlName="profession">
@@ -55,8 +63,10 @@
           J’accepte les conditions générales.
         </label>
   
-        <button type="submit">OBTENIR VOTRE DEVIS PAR MAIL</button>
+        <button type="submit">Valider</button>
       </form>
     </div>
   </div>
+</div>
+</div>
   

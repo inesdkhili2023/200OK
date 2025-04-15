@@ -11,7 +11,11 @@
 
   <section class="Paiement">
     <div class="container">
+      <div class="image-box">
+        <img src="assets/images/paiement.png" alt="Paiement Illustration" />
+      </div>
       <div class="row">
+       
         <div class="col-md-8 col-md-offset-2">
           <div class="form-box">
             <div class="form-content">
@@ -19,12 +23,11 @@
               <input type="text" formControlName="numtel" placeholder="Numéro de téléphone" />
               <input type="text" formControlName="mail" placeholder="Email" />
               <input type="text" formControlName="confirmationMail" placeholder="Confirmer Email" />
+              <input type="text" formControlName="rib" placeholder="Rib" />
+              <input type="number" formControlName="montant" placeholder="Montant" min="1" required />
+  
 
-              <mat-form-field>
-                <input matInput placeholder="Montant" formControlName="montant" type="number" min="1" required />
-              </mat-form-field>
-
-              <input matInput formControlName="rib" placeholder="RIB">
+             
 
               <!-- Élément de carte Stripe -->
               <div id="card-element" class="my-3"></div>

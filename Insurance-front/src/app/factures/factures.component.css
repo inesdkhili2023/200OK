@@ -1,60 +1,189 @@
-/* factures.component.css */
-.container {
-  padding: 20px;
+/* Conteneur facultatif (si tu as un wrapper autour du tableau) */
+.table-wrapper {
+  width: 1050px;
+  padding: 0 1rem; /* un peu de respiration sur les bords */
+  box-sizing: border-box;
+  margin-top: 100px;
 }
 
-.factures-table {
+/* Table 100% largeur */
+table {
   width: 100%;
+  margin: 2rem 0;
   border-collapse: collapse;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 1.1rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  overflow: hidden;
 }
 
-.factures-table th {
-  background-color: #3f51b5;
+/* En-tête */
+thead {
+  background-color: #d18501;
   color: white;
-  padding: 12px;
+}
+
+th, td {
+  padding: 1.2rem 1.5rem;
   text-align: left;
 }
 
-.factures-table td {
-  padding: 12px;
-  border-bottom: 1px solid #ddd;
+/* Lignes */
+tbody tr {
+  background-color: #fffdf8;
+  transition: background-color 0.3s ease;
 }
 
-.factures-table tr:hover {
-  background-color: #f5f5f5;
+tbody tr:hover {
+  background-color: #fff1dc;
 }
 
-.actions {
-  display: flex;
-  gap: 8px;
+tbody td {
+  border-top: 1px solid #eee;
 }
 
-.loading-spinner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 40px;
+/* Boutons */
+button {
+  background-color: #8d1b06;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.error-message {
-  color: #f44336;
-  padding: 20px;
+button:hover {
+  background-color: #aa2c14;
+  transform: scale(1.05);
+}
+
+/* Statistiques */
+.stat-details {
+  background: #fffdf5;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  width: 300px;
   text-align: center;
+  margin-top: 2rem;
+  margin-top: 100px;
 }
 
-.no-data {
+.stat-number {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0.5rem 0;
+}
+
+.stat-change.positive {
+  color: #2e7d32;
+  font-weight: 500;
+}
+.dashboard-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 40px;
-  color: #666;
+  min-height: 100vh;
+  background-color: #f5f6fa;
 }
 
-.no-data mat-icon {
-  font-size: 48px;
-  width: 48px;
-  height: 48px;
-  margin-bottom: 16px;
+.dashboard-sidebar {
+  width: 250px;
+  background-color: #344659;
+  color: #fff;
+  padding: 20px 0;
+}
+
+.sidebar-header {
+  padding: 0 20px;
+  margin-bottom: 30px;
+}
+
+.sidebar-header h3 {
+  color: #fff;
+  margin: 0;
+  font-size: 24px;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-menu li {
+  padding: 15px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sidebar-menu li:hover, 
+.sidebar-menu li.active {
+  background-color: #f38F1D;
+}
+
+.sidebar-menu li i {
+  margin-right: 10px;
+}
+
+.dashboard-main {
+  flex: 1;
+  padding: 20px;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.header-search input {
+  padding: 8px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 300px;
+}
+
+.header-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-profile img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.stat-card h4 {
+  color: #344659;
+  margin: 0 0 10px 0;
+  font-size: 16px;
+}
+
+.stat-number {
+  font-size: 24px;
+  font-weight: bold;
+  color: #f38F1D;
 }

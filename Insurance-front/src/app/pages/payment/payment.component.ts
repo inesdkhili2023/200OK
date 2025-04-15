@@ -14,7 +14,10 @@ import { catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit } from '@angular/core';
 import { loadStripe } from '@stripe/stripe-js';
-import { HttpHeaders } from '@angular/common/http'; // Ajoutez HttpHeaders
+import { HttpHeaders } from '@angular/common/http'; // Ajoutez HttpHeadersz
+import { FeatherModule } from 'angular-feather';
+import { Camera, Heart, Github } from 'angular-feather/icons';
+
 
 interface LineItem {
   price_data: {
@@ -27,6 +30,11 @@ interface LineItem {
   quantity: number;
 }
 
+const icons = {
+  Camera,
+  Heart,
+  Github,
+};
 
 @Component({
   selector: 'app-payment',
@@ -40,6 +48,7 @@ interface LineItem {
     MatButtonModule,
     ReactiveFormsModule,
     CommonModule
+
   ],
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.css']

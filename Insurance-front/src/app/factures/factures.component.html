@@ -1,4 +1,41 @@
+<div class="dashboard-container">
+  <div class="dashboard-sidebar">
+    <div class="sidebar-header">
+      <h3>Admin Dashboard</h3>
+    </div>
+    <ul class="sidebar-menu">
+      <li class="active">
+        <i class="fas fa-tachometer-alt"></i>
+        <span>Dashboard</span>
+      </li>
+      <li>
+        <i class="fas fa-users"></i>
+        <span>Users</span>
+      </li>
+      <li>
+        <i class="fas fa-file-alt"></i>
+        <span>Claims</span>
+      </li>
+      <li>
+        <i class="fas fa-file-alt"></i>
+        <a mat-list-item routerLink="/contrats">Mes Contrats</a>
+      </li>
+      <li>
+        <i class="fas fa-file-alt"></i>
+        <a mat-list-item routerLink="/factures">Mes Factures</a>
+      </li>
+      <li> 
+        <i class="fas fa-shield-alt"></i>
+        <span>Policies</span>
+      </li>
+      <li>
+        <i class="fas fa-cog"></i>
+        <span>Settings</span>
+      </li>
+    </ul>
+  </div>
 <div *ngIf="factures.length > 0; else noFactures" class="factures-container">
+  <div class="table-wrapper">
   <table class="factures-table">
     <thead>
       <tr>
@@ -22,6 +59,8 @@
     </tbody>
   </table>
 </div>
+</div>
+
 
 <ng-template #noFactures>
   <div class="no-factures">
