@@ -1,6 +1,7 @@
 package com.ahch.controller;
 
 import com.ahch.entity.Devis;
+import com.ahch.entity.OurUsers;
 import com.ahch.service.DevisService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 @RestController
 @RequestMapping("/devis")
@@ -15,6 +17,10 @@ import java.util.Map;
 public class DevisController {
     @Autowired
     private DevisService devisService;
+    @GetMapping("/users")
+    public List<OurUsers> getUsers(@RequestHeader("Authorization") String token) {
+        return devisService.getAllUsers(token);
+    }
 
 
     @PostMapping("/create")

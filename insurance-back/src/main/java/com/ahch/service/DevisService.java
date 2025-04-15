@@ -5,22 +5,18 @@ import com.ahch.Repo.DevisRepository;
 import com.ahch.Repo.FactureRepository;
 import com.ahch.Repo.PaiementRepository;
 import com.ahch.Repo.TypeAssuranceRepository;
-import com.ahch.entity.Contrat;
-import com.ahch.entity.Devis;
-import com.ahch.entity.Facture;
-import com.ahch.entity.Paiement;
-import com.ahch.entity.TypeAssurance;
+import com.ahch.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailAuthenticationException;
 import org.springframework.mail.MailSendException;
 import org.springframework.stereotype.Service;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+
+import java.util.*;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Map;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.HashMap;
+
 import java.util.Map;
 
 @Service
@@ -38,6 +34,15 @@ public class DevisService {
 
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private UserServiceClient userServiceClient;
+
+    public List<OurUsers> getAllUsers(String jwtToken) {
+        String finalToken = jwtToken.startsWith("Bearer ") ? jwtToken : "Bearer " + jwtToken;
+        ReqRes response = userServiceClient.getAllUsers(finalToken).getBody();
+        System.out.println("Sending token: [" + finalToken + "]");
+        return response != null ? response.getOurUsersList() : List.of();
+    }
 
 
     public Devis createDevis(Map<String, Object> payload) {

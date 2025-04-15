@@ -1,6 +1,7 @@
 package com.ahch.controller;
 
 import com.ahch.entity.Contrat;
+import com.ahch.entity.OurUsers;
 import com.ahch.service.ContratService;
 import com.ahch.service.QrCodeService;
 import com.itextpdf.io.image.ImageData;
@@ -54,6 +55,10 @@ public class ContratController {
 
     @Value("${app.company.email}")
     private String companyEmail;
+    @GetMapping("/users")
+    public List<OurUsers> getUsers(@RequestHeader("Authorization") String token) {
+        return contratService.getAllUsers(token);
+    }
 
     @GetMapping
     public ResponseEntity<List<Contrat>> getAllContrats() {

@@ -1,5 +1,6 @@
 package com.ahch.controller;
 
+import com.ahch.entity.OurUsers;
 import com.ahch.entity.Paiement;
 import com.ahch.service.PaiementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,10 @@ public class PaiementController {
     private PaiementService paiementService;
     @Value("${stripe.api.key}")
     private String stripeApiKey;
+    @GetMapping("/users")
+    public List<OurUsers> getUsers(@RequestHeader("Authorization") String token) {
+        return paiementService.getAllUsers(token);
+    }
 
 
     @PostMapping("/create")

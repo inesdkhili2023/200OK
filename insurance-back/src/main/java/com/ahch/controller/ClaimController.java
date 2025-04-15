@@ -1,6 +1,7 @@
 package com.ahch.controller;
 
 import com.ahch.entity.Claim;
+import com.ahch.entity.OurUsers;
 import com.ahch.service.ClaimService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ public class ClaimController {
 
     @Autowired
     private ClaimService ClaimService;
+
 
     @PostMapping("/save/Claim")
     public Claim saveClaim(@RequestBody Claim claim) {

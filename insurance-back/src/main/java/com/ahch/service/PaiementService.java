@@ -5,6 +5,7 @@ import com.ahch.Repo.FactureRepository;
 import com.ahch.Repo.PaiementRepository;
 import com.ahch.entity.Contrat;
 import com.ahch.entity.Facture;
+import com.ahch.entity.OurUsers;
 import com.ahch.entity.Paiement;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
@@ -28,6 +29,15 @@ public class PaiementService {
     private FactureRepository factureRepository;
     @Value("${stripe.api.key}")
     private String stripeApiKey;
+    @Autowired
+    private UserServiceClient userServiceClient;
+
+    public List<OurUsers> getAllUsers(String jwtToken) {
+        String finalToken = jwtToken.startsWith("Bearer ") ? jwtToken : "Bearer " + jwtToken;
+        ReqRes response = userServiceClient.getAllUsers(finalToken).getBody();
+        System.out.println("Sending token: [" + finalToken + "]");
+        return response != null ? response.getOurUsersList() : List.of();
+    }
 
 
     public Paiement createPaiement(Paiement paiement) {

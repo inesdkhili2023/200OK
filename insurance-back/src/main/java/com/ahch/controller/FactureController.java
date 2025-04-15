@@ -1,6 +1,7 @@
 package com.ahch.controller;
 
 import com.ahch.entity.Facture;
+import com.ahch.entity.OurUsers;
 import com.ahch.service.FactureService;
 import com.ahch.service.QrCodeService;
 import com.itextpdf.io.image.ImageData;
@@ -43,6 +44,10 @@ public class FactureController {
 
     //@Value("${app.company.logo.url}")
    // private String companyLogoUrl;
+    @GetMapping("/users")
+    public List<OurUsers> getUsers(@RequestHeader("Authorization") String token) {
+        return factureService.getAllUsers(token);
+    }
 
     @Value("${app.company.name}")
     private String companyName;
