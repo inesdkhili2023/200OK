@@ -16,11 +16,13 @@ import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.examen.nomPrenomClasseExamen.entities.Client;
 import tn.esprit.examen.nomPrenomClasseExamen.entities.Insurance;
 import tn.esprit.examen.nomPrenomClasseExamen.entities.Sinister;
+import tn.esprit.examen.nomPrenomClasseExamen.entities.SinisterType;
 import tn.esprit.examen.nomPrenomClasseExamen.services.IServices;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -228,6 +230,14 @@ public class ClientRestController {
             e.printStackTrace();
             return ResponseEntity.status(500).body("Erreur lors de l'envoi de l'email");
         }
+    }
+
+    @GetMapping("/sinisters/statistics/by-type")
+    public ResponseEntity<Map<String, Long>> getSinisterStatsByType() {
+        Map<SinisterType, Long> data = services.getSinisterCountByType();
+        Map<String, Long> stringKeyMap = new HashMap<>();
+        data.forEach((key, value) -> stringKeyMap.put(key.toString(), value));
+        return ResponseEntity.ok(stringKeyMap);
     }
 
 

@@ -6,6 +6,8 @@ import tn.esprit.examen.nomPrenomClasseExamen.entities.Insurance;
 import tn.esprit.examen.nomPrenomClasseExamen.entities.Sinister;
 
 import java.util.List;
+import java.util.Map;
+import tn.esprit.examen.nomPrenomClasseExamen.entities.SinisterType;
 
 public interface IServices {
     Client add(Client client);
@@ -22,7 +24,7 @@ public interface IServices {
 
     Sinister addSinisterToUser(Sinister sinister, Long userId);
     void sendEmail(String to, String subject, String body);
-
+    Map<SinisterType, Long> getSinisterCountByType();
 
 
 

@@ -17,7 +17,9 @@ import tn.esprit.examen.nomPrenomClasseExamen.repositories.IUserRepository;
 
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -168,6 +170,16 @@ public class ServicesImpl implements IServices {
             javaMailSender.send(message);
         }
 
+    @Override
+    public Map<SinisterType, Long> getSinisterCountByType() {
+
+            List<Object[]> grouped = sinisterRepository.countSinisterByType();
+            Map<SinisterType, Long> stats = new HashMap<>();
+            for (Object[] row : grouped) {
+                stats.put((SinisterType) row[0], (Long) row[1]);
+            }
+            return stats;
+        }
 
 
 
