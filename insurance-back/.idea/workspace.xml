@@ -5,9 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ab9635e-0de9-4c65-97cf-22720ebfb597" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ApiGateway_pi/src/main/java/com/example/apigateway/CorsConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../insurance-back-ahmed/.idea/dbnavigator.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../insurance-back-ahmed/src/main/java/com/ahch/service/OtherService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../insurance-back-ahmed/src/main/java/com/ahch/service/ReqRes.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../insurance-back-ahmed/src/main/java/com/ahch/service/UserServiceClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ApiGateway_pi/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ApiGateway_pi/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ApiGateway_pi/src/main/java/com/example/apigateway/ApiGatewayApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ApiGateway_pi/src/main/java/com/example/apigateway/ApiGatewayApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/config/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/controller/UserManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/controller/UserManagementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/service/JWTUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/service/JWTUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/phegondev/usersmanagementsystem/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/phegondev/usersmanagementsystem/config/SecurityConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/phegondev/usersmanagementsystem/controller/UserManagementController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/phegondev/usersmanagementsystem/controller/UserManagementController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/services/users.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/services/users.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +39,9 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/entity/OurUsers.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="MavenRunner">
     <option name="skipTests" value="true" />
@@ -114,6 +130,8 @@
       <workItem from="1744469792509" duration="5083000" />
       <workItem from="1744636276277" duration="24000" />
       <workItem from="1744637247180" duration="6278000" />
+      <workItem from="1744672147182" duration="3626000" />
+      <workItem from="1744707163410" duration="7389000" />
     </task>
     <servers />
   </component>

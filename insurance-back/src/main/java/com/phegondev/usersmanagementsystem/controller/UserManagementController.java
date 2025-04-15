@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/user-service")
 public class UserManagementController {
     @Autowired
     private UsersManagementService usersManagementService;
@@ -38,9 +39,13 @@ public class UserManagementController {
         return ResponseEntity.ok(usersManagementService.register(reg,imageFile));
     }
     @PostMapping("/auth/signup")
-    public ResponseEntity<ReqRes> signup(@RequestPart ReqRes reg,@RequestPart(value = "imageFile", required = false) MultipartFile imageFile){
-        return ResponseEntity.ok(usersManagementService.signup(reg,imageFile));
+    public ResponseEntity<ReqRes> signup(
+            @ModelAttribute ReqRes reg,
+            @RequestPart(value = "imageFile", required = false) MultipartFile imageFile
+    ) {
+        return ResponseEntity.ok(usersManagementService.signup(reg, imageFile));
     }
+
 
     @GetMapping("/auth/signup/confirm")
     public RedirectView confirm(@RequestParam("token") String token) {

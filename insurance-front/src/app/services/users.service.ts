@@ -11,7 +11,7 @@ export class UsersService {
     throw new Error('Method not implemented.');
   }
 
-  private BASE_URL="http://localhost:1010";
+  private BASE_URL="http://localhost:1010/user-service";
   public isAuthenticated$ = new BehaviorSubject<boolean>(this.isAuthenticated());
   public isUser$ = new BehaviorSubject<boolean>(this.isUser());
   public isAdmin$ = new BehaviorSubject<boolean>(this.isAdmin());

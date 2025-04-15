@@ -18,11 +18,11 @@ public class ApiGatewayApplication {
     @Bean
     public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
         return builder.routes()
-                .route("usersmanagementsystem", r -> r.path("/**")
+                .route("usersmanagementsystem", r -> r.path("/user-service/**")
                         .uri("lb://usersmanagementsystem"))
                 .route("200OK", r -> r.path("/**")
                         .uri("lb://200OK"))
-                .route("AHCH", r -> r.path("/**")
+                .route("AHCH", r -> r.path("/ahch-service/**")
                         .uri("lb://AHCH"))
 
                 .build();

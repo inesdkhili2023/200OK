@@ -34,15 +34,15 @@ public class SecurityConfig {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
 
-                .authorizeHttpRequests(request-> request.requestMatchers("/auth/**", "/public/**","/login/oauth2/**").permitAll()
-                        .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
+                .authorizeHttpRequests(request-> request.requestMatchers("/user-service/auth/**", "/user-service/public/**","/login/oauth2/**").permitAll()
+                        .requestMatchers("/user-service/admin/**").hasAnyAuthority("ADMIN")
                         .requestMatchers("/uploads/**").permitAll()
-                        .requestMatchers("/user/**").hasAnyAuthority("USER")
-                        .requestMatchers("/agent/**").hasAnyAuthority("AGENT")
-                        .requestMatchers("/adminuser/**").hasAnyAuthority("ADMIN","USER")
-                        .requestMatchers("/adminagent/**").hasAnyAuthority("ADMIN","AGENT")
-                        .requestMatchers("/agentuser/**").hasAnyAuthority("AGENT","USER")
-                        .requestMatchers("/allRole/**").hasAnyAuthority("ADMIN","USER","AGENT")
+                        .requestMatchers("/user-service/user/**").hasAnyAuthority("USER")
+                        .requestMatchers("/user-service/agent/**").hasAnyAuthority("AGENT")
+                        .requestMatchers("/user-service/adminuser/**").hasAnyAuthority("ADMIN","USER")
+                        .requestMatchers("/user-service/adminagent/**").hasAnyAuthority("ADMIN","AGENT")
+                        .requestMatchers("/user-service/agentuser/**").hasAnyAuthority("AGENT","USER")
+                        .requestMatchers("/user-service/allRole/**").hasAnyAuthority("ADMIN","USER","AGENT")
                         .anyRequest().authenticated())
 
                        /* .oauth2Login(oauth2 -> oauth2
