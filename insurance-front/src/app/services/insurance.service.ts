@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class InsuranceService {
   // Use a relative URL so that proxy can forward to the Spring Boot backend
-  private apiUrl = '/http://localhost:1010';
+  private apiUrl = '/api/examen';
 
   constructor(private http: HttpClient) { }
 
@@ -26,6 +26,4 @@ export class InsuranceService {
   deleteInsurance(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/insurances/${id}`);
   }
-
-  
 }

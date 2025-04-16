@@ -81,7 +81,7 @@ public class UsersManagementService {
             ourUser.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
 
             if (imageFile != null && !imageFile.isEmpty()) {
-                String uploadDir = "C:\\Users\\user\\Desktop\\front+back\\insurance-back\\uploads";
+                String uploadDir = "C:\\Users\\ahmet\\Downloads\\user\\200OK-onsgu\\insurance-back\\uploads";
                 File uploadFolder = new File(uploadDir);
                 if (!uploadFolder.exists()) uploadFolder.mkdirs();
 
@@ -144,7 +144,7 @@ public class UsersManagementService {
                 ourUser.setRole("USER"); // Valeur par défaut
             }
             if (imageFile != null && !imageFile.isEmpty()) {
-                String uploadDir = "C:\\Users\\user\\Desktop\\front+back\\insurance-back\\uploads";
+                String uploadDir = "C:\\Users\\ahmet\\Downloads\\user\\200OK-onsgu\\insurance-back\\uploads";
                 File uploadFolder = new File(uploadDir);
                 if (!uploadFolder.exists()) {
                     uploadFolder.mkdirs();
@@ -169,7 +169,7 @@ public class UsersManagementService {
             );
             confirmationTokenService.saveConfirmationToken(confirmationToken);
 
-            String link = "http://localhost:1010/auth/signup/confirm?token=" + token;
+            String link = "http://localhost:8093/user-service/auth/signup/confirm?token=" + token;
             emailSender.send(registrationRequest.getEmail(), buildEmail(registrationRequest.getName(), link));
 
             if (ourUsersResult.getId() > 0) {
@@ -531,7 +531,7 @@ public class UsersManagementService {
                 // Gestion de la nouvelle image
                 if (newImageFile != null && !newImageFile.isEmpty()) {
                     // Chemin absolu du dossier uploads
-                    String uploadDir = "C:\\Users\\user\\Desktop\\front+back\\insurance-back\\uploads";
+                    String uploadDir = "C:\\Users\\ahmet\\Downloads\\user\\200OK-onsgu\\insurance-back\\uploads";
                     File uploadFolder = new File(uploadDir);
 
                     // Créer le dossier s'il n'existe pas
@@ -587,7 +587,7 @@ public class UsersManagementService {
 
                 // Vérifier si l'image existe et ajouter l'URL complète
                 if (user.getImage() != null && !user.getImage().isEmpty()) {
-                    String imageUrl = "http://localhost:1010/uploads/" + user.getImage();
+                    String imageUrl = "http://localhost:8093/user-service/uploads/" + user.getImage();
                     user.setImage(imageUrl);
                 }
 
@@ -634,7 +634,7 @@ public class UsersManagementService {
                 ourUser.setRole("USER"); // Valeur par défaut
             }
             if (imageFile != null && !imageFile.isEmpty()) {
-                String uploadDir = "C:\\Users\\user\\Desktop\\front+back\\insurance-back\\uploads";
+                String uploadDir = "C:\\Users\\ahmet\\Downloads\\user\\200OK-onsgu\\insurance-back\\uploads";
                 File uploadFolder = new File(uploadDir);
                 if (!uploadFolder.exists()) {
                     uploadFolder.mkdirs();
@@ -675,7 +675,7 @@ public class UsersManagementService {
             );
             confirmationTokenService.saveConfirmationToken(confirmationToken);
 
-            String link = "http://localhost:1010/auth/signup/confirm?token=" + token;
+            String link = "http://localhost:8093/user-service/auth/signup/confirm?token=" + token;
             emailSender.send(registrationRequest.getEmail(), buildEmail(registrationRequest.getName(), link));
 
             if (ourUsersResult.getId() > 0) {

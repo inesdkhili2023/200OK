@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav-bar',
@@ -14,64 +13,71 @@ export class NavBarComponent implements OnInit {
   isUser: boolean = false;
   isAgent: boolean = false;
   userName: string = '';
-  userImage: string = 'assets/images/avatar-placeholder.png';
-  profileInfo: any = null;
+  userRole: string = '';
+  isMenuOpen: boolean = false;
 
   constructor(
-    private readonly userService: UsersService,
-    private readonly router: Router,
-    private readonly toastr: ToastrService
+    private userService: UsersService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.userService.isAuthenticated$.subscribe(auth => {
-      this.isAuthenticated = auth;
-      if (auth) {
-        this.loadProfile();
-      } else {
-        this.profileInfo = null;
-      }
+    this.updateAuthStatus();
+    
+    // Subscribe to authentication changes
+    this.userService.isAuthenticated$.subscribe(isAuth => {
+      this.isAuthenticated = isAuth;
+      this.updateAuthStatus();
     });
-    
-    this.userService.isUser$.subscribe(user => this.isUser = user);
-    this.userService.isAdmin$.subscribe(admin => this.isAdmin = admin);
-    this.userService.isAgent$.subscribe(agent => this.isAgent = agent);
-    
-    // Charger le profil si déjà authentifié
-    if (this.userService.isAuthenticated()) {
-      this.loadProfile();
+  }
+
+  @HostListener('document:click', ['$event'])
+  closeDropdowns(event: Event): void {
+    // Close dropdown when clicking outside
+    if (!(event.target as HTMLElement).closest('.dropdown')) {
+      const openDropdowns = document.querySelectorAll('.dropdown-menu.show');
+      openDropdowns.forEach(dropdown => {
+        dropdown.classList.remove('show');
+      });
     }
   }
 
-  async loadProfile() {
-    try {
+  updateAuthStatus(): void {
+    this.isAuthenticated = this.userService.isAuthenticated();
+    this.isAdmin = this.userService.isAdmin();
+    this.isUser = this.userService.isUser();
+    this.isAgent = this.userService.isAgent();
+    
+    // Get user info if authenticated
+    if (this.isAuthenticated) {
       const token = localStorage.getItem('token');
-      if (!token) {
-        throw new Error("No token found");
+      if (token) {
+        this.userService.getYourProfile(token).then(response => {
+          if (response && response.ourUsers) {
+            this.userName = response.ourUsers.name;
+            this.userRole = response.ourUsers.role;
+          }
+        }).catch(error => {
+          console.error('Error fetching user profile:', error);
+        });
       }
-      
-      this.profileInfo = await this.userService.getYourProfile(token);
-      
-      // Mettre à jour les propriétés pour une utilisation plus simple dans le template
-      if (this.profileInfo?.ourUsers) {
-        this.userName = this.profileInfo.ourUsers.name;
-        console.log(this.profileInfo.ourUsers);
-        this.userImage = this.profileInfo.ourUsers.image ;
-      }
-    } catch (error: any) {
-      console.error("Error loading profile:", error.message);
-      this.userImage = 'assets/images/avatar-placeholder.png';
-      this.userName = '';
+    }
+  }
+
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  toggleDropdown(event: Event): void {
+    event.preventDefault();
+    const dropdownMenu = (event.target as HTMLElement).closest('.dropdown')?.querySelector('.dropdown-menu');
+    if (dropdownMenu) {
+      dropdownMenu.classList.toggle('show');
     }
   }
 
   logout(): void {
     this.userService.logOut();
-    this.toastr.success("Déconnexion réussie");
     this.router.navigate(['/login']);
-  }
-
-  goToFaceDetection(): void {
-    this.router.navigate(['/detect-face']);
   }
 }

@@ -1,0 +1,79 @@
+<div class="agent-list-container">
+  <h2>Agent List</h2>
+  
+  <!-- Loading spinner -->
+  <div *ngIf="isLoading" class="loading-spinner">
+    Loading agents...
+  </div>
+  
+  <!-- Error message -->
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+    <button (click)="loadUsers()">Try Again</button>
+  </div>
+  
+  <!-- User table -->
+  <div *ngIf="!isLoading && !errorMessage">
+    <table class="user-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Agency</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="users.length === 0">
+          <td colspan="6" class="no-data">No agents found</td>
+        </tr>
+        <tr *ngFor="let user of users">
+          <td>{{ user.iduser }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.lastname }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.agency ? user.agency.agencyName : 'Not Assigned' }}</td>
+          <td>
+            <button *ngIf="!user.agency" class="assign-button" (click)="assignAgency(user)">
+              Assign Agency
+            </button>
+            <span *ngIf="user.agency">{{user.agency.agencyName}}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Modal for Agency Assignment -->
+  <div *ngIf="showAgencyModal" class="modal-overlay">
+    <div class="modal-content">
+      <h3>Assign Agency to {{ selectedUser?.name }} {{ selectedUser?.lastname }}</h3>
+      
+      <div class="form-group">
+        <label for="agencySelect">Select Agency:</label>
+        <select 
+          id="agencySelect" 
+          [(ngModel)]="selectedAgencyId" 
+          class="form-control"
+          required>
+          <option [value]="null" disabled>Select an agency</option>
+          <option *ngFor="let agency of agencies" [value]="agency.idAgency">
+            {{ agency.agencyName }} - {{ agency.location }}
+          </option>
+        </select>
+      </div>
+      
+      <div class="modal-actions">
+        <button class="btn-cancel" (click)="closeModal()">Cancel</button>
+        <button 
+          class="btn-confirm" 
+          [disabled]="!selectedAgencyId" 
+          (click)="confirmAssignment()">
+          Assign
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

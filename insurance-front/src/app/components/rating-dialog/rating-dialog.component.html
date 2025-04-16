@@ -1,0 +1,48 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<div class="rating-dialog" [@fadeIn]>
+    <div class="rating-header">
+      <h2>Rate Your Experience</h2>
+      <p>How would you rate your claim submission experience?</p>
+    </div>
+  
+    <div class="rating-stars">
+      <div class="stars-container">
+        <span *ngFor="let star of [1, 2, 3, 4, 5]" 
+              class="star" 
+              [class.active]="star <= rating"
+              (click)="setRating(star)">
+          <i class="fas fa-star"></i>
+        </span>
+      </div>
+      <div class="rating-label">
+        <span *ngIf="rating === 0">Select a rating</span>
+        <span *ngIf="rating === 1">Poor</span>
+        <span *ngIf="rating === 2">Fair</span>
+        <span *ngIf="rating === 3">Good</span>
+        <span *ngIf="rating === 4">Very Good</span>
+        <span *ngIf="rating === 5">Excellent</span>
+      </div>
+    </div>
+  
+    <div class="feedback-area">
+      <label for="feedback">Additional Feedback (optional)</label>
+      <textarea 
+        id="feedback" 
+        rows="3" 
+        placeholder="Tell us more about your experience..."
+        [(ngModel)]="feedback">
+      </textarea>
+    </div>
+  
+    <div class="dialog-actions">
+      <button class="btn-skip" (click)="skip()">
+        Skip
+      </button>
+      <button 
+        class="btn-submit" 
+        [disabled]="rating === 0" 
+        (click)="submit()">
+        Submit Feedback
+      </button>
+    </div>
+  </div>

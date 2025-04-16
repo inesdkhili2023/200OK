@@ -1,0 +1,119 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<div class="claims-container">
+  <div class="claims-header">
+    <h2>Claims Management</h2>
+    <p class="subtitle">Manage and process all customer claims</p>
+  </div>
+
+  <div class="claims-filter">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input type="text" [(ngModel)]="searchQuery" placeholder="Search by description or user details..." (input)="filterClaims()">
+    </div>
+    
+    <div class="filter-dropdown">
+      <label for="statusFilter">Filter by Status:</label>
+      <select id="statusFilter" [(ngModel)]="selectedStatus" (change)="filterClaims()">
+        <option value="">All Statuses</option>
+        <option *ngFor="let status of claimStatuses" [value]="status">{{ status }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="claims-content">
+    <div *ngIf="isLoading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading claims data...</p>
+    </div>
+
+    <div *ngIf="!isLoading && filteredClaims.length === 0" class="no-claims">
+      <i class="fas fa-search empty-icon"></i>
+      <p>No claims found matching your criteria.</p>
+      <button class="btn btn-primary" (click)="resetFilters()">Reset Filters</button>
+    </div>
+    <div class="claims-stats" *ngIf="!isLoading && dataSource.length > 0">
+      <div class="stat-card">
+        <div class="stat-icon untreated">
+          <i class="fas fa-hourglass-half"></i>
+        </div>
+        <div class="stat-info">
+          <h3>Untreated</h3>
+          <p class="stat-count">{{ getStatusCount(ClaimStatus.UNTREATED) }}</p>
+        </div>
+      </div>
+      
+      
+      
+      <div class="stat-card">
+        <div class="stat-icon treated">
+          <i class="fas fa-check"></i>
+        </div>
+        <div class="stat-info">
+          <h3>Treated</h3>
+          <p class="stat-count">{{ getStatusCount(ClaimStatus.TREATED) }}</p>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon total">
+          <i class="fas fa-folder-open"></i>
+        </div>
+        <div class="stat-info">
+          <h3>Total Claims</h3>
+          <p class="stat-count">{{ dataSource.length }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!isLoading && filteredClaims.length > 0" class="claims-list">
+      <div *ngFor="let claim of filteredClaims" class="claim-card" [ngClass]="getStatusClass(claim.claimStatus)">
+        <div class="claim-card-header">
+          <div class="claim-type">
+            <i [ngClass]="getClaimTypeIcon(claim.claimType)"></i>
+            <span>{{ claim.claimType }}</span>
+          </div>
+          <div class="claim-id">
+            #{{ claim.claimId }}
+          </div>
+          <div class="claim-status">
+            <span class="status-badge">{{ claim.claimStatus }}</span>
+          </div>
+        </div>
+
+        
+        
+        <div class="claim-card-body">
+          <div class="claim-user">
+            <i class="fas fa-user"></i>
+            <span>{{ claim.user?.name || 'N/A' }} {{ claim.user?.lastname || '' }}</span>
+            <span class="user-id">(ID: {{ claim.user?.iduser || 'N/A' }})</span>
+          </div>
+          <p class="claim-description">{{ claim.description }}</p>
+        </div>
+        
+        <div class="claim-card-footer">
+          <div class="claim-date">
+            <i class="far fa-calendar-alt"></i>
+            {{ formatDate(claim.dateCreation) }}
+          </div>
+          <div class="claim-actions">
+            <div class="quick-status-update">
+              <select  *ngIf="claim.claimStatus === 'UNTREATED'" [value]="claim.claimStatus" (change)="quickUpdateStatus(claim, $event)">
+                <option *ngFor="let status of claimStatuses" [value]="status">{{ status }}</option>
+              </select>
+            </div>
+            <button class="btn-icon btn-edit" (click)="updateClaim(claim.claimId)" title="Edit Claim">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn-icon btn-delete" (click)="deleteClaim(claim.claimId)" title="Delete Claim">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+</div>

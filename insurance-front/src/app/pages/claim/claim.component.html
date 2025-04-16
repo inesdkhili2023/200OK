@@ -1,0 +1,146 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<div class="claim-container">
+  <div class="claim-card">
+    <div class="claim-header">
+      <h2 *ngIf="isCreateClaim">Submit a Claim</h2>
+      <h2 *ngIf="!isCreateClaim && !adminMode">View Your Claim</h2>
+      <h2 *ngIf="!isCreateClaim && adminMode">Admin Claim Management</h2>
+      <p class="subtitle" *ngIf="isCreateClaim">Please provide the details of your claim below</p>
+      <p class="subtitle" *ngIf="!isCreateClaim && !adminMode">Review the details of your claim</p>
+      <p class="subtitle" *ngIf="!isCreateClaim && adminMode">Manage and update claim status</p>
+      <div class="form-group">
+        <label for="user">Select User:</label>
+        <select [(ngModel)]="selectedUserId" name="user" id="user" required>
+          <option value="" disabled selected>Select User</option>
+          <option *ngFor="let user of users" [value]="user.iduser">{{ user.name }} {{ user.lastname }}</option>
+        </select>
+      <!-- Admin badge -->
+      <div *ngIf="adminMode" class="admin-badge">
+        <i class="fas fa-user-shield"></i> Admin Mode
+      </div>
+    </div>
+
+    <form #ClaimForm="ngForm" (ngSubmit)="saveClaim(ClaimForm)" class="claim-form">
+      <!-- Claim ID (read-only) -->
+      <div class="form-group" *ngIf="!isCreateClaim">
+        <label for="claimId">
+          <i class="fas fa-hashtag"></i> Claim ID
+        </label>
+        <input 
+          type="text" 
+          class="form-control" 
+          id="claimId" 
+          [value]="claim.claimId" 
+          readonly
+          disabled>
+      </div>
+
+      <!-- Claim Type -->
+      <div class="form-group">
+        <label for="claimType">
+          <i class="fas fa-tags"></i> Claim Type
+        </label>
+        <select 
+          class="form-control" 
+          id="claimType" 
+          name="claimType" 
+          [(ngModel)]="claim.claimType"
+          required
+          #claimType="ngModel"
+          [disabled]="!isCreateClaim && !adminMode">
+          <option *ngFor="let type of claimTypes" [value]="type">{{ type }}</option>
+        </select>
+        <div *ngIf="claimType.invalid && (claimType.dirty || claimType.touched)" class="error-message">
+          <div *ngIf="claimType.errors?.['required']">Please select a claim type</div>
+        </div>
+      </div>
+
+      <!-- Claim Status (admin only) -->
+      <div class="form-group" *ngIf="adminMode">
+        <label for="claimStatus">
+          <i class="fas fa-tasks"></i> Claim Status
+        </label>
+        <select 
+          class="form-control" 
+          id="claimStatus" 
+          name="claimStatus" 
+          [(ngModel)]="claim.claimStatus"
+          required
+          #claimStatus="ngModel">
+          <option *ngFor="let status of claimStatuses" [value]="status">{{ status }}</option>
+        </select>
+        <div *ngIf="claimStatus.invalid && (claimStatus.dirty || claimStatus.touched)" class="error-message">
+          <div *ngIf="claimStatus.errors?.['required']">Please select a status</div>
+        </div>
+      </div>
+
+      <!-- Claim Description -->
+      <div class="form-group">
+        <label for="description">
+          <i class="fas fa-comment-alt"></i> Description
+        </label>
+        <textarea 
+          class="form-control" 
+          id="description" 
+          placeholder="Please describe your claim in detail..." 
+          name="description" 
+          [(ngModel)]="claim.description" 
+          required 
+          minlength="4"
+          #description="ngModel"
+          [disabled]="!isCreateClaim && !adminMode"></textarea>
+      
+        <div *ngIf="description.invalid && (description.dirty || description.touched)" class="error-message">
+          <div *ngIf="description.errors?.['required']">Description is required</div>
+          <div *ngIf="description.errors?.['minlength']">Description must be at least 4 characters</div>
+        </div>
+      </div>
+
+      <!-- Date created (read-only) -->
+      <div class="form-group" *ngIf="!isCreateClaim">
+        <label for="dateCreation">
+          <i class="fas fa-calendar-alt"></i> Date Submitted
+        </label>
+        
+      </div>
+
+
+      <div class="user-info-section" *ngIf="adminMode && claim.user">
+        <h3>Submitted By</h3>
+        <div class="user-details">
+          <div class="user-detail">
+            <span class="label"><i class="fas fa-id-card"></i> User ID:</span>
+            <span class="value">{{ claim.user.iduser }}</span>
+          </div>
+          <div class="user-detail">
+            <span class="label"><i class="fas fa-user"></i> Name:</span>
+            <span class="value">{{ claim.user.name }} {{ claim.user.lastname }}</span>
+          </div>
+          <div class="user-detail">
+            <span class="label"><i class="fas fa-envelope"></i> Email:</span>
+            <span class="value">{{ claim.user.email }}</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Submit button -->
+      <div class="form-actions">
+        
+        
+        <button 
+          type="submit" 
+          class="btn btn-primary" 
+          [disabled]="ClaimForm.invalid">
+          <i class="fas fa-save"></i> 
+          <span *ngIf="isCreateClaim">Submit Claim</span>
+          <span *ngIf="!isCreateClaim && adminMode">Update Claim</span>
+          <span *ngIf="!isCreateClaim && !adminMode">Update</span>
+        </button>
+      </div>
+    </form>
+
+    <div class="claim-footer">
+    </div>
+  </div>
+</div>

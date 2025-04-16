@@ -1,0 +1,51 @@
+<div class="notifications-container" (clickOutside)="closeDropdown()">
+    <div class="notification-icon" (click)="toggleDropdown()">
+      <i class="fas fa-bell"></i>
+      <span *ngIf="unreadCount > 0" class="badge">{{ unreadCount }}</span>
+    </div>
+    
+    <div class="notification-dropdown" *ngIf="isDropdownOpen">
+      <div class="dropdown-header">
+        <h4>Notifications</h4>
+        <div class="dropdown-actions">
+          <button *ngIf="notifications.length > 0" class="btn-action" (click)="markAllAsRead()">
+            Mark all as read
+          </button>
+          <button *ngIf="notifications.length > 0" class="btn-action" (click)="clearAll()">
+            Clear all
+          </button>
+        </div>
+      </div>
+      
+      <div class="dropdown-body">
+        <!-- Empty state when no notifications -->
+        <div *ngIf="notifications.length === 0" class="empty-state">
+          <i class="fas fa-bell-slash"></i>
+          <p>No notifications yet</p>
+        </div>
+        
+        <!-- Notification items -->
+        <div *ngFor="let notification of notifications" 
+             class="notification-item" 
+             [class.unread]="!notification.isRead"
+             (click)="goToNotification(notification)">
+          <div class="notification-icon" [ngClass]="notification.type">
+            <i *ngIf="notification.type === 'info'" class="fas fa-info-circle"></i>
+            <i *ngIf="notification.type === 'success'" class="fas fa-check-circle"></i>
+            <i *ngIf="notification.type === 'warning'" class="fas fa-exclamation-triangle"></i>
+            <i *ngIf="notification.type === 'error'" class="fas fa-times-circle"></i>
+          </div>
+          <div class="notification-content">
+            <p class="message">{{ notification.message }}</p>
+            <span class="time">{{ getTimeAgo(notification.timestamp) }}</span>
+          </div>
+          <div class="notification-actions">
+            <button class="btn-mark-read" (click)="markAsRead(notification); $event.stopPropagation();" 
+                    *ngIf="!notification.isRead">
+              <i class="fas fa-check"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

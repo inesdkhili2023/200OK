@@ -1,0 +1,39 @@
+.map{
+    width: 60%;
+    height: 550px;  
+    margin-top: 40px;
+    margin-left: 220px;
+    border: 2px solid #ddd; 
+}
+.col-md-3{
+    margin-top: -120px;
+}
+.back{
+    background-color: #f38F1D;
+    width: auto;
+    height: 40px;
+    margin: 20px  0 0 400px ;
+    border-radius: 8px;
+}
+.agency-count {
+    font-size: 24px;
+    font-weight: 600;
+    color: #344659;
+    margin-bottom: 20px;
+    text-align: center;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: #f38F1D;
+    max-width: 400px;
+    margin-top: 40px;
+    margin-left: 30%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-transform: capitalize;
+  }
+  
+  .agency-count span {
+    font-size: 28px;
+    color: #fff;
+    font-weight: 700;
+  }
+      

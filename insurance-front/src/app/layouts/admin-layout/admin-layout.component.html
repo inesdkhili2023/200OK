@@ -1,4 +1,5 @@
-<!-- admin-layout.component.html -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 <div class="dashboard-container">
 
     <!-- SIDEBAR -->
@@ -8,9 +9,17 @@
       </div>
   
       <ul class="sidebar-menu">
-        <li (click)="navigate('admin/dashboardAdmin')">
+        <li (click)="navigate('/admin/dashboardAdmin')">
           <i class="fas fa-chart-pie"></i>
           <span>Dashboard</span>
+        </li>
+        <li (click)="navigate('/admin/claim-admin')">
+          <i class="fas fa-file-alt"></i>
+          <span>Claims</span>
+        </li>
+        <li (click)="navigate('/admin/agency-list')">
+          <i class="fas fa-building"></i>
+          <span>Agencies</span>
         </li>
         <li (click)="navigate('/admin/contrat')">
           <i class="fas fa-file-signature"></i>
@@ -20,9 +29,9 @@
           <i class="fas fa-shield-alt"></i>
           <span>Assurance</span>
         </li>
-        <li (click)="navigate('/admin/reclamation')">
+        <li (click)="navigate('/admin/rating-list')">
           <i class="fas fa-comment-dots"></i>
-          <span>Réclamation</span>
+          <span>Ratings</span>
         </li>
         <li (click)="navigate('/admin/users')">
           <i class="fas fa-users"></i>

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
-import { UsersService } from '../services/users.service';
 import { Router } from '@angular/router';
-
+import { UsersService } from '../services/users.service';
 @Component({
   selector: 'app-dashboard-admin',
   templateUrl: './dashboard-admin.component.html',
@@ -12,152 +11,25 @@ export class DashboardAdminComponent implements OnInit {
   chart: any;
   showSettingsList: boolean = false;
   isMenuOpen = false;
-  totalUsers: number = 0;
-
-
   isAuthenticated: boolean = false;
   isAdmin: boolean = false;
   isUser: boolean = false;
   isAgent: boolean = false;
   Info: any;
-  role: string = '';
   userName: string = ''; // Nom de l'utilisateur
-  userImage: string = 'assets/images/avatar-placeholder.png'; 
+  userImage: string = 'assets/images/avatar-placeholder.png'; // Image de l'utilisateur
   errorMessage: string = '';
-  
-  constructor(private readonly userService: UsersService, private router: Router) {
+
+
+  constructor(private readonly userService: UsersService,private router: Router) {
     Chart.register(...registerables);
   }
- 
-  async ngOnInit(): Promise<void> {
+
+  ngOnInit(): void {
     this.initializeRevenueChart();
-    await this.loadUserStatistics();
-    this.isAuthenticated = this.userService.isAuthenticated();
-    this.isAdmin = this.userService.isAdmin();
-    this.isUser = this.userService.isUser();
-    this.isAgent = this.userService.isAgent();
-
-    // Récupérer les informations de l'utilisateur connecté
-    try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        throw new Error("No Token Found");
-      }
-
-      // Attendre la résolution de la promesse
-      this.Info = await this.userService.getYourProfile(token);
-      console.log(this.Info);
-
-      // Mettre à jour les propriétés userName et userImage
-      if (this.Info && this.Info.ourUsers) {
-        this.userName = this.Info.ourUsers.name;
-        this.role = this.Info.ourUsers.role;
-        this.userImage = this.Info.ourUsers.image || 'assets/images/avatar-placeholder.png';
-      }
-    } catch (error: any) {
-      this.showError(error.message);
-    }
+    // You can add more initialization logic here
   }
 
-  showError(mess: string) {
-    this.errorMessage = mess;
-    setTimeout(() => {
-      this.errorMessage = '';
-    }, 3000);
-  }
-  async loadUserStatistics() {
-    try {
-      const token = localStorage.getItem('token');
-      const response = await this.userService.getAllUsers(token!);
-      console.log("Utilisateurs récupérés :", response);
-      const allUsers = response.ourUsersList;
-      console.log("Liste des utilisateurs :", allUsers);
-
-      this.totalUsers = allUsers.length;
-      console.log("Total utilisateurs :", this.totalUsers);
-      this.updateUsersPerAgeChart(allUsers);
-
-    } catch (error) {
-      console.error('Erreur lors du chargement des utilisateurs :', error);
-      this.showError('Erreur lors du chargement des utilisateurs');
-    }
-  }
-  
-  
-  updateUsersPerAgeChart(users: any[]) {
-    const countsByAge: { [age: number]: number } = {};
-  
-    const currentYear = new Date().getFullYear();
-  
-    users.forEach(user => {
-      const birth = user.dnaiss ? new Date(user.dnaiss) : null;
-      if (birth && !isNaN(birth.getTime())) {
-        const age = currentYear - birth.getFullYear();
-        if (age >= 18) {
-          countsByAge[age] = (countsByAge[age] || 0) + 1;
-        }
-      }
-    });
-  
-    // Trier les âges par ordre croissant
-    const sortedAges = Object.keys(countsByAge)
-      .map(age => parseInt(age))
-      .sort((a, b) => a - b);
-  
-    const data = sortedAges.map(age => countsByAge[age]);
-  
-    console.log('Âges =', sortedAges);
-    console.log('Data =', data);
-  
-    setTimeout(() => {
-      const canvas = document.getElementById('usersPerYearChart') as HTMLCanvasElement;
-      if (canvas) {
-        new Chart(canvas, {
-          type: 'bar',
-          data: {
-            labels: sortedAges.map(a => a.toString()),
-            datasets: [{
-              label: 'Utilisateurs par âge',
-              data: data,
-              borderWidth: 1,
-              backgroundColor: '#4e73df'
-            }]
-          },
-          options: {
-            responsive: true,
-            scales: {
-              x: {
-                title: {
-                  display: true,
-                  text: 'Âge'
-                }
-              },
-              y: {
-                beginAtZero: true,
-                title: {
-                  display: true,
-                  text: 'Nombre d\'utilisateurs'
-                },
-                ticks: {
-                  precision: 0
-                }
-              }
-            },
-            plugins: {
-              legend: {
-                display: true,
-                position: 'top'
-              }
-            }
-          }
-        });
-      } else {
-        console.error('Canvas non trouvé !');
-      }
-    }, 300);
-  }
-  
-  
   private initializeRevenueChart(): void {
     const ctx = document.getElementById('revenueChart') as HTMLCanvasElement;
     this.chart = new Chart(ctx, {
@@ -183,6 +55,59 @@ export class DashboardAdminComponent implements OnInit {
     });
   }
 
-  
-  
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  updateProfile(id: string){
+    this.router.navigate(['/update', id])
+}
+logout(): void {
+  this.userService.logOut();
+  this.isAuthenticated = false;
+  this.isAdmin = false;
+  this.isUser = false;
+  this.isAgent = false;
+  this.router.navigate(['/login']);
+}
+
+  // Methods for handling quick actions
+  addUser(): void {
+    console.log('Add user clicked');
+    // Implement user addition logic
+  }
+
+  createNewPolicy(): void {
+    console.log('Create new policy clicked');
+    // Implement policy creation logic
+  }
+
+  generateReport(): void {
+    console.log('Generate report clicked');
+    // Implement report generation logic
+  }
+
+  // Method for handling search
+  handleSearch(searchTerm: string): void {
+    console.log('Searching for:', searchTerm);
+    // Implement search logic
+  }
+
+  // Method for handling notifications
+  viewNotifications(): void {
+    console.log('Viewing notifications');
+    // Implement notifications view logic
+  }
+
+  // Method for handling profile actions
+  handleProfileAction(): void {
+    console.log('Profile action clicked');
+    // Implement profile actions logic
+  }
+
+  // Method for handling sidebar navigation
+  navigate(route: string): void {
+    console.log('Navigating to:', route);
+    // Implement navigation logic
+  }
 }

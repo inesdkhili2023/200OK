@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UsersService } from 'src/app/services/users.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-layout',
@@ -9,7 +10,7 @@ import { UsersService } from 'src/app/services/users.service';
   styleUrls: ['./user-layout.component.css']
 })
 export class UserLayoutComponent {
- showSettingsList: boolean = false;
+  showSettingsList: boolean = false;
   isMenuOpen = false;
   isAuthenticated: boolean = false;
   isAdmin: boolean = false;
@@ -20,13 +21,20 @@ export class UserLayoutComponent {
   userName: string = ''; // Nom de l'utilisateur
   userImage: string = 'assets/images/avatar-placeholder.png'; 
   errorMessage: string = '';
+  activeRoute: string = '';
   
   constructor(private readonly userService: UsersService, 
     private router: Router,
-  private readonly toastr: ToastrService) {
+    private readonly toastr: ToastrService) {
   }
  
   async ngOnInit(): Promise<void> {
+    // Track router events to update active route
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      this.activeRoute = event.url;
+    });
 
     await this.loadUserStatistics();
     this.userService.isAuthenticated$.subscribe((value: boolean) => {
@@ -95,7 +103,10 @@ export class UserLayoutComponent {
     this.router.navigate(['/login']);
   }
 
- 
+  // Check if a route is active
+  isActive(route: string): boolean {
+    return this.activeRoute.includes(route);
+  }
 
   navigate(route: string): void {
     this.router.navigate([route]);

@@ -11,7 +11,7 @@ export class UsersService {
     throw new Error('Method not implemented.');
   }
 
-  private BASE_URL="http://localhost:1010/user-service";
+  private BASE_URL="http://localhost:8093/user-service";
   public isAuthenticated$ = new BehaviorSubject<boolean>(this.isAuthenticated());
   public isUser$ = new BehaviorSubject<boolean>(this.isUser());
   public isAdmin$ = new BehaviorSubject<boolean>(this.isAdmin());
@@ -47,10 +47,13 @@ initializeAuthStatus(): void {
   async login(email:string,password:string):Promise<any>{
     const url=`${this.BASE_URL}/auth/login`
     try{
-      const response=await this.http.post<any>(url,{email,password}).toPromise()
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json'
+      });
+      const response=await this.http.post<any>(url,{email,password}, {headers, withCredentials: true}).toPromise()
       this.setCurrentUser(response.user);
       this.isAuthenticated$.next(true);
-      console.log(response.user);
+      console.log(response);
       return response;
     }catch(error){
       throw error;

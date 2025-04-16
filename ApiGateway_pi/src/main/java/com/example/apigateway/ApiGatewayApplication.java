@@ -7,6 +7,11 @@ import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.CorsWebFilter;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @SpringBootApplication
 public class ApiGatewayApplication {
@@ -20,12 +25,22 @@ public class ApiGatewayApplication {
         return builder.routes()
                 .route("usersmanagementsystem", r -> r.path("/user-service/**")
                         .uri("lb://usersmanagementsystem"))
-                .route("200OK", r -> r.path("/**")
-                        .uri("lb://200OK"))
-                .route("AHCH", r -> r.path("/ahch-service/**")
-                        .uri("lb://AHCH"))
-
+                .route("ahch", r -> r.path("/ahch/**")
+                        .uri("lb://ahch"))
                 .build();
     }
 
+    @Bean
+    public CorsWebFilter corsWebFilter() {
+        CorsConfiguration corsConfig = new CorsConfiguration();
+        corsConfig.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+        corsConfig.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        corsConfig.setAllowedHeaders(Arrays.asList("*"));
+        corsConfig.setAllowCredentials(true);
+        corsConfig.setMaxAge(3600L);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfig);
+        return new CorsWebFilter(source);
+    }
 }

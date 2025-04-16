@@ -1,8 +1,10 @@
-<header data-spy="scroll" data-target=".navbar-fixed-top" >
+<header data-spy="scroll" data-target=".navbar-fixed-top">
   <div class="top-bar">
     <div class="container">
       <div class="row">
-      
+        <div class="col-sm-6 address">
+          <i class="ti-location-pin"></i> 2109 WS 09 Oxford Rd #127 ParkVilla Hills, MI 48334
+        </div>
         <div class="col-sm-6 social">
           <ul>
             <li><a href="#"><i class="fa fa-twitter"></i></a></li>
@@ -16,46 +18,65 @@
       </div>
     </div>
   </div>
-  <div class="padding">
   <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
-    <div class="container" >
-     
+    <div class="container">
       <div class="navbar-header">
-        <!-- Affichage du profil utilisateur si connecté -->
-
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+        <button type="button" class="navbar-toggle" (click)="toggleMenu()">
           <i class="fa fa-bars"></i>
         </button>
         <a class="navbar-brand" routerLink="/home">
-          Assurance<span>maghrebia</span>
+          Insurance<span>Press</span>
         </a>
-        <p>Appelez-nous <b>+216 25 557 335</b></p>
+        <p>Call Us Now <b>+215 (362) 4579</b></p>
       </div>
-    
-      <div class="collapse navbar-collapse navbar-main-collapse">
-       
+      <div class="collapse navbar-collapse navbar-main-collapse" [ngClass]="{'in': isMenuOpen}">
         <ul class="nav navbar-nav navbar-right">
-          <li><a routerLink="/home">Accueil</a></li>
-          <li><a routerLink="/contact-us">Contact</a></li>
-          <li><a routerLink="/buy-pro" class="btn-default">souscrire une assurance</a></li>
-          <li *ngIf="isUser"><a routerLink="/user/dashboard">Espace client</a></li>
-          <li><a routerLink="/insurances">Insurances</a></li>
-          <li *ngIf = "!isAuthenticated"><a routerLink = "/signup">S'inscrire</a></li>
-          <li *ngIf = "!isAuthenticated"><a routerLink = "/login">Se Connecter</a></li>
-          <li *ngIf = "isAuthenticated"><a routerLink = "" (click)="logout()">Se déconnecter</a></li>
+          <!-- Common pages for all users -->
+          <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
+          <li><a routerLink="/blog" routerLinkActive="active">Blog</a></li>
+          <li><a routerLink="/contact-us" routerLinkActive="active">Contact</a></li>
           
-          <li *ngIf="isAuthenticated" class="navbar-user-info">
-            <img [src]="userImage" 
-                 alt="Avatar" 
-                 class="navbar-avatar"
-                 *ngIf="isAuthenticated">
-            <span class="navbar-username" *ngIf="userName">{{ userName }}</span>
+          <!-- Pages for authenticated users -->
+          <li *ngIf="isAuthenticated"><a routerLink="/claim" routerLinkActive="active">Claim</a></li>
+          <li *ngIf="isAuthenticated"><a routerLink="/insurances" routerLinkActive="active">Insurances</a></li>
+          
+          <!-- Admin-only pages -->
+          <li *ngIf="isAdmin"><a routerLink="/admin/dashboard" routerLinkActive="active">Admin Dashboard</a></li>
+          <li *ngIf="isAdmin"><a routerLink="/admin/register" routerLinkActive="active">Register User</a></li>
+          <li *ngIf="isAdmin"><a routerLink="/admin/user-list" routerLinkActive="active">User Management</a></li>
+          
+          <!-- Agent-only pages -->
+          <li *ngIf="isAgent"><a routerLink="/agent/dashboard" routerLinkActive="active">Agent Dashboard</a></li>
+          
+          <!-- User-only pages -->
+          <li *ngIf="isUser && !isAdmin && !isAgent"><a routerLink="/dashboard" routerLinkActive="active">My Dashboard</a></li>
+          
+          <!-- Authentication links -->
+          <li *ngIf="!isAuthenticated"><a routerLink="/login" routerLinkActive="active">Login</a></li>
+          <li *ngIf="!isAuthenticated"><a routerLink="/signup" routerLinkActive="active">Sign Up</a></li>
+          
+          <!-- User profile/logout dropdown -->
+          <li *ngIf="isAuthenticated" class="dropdown">
+            <a href="#" class="dropdown-toggle" (click)="toggleDropdown($event)">
+              <span class="user-name">{{ userName || 'Profile' }}</span>
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="user-info">
+                <span>{{ userName }}</span>
+                <span class="user-role">{{ userRole }}</span>
+              </li>
+              <li role="separator" class="divider"></li>
+              <li><a routerLink="/profile"><i class="fa fa-user"></i> My Profile</a></li>
+              <li *ngIf="isAdmin"><a routerLink="/admin/dashboard"><i class="fa fa-dashboard"></i> Admin Dashboard</a></li>
+              <li *ngIf="isAgent"><a routerLink="/agent/dashboard"><i class="fa fa-dashboard"></i> Agent Dashboard</a></li>
+              <li *ngIf="isUser && !isAdmin && !isAgent"><a routerLink="/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a (click)="logout()" style="cursor: pointer;"><i class="fa fa-sign-out"></i> Logout</a></li>
+            </ul>
           </li>
-        
         </ul>
       </div>
-    
     </div>
   </nav>
-</div>
 </header>

@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/ahch")
-@CrossOrigin("http://localhost:4200")
+
 public class AgencyController {
     @Autowired
     private AgencyService agencyService;
@@ -51,6 +51,5 @@ public class AgencyController {
     public Agency updateagency(@RequestBody Agency agency) {
         return agencyService.updateAgency(agency);
     }
-
 
 }

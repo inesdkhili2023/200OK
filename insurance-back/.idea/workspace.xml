@@ -5,22 +5,66 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ab9635e-0de9-4c65-97cf-22720ebfb597" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../ApiGateway_pi/src/main/java/com/example/apigateway/CorsConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../insurance-back-ahmed/.idea/dbnavigator.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../insurance-back-ahmed/src/main/java/com/ahch/service/OtherService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../insurance-back-ahmed/src/main/java/com/ahch/service/ReqRes.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../insurance-back-ahmed/src/main/java/com/ahch/service/UserServiceClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ApiGateway_pi/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../ApiGateway_pi/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ApiGateway_pi/src/main/java/com/example/apigateway/ApiGatewayApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ApiGateway_pi/src/main/java/com/example/apigateway/ApiGatewayApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ApiGateway_pi/src/main/java/com/example/apigateway/CorsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ApiGateway_pi/src/main/java/com/example/apigateway/CorsConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-back-ahmed/src/main/java/com/ahch/controller/AgencyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-back-ahmed/src/main/java/com/ahch/controller/AgencyController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-back-ahmed/target/classes/com/ahch/controller/AgencyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-back-ahmed/target/classes/com/ahch/controller/AgencyController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/config/CorsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/config/CorsConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/config/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/controller/UserManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/controller/UserManagementController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/service/JWTUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/service/JWTUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/service/UsersManagementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/phegondev/usersmanagementsystem/service/UsersManagementService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/phegondev/usersmanagementsystem/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/phegondev/usersmanagementsystem/config/SecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/phegondev/usersmanagementsystem/controller/UserManagementController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/phegondev/usersmanagementsystem/controller/UserManagementController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/phegondev/usersmanagementsystem/service/UsersManagementService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/phegondev/usersmanagementsystem/service/UsersManagementService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/angular.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/node_modules/webpack-dev-server/node_modules/webpack-dev-middleware/types/middleware.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/node_modules/webpack-dev-server/node_modules/webpack-dev-middleware/types/utils/compatibleAPI.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/node_modules/webpack-dev-server/node_modules/webpack-dev-middleware/types/utils/getFilenameFromUrl.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/node_modules/webpack-dev-server/node_modules/webpack-dev-middleware/types/utils/getPaths.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/node_modules/webpack-dev-server/node_modules/webpack-dev-middleware/types/utils/ready.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/node_modules/webpack-dev-server/node_modules/webpack-dev-middleware/types/utils/setupHooks.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/node_modules/webpack-dev-server/node_modules/webpack-dev-middleware/types/utils/setupOutputFileSystem.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/node_modules/webpack-dev-server/node_modules/webpack-dev-middleware/types/utils/setupWriteToDisk.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/node_modules/webpack-dev-server/types/bin/cli-flags.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/node_modules/webpack-dev-server/types/bin/process-arguments.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/node_modules/webpack-dev-server/types/bin/webpack-dev-server.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/node_modules/webpack-dev-server/types/lib/Server.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/node_modules/webpack-dev-server/types/lib/getPort.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/node_modules/webpack-dev-server/types/lib/servers/BaseServer.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/node_modules/webpack-dev-server/types/lib/servers/SockJSServer.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/node_modules/webpack-dev-server/types/lib/servers/WebsocketServer.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/proxy.conf.json" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/proxy.conf.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/app-routing.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/app.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/app.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/app.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/app.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/dashboard-admin/dashboard-admin.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/dashboard-admin/dashboard-admin.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/dashboard-admin/dashboard-admin.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/dashboard-admin/dashboard-admin.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/dashboard-admin/dashboard-admin.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/dashboard-admin/dashboard-admin.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/dashboard-agent/dashboard-agent.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/dashboard-agent/dashboard-agent.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/dashboard/dashboard.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/dashboard/dashboard.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/layouts/admin-layout/admin-layout.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/layouts/admin-layout/admin-layout.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/layouts/user-layout/user-layout.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/layouts/user-layout/user-layout.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/layouts/user-layout/user-layout.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/layouts/user-layout/user-layout.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/layouts/user-layout/user-layout.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/layouts/user-layout/user-layout.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/pages/contact-us/contact-us.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/pages/contact-us/contact-us.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/pages/contact-us/contact-us.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/pages/contact-us/contact-us.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/pages/nav-bar/nav-bar.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/pages/nav-bar/nav-bar.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/pages/nav-bar/nav-bar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/pages/nav-bar/nav-bar.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/pages/nav-bar/nav-bar.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/pages/nav-bar/nav-bar.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/services/insurance.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/services/insurance.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/services/users.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/services/users.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/user/login-attentance/login-attentance.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/user/login-attentance/login-attentance.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/app/user/user-list/user-list.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/app/user/user-list/user-list.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/assets/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../insurance-front/src/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/../insurance-front/src/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,29 +101,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;onsgu&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/user/Downloads/testt/front+back/ApiGateway_pi&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.javacompiler&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.UsersmanagementsystemApplication.executor": "Run",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "integration",
+    "last_opened_file_path": "C:/Users/user/Downloads/testt/front+back/ApiGateway_pi",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>

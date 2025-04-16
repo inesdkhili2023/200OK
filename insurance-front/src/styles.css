@@ -1,68 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
 
-@use "@material/snackbar/mdc-snackbar";
-/* Forcer le snackbar au centre de l'écran */
-.cdk-global-overlay-wrapper {
-    justify-content: center !important;
-    align-items: center !important;
-    display: flex !important;
-  }
-  
-  .cdk-overlay-pane {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-  }
-  
-  /* Design du snackbar personnalisé */
-  .custom-snackbar-overlay {
-    background-color: #fff !important;
-    color: #222 !important;
-    padding: 20px 30px;
-    border-radius: 12px;
-    font-size: 18px;
-    font-weight: 500;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-    text-align: center;
-    min-width: 350px;
-    max-width: 90vw;
-  }
-  
-  /* Boutons dans snackbar */
-  .custom-snackbar-overlay button {
-    font-size: 16px;
-    font-weight: bold;
-    margin: 0 15px;
-  }
-  
-  /* Overlay blur */
-  .cdk-overlay-container::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(6px);
-    z-index: 998; /* moins que le snackbar */
-    pointer-events: none;
-  }
-  
-  .back-dashboard {
-    display: inline-block;
-    color: #FF8000;
-    font-weight: bold;
-    text-decoration: none;
-    margin-bottom: 20px;
-    padding: 20px ;
-    transition: color 0.3s, transform 0.3s;
-    font-size: 16px;
-  }
-  
-  .back-dashboard:hover {
-    color: #e07000;
-    transform: translateX(-3px);
-    text-decoration: underline;
-  }
-  
-  .back-dashboard::before {
-    margin-right: 6px;
-  }
-  
+/* Global styles */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Add any other global styles below */
