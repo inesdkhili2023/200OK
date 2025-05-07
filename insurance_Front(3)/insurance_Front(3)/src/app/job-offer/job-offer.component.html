@@ -1,0 +1,73 @@
+<div class="banner" style="background-image: url('assets/images/carrieres.jpg'); background-size: cover; background-position: center; height: 250px; display: flex; align-items: center; justify-content: center; color: darkblue;">
+</div>
+<section class="breadcrumb">
+  <div class="container">
+    <h2>Carrières</h2>
+    <ul>
+      <li><a routerLink="/joinus">Rejoignez-nous</a> ></li>
+      <li style="color: grey;">Offres d'emploi</li>
+    </ul>
+  </div>
+</section>
+
+
+
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+
+  <h2 class="text-center text-primary m-0 " ><mat-icon>work</mat-icon> Offres d'emploi</h2> <!-- Filtres -->
+  <div class="filter m-0">
+   
+   <button mat-icon-button [matMenuTriggerFor]="filterMenu">
+     <mat-icon>filter_list</mat-icon>
+   </button>
+   <mat-menu #filterMenu="matMenu">
+     <button mat-menu-item (click)="sortJobs('recent')">
+       <mat-icon>arrow_downward</mat-icon> Du plus récent
+     </button>
+     <button mat-menu-item (click)="sortJobs('oldest')">
+       <mat-icon>arrow_upward</mat-icon> Du plus ancien
+     </button>
+   </mat-menu>
+ </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4" *ngFor="let job of paginatedJobOffers">
+      <div class="card shadow-lg rounded-lg bg-light job-card">
+        <div class="card-body">
+          <h5 class="card-title text-primary font-weight-bold">{{job.title}} </h5>
+          <p class="card-subtitle mb-2 text-muted"> Assurances Maghrebia recrute un <strong>{{job.title}}</strong>.</p>
+          <p class="card-text"> {{job.description}}</p>
+          <p class="text-muted"><strong>Référence de l'offre :</strong> {{job.jobOfferId}} </p>
+          <p class="text-muted"><strong>Deadline:</strong> {{ job.applicationDeadline || 'No deadline' }} </p>
+
+        </div>
+        <div class="card-footer d-flex justify-content-between bg-white border-0">
+          <button class="btn btn-dark" (click)="openJobOfferDialog(job)">Lire la suite</button>
+          <button class="btn btn-primary" [routerLink]="['/jobApp', job.jobOfferId]">Postuler</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  <mat-paginator [length]="jobOffers.length"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="[6, 12, 18]"
+  showFirstLastButtons></mat-paginator>
+</div>
+<!-- Pagination -->
+
+<!--<div *ngIf="showForm" class="modal fade show d-block" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">Postuler pour : {{ selectedJob?.title }}</h5>
+        <button type="button" class="close text-white" (click)="closeForm()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <app-job-application-form [selectedJob]="selectedJob" (formClosed)="closeForm()">
+        </app-job-application-form>
+      </div>
+    </div>
+  </div>
+</div>-->

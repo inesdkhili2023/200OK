@@ -1,0 +1,59 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header bg-success text-white">
+          <h3 class="mb-0">create  Insurance</h3>
+        </div>
+        <div class="card-body">
+          <form (ngSubmit)="createInsurance()" #insuranceForm="ngForm">
+            <div class="form-group mb-3">
+              <label for="newType">Type: *</label>
+              <input type="text" id="newType" class="form-control" 
+                     [ngClass]="{
+                       'is-invalid': submitted && formErrors.insuranceType,
+                       'is-valid': submitted && !formErrors.insuranceType && newInsurance.insuranceType
+                     }"
+                     [(ngModel)]="newInsurance.insuranceType" name="newType" required #typeInput="ngModel">
+              <div class="invalid-feedback" *ngIf="submitted && formErrors.insuranceType">
+                {{ formErrors.insuranceType }}
+              </div>
+              <div class="valid-feedback" *ngIf="submitted && !formErrors.insuranceType && newInsurance.insuranceType">
+                Type is valid!
+              </div>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="newStartDate">Start Date: *</label>
+              <input type="date" id="newStartDate" class="form-control" 
+                     [ngClass]="{
+                       'is-invalid': submitted && formErrors.startDate,
+                       'is-valid': submitted && !formErrors.startDate && newInsurance.startDate
+                     }"
+                     [(ngModel)]="newInsurance.startDate" name="newStartDate" required>
+              <div class="invalid-feedback" *ngIf="submitted && formErrors.startDate">
+                {{ formErrors.startDate }}
+              </div>
+              <div class="valid-feedback" *ngIf="submitted && !formErrors.startDate && newInsurance.startDate">
+                Start date is valid!
+              </div>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="newEndDate">End Date: *</label>
+              <input type="date" id="newEndDate" class="form-control" 
+                     [ngClass]="{
+                       'is-invalid': submitted && formErrors.endDate,
+                       'is-valid': submitted && !formErrors.endDate && newInsurance.endDate
+                     }"
+                     [(ngModel)]="newInsurance.endDate" name="newEndDate" required>
+              <div class="invalid-feedback" *ngIf="submitted && formErrors.endDate">
+                {{ formErrors.endDate }}
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

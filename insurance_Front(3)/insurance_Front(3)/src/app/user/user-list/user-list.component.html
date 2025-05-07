@@ -1,0 +1,93 @@
+<div class="container">
+  <h2>Liste d'tilisateurs</h2>
+  <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+
+  <!-- Barre de recherche -->
+  <div class="search-bar">
+    <input type="text" [(ngModel)]="searchQuery" (input)="filterUsers()" placeholder="Rechercher un utilisateur..." />
+  </div>
+  <button routerLink="/admin/register" class="reg-button">Ajouter un utilisateur</button>
+  <ng-container *ngTemplateOutlet="userTable; context: {
+        title: '👤 Utilisateurs',
+        users: paginatedUsers,
+        page: usersPage,
+        total: totalPagesUsers,
+        changePage: changePageUsers
+      }"></ng-container>
+  <ng-container *ngTemplateOutlet="userTable; context: {
+        title: '🛡️ Administrateurs',
+        users: paginatedAdmins,
+        page: adminsPage,
+        total: totalPagesAdmins,
+        changePage: changePageAdmins
+      }"></ng-container>
+  <ng-container *ngTemplateOutlet="userTable; context: {
+        title: '🧑‍💼 Agents',
+        users: paginatedAgents,
+        page: agentsPage,
+        total: totalPagesAgents,
+        changePage: changePageAgents
+      }"></ng-container>
+
+
+
+
+
+  <!-- Tableau des utilisateurs -->
+  <ng-template #userTable let-title="title" let-users="users" let-page="page" let-total="total"
+    let-changePage="changePage">
+    <h3>{{ title }}</h3>
+
+    <table *ngIf="users.length > 0">
+      <thead>
+        <tr>
+
+          <th>Prénom</th>
+          <th>Nom</th>
+          <th>Date de naissance</th>
+          <th>CIN</th>
+          <th>Email</th>
+          <th>Civilité</th>
+          <th>Ville</th>
+          <th>Image</th>
+          <th>Rôle</th>
+          <th>Status</th>
+          <th>Modifier</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+
+          <td>{{ user.name }}</td>
+          <td>{{ user.lastname }}</td>
+          <td>{{ user.dnaiss }}</td>
+          <td>{{ user.cin }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.civility }}</td>
+          <td>{{ user.city }}</td>
+          <td>
+            <img *ngIf="user.image" [src]="'http://localhost:8093/user-service/uploads/' + user.image"
+              alt="Image utilisateur" class="user-avatar" />
+          <td>{{ user.role }}</td>
+          <td>
+            <button [ngClass]="user.enabled ? 'status-button active' : 'status-button blocked'"
+              (click)="toggleUserStatus(user)">
+              {{ user.enabled ? '🟢 Activé' : '🔴 Bloqué' }}
+            </button>
+          </td>
+          <td><button class="update-button" (click)="navigateToUpdate(user.id)">Modifier</button></td>
+
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pagination-controls" *ngIf="users.length > 0">
+      <button (click)="changePage('prev')">Précédent</button>
+      <span>Page {{ page }} / {{ total }}</span>
+      <button (click)="changePage('next')">Suivant</button>
+    </div>
+  </ng-template>
+
+  <a routerLink="/dashboard" *ngIf="isUser"><- dashboard</a>
+</div>

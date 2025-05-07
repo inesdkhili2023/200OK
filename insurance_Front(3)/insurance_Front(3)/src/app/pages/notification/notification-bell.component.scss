@@ -1,0 +1,172 @@
+.notification-container {
+  position: relative;
+  display: inline-block;
+}
+
+.notification-bell {
+  cursor: pointer;
+  position: relative;
+  padding: 8px;
+  
+  i {
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .notification-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #e74c3c;
+    color: white;
+    border-radius: 50%;
+    min-width: 18px;
+    height: 18px;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    padding: 0 5px;
+  }
+}
+
+.notification-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 320px;
+  max-height: 400px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  overflow: hidden;
+  animation: fadeIn 0.2s ease-in-out;
+  
+  .notification-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    .notification-title {
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+    
+    .mark-all-read {
+      background: none;
+      border: none;
+      color: #3498db;
+      cursor: pointer;
+      font-size: 0.85rem;
+      
+      &:disabled {
+        color: #ccc;
+        cursor: default;
+      }
+    }
+  }
+  
+  .notification-list {
+    max-height: 340px;
+    overflow-y: auto;
+    
+    .notification-item {
+      padding: 12px 16px;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      
+      &:hover {
+        background-color: #f9f9f9;
+      }
+      
+      &.unread {
+        background-color: #f0f7ff;
+        
+        &:hover {
+          background-color: #e6f2ff;
+        }
+        
+        .notification-icon i {
+          color: #3498db;
+        }
+      }
+      
+      .notification-content {
+        display: flex;
+        align-items: flex-start;
+        
+        .notification-icon {
+          margin-right: 12px;
+          min-width: 24px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          
+          i {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+          }
+        }
+        
+        .notification-message {
+          flex: 1;
+          
+          .message-text {
+            color: #333;
+            
+            .policy-number {
+              color: #3498db;
+              font-weight: bold;
+            }
+          }
+          
+          .notification-time {
+            font-size: 0.8rem;
+            color: #999;
+            margin-top: 4px;
+          }
+        }
+      }
+    }
+  }
+  
+  .notification-empty {
+    padding: 24px;
+    text-align: center;
+    color: #999;
+    
+    i {
+      font-size: 2rem;
+      margin-bottom: 8px;
+      display: block;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.agent-badge {
+  font-size: 0.7rem;
+  padding: 2px 4px;
+  background-color: #e9ecef;
+  color: #495057;
+  border-radius: 3px;
+  display: inline-block;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  font-weight: bold;
+} 

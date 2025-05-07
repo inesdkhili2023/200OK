@@ -1,0 +1,230 @@
+<section class="breadcrumb">
+  <div class="container">
+    <h2>Dashboard Admin</h2>
+    <ul>
+      <li><a routerLink="/admin/dashboard">Dashboard</a> ></li>
+      <li>Candidatures</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Card Header -->
+<div class="card-header bg-primary text-white">
+ <!-- <h2 class="mb-0">Gestion des candidatures</h2>-->
+</div>
+
+<!-- Statistiques -->
+<div class="card mb-4">
+  <div class="card-header bg-light">
+   <!-- <h4 class="mb-0">Statistiques des candidatures</h4>-->
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <!-- Total Candidatures -->
+      <div class="col-md-3">
+        <div class="stat-item">
+          <mat-icon class="stat-icon" style="color:  #007bff;">group</mat-icon>
+
+          <h5>Total Candidatures</h5>
+          <p>{{ totalApplications }}</p>
+        </div>
+      </div>
+
+      <!-- En attente -->
+      <div class="col-md-3">
+        <div class="stat-item en-attente">
+          <mat-icon class="stat-icon" style="color: #f39c12;;">hourglass_empty</mat-icon>
+
+          <h5>En Attente</h5>
+          <p>{{ statusCounts['ON_HOLD'] }}</p>
+        </div>
+      </div>
+
+      <!-- Acceptées -->
+      <div class="col-md-3">
+        <div class="stat-item acceptees">
+          <mat-icon class="stat-icon" style="color:#28a745; ;">check_circle</mat-icon>
+
+          <h5>Acceptées</h5>
+          <p>{{ statusCounts['ACCEPTED'] }}</p>
+        </div>
+      </div>
+
+      <!-- Refusées -->
+      <div class="col-md-3">
+        <div class="stat-item refusees">
+          <mat-icon class="stat-icon" style="color:#dc3545 ;">cancel</mat-icon>
+
+          <h5>Refusées</h5>
+          <p>{{ statusCounts['REFUSED'] }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Card -->
+<mat-card class="trinta-card leads-report-card mb-25 bg-white border-none d-block">
+  <mat-card-content>
+    
+    <!-- Search & Filters -->
+    <div class="filters-container">
+      <mat-form-field appearance="outline" class="search full-width">
+        <mat-label>Rechercher une candidature</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Rechercher par nom, email...">
+      </mat-form-field>
+
+      <!-- Filtrer par statut -->
+      <mat-form-field appearance="outline" class="filter">
+        <mat-label>Statut</mat-label>
+        <mat-select [(ngModel)]="selectedStatus" (selectionChange)="applyFilter2()">
+          <mat-option value="">Tous</mat-option>
+          <mat-option value="ON_HOLD">En attente</mat-option>
+          <mat-option value="ACCEPTED">Accepté</mat-option>
+          <mat-option value="REFUSED">Refusé</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Filtrer par date -->
+    
+    </div>
+
+    <!-- Table -->
+    <div class="table-responsive">
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+        <!-- Nom -->
+        <ng-container matColumnDef="firstName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Prénom </th>
+          <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+        </ng-container>
+
+        <!-- Prénom -->
+        <ng-container matColumnDef="lastName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
+          <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+        </ng-container>
+
+        <!-- Email -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+          <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+        </ng-container>
+
+        <!-- Téléphone -->
+        <ng-container matColumnDef="phone">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Téléphone </th>
+          <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+        </ng-container>
+
+        <!-- Date de candidature -->
+        <ng-container matColumnDef="appliedAt">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Date de candidature </th>
+          <td mat-cell *matCellDef="let element"> {{element.appliedAt | date:'dd/MM/yyyy'}} </td>
+        </ng-container>
+
+<!-- Score de compatibilité 
+<ng-container matColumnDef="compatibilityScore">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header> Score de compatibilité </th>
+  <td mat-cell *matCellDef="let element">
+    <div class="score-container">
+      <strong>{{ calculateCompatibilityScore(element.jobOffer, element) }}%</strong>
+      <mat-progress-bar mode="determinate" [value]="calculateCompatibilityScore(element.jobOffer, element)"></mat-progress-bar>
+    </div>
+  </td>
+</ng-container>-->
+
+  <!-- Match Score Column -->
+  <ng-container matColumnDef="match_score">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Matching Score</th>
+    <td mat-cell *matCellDef="let element">
+      <div class="score-container">
+        <button mat-button color="primary" (click)="toggleScoreVisibility(element)">
+          {{ element.showScore ? 'Cacher Score' : 'Voir Score' }}
+        </button>
+
+        <div *ngIf="element.showScore" class="score-details">
+          <ng-container *ngIf="isLoadingScores">
+            <span>Chargement...</span>
+          </ng-container>
+          
+          <ng-container *ngIf="!isLoadingScores">
+            <ng-container *ngIf="element.match_score !== null && element.match_score !== undefined; else notCalculated">
+              <strong>{{ element.match_score }}%</strong>
+              <mat-progress-bar mode="determinate" [value]="element.match_score"></mat-progress-bar>
+            </ng-container>
+            
+            <ng-template #notCalculated>
+              <em>Score non calculé</em>
+              <p *ngIf="!element.jobOffer" class="small-text">
+                (Pas d'offre associée)
+              </p>
+            </ng-template>
+          </ng-container>
+        </div>
+      </div>
+    </td>
+  </ng-container>
+  
+
+        <!-- Statut -->
+        <ng-container matColumnDef="applicationStatus">
+          <th mat-header-cell *matHeaderCellDef> Statut </th>
+          <td mat-cell *matCellDef="let element">
+            <!-- Badge cliquable qui ouvre le menu -->
+            <span [matMenuTriggerFor]="menu" class="status-badge" [ngClass]="getStatusClass(element.applicationStatus)">
+              {{ getStatusLabel(element.applicationStatus) }}
+            </span>
+        
+            <!-- Menu déroulant contenant les statuts -->
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item *ngFor="let status of statusList" (click)="updateApplicationStatus(element.jobApplicationId, status.value)">
+                <span class="status-badge" [ngClass]="getStatusClass(status.value)">
+                  {{ status.label }}
+                </span>
+              </button>
+            </mat-menu>
+          </td>
+        </ng-container>
+        
+        
+        <!-- Résumé -->
+<ng-container matColumnDef="resume">
+  <th mat-header-cell *matHeaderCellDef> CV </th>
+  <td mat-cell *matCellDef="let element">
+    <button mat-button color="primary" (click)="voirCV(element.resume)">
+      <mat-icon>picture_as_pdf</mat-icon> Voir le CV
+    </button>
+  </td>
+</ng-container>
+
+
+        <!-- Actions -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button (click)="viewApplication(element)">
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteApplication(element.jobApplicationId)">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <!-- NEW: Button to calculate matching score -->
+   
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"(click)="onRowClick(row)" 
+        [ngClass]="{ 'selected-row': selectedRowIndex === row?.jobApplicationId }"></tr>
+
+      </table>
+    </div>
+
+
+
+  </mat-card-content>
+</mat-card>
+<!-- Pagination -->
+<mat-paginator [pageSizeOptions]="[5, 10, 15]"  showFirstLastButtons></mat-paginator>
+

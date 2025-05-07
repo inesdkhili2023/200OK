@@ -1,0 +1,209 @@
+.container {
+    max-width: 1500px;
+    margin: 20px auto;
+    padding: 20px;
+    padding-top: 30px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-top: 20px; /* Décale tout le contenu sous le navbar */
+}
+.banner {
+  background-image: url('/assets/images/carrieres.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin-top: 20px;
+  position: relative;
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+}
+.breadcrumb ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 16px;
+  color: #666;
+}
+/* Breadcrumb */
+.breadcrumb {
+  background-color: #f8f9fa;
+  padding: 10px;
+  text-align: center;
+  margin-top: -5px;
+}
+
+.google-btn{
+  margin-left: 5px;
+  margin-top: 20px;
+    padding: 12px 20px;
+    font-size: 16px;
+    background: orange;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.breadcrumb li {
+  display: inline;
+  margin-right: 5px;
+  color: #ff8c00;
+}
+.schedule-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px; /* Space between elements */
+}
+
+/* Weather Widget Styling */
+.weather-widget {
+  flex: 1;
+  max-width: 250px; /* Adjust width as needed */
+}
+
+/* Calendar Section Styling */
+.calendar-section {
+  flex: 2;
+  width: 100%;
+}
+
+h2 {
+    color: #333;
+    
+}
+
+.time {
+    padding: 10px 15px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.time:hover {
+    background: #28a745;
+    color: white;
+}
+
+.confirm-btn {
+    margin-top: 20px;
+    padding: 12px 20px;
+    font-size: 16px;
+    background: orange;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+/* Styles pour Angular Material 16+ */
+.mdc-snackbar__surface {
+  background-color: var(--mdc-snackbar-container-color) !important;
+}
+
+.error-snackbar {
+  --mdc-snackbar-container-color: #f44336;
+  --mat-mdc-snack-bar-button-color: #fff;
+  --mdc-snackbar-supporting-text-color: #fff;
+}
+
+.success-snackbar {
+  --mdc-snackbar-container-color: #4caf50;
+  --mat-mdc-snack-bar-button-color: #fff;
+  --mdc-snackbar-supporting-text-color: #fff;
+}
+
+.confirm-btn:hover {
+    background: #28a745;
+}
+.time-slots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .time-slots button {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .time-slots button:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .selected-time {
+    background-color: #007bff !important;
+    color: white !important;
+    border: 2px solid #0056b3;
+  }
+  .time-btn {
+    padding: 10px 15px;
+    margin: 5px;
+    cursor: pointer;
+    border: 1px solid #007bff;
+    background-color: white;
+    border-radius: 5px;
+    font-size: 14px; /* Make the font size consistent with other elements */
+    color: #007bff; /* Set the text color to match the border */
+    transition: all 0.3s ease-in-out;
+}
+
+.time-btn:hover {
+    background-color: #f0f0f0;
+    color: #0056b3; /* Change text color on hover */
+}
+
+.time-btn:active {
+    background-color: #007bff;
+    color: white; /* Make the button background blue when clicked */
+}
+.time-slots button {
+    margin: 5px;
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  .time-slots button.selected {
+    background-color: #2196F3;
+    color: white;
+  }
+  
+  .time-slots button:disabled {
+    background-color: #ccc;
+    color: #666;
+  }
+  .time-btn:disabled {
+    background-color: #e0e0e0;
+    cursor: not-allowed;
+  }
+  .confirm-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+ 
+  
+  .time-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #ccc;
+  }
+  
+  .selected-time {
+    background-color: #007bff;
+    color: white;
+  }
+  

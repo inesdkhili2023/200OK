@@ -1,0 +1,46 @@
+<div class="packs-container">
+  <h1 class="main-title">Nos Packs d'Assurance Habitation</h1>
+  <p class="subtitle">Choisissez la protection qui correspond à vos besoins</p>
+
+  <div class="packs-grid">
+    <mat-card *ngFor="let pack of packs" class="pack-card">
+      <div class="pack-header">
+        <h2>Pack {{ pack.name }}</h2>
+      </div>
+
+      <mat-card-content>
+        <p class="pack-description">{{ pack.description }}</p>
+        
+        <div class="price-section">
+          <div class="standard-price">
+            <span class="price-amount">{{ pack.price }}</span>
+            <span class="price-currency">dt/mois</span>
+          </div>
+          <div *ngIf="pack.greenPrice" class="green-price">
+            À {{ pack.greenPrice }} dt/mois pour une habitation verte
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <h3 class="garanties-title">Garanties incluses :</h3>
+        <div class="garanties-list">
+          <div *ngFor="let garantie of pack.garanties" class="garantie-item">
+            <mat-icon class="check-icon">check_circle</mat-icon>
+            <div class="garantie-content">
+              <div class="garantie-title">{{ garantie.title }}</div>
+              <div class="garantie-limit">{{ garantie.limit }}</div>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="openInsuranceForm(pack)" class="discover-btn">
+          Je Découvre
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

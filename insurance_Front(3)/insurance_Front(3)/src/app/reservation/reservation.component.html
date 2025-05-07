@@ -1,0 +1,39 @@
+<body>
+  <div class="banner" style="background-image: url('/assets/images/agenda.jpg'); background-size: cover; background-position: center; height: 250px;  align-items: center; justify-content: center;margin-top: -40px;">
+  </div>
+  
+  <section class="breadcrumb" >
+    <div>
+      <h2>Réservation</h2>
+      <ul>
+        <li>Accueil > </li>
+        <li>Réservation</li>
+      </ul>
+    </div>
+  </section>
+  
+  <div class="container">
+    <h2 style="margin-left: 30px;">Planning des Rendez-vous</h2>
+  
+    <div class="schedule-container">
+      <!-- Weather App -->
+      <app-weather class="weather-widget"></app-weather>
+  
+      <!-- Calendar -->
+      <div class="calendar-section">
+        <full-calendar [options]="calendarOptions"></full-calendar>
+  
+        <div *ngIf="selectedDate">
+          <h3>Heures disponibles pour le {{ selectedDate }}</h3>
+          <button *ngFor="let time of availableTimes; let i = index"
+                  class="time-btn" [disabled]="isSlotDisabled(time)"
+                  [ngClass]="{'selected-time': isSlotSelected(i)}"
+                  (click)="onTimeSelect(time)">      {{ time }}
+          </button>
+        </div>
+  
+        <button class="confirm-btn" (click)="confirmReservation()" [disabled]="!selectedDate || !selectedTime">Confirmer la réservation</button>
+       <!--  <button class="google-btn" (click)="signIn()">Se connecter avec Google</button>-->
+      </div>
+    </div>
+  </div>

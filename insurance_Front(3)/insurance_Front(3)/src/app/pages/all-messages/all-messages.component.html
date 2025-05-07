@@ -1,0 +1,91 @@
+<div class="all-messages-container">
+  <div class="page-header">
+    <h2>All Agents Messages</h2>
+    <div class="action-buttons">
+      <button class="btn btn-primary" (click)="refreshMessages()">
+        <i class="fas fa-sync-alt"></i> Refresh
+      </button>
+      <button class="btn btn-secondary" (click)="clearFilters()">
+        <i class="fas fa-filter-circle-xmark"></i> Clear Filters
+      </button>
+    </div>
+  </div>
+
+  <div class="filters-container">
+    <div class="filter-group">
+      <label for="agent-filter">Agent:</label>
+      <select id="agent-filter" class="form-select" [(ngModel)]="agentFilter" (change)="applyFilters()" aria-label="Filter by agent">
+        <option value="all">All Agents</option>
+        <option *ngFor="let agentId of uniqueAgentIds" [value]="agentId">
+          Agent #{{ agentId }}
+        </option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label for="type-filter">Message Type:</label>
+      <select id="type-filter" class="form-select" [(ngModel)]="messageTypeFilter" (change)="applyFilters()" aria-label="Filter by message type">
+        <option value="all">All Types</option>
+        <option value="text">Message</option>
+        <option value="request">Request</option>
+        <option value="status">Status</option>
+        <option value="notification">Notification</option>
+      </select>
+    </div>
+
+    <div class="filter-group search-group">
+      <label for="search-input">Search:</label>
+      <div class="search-input-container">
+        <input id="search-input" type="text" class="form-control" [(ngModel)]="searchTerm" (input)="applyFilters()" placeholder="Search in messages...">
+        <i class="fas fa-search search-icon"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="messages-list">
+    <div class="messages-count">
+      Displaying {{ filteredMessages.length }} of {{ allMessages.length }} messages
+    </div>
+
+    <div class="messages-table-container">
+      <table class="table messages-table">
+        <thead>
+          <tr>
+            <th>Agent</th>
+            <th>Type</th>
+            <th>Content</th>
+            <th>Timestamp</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let message of filteredMessages" [class.current-agent]="isCurrentAgent(message.senderId)">
+            <td>
+              <span class="agent-badge">
+                {{ message.senderName || 'Agent #' + message.senderId }}
+              </span>
+              <span *ngIf="message.receiverId" class="receiver-info">
+                → {{ 'Agent #' + message.receiverId }}
+              </span>
+            </td>
+            <td>
+              <span class="badge" 
+                    [ngClass]="{'badge-primary': message.type === 'text', 
+                               'badge-success': message.type === 'status',
+                               'badge-warning': message.type === 'request',
+                               'badge-info': message.type === 'notification'}">
+                {{ getMessageTypeLabel(message.type) }}
+              </span>
+            </td>
+            <td>{{ message.content }}</td>
+            <td>{{ formatDate(message.timestamp) }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="no-messages" *ngIf="filteredMessages.length === 0">
+      <i class="fas fa-comments-alt-slash"></i>
+      <p>No messages match your current filters.</p>
+    </div>
+  </div>
+</div> 

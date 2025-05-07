@@ -1,0 +1,103 @@
+.dialog-title {
+  margin-left: 20px;
+  font-weight: bold;
+  font-size: 24px;
+  margin-top:160px;
+
+}
+
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.close-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+button {
+  min-width: 50px;
+}
+
+
+
+mat-form-field {
+  margin-bottom: 16px;
+}
+
+mat-error {
+  font-size: 12px;
+  color: #f44336;
+}
+
+mat-select, mat-datepicker {
+  width: 100%;
+}
+
+
+
+
+.mat-dialog-container {
+  display: flex;
+  overflow-y: auto;
+}
+
+
+
+.dialog-actions {
+  flex-wrap: wrap;
+  position: sticky;
+  bottom: 0;
+  background: white;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Ajoute une ombre pour le démarquer */
+}
+/* Animation d'apparition du dialogue */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.mat-dialog-container {
+  display: flex;
+  overflow-y: auto;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Animation pour les champs de formulaire */
+mat-form-field {
+  opacity: 0;
+  transform: translateY(-10px);
+  animation: slideIn 0.4s ease-out forwards;
+}
+
+/* Défilement fluide des champs */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animation des boutons */
+button {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+

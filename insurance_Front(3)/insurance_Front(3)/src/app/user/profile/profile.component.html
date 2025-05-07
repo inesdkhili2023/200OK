@@ -1,0 +1,32 @@
+<div class="profile-container">
+    <div class="profile-card">
+      <div class="profile-header">
+        <img *ngIf="profileInfo?.ourUsers?.image"
+             [src]="profileInfo.ourUsers.image"
+             alt="Image de profil"
+             class="profile-image">
+      </div>
+  
+      <div class="profile-body">
+        <h2>👤 Mon Profil</h2>
+  
+        <div class="profile-info">
+          <p><span class="label">Prénom :</span> {{ profileInfo?.ourUsers?.name }}</p>
+          <p><span class="label">Nom :</span> {{ profileInfo?.ourUsers?.lastname }}</p>
+          <p><span class="label">Date de naissance :</span> {{ profileInfo?.ourUsers?.dnaiss | date:'yyyy-MM-dd' }}</p>
+          <p><span class="label">CIN :</span> {{ profileInfo?.ourUsers?.cin }}</p>
+          <p><span class="label">Email :</span> {{ profileInfo?.ourUsers?.email }}</p>
+          <p><span class="label">Civilité :</span> {{ profileInfo?.ourUsers?.civility }}</p>
+          <p><span class="label">Ville :</span> {{ profileInfo?.ourUsers?.city }}</p>
+          <p *ngIf="isAdmin"><span class="label">Rôle :</span> {{ profileInfo?.ourUsers?.role }}</p>
+        </div>
+  
+        <button class="update-btn" (click)="updateProfile(profileInfo?.ourUsers?.id)">
+          ✏️ Mettre à jour mes infos
+        </button>
+  
+        
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,72 @@
+.conversations-list {
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+}
+
+.conversation-item {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.conversation-item:hover {
+  background-color: rgba(0, 123, 255, 0.05);
+}
+
+.conversation-item.active {
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+.chat-messages {
+  height: calc(100vh - 138px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.message {
+  display: flex;
+  max-width: 80%;
+}
+
+.user-message {
+  align-self: flex-start;
+}
+
+.admin-message {
+  align-self: flex-end;
+}
+
+.message-content {
+  padding: 10px 15px;
+  border-radius: 10px;
+  margin: 2px 0;
+}
+
+.user-message .message-content {
+  background-color: #f1f1f1;
+}
+
+.admin-message .message-content {
+  background-color: #007bff;
+  color: white;
+}
+
+.admin-message .message-time {
+  text-align: right;
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.chat-placeholder {
+  background-color: #f8f9fa;
+  height: 100%;
+}
+
+.message-text {
+  word-break: break-word;
+}
+
+@media (max-width: 767.98px) {
+  .conversations-list, .chat-messages {
+    height: 50vh;
+  }
+} 

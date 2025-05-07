@@ -1,0 +1,429 @@
+<section class="contact-us">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-10">
+          <!-- Sinister List Card -->
+          <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+              <h2 class="mb-0">Sinisters</h2>
+            </div>
+            <div class="card-body">
+              <table class="table table-striped table-bordered">
+                <thead>
+                  <tr>
+                    <th>Accident Date</th>
+                    <th>Client ID</th>
+                    <th>Declaration Date</th>
+                    <th>Location</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Attachment</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let sinister of sinisters">
+                    <td>{{ sinister.dateAccident | date }}</td>
+                    <td>{{ sinister.idClient }}</td>
+                    <td>{{ sinister.dateDeclaration | date }}</td>
+                    <td>{{ sinister.accidentLocation }}</td>
+                    <td>{{ sinister.typeSinister }}</td>
+                    <td>{{ sinister.description }}</td>
+                    <td>{{ sinister.status }}</td>
+                    <td>
+                      <button *ngIf="sinister.attachmentPath" 
+                              class="btn btn-sm btn-info" 
+                              (click)="viewFile(sinister.attachmentPath)">
+                        <i class="fas fa-file"></i> View File
+                      </button>
+                      <span *ngIf="!sinister.attachmentPath">No file</span>
+                    </td>
+                    <td>
+                      <div class="action-buttons">
+                        <button class="btn btn-sm btn-warning me-1 mini-btn" (click)="editSinister(sinister)">
+                          <i class="fas fa-edit"></i> Edit
+                        </button>
+                        <button class="btn btn-sm btn-warning mini-btn" (click)="deleteSinister(sinister.sinisterId!)">
+                          <i class="fas fa-trash-alt"></i> Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+          <!-- Create Form Card -->
+          <div *ngIf="!isEditing; else editForm">
+            <div class="card">
+              <div class="card-header bg-success text-white">
+                <h3 class="mb-0">Add Sinister</h3>
+              </div>
+              <div class="card-body">
+                <form (ngSubmit)="createSinister()">
+                  <div class="form-group mb-3">
+                    <label for="newAccidentDate">Accident Date: *</label>
+                    <input type="date" id="newAccidentDate" class="form-control"
+                           [(ngModel)]="newSinister.dateAccident" name="newAccidentDate" required>
+                    <div class="text-danger" *ngIf="submitted && formErrors.dateAccident">{{ formErrors.dateAccident }}</div>
+                  </div>
+  
+                  <div class="form-group mb-3">
+                    <label for="newDeclarationDate">Declaration Date: *</label>
+                    <input type="date" id="newDeclarationDate" class="form-control"
+                           [(ngModel)]="newSinister.dateDeclaration" name="newDeclarationDate" required>
+                    <div class="text-danger" *ngIf="submitted && formErrors.dateDeclaration">{{ formErrors.dateDeclaration }}</div>
+                  </div>
+  
+                  <div class="form-group mb-3">
+                    <label for="newLocation">Location: *</label>
+                    <div class="input-group">
+                      <input type="text" id="newLocation" class="form-control"
+                             [(ngModel)]="newSinister.accidentLocation" name="newLocation" required>
+                      <button type="button" class="btn btn-secondary" (click)="openMap('new')">
+                        <i class="fas fa-map-marker-alt"></i> Show Map
+                      </button>
+                    </div>
+                    <div class="text-danger" *ngIf="submitted && formErrors.accidentLocation">{{ formErrors.accidentLocation }}</div>
+                  </div>
+  
+                  <div class="form-group mb-3">
+                    <label for="newType">Type: *</label>
+                    <select id="newType" class="form-control"
+                            [(ngModel)]="newSinister.typeSinister" 
+                            name="newType" required>
+                        <option *ngFor="let type of sinisterTypes" [value]="type">
+                            {{type}}
+                        </option>
+                    </select>
+                    <div class="text-danger" *ngIf="submitted && formErrors.typeSinister">{{ formErrors.typeSinister }}</div>
+                  </div>
+  
+                  <div class="form-group mb-3">
+                    <label for="newDescription">Description: *</label>
+                    <textarea id="newDescription" class="form-control" rows="3"
+                            [(ngModel)]="newSinister.description" name="newDescription" required></textarea>
+                    <div class="text-danger" *ngIf="submitted && formErrors.description">{{ formErrors.description }}</div>
+                  </div>
+
+                  <!-- New idClient input -->
+                  <div class="form-group mb-3">
+                    <label for="newIdClient">Client ID: *</label>
+                    <input type="number" id="newIdClient" class="form-control"
+                           [(ngModel)]="newSinister.idClient" name="newIdClient" required>
+                  </div>
+
+                  <div class="form-group mb-3">
+                    <label for="newAttachment">Attachment:</label>
+                    <input type="file" 
+                           id="newAttachment" 
+                           class="form-control"
+                           (change)="onFileSelected($event)"
+                           accept=".pdf,.jpg,.jpeg,.png">
+                    <small class="form-text text-muted" *ngIf="selectedFile">
+                      Selected file: {{ selectedFile.name }}
+                    </small>
+                  </div>
+  
+                  <button type="submit" class="btn btn-success">Create</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Edit Form Template -->
+          <ng-template #editForm>
+            <div class="card">
+              <div class="card-header bg-warning text-dark">
+                <h3 class="mb-0">Edit Sinister</h3>
+              </div>
+              <div class="card-body">
+                <form (ngSubmit)="updateSinister()">
+                  <div class="form-group mb-3">
+                    <label for="editAccidentDate">Accident Date: *</label>
+                    <input type="date" id="editAccidentDate" class="form-control"
+                           [(ngModel)]="selectedSinister.dateAccident" name="editAccidentDate" required>
+                    <div class="text-danger" *ngIf="editSubmitted && formErrors.dateAccident">{{ formErrors.dateAccident }}</div>
+                  </div>
+  
+                  <div class="form-group mb-3">
+                    <label for="editDeclarationDate">Declaration Date: *</label>
+                    <input type="date" id="editDeclarationDate" class="form-control"
+                           [(ngModel)]="selectedSinister.dateDeclaration" name="editDeclarationDate" required>
+                    <div class="text-danger" *ngIf="editSubmitted && formErrors.dateDeclaration">{{ formErrors.dateDeclaration }}</div>
+                  </div>
+  
+                  <div class="form-group mb-3">
+                    <label for="editLocation">Location: *</label>
+                    <div class="input-group">
+                      <input type="text" id="editLocation" class="form-control"
+                             [(ngModel)]="selectedSinister.accidentLocation" name="editLocation" required>
+                      <button type="button" class="btn btn-secondary" (click)="openMap('edit')">
+                        <i class="fas fa-map-marker-alt"></i> Show Map
+                      </button>
+                    </div>
+                    <div class="text-danger" *ngIf="editSubmitted && formErrors.accidentLocation">{{ formErrors.accidentLocation }}</div>
+                  </div>
+  
+                  <div class="form-group mb-3">
+                    <label for="editType">Type: *</label>
+                    <select id="editType" class="form-control"
+                            [(ngModel)]="selectedSinister.typeSinister" 
+                            name="editType" required>
+                        <option *ngFor="let type of sinisterTypes" [value]="type">
+                            {{type}}
+                        </option>
+                    </select>
+                    <div class="text-danger" *ngIf="editSubmitted && formErrors.typeSinister">{{ formErrors.typeSinister }}</div>
+                  </div>
+  
+                  <div class="form-group mb-3">
+                    <label for="editDescription">Description: *</label>
+                    <textarea id="editDescription" class="form-control" rows="3"
+                            [(ngModel)]="selectedSinister.description" name="editDescription" required></textarea>
+                    <div class="text-danger" *ngIf="editSubmitted && formErrors.description">{{ formErrors.description }}</div>
+                  </div>
+
+                  <div class="form-group mb-3">
+                    <label for="attachment">Attachment:</label>
+                    <input 
+                      type="file" 
+                      id="attachment" 
+                      class="form-control"
+                      (change)="onFileSelected($event)"
+                      accept=".pdf,.jpg,.jpeg,.png"
+                    >
+                    <small class="form-text text-muted" *ngIf="selectedFile">
+                      Selected file: {{ selectedFile.name }}
+                    </small>
+                  </div>
+  
+                  <div class="d-flex justify-content-between mt-3">
+                    <button type="submit" class="btn btn-warning">Update</button>
+                    <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div class="modal" [ngClass]="{'show d-block': showMap, 'd-none': !showMap}" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Select Location on Map</h5>
+            <button type="button" class="btn-close" (click)="showMap = false"></button>
+          </div>
+          <div class="modal-body p-0">
+            <app-map-location
+              *ngIf="showMap"
+              (locationSelected)="onLocationSelected($event)">
+            </app-map-location>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-backdrop fade show" *ngIf="showMap"></div>
+
+    <!-- Delete Confirmation Dialog -->
+    <div class="custom-dialog-overlay" *ngIf="showDeleteDialog">
+      <div class="custom-dialog">
+        <div class="dialog-content">
+          <div class="dialog-icon">
+            <i class="fas fa-exclamation-triangle text-warning"></i>
+          </div>
+          <h4>Confirm Deletion</h4>
+          <p>Are you sure you want to delete this sinister?</p>
+          <div class="dialog-actions">
+            <button class="btn btn-secondary" (click)="cancelDelete()">Cancel</button>
+            <button class="btn btn-warning text-white" (click)="confirmDelete()">
+              <i class="fas fa-trash-alt"></i> Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Delete Alert -->
+    <div class="custom-alert" *ngIf="showDeleteSuccess">
+      <div class="alert-content">
+        <div class="alert-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="alert-message">
+          <h4>Success!</h4>
+          <p>Sinister deleted successfully!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ajoutez ces styles -->
+    <style>
+    /* Custom Alert and Dialog styles */
+    .custom-alert {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      animation: slideIn 0.5s ease-in-out;
+      background: rgba(255, 255, 255, 0.95);
+      border-left: 4px solid #28a745;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      border-radius: 4px;
+      padding: 15px;
+      min-width: 300px;
+    }
+    
+    .custom-dialog-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    
+    .custom-dialog {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      animation: slideDown 0.3s ease-out;
+    }
+    
+    /* Form validation styles */
+    .form-control {
+      transition: all 0.3s ease-in-out;
+    }
+    
+    .form-control.is-invalid {
+      border-color: #dc3545;
+      background-color: #f8d7da;
+      padding-right: 40px;
+    }
+    
+    .form-control.is-valid {
+      border-color: #198754;
+      background-color: #e8f5e9;
+      padding-right: 40px;
+    }
+    
+    .text-danger {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-top: 5px;
+      display: block;
+    }
+    
+    /* Button styles */
+    .btn-warning {
+      background-color: #ff8c00 !important;
+      border-color: #ff8c00 !important;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-warning:hover {
+      background-color: #ff7600 !important;
+      border-color: #ff7600 !important;
+      box-shadow: 0 2px 8px rgba(255, 140, 0, 0.3);
+    }
+
+    /* Styles pour les petits boutons */
+    .btn-xs {
+      padding: 0.2rem 0.4rem;
+      font-size: 0.75rem;
+      line-height: 1.2;
+      border-radius: 0.2rem;
+      min-width: 30px;
+      height: 24px;
+    }
+
+    .btn-group-sm .btn-xs {
+      margin: 0 2px;
+    }
+
+    .btn-xs i {
+      font-size: 0.8rem;
+      margin: 0;
+    }
+
+    /* Hover effect pour les petits boutons */
+    .btn-xs:hover {
+      transform: scale(1.1);
+      transition: transform 0.2s ease;
+    }
+
+    /* Ajustement de l'espacement des icônes */
+    .btn-xs i {
+      vertical-align: middle;
+    }
+
+    /* Mini Buttons Styling */
+    .action-buttons {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .mini-btn {
+      padding: 2px 8px;
+      font-size: 0.7rem;
+      line-height: 1.2;
+      height: 22px;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mini-btn i {
+      font-size: 0.7rem;
+      margin-right: 3px;
+    }
+
+    /* Hover effect */
+    .mini-btn:hover {
+      transform: translateY(-1px);
+      transition: transform 0.2s ease;
+    }
+
+    /* Active state */
+    .mini-btn:active {
+      transform: translateY(0);
+    }
+    
+    /* Animations */
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    
+    @keyframes slideDown {
+      from {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    </style>
+</section>

@@ -1,0 +1,19 @@
+<div class="weather-container">
+
+<div *ngIf="isLoading">Chargement...</div>
+<div *ngIf="errorMessage">{{ errorMessage }}</div>
+
+<div *ngIf="weather">
+  
+  <h3><i class="fa fa-sun-o" style="margin-right: 6px;"></i>Météo à {{ weather.name }}</h3>
+  <div class="weather-info">
+  <p>Température : {{ weather.main.temp }}°C</p>
+  <p>Condition : {{ weather.weather[0].description }}</p>
+  <p>Humidité : {{ weather.main.humidity }}%</p>
+  <p>Vent : {{ weather.wind.speed }} m/s</p>
+  </div>
+</div>
+
+<input [(ngModel)]="city" placeholder="Entrez une ville" />
+<button (click)="getWeather()">Obtenir la météo</button>
+</div>

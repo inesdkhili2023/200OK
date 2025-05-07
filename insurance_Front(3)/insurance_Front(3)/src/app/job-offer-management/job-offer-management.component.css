@@ -1,0 +1,131 @@
+/* Bannière */
+.banner {
+  background-image: url('/assets/images/carrieres.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin-top: 20px;
+  position: relative;
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+/* Overlay pour améliorer la lisibilité */
+.banner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+.banner h1 {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  background-color: #f8f9fa;
+  padding: 15px;
+  text-align: center;
+}
+
+.breadcrumb ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 16px;
+  color: #666;
+}
+
+.breadcrumb li {
+  display: inline;
+  margin-right: 5px;
+  color: #ff8c00;
+}
+
+/* Cartes */
+.cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 40px;
+}
+
+.card {
+  text-align: center;
+  padding: 30px;
+  width: 300px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.05), 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 -8px 16px rgba(250, 96, 0, 0.2),0 8px 16px rgba(250, 96, 0, 0.2);
+}
+
+/* Icônes circulaires */
+.icon-container {
+  width: 80px;
+  height: 80px;
+  background-color: orange;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  margin: 0 auto 15px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.icon-container:hover {
+  background-color: #ff6600;
+}
+
+.icon {
+  color: white;
+  font-size: 36px;
+}
+.selected-row {
+  background-color: #e3f2fd !important; /* Bleu clair */
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease;
+  transform: scale(1.02); /* Effet léger d'agrandissement */
+  cursor: pointer;
+}
+.icon-container {
+  width: 90px;
+  height: 90px;
+  background-color: orange;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+  margin-top: 15px;
+}
+
+mat-icon.icon {
+  color: white;
+  font-size: 42px !important;
+  width: 1em; /* important pour garder le bon ratio */
+  height: 1em;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+

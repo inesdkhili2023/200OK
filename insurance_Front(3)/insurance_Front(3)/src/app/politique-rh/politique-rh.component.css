@@ -1,0 +1,31 @@
+.text{
+  text-align: center;
+}
+.policy-container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: justify;
+}
+
+.intro-text {
+  margin-top: 50px;
+  font-size: 1.1em;
+  margin-bottom: 30px;
+}
+
+.policy-list {
+  list-style: none;
+  padding: 0;
+}
+
+.policy-list li {
+  margin: 10px 0;
+  font-size: 1.05em;
+  display: flex;
+  align-items: center;
+}
+
+.policy-list i {
+  color: darkblue;
+  margin-right: 10px;
+}

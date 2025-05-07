@@ -1,0 +1,72 @@
+<div class="container">
+  
+      <h2>Assurance contre les accidents</h2>
+      
+      <div class="content-wrapper">
+        <!-- Image à gauche -->
+        <div class="image-section">
+          <img src="assets/images/accident.jpg" alt="Illustration" />
+        </div>
+  
+    <!-- Premier formulaire -->
+    <div class="form-section">
+    <form [formGroup]="form1" (ngSubmit)="onSubmitForm1()">
+      <label>Classe Profession</label>
+      <select formControlName="profession">
+        <option *ngFor="let prof of professions" [value]="prof">{{ prof }}</option>
+      </select>
+  
+      <label>Capital décès: {{ form1.value.capitalDeces }}</label>
+      <input type="range" formControlName="capitalDeces" min="1000" max="50000">
+  
+      <label>Capital IPP: {{ form1.value.capitalIPP }}</label>
+      <input type="range" formControlName="capitalIPP" min="1000" max="50000">
+  
+      <label>Montant Rente Par jour (TND): {{ form1.value.rente }}</label>
+      <input type="range" formControlName="rente" min="10" max="500">
+  
+      <label>Durée de Franchise Garantie Rente</label>
+      <select formControlName="franchise">
+        <option *ngFor="let f of franchises" [value]="f">{{ f }}</option>
+      </select>
+  
+      <label>Capital Frais de traitement</label>
+      <select formControlName="fraisTraitement">
+        <option *ngFor="let f of fraisTraitement" [value]="f">{{ f }}</option>
+      </select>
+  
+      <button type="submit">ENVOYER</button>
+    </form>
+  
+    <!-- Deuxième formulaire (apparaît après validation du premier) -->
+    <div *ngIf="showForm2">
+      <form [formGroup]="form2" (ngSubmit)="onSubmitForm2()">
+        <p>Veuillez remplir les informations ci-dessous :</p>
+  
+        <input type="text" placeholder="Nom" formControlName="nom">
+        <input type="text" placeholder="Prénom" formControlName="prenom">
+        <input type="email" placeholder="Email" formControlName="email">
+        <input type="email" placeholder="Confirmer votre E-mail" formControlName="confirmEmail">
+        <input type="tel" placeholder="Téléphone" formControlName="telephone">
+        
+        <div style="margin-top: 20px;">
+          <re-captcha 
+          [siteKey]="'6LcWNwsrAAAAAFw51xVXqUO1U-G1xm01ZwMzKvlu'" 
+          (resolved)="onCaptchaResolved($event!)">  <!-- Note the ! operator -->
+        </re-captcha>
+        </div>
+        
+        
+  
+        <label>
+          <input type="checkbox" formControlName="conditions">
+          J’accepte les conditions générales.
+        </label>
+  
+        <button type="submit">Valider</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+  

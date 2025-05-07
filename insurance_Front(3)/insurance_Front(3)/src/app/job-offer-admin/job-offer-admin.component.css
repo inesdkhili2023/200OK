@@ -1,0 +1,69 @@
+.breadcrumb{
+  margin-top: 70px;
+}
+.card-header{
+  margin-top: -20px;
+
+}
+.mb-0{
+  text-align: center;
+}
+.search{
+  width: 50%;
+  margin-left: 40px;
+}
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem; /* Ajoute un espacement entre les éléments */
+}
+
+.search-container .search {
+  flex: 1; /* La barre de recherche prend tout l'espace disponible */
+}
+.btn{
+margin-top: -15px;
+width: max-content;
+font-size: medium;
+}
+table {
+  width: 100%;
+  table-layout: fixed; /* Fixe la largeur des colonnes */
+  border-collapse: collapse;
+}
+
+th, td {
+  width: auto;
+  text-align: left;
+  padding: 10px;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+th {
+  background-color: #f8f9fa;
+}
+
+.mat-column-title,
+.mat-column-description,
+.mat-column-requirements,
+.mat-column-location,
+.mat-column-contractType,
+.mat-column-deadline,
+.mat-column-action {
+  width: 14%; /* Ajuste en fonction du nombre de colonnes */
+}
+.selected-row {
+  background-color: #e3f2fd !important; /* Bleu clair */
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease;
+  transform: scale(1.02); /* Effet léger d'agrandissement */
+  cursor: pointer;
+}
+table th{
+  background-color: #344659;
+  color: #e3f2fd;
+}
+
+
+

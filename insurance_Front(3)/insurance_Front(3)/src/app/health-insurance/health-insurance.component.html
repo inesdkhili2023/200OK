@@ -1,0 +1,46 @@
+<div class="form-container">
+  <h2>🩺 Demande de devis santé</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <label>Nom:
+      <input type="text" formControlName="nom" />
+    </label>
+
+    <label>Âge:
+      <input type="number" formControlName="age" />
+    </label>
+
+    <label>Profession:
+      <select formControlName="profession">
+        <option value="">-- Choisir --</option>
+        <option value="enseignant">Enseignant</option>
+        <option value="ouvrier">Ouvrier</option>
+        <option value="infirmier">Infirmier</option>
+        <option value="policier">Policier</option>
+        <option value="informaticien">Informaticien</option>
+        <option value="autre">Autre</option>
+      </select>
+    </label>
+
+    <label>Antécédents médicaux:
+      <select formControlName="antecedents">
+        <option value="non">Non</option>
+        <option value="oui">Oui</option>
+      </select>
+    </label>
+
+    <label>Couverture:
+      <select formControlName="couverture">
+        <option value="base">Base</option>
+        <option value="standard">Standard</option>
+        <option value="premium">Premium</option>
+      </select>
+    </label>
+
+    <button type="submit" [disabled]="form.invalid">Envoyer</button>
+  </form>
+
+  <div *ngIf="submitted && tarif !== null" class="result">
+    💰 Tarif estimé : <strong>{{ tarif }} DT / mois</strong>
+  </div>
+</div>

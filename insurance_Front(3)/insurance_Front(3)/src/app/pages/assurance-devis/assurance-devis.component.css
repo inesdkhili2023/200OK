@@ -1,0 +1,85 @@
+body {
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f7fa;
+  color: #333;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: auto;
+  margin-top: 50px;
+}
+
+.grid-item {
+  position: relative;
+  width: 100%;
+  height: 260px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  font-size: 1.6rem;
+}
+
+.grid-item:hover {
+  transform: scale(1.03);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+}
+
+.grid-item .overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 15, 15, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.4s ease;
+}
+
+.grid-item:hover .overlay {
+  background: rgba(15, 15, 15, 0.65);
+}
+
+.grid-item .overlay .icon {
+  font-size: 44px;
+  margin-bottom: 12px;
+}
+
+.grid-item p {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+}
+
+/* Mobile friendly */
+@media (max-width: 768px) {
+  .grid-container {
+    padding: 20px 10px;
+    gap: 15px;
+  }
+
+  .grid-item {
+    height: 220px;
+  }
+
+  .grid-item p {
+    font-size: 2.1rem;
+  }
+ 
+}
+

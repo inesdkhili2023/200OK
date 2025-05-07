@@ -1,0 +1,149 @@
+<div class="admin-sinisters">
+  <div class="card">
+    <div class="card-header">
+      <h2 class="mb-0">Liste des Sinistres</h2>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <div class="container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Date Accident</th>
+                <th>Client ID</th>
+                <th>Date Déclaration</th>
+                <th>Location</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Document</th>
+                <th>Statut</th>
+                <th>Indemnisation Estimée</th>
+                <th>Actions</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let sinister of paginatedSinisters">
+                <td>{{ sinister.dateAccident | date }}</td>
+                <td>{{ sinister.idClient }}</td>
+                <td>{{ sinister.dateDeclaration | date }}</td>
+                <td>{{ sinister.accidentLocation }}</td>
+                <td>{{ sinister.typeSinister }}</td>
+                <td>{{ sinister.description }}</td>
+                <td>
+                  <button *ngIf="sinister.attachmentPath" 
+                          class="btn btn-sm btn-info" 
+                          (click)="viewFile(sinister.attachmentPath)">
+                    <i class="fas fa-file"></i> View File
+                  </button>
+                  <span *ngIf="!sinister.attachmentPath">No file</span>
+                </td>
+                <td>
+                  <select [(ngModel)]="sinister.status" class="form-select form-select-sm">
+                    <option value="IN_PROGRESS">In Progress</option>
+                    <option value="ACCEPTED">Accepted</option>
+                    <option value="REFUSED">Refused</option>
+                  </select>
+                </td>
+                <td>
+                  <div class="d-flex align-items-center">
+                    {{ sinister.estimatedCompensation | currency:'DT' }}
+                    <button class="btn btn-sm btn-outline-primary ms-2" 
+                            (click)="openSimulation(sinister)">
+                      Simuler
+                    </button>
+                  </div>
+                </td>
+                <td>
+                  <button class="btn btn-sm btn-primary" (click)="updateStatus(sinister)">Update</button>
+                </td>
+                <td>
+                  <button class="btn btn-sm btn-info" (click)="openEmailForm(sinister)">
+                    <i class="fas fa-envelope"></i> Send Mail
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <mat-paginator
+            (page)="handlePageEvent($event)"
+            [length]="length"
+            [pageSize]="pageSize"
+            [showFirstLastButtons]="showFirstLastButtons"
+            [pageSizeOptions]="pageSizeOptions"
+            [pageIndex]="pageIndex"
+            aria-label="Select page">
+          </mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Simulation Modal -->
+<div class="modal" tabindex="-1" [class.show]="showSimulationModal" [style.display]="showSimulationModal ? 'block' : 'none'">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Simulation d'indemnisation</h5>
+        <button type="button" class="btn-close" (click)="closeSimulation()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group mb-3">
+          <label for="severity">Gravité:</label>
+          <select class="form-control" id="severity" [(ngModel)]="simulationSeverity">
+            <option value="1">Mineure</option>
+            <option value="2">Modérée</option>
+            <option value="3">Majeure</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="clientResponsible" 
+                   [(ngModel)]="simulationClientResponsible">
+            <label class="form-check-label" for="clientResponsible">
+              Client responsable
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeSimulation()">Fermer</button>
+        <button type="button" class="btn btn-primary" (click)="simulateCompensation()">Simuler</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop fade show" *ngIf="showSimulationModal"></div>
+
+<!-- Email Modal -->
+<div class="modal" tabindex="-1" [class.show]="showEmailModal" [style.display]="showEmailModal ? 'block' : 'none'">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Send Email</h5>
+        <button type="button" class="btn-close" (click)="closeEmailForm()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group mb-3">
+          <label for="emailTo">To:</label>
+          <input type="email" class="form-control" id="emailTo" [(ngModel)]="emailForm.to" required>
+        </div>
+        <div class="form-group mb-3">
+          <label for="emailSubject">Subject:</label>
+          <input type="text" class="form-control" id="emailSubject" [(ngModel)]="emailForm.subject">
+        </div>
+        <div class="form-group mb-3">
+          <label for="emailBody">Message:</label>
+          <textarea class="form-control" id="emailBody" rows="5" [(ngModel)]="emailForm.body"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeEmailForm()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="sendEmail()">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop fade show" *ngIf="showEmailModal"></div>

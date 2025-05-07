@@ -1,0 +1,56 @@
+<div class="container">
+    <h2>Modifier Utilisateur</h2>
+    <form (ngSubmit)="updateUser()">
+      <div class="form-group">
+        <label>Prénom</label>
+        <input type="text" name="name" [(ngModel)]="userData.name" />
+      </div>
+  
+      <div class="form-group">
+        <label>Nom</label>
+        <input type="text" name="lastname" [(ngModel)]="userData.lastname" />
+      </div>
+  
+      <div class="form-group">
+        <label>Date de naissance</label>
+        <input type="date" name="dnaiss" [(ngModel)]="userData.dnaiss" />
+      </div>
+  
+      <div class="form-group">
+        <label>CIN</label>
+        <input type="text" name="cin" [(ngModel)]="userData.cin" (blur)="validateCin()" required />
+        <div class="error-text" *ngIf="validationErrors.cin">{{ validationErrors.cin }}</div>
+      </div>
+  
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="email" [(ngModel)]="userData.email" (blur)="validateEmail()" required />
+        <div class="error-text" *ngIf="validationErrors.email">{{ validationErrors.email }}</div>
+      </div>
+  
+      <div class="form-group">
+        <label>Civilité</label>
+        <select name="civility" [(ngModel)]="userData.civility">
+          <option value="">Sélectionner civilité</option>
+          <option value="SINGLE">Célibataire</option>
+          <option value="MARRIED">Marié(e)</option>
+          <option value="DIVORCED">Divorcé(e)</option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <label>Ville</label>
+        <input type="text" name="city" [(ngModel)]="userData.city" />
+      </div>
+  
+      <div class="form-group">
+        <label>Image</label>
+        <img *ngIf="userData.image" [src]="userData.image" alt="Image Utilisateur" class="preview-image" />
+        <input type="file" (change)="onFileSelected($event)" />
+      </div>
+  
+      <button type="submit">Mettre à jour</button>
+      
+    </form>
+  </div>
+  

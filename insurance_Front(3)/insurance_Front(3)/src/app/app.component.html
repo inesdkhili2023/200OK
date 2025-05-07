@@ -1,0 +1,11 @@
+<app-nav-bar *ngIf="showHeaderFooter"></app-nav-bar>
+
+<div class="content" [ngClass]="{'no-padding': !showHeaderFooter}">
+  <router-outlet></router-outlet>
+</div>
+
+<app-footer *ngIf="showHeaderFooter"></app-footer>
+
+
+
+

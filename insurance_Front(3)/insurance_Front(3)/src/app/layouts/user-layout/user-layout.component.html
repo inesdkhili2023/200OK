@@ -1,0 +1,114 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<!-- admin-layout.component.html -->
+<div class="dashboard-container">
+
+    <!-- SIDEBAR -->
+    <div class="dashboard-sidebar">
+        <div class="sidebar-top">
+          <div class="sidebar-logo">
+            <a routerLink="/home">
+              <img src="/assets/images/maghrebia.png" alt="Logo Assurance" style="cursor: pointer;" />
+            </a>
+          </div>
+          
+  
+      <ul class="sidebar-menu">
+        <li [class.active]="isActive('/user/dashboard')" (click)="navigate('/user/dashboard')">
+          <i class="fas fa-tachometer-alt"></i>
+          <span>Dashboard</span>
+        </li>
+        
+        <h5 class="menu-category">INSURANCE</h5>
+        <li [class.active]="isActive('/user/assurance')" (click)="navigate('/user/assurance')">
+          <i class="fas fa-shield-alt"></i>
+          <span>My Policies</span>
+        </li>
+        <li [class.active]="isActive('/user/contrat')" (click)="navigate('/user/contrat')">
+          <i class="fas fa-file-signature"></i>
+          <span>My Contracts</span>
+        </li>
+        <li [class.active]="isActive('/user/sinisters')" (click)="navigate('/user/sinisters')">
+          <i class="fas fa-file-signature"></i>
+          <span>My sinisters</span>
+        </li>
+        <h5 class="menu-category">SUPPORT</h5>
+        <li [class.active]="isActive('/user/claim')" (click)="navigate('/user/claim')">
+          <i class="fas fa-file-alt"></i>
+          <span>File a Claim</span>
+        </li>
+        <li [class.active]="isActive('user/reservation')" (click)="navigate('/user/reservation')">
+          <i class="fas fa-calendar-check"></i>
+          <span>Prendre un rendez-vous</span>
+        </li>
+        <li [class.active]="isActive('user/payment')" (click)="navigate('/user/payment')">
+          <i class="fas fa-credit-card"></i>
+          <span>Paiement</span>
+        </li>
+       
+        <li [class.active]="isActive('/user/reclamation')" (click)="navigate('/user/reclamation')">
+          <i class="fas fa-comment-dots"></i>
+          <span>Contact Support</span>
+        </li>
+       
+        <h5 class="menu-category">MY ACCOUNT</h5>
+        <li [class.active]="isActive('/user/profile')" (click)="navigate('/user/profile')">
+          <i class="fas fa-user"></i>
+          <span>My Profile</span>
+        </li>
+        <li [class.active]="isActive('/user/settings')" (click)="navigate('/user/profile')">
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </li>
+        <li (click)="logout()" class="logout-btn">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </li>
+      </ul>
+      </div>
+      <div class="dashboard-home-link">
+        <a routerLink="/home" class="home-button">
+          <i class="fas fa-home"></i> Return to Home
+        </a>
+      </div>
+    </div>
+  
+    <!-- MAIN SECTION -->
+    <div class="dashboard-main">
+      <!-- HEADER -->
+      <div class="dashboard-header" *ngIf="false">
+        <div class="header-search">
+          <input type="text" placeholder="Search..." class="search-input" />
+          <i class="fas fa-search search-icon"></i>
+        </div>
+        <div class="header-profile" (click)="toggleMenu()" tabindex="0">
+          <img [src]="userImage" alt="User" class="profile-img" />
+          <div class="profile-text">
+            <span class="user-name">{{ userName }}</span>
+            <small class="user-role">{{ role }}</small>
+          </div>
+          <i class="fas fa-chevron-down chevron-icon"></i>
+  
+          <div *ngIf="isMenuOpen" class="profile-dropdown">
+            <ul>
+              <li (click)="navigate('/user/profile')">
+                <i class="fas fa-user"></i> Profile
+              </li>
+              <li (click)="updateProfile(Info?.ourUsers?.id)">
+                <i class="fas fa-user-edit"></i> Edit Profile
+              </li>
+              <li (click)="logout()" class="logout">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+  
+      <!-- CONTENT -->
+      <div class="dashboard-content">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+  

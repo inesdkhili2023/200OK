@@ -1,0 +1,644 @@
+<div class="dashboard-main">
+    <div class="buttons-container">
+      <button class="btn btn-primary mb-3" (click)="toggleAddInsuranceForm()">
+        <i class="fas fa-plus"></i> {{ showAddForm ? 'Hide Form' : 'Add Insurance' }}
+      </button>
+      <button class="btn btn-info d-block w-100 mb-4" (click)="toggleInsuranceList()">
+        <i class="fas fa-list"></i> {{ showInsuranceList ? 'Hide' : 'View' }} Insurance List
+      </button>
+    </div>
+
+    <!-- Add Insurance Form -->
+    <div *ngIf="showAddForm" class="card mb-4">
+      <div class="card-header bg-success text-white">
+        <h3 class="mb-0">AddInsurance</h3>
+      </div>
+      <div class="card-body">
+        <form (ngSubmit)="createInsurance()" #insuranceForm="ngForm">
+          <div class="form-group mb-4">
+            <label for="newType" class="form-label custom-label">Type: *</label>
+            <div class="select-wrapper">
+              <select id="newType" 
+                      class="form-control form-control-lg" 
+                      [ngClass]="{
+                        'is-invalid': submitted && formErrors.insuranceType,
+                        'is-valid': newInsurance.insuranceType,
+                        'border-primary': focused === 'type'
+                      }"
+                      [(ngModel)]="newInsurance.insuranceType" 
+                      name="newType" 
+                      required
+                      (focus)="focused='type'"
+                      (blur)="focused=''">
+                <option value="" disabled>Select an insurance type</option>
+                <option value="Health">Health</option>
+                <option value="Car">Car</option>
+                <option value="House">House</option>
+                <option value="Journey">Journey</option>
+              </select>
+            </div>
+            <div class="feedback-container">
+              <div class="invalid-feedback text-primary fw-bold" style="font-size: 0.9rem;">
+                Please select an insurance type
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group mb-4">
+            <label for="newStartDate" class="form-label custom-label">Start Date: *</label>
+            <input type="date" 
+                   id="newStartDate" 
+                   class="form-control form-control-lg" 
+                   [ngClass]="{
+                     'is-invalid': submitted && formErrors.startDate,
+                     'is-valid': newInsurance.startDate,
+                     'border-primary': focused === 'startDate'
+                   }"
+                   [(ngModel)]="newInsurance.startDate" 
+                   name="newStartDate" 
+                   required
+                   (focus)="focused='startDate'"
+                   (blur)="focused=''">
+            <div class="feedback-container">
+              <div class="invalid-feedback text-primary fw-bold" style="font-size: 0.9rem;">
+                Please select a start date
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group mb-4">
+            <label for="newEndDate" class="form-label custom-label">End Date: *</label>
+            <input type="date" 
+                   id="newEndDate" 
+                   class="form-control form-control-lg"
+                   [ngClass]="{
+                     'is-invalid': submitted && formErrors.endDate,
+                     'is-valid': newInsurance.endDate,
+                     'border-primary': focused === 'endDate'
+                   }"
+                   [(ngModel)]="newInsurance.endDate" 
+                   name="newEndDate" 
+                   required
+                   (focus)="focused='endDate'"
+                   (blur)="focused=''">
+            <div class="feedback-container">
+              <div class="invalid-feedback text-primary fw-bold" style="font-size: 0.9rem;">
+                {{ formErrors.endDate || 'Please select an end date' }}
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group mb-4">
+            <label for="newDescription" class="form-label custom-label">Description: *</label>
+            <textarea id="newDescription" 
+                      class="form-control form-control-lg" 
+                      rows="4"
+                      [ngClass]="{
+                        'is-invalid': (submitted && formErrors.description) || (descriptionInput.touched && descriptionInput.errors),
+                        'is-valid': newInsurance.description && newInsurance.description.length >= 10,
+                        'border-primary': focused === 'description'
+                      }"
+                      [(ngModel)]="newInsurance.description" 
+                      name="newDescription" 
+                      required
+                      minlength="10"
+                      #descriptionInput="ngModel"
+                      (focus)="focused='description'"
+                      (blur)="focused=''"></textarea>
+            <div class="feedback-container">
+              <div *ngIf="descriptionInput.touched && descriptionInput.errors" 
+                   class="invalid-feedback text-primary fw-bold" 
+                   style="font-size: 0.9rem;">
+                <div *ngIf="descriptionInput.errors['required']">Please fill this field</div>
+                <div *ngIf="descriptionInput.errors['minlength']">Description must be at least 10 characters long</div>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-success me-2">Create</button>
+          <button type="button" class="btn btn-secondary" (click)="toggleAddInsuranceForm()">Cancel</button>
+        </form>
+      </div>
+    </div>
+
+    <div *ngIf="showInsuranceList" class="insurance-list-container">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <div class="d-flex justify-content-between align-items-center">
+            <h2 class="mb-0">Insurance List</h2>
+            <input type="text"
+                   class="form-control"
+                   style="width: 300px;"
+                   [(ngModel)]="searchTerm"
+                   (input)="searchInsurances()"
+                   placeholder="Search by type or description...">
+          </div>
+        </div>
+        <div class="card-body">
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Type</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Description</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let insurance of filteredInsurances">
+                <td>{{ insurance.insuranceId }}</td>
+                <td (dblclick)="startEditing(insurance, 'insuranceType')" [class.editing]="isEditingField(insurance, 'insuranceType')">
+                  <div class="d-flex flex-column">
+                    <span *ngIf="!isEditingField(insurance, 'insuranceType')">{{ insurance.insuranceType }}</span>
+                    <div *ngIf="isEditingField(insurance, 'insuranceType')" class="edit-container">
+                      <select class="form-control form-control-sm mb-1"
+                              [(ngModel)]="insurance.insuranceType">
+                        <option value="Health">Health</option>
+                        <option value="Car">Car</option>
+                        <option value="House">House</option>
+                        <option value="Journey">Journey</option>
+                      </select>
+                      <button class="btn btn-sm btn-success" (click)="saveEdit(insurance)">
+                        Confirm Changes
+                      </button>
+                    </div>
+                  </div>
+                </td>
+                <td (dblclick)="startEditing(insurance, 'startDate')" [class.editing]="isEditingField(insurance, 'startDate')">
+                  <div class="d-flex flex-column">
+                    <span *ngIf="!isEditingField(insurance, 'startDate')">{{ insurance.startDate | date }}</span>
+                    <div *ngIf="isEditingField(insurance, 'startDate')" class="edit-container">
+                      <input type="date" 
+                             [(ngModel)]="insurance.startDate"
+                             class="form-control form-control-sm mb-1">
+                      <button class="btn btn-sm btn-success" (click)="saveEdit(insurance)">
+                        Confirm Changes
+                      </button>
+                    </div>
+                  </div>
+                </td>
+                <td (dblclick)="startEditing(insurance, 'endDate')" [class.editing]="isEditingField(insurance, 'endDate')">
+                  <div class="d-flex flex-column">
+                    <span *ngIf="!isEditingField(insurance, 'endDate')">{{ insurance.endDate | date }}</span>
+                    <div *ngIf="isEditingField(insurance, 'endDate')" class="edit-container">
+                      <input type="date" 
+                             [(ngModel)]="insurance.endDate"
+                             class="form-control form-control-sm mb-1">
+                      <button class="btn btn-sm btn-success" (click)="saveEdit(insurance)">
+                        Confirm Changes
+                      </button>
+                    </div>
+                  </div>
+                </td>
+                <td (dblclick)="startEditing(insurance, 'description')" [class.editing]="isEditingField(insurance, 'description')">
+                  <div class="d-flex flex-column">
+                    <span *ngIf="!isEditingField(insurance, 'description')">{{ insurance.description }}</span>
+                    <div *ngIf="isEditingField(insurance, 'description')" class="edit-container">
+                      <textarea 
+                           [(ngModel)]="insurance.description"
+                           class="form-control form-control-sm mb-1"></textarea>
+                      <button class="btn btn-sm btn-success" (click)="saveEdit(insurance)">
+                        Confirm Changes
+                      </button>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <button class="btn btn-sm btn-warning text-white" (click)="deleteInsurance(insurance.insuranceId!)">
+                    <i class="fas fa-trash-alt"></i> Delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="chart-section mt-4">
+      <div class="chart-header">
+        <h2>Statistics Dashboard</h2>
+        <button class="btn btn-primary refresh-btn" (click)="refreshCharts()">
+          <i class="fas fa-sync-alt"></i> Refresh Stats
+        </button>
+      </div>
+      
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+              <h4>Sinisters Distribution by Type</h4>
+            </div>
+            <div class="card-body">
+              <div class="chart-container" style="position: relative; height:60vh;">
+                <canvas #pieChart></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Confirmation Dialog -->
+    <div class="custom-dialog-overlay" *ngIf="showDeleteDialog">
+      <div class="custom-dialog">
+        <div class="dialog-content">
+          <div class="dialog-icon">
+            <i class="fas fa-exclamation-triangle text-warning"></i>
+          </div>
+          <h4>Confirm Deletion</h4>
+          <p>Are you sure you want to delete this insurance?</p>
+          <div class="dialog-actions">
+            <button class="btn btn-secondary" (click)="cancelDelete()">Cancel</button>
+            <button class="btn btn-warning text-white" (click)="confirmDelete()">
+              <i class="fas fa-trash-alt"></i> Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Delete Alert -->
+    <div class="custom-alert" *ngIf="showDeleteSuccess">
+      <div class="alert-content">
+        <div class="alert-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="alert-message">
+          <h4>Success!</h4>
+          <p>Insurance deleted successfully!</p>
+        </div>
+      </div>
+    </div>
+
+    <router-outlet></router-outlet>
+  </div>
+
+<style>
+  /* Form Control Styles */
+  .form-control {
+    padding: 12px;
+    font-size: 16px;
+    border-width: 2px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  }
+
+  /* Validation States */
+  .form-control.is-invalid {
+    border-color: #dc3545;
+    background-color: #f8d7da;
+    padding-right: 40px;
+  }
+
+  .form-control.is-valid {
+    border-color: #198754;
+    background-color: #e8f5e9;
+    padding-right: 40px;
+  }
+
+  /* Feedback Messages */
+  .feedback-container {
+    margin-top: 8px;
+    min-height: 24px;
+  }
+
+  .invalid-feedback {
+    display: block;
+    color: #dc3545;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-top: 5px;
+  }
+
+  .valid-feedback {
+    display: block;
+    color: #198754;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-top: 5px;
+  }
+
+  /* Labels */
+  .form-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #344767;
+    margin-bottom: 8px;
+  }
+
+  /* Form Groups */
+  .form-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Focus State */
+  .form-control.border-primary {
+    border-color: #0d6efd;
+    border-width: 2px;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  }
+
+  /* Error Icon */
+  .form-control.is-invalid {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23dc3545' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 24px 24px;
+  }
+
+  /* Success Icon */
+  .form-control.is-valid {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 24px 24px;
+  }
+
+  /* Large Input Style */
+  .form-control-lg {
+    padding: 12px 16px;
+    font-size: 1.1rem;
+  }
+
+  /* Improved Select Styling */
+  select.form-control-lg {
+    height: 50px !important;
+    padding: 10px 15px;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    width: 100%;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+  }
+
+  select.form-control-lg option {
+    padding: 10px;
+    font-size: 1.1rem;
+  }
+
+  /* Adjust all form controls */
+  .form-control-lg {
+    height: 50px;
+    min-height: 50px;
+  }
+
+  textarea.form-control-lg {
+    height: auto !important;
+    min-height: 100px;
+  }
+
+  /* Improve feedback container spacing */
+  .feedback-container {
+    margin-top: 0.5rem;
+    min-height: 30px;
+    padding: 5px 0;
+  }
+
+  /* Enhanced validation messages */
+  .invalid-feedback {
+    font-size: 1rem;
+    padding: 5px 0;
+    margin-top: 0.25rem;
+  }
+
+  /* Form group spacing */
+  .form-group {
+    margin-bottom: 2rem;
+  }
+
+  /* Label improvements */
+  .form-label {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+    color: #344767;
+    font-weight: 700;
+  }
+
+  /* Form field focus state */
+  .form-control-lg:focus {
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    border-color: #0d6efd;
+  }
+
+  /* Validation state colors */
+  .is-valid {
+    border-color: #198754 !important;
+    padding-right: 4rem !important;
+  }
+
+  .is-invalid {
+    border-color: #dc3545 !important;
+    padding-right: 4rem !important;
+  }
+
+  /* Uniform Label Styling */
+  .custom-label {
+    font-size: 1.2rem !important;
+    font-weight: 600 !important;
+    color: #2c3e50 !important;
+    margin-bottom: 1rem !important;
+    display: block !important;
+    letter-spacing: 0.3px;
+    text-transform: capitalize;
+  }
+
+  /* Adjust form groups for consistent spacing */
+  .form-group {
+    margin-bottom: 2rem !important;
+  }
+
+  /* Make all form controls consistent */
+  .form-control-lg {
+    height: 50px !important;
+    font-size: 1.1rem !important;
+    padding: 12px 16px !important;
+  }
+
+  /* Consistent feedback container */
+  .feedback-container {
+    margin-top: 0.75rem !important;
+    min-height: 30px !important;
+  }
+
+  /* Consistent validation messages */
+  .invalid-feedback {
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    color: #dc3545 !important;
+  }
+
+  /* Adjust spacing after labels */
+  .form-label {
+    margin-bottom: 0.75rem !important;
+  }
+
+  /* Custom Alert Styles */
+  .custom-alert {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    animation: slideIn 0.5s ease-in-out;
+    background: rgba(255, 255, 255, 0.95);
+    border-left: 4px solid #28a745;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    padding: 15px;
+    min-width: 300px;
+  }
+
+  .alert-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .alert-icon {
+    font-size: 2rem;
+    color: #28a745;
+  }
+
+  .alert-message {
+    flex-grow: 1;
+  }
+
+  .alert-message h4 {
+    margin: 0;
+    color: #28a745;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  .alert-message p {
+    margin: 5px 0 0;
+    color: #666;
+    font-size: 0.9rem;
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  .custom-alert.hiding {
+    animation: fadeOut 0.5s ease-in-out forwards;
+  }
+
+  /* Dialog Styles */
+  .custom-dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+
+  .custom-dialog {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    animation: slideDown 0.3s ease-out;
+  }
+
+  .dialog-content {
+    text-align: center;
+  }
+
+  .dialog-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #ffc107;
+  }
+
+  .dialog-content h4 {
+    margin: 0 0 1rem;
+    color: #2c3e50;
+    font-size: 1.5rem;
+  }
+
+  .dialog-content p {
+    margin-bottom: 1.5rem;
+    color: #666;
+    font-size: 1.1rem;
+  }
+
+  .dialog-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .dialog-actions button {
+    min-width: 100px;
+    padding: 8px 16px;
+    font-size: 1rem;
+  }
+
+  @keyframes slideDown {
+    from {
+      transform: translateY(-50px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  /* Styles pour les boutons de suppression */
+  .btn-warning {
+    background-color: #ff8c00 !important;
+    border-color: #ff8c00 !important;
+    transition: all 0.3s ease;
+  }
+
+  .btn-warning:hover {
+    background-color: #ff7600 !important;
+    border-color: #ff7600 !important;
+    box-shadow: 0 2px 8px rgba(255, 140, 0, 0.3);
+  }
+
+  .btn-warning:active {
+    transform: translateY(1px);
+  }
+
+  /* Style pour l'icône dans le bouton */
+  .btn-warning i {
+    margin-right: 5px;
+  }
+</style>
+

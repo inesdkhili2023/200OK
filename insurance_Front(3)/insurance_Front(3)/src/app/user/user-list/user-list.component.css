@@ -1,0 +1,215 @@
+
+.container {
+    width: 85%;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.6s ease-in-out;
+    overflow-x: auto; /* Ajouté pour permettre le défilement horizontal si nécessaire */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    table-layout: auto; /* Ajouté pour une gestion plus stricte de la largeur */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h2 {
+    font-weight: bold;
+    font-size: 30px;
+    margin-bottom: 20px;
+    color: #343a40;
+    text-align: center;
+}
+
+.reg-button {
+    display: block;
+    margin: 20px auto;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(135deg, #E07000, #ff8c00);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.reg-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(224, 112, 0, 0.3);
+}
+
+
+table th,
+table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+    color: #495057;
+
+    border-right: 1px solid #dee2e6 ;
+}
+
+table th {
+    background-color:#344659 ;
+    color: white;
+    font-weight: bold;
+}
+
+tbody tr {
+    transition: background 0.3s ease;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeInRows 0.5s ease-in-out forwards;
+}
+
+@keyframes fadeInRows {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.delete-button,
+.debloque-button,
+.update-button {
+    padding: 10px 15px;
+    font-size: 14px;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.search-bar {
+    margin-bottom: 20px;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Contrôles de pagination */
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.pagination-controls button {
+    background: #FF8000;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 10px;
+    transition: background 0.3s ease-in-out;
+}
+
+.pagination-controls button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.pagination-controls button:hover:not(:disabled) {
+    background: #FF5733;
+}
+
+.pagination-controls span {
+    font-size: 16px;
+    color: #333;
+}
+.delete-button {
+    background: linear-gradient(135deg, #dc3545, #ff4d4d);
+}
+
+.update-button {
+    background: linear-gradient(135deg, #ffbb00, #ff8c00);
+}
+.debloque-button{
+    background: linear-gradient(135deg, #435c77, #344659);
+}
+.delete-button:hover,.debloque-button:hover,
+.update-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+.status-button {
+    padding: 10px 15px;
+    font-size: 14px;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .status-button.active {
+    background: linear-gradient(135deg, #28a745, #5cb85c); /* Vert */
+  }
+  
+  .status-button.blocked {
+    background: linear-gradient(135deg, #dc3545, #ff4d4d); /* Rouge */
+  }
+  
+  .status-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  }
+ 
+.error-message {
+    color: #dc3545;
+    font-size: 18px;
+    margin: 15px;
+    text-align: center;
+    animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+  }
+  

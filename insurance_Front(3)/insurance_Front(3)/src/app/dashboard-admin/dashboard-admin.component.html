@@ -1,0 +1,138 @@
+<div class="dashboard-content">
+  <div class="stats-container">
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="fas fa-users"></i>
+      </div>
+      <div class="stat-details">
+        <h4>Total Users</h4>
+        <div class="stat-number">1,234</div>
+        <div class="stat-change positive">+15% romzd last month</div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="fas fa-file-contract"></i>
+      </div>
+      <div class="stat-details">
+        <h4>Active Policies</h4>
+        <div class="stat-number">567</div>
+        <div class="stat-change positive">+8% from last month</div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="fas fa-clock"></i>
+      </div>
+      <div class="stat-details">
+        <h4>Pending Claims</h4>
+        <div class="stat-number">89ss</div>
+        <div class="stat-change negative">-5% from last month</div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="fas fa-dollar-sign"></i>
+      </div>
+      <div class="stat-details">
+        <h4>Revenue</h4>
+        <div class="stat-number">$12,345</div>
+        <div class="stat-change positive">+12% from last month</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard Grid -->
+  <div class="dashboard-grid">
+    <div class="grid-item chart-container">
+      <h3>Revenue Overview</h3>
+      <div class="chart">
+        <canvas id="revenueChart"></canvas>
+      </div>
+    </div>
+
+    <div class="grid-item recent-activities">
+      <h3>Recent Activities</h3>
+      <ul class="activity-list">
+        <li>
+          <i class="fas fa-user-plus"></i>
+          <div class="activity-details">
+            <p>New user registered</p>
+            <span>5 minutes ago</span>
+          </div>
+        </li>
+        <li>
+          <i class="fas fa-file-signature"></i>
+          <div class="activity-details">
+            <p>New policy created</p>
+            <span>2 hours ago</span>
+          </div>
+        </li>
+        <li>
+          <i class="fas fa-exclamation-circle"></i>
+          <div class="activity-details">
+            <p>New claim submitted</p>
+            <span>4 hours ago</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="grid-item quick-actions">
+      <h3>Quick Actions</h3>
+      <div class="action-buttons">
+        <button class="btn-action" (click)="addUser()">
+          <i class="fas fa-user-plus"></i>
+          Add User
+        </button>
+        <button class="btn-action" (click)="createNewPolicy()">
+          <i class="fas fa-file-medical"></i>
+          New Policy
+        </button>
+        <button class="btn-action" (click)="generateReport()">
+          <i class="fas fa-chart-line"></i>
+          Generate Report
+        </button>
+      </div>
+    </div>
+
+    <div class="grid-item pending-tasks">
+      <h3>Pending Tasks</h3>
+      <ul class="task-list">
+        <li>
+          <div class="task-checkbox">
+            <input type="checkbox" id="task1">
+            <label for="task1"></label>
+          </div>
+          <div class="task-details">
+            <p>Review new insurance applications</p>
+            <span class="task-date">Due today</span>
+          </div>
+        </li>
+        <li>
+          <div class="task-checkbox">
+            <input type="checkbox" id="task2">
+            <label for="task2"></label>
+          </div>
+          <div class="task-details">
+            <p>Update pricing models</p>
+            <span class="task-date">Due tomorrow</span>
+          </div>
+        </li>
+        <li>
+          <div class="task-checkbox">
+            <input type="checkbox" id="task3">
+            <label for="task3"></label>
+          </div>
+          <div class="task-details">
+            <p>Follow up on claim #12345</p>
+            <span class="task-date">Due in 2 days</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

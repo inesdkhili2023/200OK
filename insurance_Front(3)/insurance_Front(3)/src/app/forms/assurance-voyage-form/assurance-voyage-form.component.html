@@ -1,0 +1,132 @@
+<div class="container">
+  
+  <h1 class="title">Mon Voyage</h1>
+  
+  <div class="content-wrapper">
+    <!-- Image à gauche -->
+    <div class="image-section">
+      <img src="assets/images/assurance-voyage.jpg" alt="Illustration" />
+    </div>
+  <!-- Formulaire principal -->
+  <div class="form-section">
+    <label for="duree">Durée du contrat:</label>
+    <select id="duree" [(ngModel)]="duree" [ngModelOptions]="{updateOn: 'change'}" (change)="calculerDateRetour()">
+      <option value="1">1 à 8 Jours</option>
+      <option value="9">9 à 16 Jours</option>
+      <option value="17">17 à 32 Jours</option>
+      <option value="33">33 à 60 Jours</option>
+      <option value="61">61 à 90 Jours</option>
+      <option value="365">Une Année</option>
+    </select>
+    
+    <label for="depart">Date de départ:</label>
+    <input type="date" id="depart" [(ngModel)]="dateDepart" [ngModelOptions]="{updateOn: 'change'}" (change)="calculerDateRetour()">
+    
+    <label for="retour">Date de retour:</label>
+    <input type="date" id="retour" [value]="dateRetour" readonly>
+  
+    
+    <label>Zone de couverture:</label>
+    <div>
+      <input type="radio" name="coverage" value="option1" [(ngModel)]="coverageOption" /> MONDE ENTIER SAUF USA, CANADA, AUSTRALIE, JAPON ET TUNISIE
+      <input type="radio" name="coverage" value="option2" [(ngModel)]="coverageOption" /> MONDE ENTIER SAUF TUNISIE
+    </div>
+    
+    <label>Nationalité:</label>
+    <select [(ngModel)]="nationality">
+      <option value="Tunisienne">Tunisienne</option>
+      <option value="Française">Française</option>
+    </select>
+    
+    <label>Tranche d'âge:</label>
+    <select [(ngModel)]="ageRange">
+      <option value="1-70">Entre 1 et 70 ans</option>
+      <option value="71-75">Entre 71 et 75 ans</option>
+      <option value="76-80">Entre 76 et 80 ans</option>
+    </select>
+    
+    
+    <button type="button" (click)="calculateTariff()">Obtenir un tarif</button>
+ 
+
+<!-- Section tarif -->
+<div *ngIf="showTariff" class="tariff">
+  <h2>Prime Totale</h2>
+  <p>{{ totalPremium }} TND</p>
+  <h3>Garanties couvertes</h3>
+  <ul>
+    <li>Frais médicaux: Maximum 50%</li>
+    <li>Transport en cas de maladie: Maximum 10%</li>
+    <li>Transport du bénéficiaire décédé: Maximum 10%</li>
+    <li>Perte de bagages: Maximum 30%</li>
+  </ul>
+  <button type="button" (click)="buyInsurance()">Acheter maintenant</button>
+</div>
+
+
+  <!-- Formulaire du souscripteur -->
+  <div *ngIf="showSouscripteurForm" class="souscripteur-container">
+    <div class="header">
+      
+      <h2>Coordonnées du souscripteur</h2>
+    </div>
+  
+    <hr class="divider">
+  
+    <form [formGroup]="souscripteurForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="cin">CIN: <span class="required">*</span></label>
+        <input id="cin" type="text" formControlName="cin">
+      </div>
+  
+      <div class="form-group">
+        <label for="nom">Nom: <span class="required">*</span></label>
+        <input id="nom" type="text" formControlName="nom">
+      </div>
+  
+      <div class="form-group">
+        <label for="prenom">Prénom: <span class="required">*</span></label>
+        <input id="prenom" type="text" formControlName="prenom">
+      </div>
+  
+      <div class="form-group">
+        <label for="telephone">N°Téléphone: <span class="required">*</span></label>
+        <input id="telephone" type="text" formControlName="telephone">
+      </div>
+  
+      <div class="form-group">
+        <label for="email">Adresse Email: <span class="required">*</span></label>
+        <input id="email" type="email" formControlName="email">
+      </div>
+  
+      <div class="form-group">
+        <label for="confirmEmail">Confirmation Adresse Email: <span class="required">*</span></label>
+        <input id="confirmEmail" type="email" formControlName="confirmEmail">
+      </div>
+  
+      <div class="form-group">
+        <input id="conditions" type="checkbox" formControlName="conditions">
+        <label for="conditions">
+          J'ai lu et approuvé <a href="#">les conditions de traitement des données personnelles</a>
+        </label>
+      </div>
+  
+      <div class="button-group">
+        <button type="button" class="back-btn" (click)="showMain()">◀ Retour</button>
+        <button type="submit" class="submit-btn">Soumettre</button>
+      </div>
+    </form>
+    
+  
+  <!-- Boîte de dialogue d'information -->
+  <mat-dialog-content *ngIf="showDialog" class="dialog-content">
+    <mat-icon class="info-icon">info</mat-icon>
+    <p>
+      Veuillez prendre en considération que les contrats souscrits ne peuvent en aucun cas être remboursés,
+      même après refus de visa !
+    </p>
+    <button (click)="closeDialog()" class="ok-btn">OK</button>
+  </mat-dialog-content>
+</div>
+</div>
+</div>

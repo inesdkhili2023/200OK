@@ -1,0 +1,154 @@
+<div class="formulaire-avec-image">
+  <div class="row-layout">
+    <!-- Image à gauche -->
+    <div class="image-container">
+      <img src="assets/images/ecolia.jpg" alt="Illustration" />
+    </div>
+  <div class="stepper-container">
+
+<mat-horizontal-stepper #stepper class="Contenu">
+  
+    <!-- Étape 1 -->
+    <mat-step [stepControl]="step1Form">
+      <form [formGroup]="step1Form" (ngSubmit)="onSubmit()">
+        <ng-template matStepLabel>Parent / Tuteur</ng-template>
+        <div>
+          <label for="typePieceIdentite">Type de pièce d'identité :</label>
+          <select id="typePieceIdentite" formControlName="typePieceIdentite">
+            <option value="Carte d'identité">Carte d'identité</option>
+            <option value="Passeport">Passeport</option>
+
+          </select>
+        </div>
+        <div>
+          <label for="numeroPieceIdentite">N° pièce d'identité :</label>
+          <input id="numeroPieceIdentite" type="text" formControlName="numeroPieceIdentite">
+        </div>
+        <div>
+          <div>
+            <label for="typeAssuranceId">type assurance id:</label>
+            <input id="typeAssuranceId" type="text" formControlName="typeAssuranceId">
+          </div>
+          
+          <label for="nomPrenom">Nom et prénom :</label>
+          <input id="nomPrenom" type="text" formControlName="nomPrenom">
+        </div>
+        <div>
+          <label for="numeroTelephone">Numéro téléphone :</label>
+          <input id="numeroTelephone" type="tel" formControlName="numeroTelephone">
+        </div>
+        <div>
+          <label for="email">Email :</label>
+          <input id="email" type="email" formControlName="email">
+        </div>
+        <div>
+          <label>
+            <input type="checkbox" formControlName="acceptConditions">
+            J'ai lu et approuvé les conditions de traitement des données personnelles saisies dans cette page
+          </label>
+        </div>
+        <div class="form-actions">
+          <button type="submit" [disabled]="step1Form.invalid">Suivant</button>
+        </div>
+      </form>
+    </mat-step>
+  
+    <!-- Étape 2 -->
+    <mat-step [stepControl]="step2Form">
+      <form [formGroup]="step2Form">
+        <ng-template matStepLabel>Simulation</ng-template>
+  
+        <div class="form-group">
+          <label for="nombreEnfants">Nombre d'enfant(s) :</label>
+          <input id="nombreEnfants" type="number" formControlName="nombreEnfants" (change)="calculerMontants()" min="1">
+        </div>
+  
+        <div class="form-group">
+          <label for="dateEffet">Date d'Effet :</label>
+          <input id="dateEffet" type="date" formControlName="dateEffet" required>
+        </div>
+  
+        <div class="form-group">
+          <label>
+            <input type="checkbox" formControlName="acceptConditions">
+            J'ai lu et approuvé les conditions de traitement des données personnelles saisies dans cette page
+          </label>
+        </div>
+  
+      </form>
+  
+      <!-- Simulation (affichée après le clic sur Suivant) -->
+      <div *ngIf="showSimulation" class="simulation-container">
+        <div class="assurance-cards">
+          <div class="card">
+            <h3>FORMULE ECOLIA</h3>
+            <p>Cette couverture est accordée aux écoliers, collégiens et lycéens...</p>
+            <p class="montant">Montant : {{ montantEcolia }} TND</p>
+            <button (click)="acheter('ECOLIA')">J'ACHÈTE MAINTENANT</button>
+          </div>
+          <div class="card">
+            <h3>FORMULE ECOLIAPLUS</h3>
+            <p>Cette couverture est accordée aux écoliers, collégiens et lycéens...</p>
+            <p class="montant">Montant : {{ montantEcoliaPlus }} TND</p>
+            <button (click)="acheter('ECOLIAPLUS')">J'ACHÈTE MAINTENANT</button>
+          </div>
+        </div>
+        <button type="button" (click)="passerEtapeSuivante()" [disabled]="!showSimulation">Suivant</button>
+      </div>
+      <div class="form-actions">
+        <button type="button" (click)="onPrevious()">Précédent</button>
+        <button type="button" (click)="validerEtAfficherSimulation()" [disabled]="step2Form.invalid">Afficher la simulation</button>
+      </div>
+    </mat-step>
+  
+    <!-- Étape 3 -->
+    <mat-step>
+      <ng-template matStepLabel>Validation</ng-template>
+      <div class="formule-details">
+        <h3>FORMULE {{ formuleChoisie }}</h3>
+        <p>Nombre d’enfant(s) : {{ nombreEnfants }}</p>
+        <p>Durée du contrat : 12 mois</p>
+        <p>Prime totale : {{ primeTotale }} TND</p>
+        <p>Date d’effet : {{ dateEffet }}</p>
+      </div>
+  
+      <!-- Garanties -->
+      <div class="garanties">
+        <h4>GARANTIES</h4>
+        <ul>
+          <li>Dommages corporels et matériels</li>
+          <li>Défense et recours</li>
+          <li>Capital en cas de décès accidentel</li>
+          <li>Remboursement des frais de traitement suite à un accident</li>
+        </ul>
+      </div>
+  
+      <!-- Informations des enfants à assurer -->
+      <div class="enfants-a-assurer">
+        <h4>ENFANT(S) À ASSURER</h4>
+        <div *ngFor="let enfant of enfants; let i = index">
+          <h5>Enfant {{ i + 1 }}</h5>
+          <div class="form-group">
+            <label>Nom :</label>
+            <input [(ngModel)]="enfant.nom" placeholder="Nom">
+          </div>
+          <div class="form-group">
+            <label>Prénom :</label>
+            <input [(ngModel)]="enfant.prenom" placeholder="Prénom">
+          </div>
+          <div class="form-group">
+            <label>Date de naissance :</label>
+            <input type="date" [(ngModel)]="enfant.dateNaissance">
+          </div>
+        </div>
+      </div>
+  
+      <div class="form-actions">
+        <button (click)="onPrevious()">Précédent</button>
+        <button title="Envoyer le formulaire" aria-label="Envoyer le formulaire" (click)="submitForm()">Valider</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+ 
+</div>
+  

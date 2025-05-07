@@ -1,0 +1,23 @@
+.dashboard-layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .default-layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+.content {
+  min-height: calc(100vh - 160px); /* Adjust based on your header and footer height */
+  padding-top: 70px; /* Adjust based on your header height */
+  padding-bottom: 20px;
+}
+
+.no-padding {
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+}

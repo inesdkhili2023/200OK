@@ -1,0 +1,129 @@
+.formulaire-avec-image {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 2rem;
+  flex-wrap: wrap;
+  padding: 2rem;
+  background-color: #f7f7f7;
+  border-radius: 1rem;
+  margin-top: 60px
+}
+
+.row-layout {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1200px;
+  align-items: stretch;
+}
+.garanties {
+  background-color: #fffdf6;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+.formule-details h3 {
+  font-size: 1.8rem;
+  color: #d18501;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #fceabd;
+  padding-bottom: 0.5rem;
+}
+
+.formule-details p {
+  font-size: 1rem;
+  margin: 0.5rem 0;
+}
+
+.garanties h4 {
+  font-size: 1.5rem;
+  color: #8d1b06;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #f1d1c5;
+  padding-bottom: 0.5rem;
+}
+
+.garanties ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+}
+
+.garanties li {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.image-container {
+  flex: 1;
+  min-width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+
+  img {
+    width: 100%;
+    height: 100%; 
+    object-fit: cover;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.stepper-container {
+  flex: 2;
+  min-width: 400px;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+}
+
+input, select {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+
+button {
+  padding: 0.75rem 1.5rem;
+  background-color: #d18501;
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #b86d00;
+}
+
+.form-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .row-layout {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stepper-container {
+    width: 100%;
+  }
+}

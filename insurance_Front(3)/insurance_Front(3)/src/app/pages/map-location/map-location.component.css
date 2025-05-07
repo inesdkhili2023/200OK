@@ -1,0 +1,34 @@
+.map-wrapper {
+  position: relative;
+  width: 100%;
+  padding: 10px;
+}
+
+.map-container {
+  height: 400px;
+  width: 100%;
+  z-index: 1000;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+/* Add styles for the geocoder control */
+.leaflet-control-geocoder {
+  background: white;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+  border-radius: 4px;
+  padding: 5px;
+}
+
+.leaflet-control-geocoder input {
+  width: 200px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.btn-confirm {
+  margin-top: 10px;
+  width: 200px;
+}

@@ -1,0 +1,86 @@
+<div class="blog-detail-content" id="pdfContent">
+  <section class="breadcrumb">
+    <div class="container">
+      <h2>Car Insurance Details</h2>
+      <ul>
+        <li><a routerLink="/home">Home</a> ></li>
+        <li><a href="#">Car Insurance Details</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="blog-detail-page">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8">
+          <div class="single-post">
+            <div class="blog-img">
+              <img [src]="insurance.imageUrl || '/assets/images/2.jpg'" class="img-responsive">
+              <div class="blog-icon">
+                <i class="ti-car"></i>
+              </div>
+            </div>
+            <h2 class="blog-title">{{insurance.insuranceType}}</h2>
+            <div class="blog-meta">
+              <span><i class="fa fa-calendar"></i> Valid until: {{insurance.validUntil | date}}</span>
+              <span><i class="fa fa-money"></i> Price: {{insurance.price}}</span>
+            </div>
+            
+            <div class="insurance-details-box">
+              <h3>Coverage Details</h3>
+              <p>{{insurance.description}}</p>
+              
+              <div class="coverage-list">
+                <h4>What's Covered:</h4>
+                <ul>
+                  <li>✓ Collision Damage</li>
+                  <li>✓ Third Party Liability</li>
+                  <li>✓ Personal Accident Cover</li>
+                  <li>✓ Natural Disasters</li>
+                </ul>
+              </div>
+
+              <div class="policy-details mt-4">
+                <h4>Policy Information</h4>
+                <table class="table">
+                  <tr>
+                    <td>Policy Number:</td>
+                    <td>{{insurance.policyNumber}}</td>
+                  </tr>
+                  <tr>
+                    <td>Coverage Amount:</td>
+                    <td>{{insurance.coverageAmount}}</td>
+                  </tr>
+                  <tr>
+                    <td>Duration:</td>
+                    <td>{{insurance.duration}}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="col-sm-4">
+          <div class="blog-post">
+            <h2>Quick Actions</h2>
+            <div class="insurance-actions">
+              <button class="btn btn-primary mb-3 w-100">Apply Now</button>
+              <button class="btn btn-secondary mb-3 w-100" (click)="downloadPDF()">
+                <i class="fa fa-download"></i> Download PDF
+              </button>
+              <button class="btn btn-info w-100">Contact Agent</button>
+            </div>
+            
+            <div class="contact-info mt-4">
+              <h3>Need Help?</h3>
+              <p><i class="fa fa-phone"></i> +123 456 7890</p>
+              <p><i class="fa fa-envelope"></i> support&#64;insurance.com</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

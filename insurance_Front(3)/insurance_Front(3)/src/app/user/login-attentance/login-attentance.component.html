@@ -1,0 +1,19 @@
+<div class="face-login-container">
+    <h2>Connexion par reconnaissance faciale</h2>
+    <hr class="underline" />
+  
+    <video #video width="320" height="240" autoplay></video>
+    <canvas #canvas width="320" height="240" style="display:none;"></canvas>
+  
+    <button (click)="captureAndLogin()" class="face-login-btn">
+      Se connecter avec le visage
+    </button>
+  
+    <p *ngIf="loginMessage" class="login-message">{{ loginMessage }}</p>
+  
+    <p class="back-login-text">
+      <a routerLink="/login">Revenir au connexion par email</a>
+    </p>
+    <p class="signup-text">Pas encore de compte ? <a routerLink="../signup">S'inscrire</a></p>
+  </div>
+  

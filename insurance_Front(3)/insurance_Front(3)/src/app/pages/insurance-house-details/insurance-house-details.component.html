@@ -1,0 +1,24 @@
+<div class="container mt-4" id="pdfContent">
+  <h2 class="mb-4">Insurance House Details</h2>
+
+  <div class="card" *ngIf="insurance">
+    <div class="card-body">
+      <p><strong>ID:</strong> {{insurance.id}}</p>
+      <p><strong>Type:</strong> {{insurance.type}}</p>
+      <p><strong>Description:</strong> {{insurance.description}}</p>
+      <p><strong>Coverage Amount:</strong> ${{insurance.coverageAmount}}</p>
+      <p><strong>Status:</strong> {{insurance.status}}</p>
+      
+      <div class="mt-3">
+        <button class="btn btn-primary me-2">Contact Agent</button>
+        <button class="btn btn-secondary" (click)="downloadPDF()">
+          <i class="fa fa-download"></i> Download PDF
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-info mt-3" *ngIf="!insurance">
+    Loading insurance details...
+  </div>
+</div>

@@ -1,0 +1,85 @@
+/* General Section Styling */
+.contact-us {
+    background-color: #f8f9fa;
+    padding: 40px 0;
+  }
+  
+  /* Card Styling */
+  .card {
+    border: none;
+    border-radius: 10px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  }
+  
+  /* Card Header Styling */
+  .card-header {
+    padding: 15px 20px;
+    border-bottom: none;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  
+  /* Gradient Headers */
+  .card-header.text-white {
+    background: linear-gradient(45deg, #dd991b, #dd991b);
+  }
+  
+  .card-header.text-dark {
+    background: linear-gradient(45deg, #ffc107, #d39e00);
+    color: #596067;
+  }
+  
+  /* Table Styling */
+  .table-responsive {
+    overflow-x: auto;
+  }
+  
+  .table {
+    margin-bottom: 0;
+  }
+  
+  .table thead th {
+    background-color: #343a40;
+    color: #fff;
+  }
+  
+  .table tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.075);
+  }
+  
+  /* Form Labels & Error Messages */
+  .form-label {
+    font-weight: 500;
+  }
+  
+  .text-danger {
+    font-size: 0.875em;
+  }
+  
+  /* Spacing Utilities (override if needed) */
+  .mt-3 {
+    margin-top: 1rem !important;
+  }
+  
+  .mt-4 {
+    margin-top: 1.5rem !important;
+  }
+  
+  .py-5 {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+  
+  /* Responsive Typography */
+  @media (max-width: 576px) {
+    .card-header h2,
+    .card-header h3 {
+      font-size: 1.25rem;
+    }
+  }
+  

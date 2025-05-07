@@ -1,0 +1,132 @@
+.breadcrumb{
+  margin-top: 70px;
+}
+.card-header{
+  margin-top: -10px;
+  background-color: #344659;
+
+}
+.mb-0{
+  text-align: center;
+  
+}
+.search{
+  width:60%;
+  margin-left: 20px;
+}
+/* Définir les couleurs selon le statut */
+.status-on-hold {
+  color: orange ; /* Orange pour "En attente" */
+}
+
+.status-accepted {
+  color: green ; /* Vert pour "Accepté" */
+}
+
+.status-refused {
+  color: red ; /* Rouge pour "Refusé" */
+}
+/* Styles des badges */
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+  min-width: 80px;
+}
+
+.status-accepted {
+  background-color: #e0f7e9;
+  color: #2e7d32;
+}
+
+.status-on-hold {
+  background-color: #fff3e0;
+  color: #e65100;
+}
+
+.status-refused {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+/* Personnalisation du dropdown */
+.custom-dropdown .mat-option {
+  display: flex;
+  align-items: center;
+}
+
+.custom-dropdown .mat-option span {
+  width: 100%;
+}
+/* Style pour la section des statistiques */
+.statistiques-container {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  padding: 15px 0;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.stat-item {
+  background: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.stat-item h5 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.stat-item p {
+  font-size: 20px;
+  font-weight: bold;
+  color: #007bff;
+}
+
+.en-attente p { color: #f39c12; } /* Orange */
+.acceptees p { color: #28a745; } /* Vert */
+.refusees p { color: #dc3545; } /* Rouge */
+
+.card-body{
+  margin-left: 20px;
+  margin-right: 20px;
+
+}
+th.mat-header-cell, td.mat-cell {
+  width: 150px;
+}
+.stat-item {
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+.filter{
+  margin-left: 20px;
+  margin-top: 10px;
+}
+.stat-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.selected-row {
+  background-color: #e3f2fd !important; /* Bleu clair */
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease;
+  transform: scale(1.02); /* Effet léger d'agrandissement */
+  cursor: pointer;
+}
+
+table th{
+  background-color: #344659;
+  color: #e3f2fd;
+}
+tr.mat-row:hover {
+  background-color: #f5f5f5;
+  cursor: pointer;
+}
+

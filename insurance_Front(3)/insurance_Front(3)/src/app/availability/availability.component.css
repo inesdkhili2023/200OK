@@ -1,0 +1,124 @@
+.availability-form{
+  text-align: center;
+}
+.breadcrumb{
+  margin-top: 70px;
+}
+.card-header{
+  margin-top: -20px;
+
+}
+.mb-0{
+  text-align: center;
+}
+.availability-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.availability-card {
+  width: 400px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+
+
+
+
+.availability-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.time-inputs {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* General container styling */
+.availability-form {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Form heading */
+.availability-form h3 {
+  text-align: center;
+  font-size: 1.8em;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Input fields */
+.availability-form label {
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.availability-form input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+  box-sizing: border-box;
+  transition: border 0.3s ease-in-out;
+}
+
+.availability-form input:focus {
+  border-color: #4CAF50; /* Green border on focus */
+  outline: none;
+}
+
+/* Button */
+.availability-form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.availability-form button:hover {
+  background-color: #45a049;
+}
+
+
+
+
+
+
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .availability-form {
+    padding: 15px;
+  }
+
+  .availability-form h3 {
+    font-size: 1.5em;
+  }
+
+  .availability-form button {
+    font-size: 1em;
+  }
+}
+
+
+

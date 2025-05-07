@@ -1,0 +1,97 @@
+<div class="notifications-container">
+  <div class="notifications-header">
+    <h2>All Notifications</h2>
+    <div class="actions">
+      <button class="btn-mark-all" (click)="markAllAsRead()" aria-label="Mark all notifications as read">
+        <i class="fas fa-check-double"></i> Mark All as Read
+      </button>
+    </div>
+  </div>
+
+  <div class="notifications-content" *ngIf="!loading">
+    <div class="notifications-list">
+      <div *ngIf="notifications.length === 0" class="empty-state">
+        <i class="fas fa-bell-slash"></i>
+        <p>No notifications available</p>
+      </div>
+
+      <div *ngFor="let notification of notifications" 
+           class="notification-item" 
+           [class.read]="notification.read"
+           [class.unread]="!notification.read"
+           (click)="viewNotificationDetails(notification)">
+        <div class="notification-icon">
+          <i class="fas fa-truck" *ngIf="notification.status === 'new'"></i>
+          <i class="fas fa-spinner fa-spin" *ngIf="notification.status === 'in-progress'"></i>
+          <i class="fas fa-check-circle" *ngIf="notification.status === 'completed'"></i>
+          <i class="fas fa-bell" *ngIf="!notification.status"></i>
+        </div>
+        <div class="notification-content">
+          <div class="notification-header">
+            <span class="status-badge" [class]="getStatusClass(notification.status)">
+              {{ notification.status }}
+            </span>
+            <span class="notification-time">{{ getFormattedDate(notification.date) }}</span>
+          </div>
+          <div class="notification-message" [innerHTML]="notification.message"></div>
+          <div class="notification-meta" *ngIf="notification.policyNumber">
+            <span class="policy-number">Policy: {{ notification.policyNumber }}</span>
+          </div>
+        </div>
+        <div class="notification-actions">
+          <button *ngIf="!notification.read" class="btn-mark-read" (click)="markAsRead(notification); $event.stopPropagation()" aria-label="Mark as read">
+            <i class="fas fa-check"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notification Details Modal -->
+    <div class="notification-detail-modal" *ngIf="selectedNotification">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Notification Details</h3>
+          <button class="close-btn" (click)="closeDetails()" aria-label="Close notification details">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="detail-row">
+            <span class="label">Status:</span>
+            <span class="value status-badge" [class]="getStatusClass(selectedNotification?.status || '')">
+              {{ selectedNotification?.status }}
+            </span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Date:</span>
+            <span class="value">{{ selectedNotification && selectedNotification.date ? getFormattedDate(selectedNotification.date) : '' }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Message:</span>
+            <span class="value" [innerHTML]="selectedNotification?.message"></span>
+          </div>
+          <div class="detail-row" *ngIf="selectedNotification?.policyNumber">
+            <span class="label">Policy Number:</span>
+            <span class="value">{{ selectedNotification?.policyNumber }}</span>
+          </div>
+          <div class="detail-row" *ngIf="selectedNotification?.location">
+            <span class="label">Location:</span>
+            <span class="value">{{ selectedNotification?.location }}</span>
+          </div>
+          <div class="detail-row" *ngIf="selectedNotification?.agentId">
+            <span class="label">Agent ID:</span>
+            <span class="value">{{ selectedNotification?.agentId }}</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-primary" (click)="closeDetails()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="loading-indicator" *ngIf="loading">
+    <i class="fas fa-spinner fa-spin"></i>
+    <p>Loading notifications...</p>
+  </div>
+</div> 

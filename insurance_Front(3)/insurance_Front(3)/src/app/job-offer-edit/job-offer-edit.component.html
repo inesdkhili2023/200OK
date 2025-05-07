@@ -1,0 +1,35 @@
+<h2 mat-dialog-title class="dialog-title">Modifier l'offre de:{{ job.title }}</h2>
+
+<div mat-dialog-content class="dialog-content">
+  <mat-form-field appearance="fill" class="full-width" >
+    <mat-label>ID</mat-label>
+    <input matInput [(ngModel)]="job.jobOfferId" disabled>
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Description</mat-label>
+    <textarea matInput [(ngModel)]="job.description" rows="3"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Exigences</mat-label>
+    <textarea matInput [(ngModel)]="job.requirements" rows="3"></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Localisation</mat-label>
+    <input matInput [(ngModel)]="job.location">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Type de contrat</mat-label>
+    <input matInput [(ngModel)]="job.contractType">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Date limite</mat-label>
+    <input matInput [(ngModel)]="job.applicationDeadline" type="date">
+  </mat-form-field>
+</div>
+
+  <button mat-button (click)="closeDialog()" style="align-content: center;flex-wrap: wrap;" class="close-btn">Fermer</button>
+  <button mat-raised-button color="primary" (click)="saveJobOffer()">Enregistrer</button>
