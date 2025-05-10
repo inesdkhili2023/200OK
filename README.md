@@ -51,11 +51,4 @@ This project focuses on redesigning the official website of **Assurances Maghreb
 
 ---
 
-## 🚀 Getting Started
 
-### Backend
-
-```bash
-cd backend/
-mvn clean install
-# Start each microservice individually or via Docker Compose (if configured)
