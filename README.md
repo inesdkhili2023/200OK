@@ -21,10 +21,15 @@ This project focuses on redesigning the official website of **Assurances Maghreb
 ### 📡 Backend (Microservices - Spring Boot)
 - **User Service**: user registration, authentication with JWT, facial recognition.
 - **Contract Service**: insurance contract management.
+- **Quote Service**: generate personalized insurance quotes based on user input.
 - **Claim Service**: online claim submission and tracking.
 - **Appointment Service**: schedule meetings with agents.
 - **Job Service**: job posting and applications.
-- **Notification Service**: email and SMS (Twilio).
+- **Agency Service**: agency listing, creation, update, and location-based search.
+- **Towing Service**: roadside assistance requests and tracking.
+- **Chatbot Service**: handles natural language queries and responses.
+- **Insurance Service**: management of insurance products (auto, health, home, etc.).
+- **Sinister Service**: management of incident declarations .
 - **Gateway & Eureka Server**: API Gateway and Service Discovery.
 
 ### 💻 Frontend (Angular)
