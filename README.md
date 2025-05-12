@@ -65,13 +65,5 @@ This project is a **full-stack insurance management platform** developed using *
 
 ---
 
-## ✅ Future Improvements
-
-- Admin panel for user management
-- Dashboard with user statistics and ML model insights
-- Multi-factor authentication (MFA)
-- Integration with third-party insurance providers
-
----
 
 
