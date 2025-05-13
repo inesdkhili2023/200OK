@@ -1,31 +1,31 @@
-# 📄 Contract, Invoice, Payment & Quote Management System
+# 📄 Contract, Invoice, Payment, Quote & Chatbot Management System
 
-This project is part of the **Assurances Maghrebia Redesign – PIDEV Module**. It includes contract, invoice, payment, and quote management functionalities, built using a modern stack with **Spring Boot** and **Angular**.
+This project is part of the **Assurances Maghrebia Redesign – PIDEV Module**. It includes contract, invoice, payment, quote, and intelligent chatbot functionalities, built using **Spring Boot**, **Angular**, and **Rasa (AI-powered chatbot framework)**.
 
 ---
 
 ## 🚀 Overview
 
-This backend and frontend solution is designed to automate and secure the management of:
-- Contracts and invoices (including PDF generation and QR codes),
-- Online payments via Stripe,
-- Insurance quote requests with integrated email notifications.
+This complete solution includes both backend and frontend components designed to manage:
+- Business documents (contracts, invoices),
+- Insurance quotes and Stripe payments,
+- A smart chatbot that assists users via natural language understanding.
 
-The system is role-based and integrates secure communication between frontend and backend using token-based authorization.
+The chatbot supports quote submissions, FAQ answers, and redirects to specific services.
 
 ---
 
 ## 🧩 Core Features
 
-### ✅ Module 6: Contract and Invoice Management
+### ✅ Module : Contract and Invoice Management
 
 **Purpose:** Automate retrieval and PDF generation of contracts and invoices with branding and traceability.
 
 #### 📌 Features:
 - Generate and download styled PDF documents
-- Embed QR codes (optional)
+- QR code integration
 - Token-secured endpoints
-- Integration with Angular frontend
+- Angular integration for listing and previewing documents
 
 #### 📥 API Endpoints:
 - `GET /api/contrats` – Retrieve all contracts
@@ -35,91 +35,118 @@ The system is role-based and integrates secure communication between frontend an
 
 ---
 
-### 💳 Module 7: Payment Management (Stripe)
+### 💳 Module : Payment Management (Stripe)
 
 **Purpose:** Handle secure Stripe-based card payments and store related data.
 
 #### 📌 Features:
-- Secure card transactions via Stripe
-- PaymentIntent flow with frontend validation
-- Store and manage payment records
+- Secure Stripe integration with client-side Elements
+- Full payment flow with backend validation
+- Payment record persistence
 
 #### 📥 API Endpoints:
 - `POST /paiements/create` – Log initial payment info
 - `POST /paiements/create-payment-intent` – Initialize Stripe PaymentIntent
-- `POST /paiements/confirm-and-save` – Confirm and save completed payments
+- `POST /paiements/confirm-and-save` – Confirm and store payment
 
 ---
 
 ### 🧾 Module 8: Quote (Devis) Management
 
-**Purpose:** Allow users to request insurance quotes and receive email confirmations.
+**Purpose:** Enable users to request insurance quotes and receive confirmation emails.
 
 #### 📌 Features:
-- Create and manage insurance quote requests
-- Email notifications (confirmation, validation)
-- User association with quotes
+- Create quotes from Angular forms
+- Email notifications on key actions
+- Token-based user linking
 
 #### 📥 API Endpoints:
-- `GET /devis/users` – Get users (secured)
-- `POST /devis/create` – Create a new quote
-- `GET /test-email` – Send a test email
-- `GET /factures/users` – Retrieve users linked to invoices
+- `POST /devis/create` – Submit a new quote
+- `GET /devis/users` – Retrieve users associated with quotes
+- `GET /test-email` – Send test email
+- `GET /factures/users` – Get users related to invoices
+
+---
+
+### 🤖  AI Chatbot Assistant (Rasa)
+
+**Purpose:** Provide real-time user assistance using a machine learning–based chatbot.
+
+#### 📌 Features:
+- Built using **Rasa (NLU + Core)** and trained with real conversation data
+- Handles quote requests, payment help, document info, etc.
+- Custom fallback, intent classification, and form-based dialogues
+- Integrated into the Angular frontend via REST or WebSocket
+
+#### 📥 Chatbot Endpoints:
+- `POST /webhooks/rest/webhook` – Rasa endpoint to receive user messages
+- `GET /intents` –  Expose available intents for admin use
+
+#### 🧠 Training Details:
+- Uses Rasa NLU pipeline with spaCy / DIETClassifier (Deep Learning)
+- Domain includes intents like:
+  - `request_quote`
+  - `invoice_help`
+  - `payment_assistance`
+  - `greet`, `goodbye`, `faq`, `fallback`
+- Stories and rules define conversational paths
 
 ---
 
 ## 🖥️ Frontend Integration
 
-- Developed using **Angular**
-- Uses reactive forms and RESTful communication
-- Secure API interaction using token-based authentication
-- In-app PDF viewing and downloads
-- Stripe Elements for card inputs
+- Built with **Angular**
+- Secure API calls using tokens
+- In-app PDF preview and Stripe integration
+- Chatbot UI available chat window
+- Dynamic responses handled via REST/WebSocket to Rasa
 
 ---
 
 ## 🛠️ Technologies Used
 
-- **Spring Boot**
+- **Spring Boot** (Backend)
 - **REST API (JSON)**
-- **JPA / Hibernate**
+- **JPA**
 - **MySQL**
-- **iText PDF generation**
-- **QR Code generation**
-- **File upload (Multipart)**
+- **iText PDF Generator**
+- **QR Code Generator**
 - **Stripe SDK**
-- **Angular 15+**
+- **Angular 16** (Frontend)
+- **Rasa Open Source** (Chatbot)
+- **Python 3.10** for Rasa backend
+- **DIETClassifier** for chatbot training
 
 ---
 
 ## 👥 Roles
 
-- **Admin** – Full access to all features and endpoints
-- **User** – Can manage their own contracts, quotes, and payments
-- **Guest** – Limited access, mostly read-only or public
+- **Admin** 
+- **User** 
+- **Guest** 
 
 ---
 
 ## 📝 Notes
 
-- All secure endpoints require a valid token in the `Authorization` header.
-- Email service uses SMTP; test endpoint available.
-- Stripe payments are processed in cents.
-- iText is used for consistent branded PDFs (contract & invoice).
+- All protected endpoints require a token in `Authorization` header.
+- PDF documents are generated on the fly using company branding.
+- Stripe handles secure card payments with tokenized flow.
+
 
 ---
 
 ## 📜 License
 
 This project is part of the **Assurances Maghrebia Redesign Project – PIDEV**  
-📚 **For academic use only. Not intended for production deployment.**
+📚 **For academic use only. Not for commercial use.**
 
 ---
 
 ## 🔗 Project Links
 
-- 🎓 [GitHub Repository](#)  
-- 📢 [LinkedIn Project Post](#)
+- 🎓 [GitHub Repository](#)
+- 🧠 [Rasa Bot GitHub (Optional)](#)
+- 🧪 [Chatbot Demo Video (Optional)](#)
 
 ---
-
