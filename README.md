@@ -145,7 +145,7 @@ This project is part of the **Assurances Maghrebia Redesign Project – PIDEV**
 ## 🔗 Project Links
 
 - 🎓 [GitHub Repository](#)
-- 🧠 [Rasa Bot GitHub (Optional)](#)
-- 🧪 [Chatbot Demo Video (Optional)](#)
+- 🧠 [Rasa Bot GitHub ](#)
+  
 
 ---
