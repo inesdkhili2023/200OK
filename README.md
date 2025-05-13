@@ -16,6 +16,26 @@ This project focuses on redesigning the official website of **Assurances Maghreb
 
 ---
 
+## 🚀 Technologies Used
+
+### Frontend:
+- Angular 16
+- TypeScript
+- HTML5, CSS
+- Bootstrap
+
+### Backend:
+- Java 17
+- Spring Boot
+- Spring Security (JWT)
+- Spring Cloud (Eureka, Gateway)
+- JPA
+
+### Database:
+- MySQL
+
+---
+
 ## 🧱 Architecture
 
 ### 📡 Backend (Microservices - Spring Boot)
@@ -55,5 +75,14 @@ This project focuses on redesigning the official website of **Assurances Maghreb
 - 💳 Secure online payment integration
 
 ---
+
+## 👨‍💻 Team
+
+Team Name: Team 200 OK
+Project Type: PIDEV Engineering Project
+Institution: Esprit School of Engineering
+
+## 🏷️ Hashtag
+#Esprit_school_of_engineering
 
 
