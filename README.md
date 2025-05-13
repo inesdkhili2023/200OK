@@ -34,6 +34,11 @@ This project focuses on redesigning the official website of **Assurances Maghreb
 ### Database:
 - MySQL
 
+### DevOps:
+- Git & GitHub
+- Docker 
+- Postman (for API testing)
+
 ---
 
 ## 🧱 Architecture
