@@ -51,7 +51,7 @@ The chatbot supports quote submissions, FAQ answers, and redirects to specific s
 
 ---
 
-### 🧾 Module 8: Quote (Devis) Management
+### 🧾 Module : Quote (Devis) Management
 
 **Purpose:** Enable users to request insurance quotes and receive confirmation emails.
 
@@ -130,7 +130,6 @@ The chatbot supports quote submissions, FAQ answers, and redirects to specific s
 ## 📝 Notes
 
 - All protected endpoints require a token in `Authorization` header.
-- PDF documents are generated on the fly using company branding.
 - Stripe handles secure card payments with tokenized flow.
 
 
