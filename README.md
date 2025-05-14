@@ -6,7 +6,7 @@ The `virginalaa` branch focuses on implementing and managing a *Towing Request M
 
 ## 📖 Overview
 
-The Towing Request Management System ensures efficient operations for towing services by leveraging tools such as WebSockets, real-time notifications, and geolocation-based features. This system is ideal for service providers and their customers.
+The Towing Request Management System ensures efficient operations for towing services by leveraging tools such as WebSockets, real-time notifications, geolocation-based features, towing agent management, and a recommendation system.
 
 ### Key Features
 
@@ -14,6 +14,8 @@ The Towing Request Management System ensures efficient operations for towing ser
 - **WebSocket Integration**: Enables live updates for notifications and agent status.
 - **Interactive Map**: Displays agent locations, towing requests, and user geolocations using Leaflet.js.
 - **Notification System**: Real-time alerts for new towing requests, status updates, and user interactions.
+- **Towing Agent Module**: Manage agent details, locations, and assignments.
+- **Recommendation Module**: Provide recommendations based on historical data and user feedback.
 - **Admin Tools**: Manage users, towing requests, and notifications centrally.
 
 ---
@@ -31,6 +33,24 @@ The Towing Request Management System ensures efficient operations for towing ser
   Update an existing towing request (e.g., status, details).
 - **`DELETE /api/towing-requests/{id}`**  
   Delete a towing request by its ID.
+
+### **Towing Agent Module**
+- **`GET /api/agents`**  
+  Retrieve a list of all towing agents.
+- **`POST /api/agents`**  
+  Add a new towing agent.
+- **`GET /api/agents/{id}`**  
+  Fetch details of a specific agent.
+- **`PUT /api/agents/{id}`**  
+  Update agent information (e.g., location, status).
+- **`DELETE /api/agents/{id}`**  
+  Remove an agent from the system.
+
+### **Recommendation Module**
+- **`GET /api/recommendations`**  
+  Retrieve recommendations for improving service quality.
+- **`POST /api/recommendations`**  
+  Submit feedback or data to enhance recommendations.
 
 ### **WebSocket Endpoints**
 - **`/topic/public`**  
@@ -110,7 +130,15 @@ Key methods in the `WebSocketService`:
    - Real-time notification updates using WebSocket and REST APIs.
    - Enhanced UI for managing notifications.
 
-5. **Error Handling and Fallbacks**  
+5. **Towing Agent Module**  
+   - Manage agent details, locations, and assignments.
+   - Enable agents to receive real-time updates on towing requests.
+
+6. **Recommendation Module**  
+   - Generate recommendations based on historical data and feedback.
+   - Provide actionable insights to improve service efficiency.
+
+7. **Error Handling and Fallbacks**  
    - Graceful handling of WebSocket errors with fallback mechanisms.
    - Mock data support for testing purposes.
 
