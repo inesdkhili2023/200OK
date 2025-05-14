@@ -1,112 +1,125 @@
 # Towing Request Management
 
-The `virginalaa` branch focuses on the implementation and management of a *Towing Request Management System*. This system is designed to efficiently handle towing service requests, track their progress, and provide recommendations for improvements.
+The `virginalaa` branch focuses on implementing and managing a *Towing Request Management System*. It includes comprehensive features for handling towing service requests, real-time notifications, and interactive map-based functionalities.
 
 ---
 
 ## 📖 Overview
 
-The Towing Request Management System includes functionalities for managing towing service requests, tracking their statuses, and providing recommendations for improvements. This system is ideal for use by service providers and their customers to ensure smooth operations.
+The Towing Request Management System ensures efficient operations for towing services by leveraging tools such as WebSockets, real-time notifications, and geolocation-based features. This system is ideal for service providers and their customers.
 
 ### Key Features
 
-- **Request Creation**: Users can create towing requests with specific details (e.g., location, vehicle type).
-- **Request Tracking**: Monitor the status of each towing request in real-time.
-- **Notifications**: Automatic updates for changes in request status.
-- **Recommendation System**: Generate recommendations based on historical data and user feedback.
-- **Admin Tools**: Administrative panel for managing users, requests, and notifications.
+- **Request Creation and Tracking**: Create and monitor towing requests in real-time.
+- **WebSocket Integration**: Enables live updates for notifications and agent status.
+- **Interactive Map**: Displays agent locations, towing requests, and user geolocations using Leaflet.js.
+- **Notification System**: Real-time alerts for new towing requests, status updates, and user interactions.
+- **Admin Tools**: Manage users, towing requests, and notifications centrally.
 
 ---
 
 ## 🌐 API Endpoints
 
-Here are the key API endpoints used in the system:
-
 ### **Towing Requests**
 - **`GET /api/towing-requests`**  
-  Fetch all towing requests. Supports query parameters for filtering (e.g., status, date range).
-  
+  Fetch all towing requests with filters (e.g., status, date range).
 - **`POST /api/towing-requests`**  
-  Create a new towing request. Requires details such as user ID, location, and vehicle information.
-  
+  Create a new towing request with required details such as location and vehicle type.
 - **`GET /api/towing-requests/{id}`**  
-  Get detailed information about a specific towing request.
-  
+  Retrieve detailed information about a specific towing request.
 - **`PUT /api/towing-requests/{id}`**  
-  Update an existing towing request (e.g., change status, update details).
-  
+  Update an existing towing request (e.g., status, details).
 - **`DELETE /api/towing-requests/{id}`**  
   Delete a towing request by its ID.
 
-### **User Management**
-- **`GET /api/users`**  
-  Retrieve a list of users.
-  
-- **`POST /api/users`**  
-  Add a new user to the system.
-  
-- **`GET /api/users/{id}`**  
-  Fetch details of a specific user.
-  
-- **`PUT /api/users/{id}`**  
-  Update user information.
-  
-- **`DELETE /api/users/{id}`**  
-  Remove a user from the system.
+### **WebSocket Endpoints**
+- **`/topic/public`**  
+  Subscribe to public updates for all users.
+- **`/topic/agent-{id}`**  
+  Agent-specific updates for towing requests.
+- **`/topic/towing`**  
+  Real-time updates for towing service-related changes.
 
-### **Recommendation System**
-- **`GET /api/recommendations`**  
-  Fetch recommendations based on historical towing data.
-  
-- **`POST /api/recommendations`**  
-  Submit feedback to improve recommendations.
+### **Notification API**
+- **`GET /api/notifications`**  
+  Fetch all notifications for a user.
+- **`POST /api/notifications/{id}/read`**  
+  Mark a notification as read.
+- **`POST /api/notifications/mark-all-read`**  
+  Mark all notifications as read.
+- **`GET /api/notifications/all`**  
+  Retrieve all notifications regardless of agent.
 
----
-
-## 🛠️ Development Instructions
-
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/inesdkhili2023/200OK.git
-   ```
-
-2. **Check Out the `virginalaa` Branch**
-   ```bash
-   git checkout virginalaa
-   ```
-
-3. **Install Dependencies**
-   ```bash
-   npm install
-   ```
-
-4. **Start the Development Server**
-   ```bash
-   npm start
-   ```
-
-5. **Run Tests**
-   ```bash
-   npm test
-   ```
+### **Map Integration**
+- **Interactive Map Features**  
+  - Displays user's current location.
+  - Shows nearby agents and towing services with markers.
+  - Provides detailed information via popups for each location.
 
 ---
 
-## 📝 Recommendations for Working on `virginalaa`
+## 🛠️ WebSocket Implementation
 
-1. **Follow RESTful Standards**: Ensure all APIs adhere to RESTful design principles.
-2. **Document Changes**: Update the README or create additional documentation for any new features or changes.
-3. **Write Tests**: Add unit and integration tests for all new functionalities.
-4. **Use Meaningful Commit Messages**: Clearly describe the changes in each commit.
-5. **Pull Updates Regularly**: Always pull the latest changes from the branch to avoid conflicts.
-6. **Collaborate**: Use GitHub Issues and Pull Requests for tracking tasks and code reviews.
+The application integrates WebSocket services to enhance real-time communication. Below are some details about the implementation:
+
+- **Initialization**: WebSocket connections are established using SockJS and Stomp.js.
+- **Subscription Management**: Users subscribe to specific topics based on their roles (e.g., agent updates, towing notifications).
+- **Message Handling**: Messages are parsed and displayed in real-time via Angular services.
+- **Error Handling**: Automatic reconnection attempts in case of WebSocket errors.
+
+Key methods in the `WebSocketService`:
+- **`connect(agentId: number)`**: Connects an agent to their specific WebSocket channel.
+- **`sendMessage(destination: string, body: any)`**: Sends a message to a specific WebSocket endpoint.
+- **`disconnect()`**: Gracefully disconnects from the WebSocket.
+
+---
+
+## 🗺️ Map and Notification Features
+
+### Map Integration
+- **Framework**: Leaflet.js is used for rendering interactive maps.
+- **Geolocation**: Displays the user’s current location and nearby agents or towing requests.
+- **Markers and Popups**:
+  - Agents and towing requests are represented as markers.
+  - Popups display detailed information such as agency name, contact details, and status.
+
+### Notifications
+- **Real-Time Updates**: Notifications are pushed via WebSocket to inform users about new requests and updates.
+- **UI Features**: 
+  - Unread notifications are highlighted.
+  - Users can mark notifications as read or clear them all.
+- **APIs**: Notifications are loaded and managed through REST APIs for reliability.
+
+---
+
+## 📝 Summary of Work Done
+
+1. **Towing Request Management**  
+   - API endpoints for creating, updating, and retrieving towing requests.
+   - Admin dashboard for managing requests.
+
+2. **WebSocket Integration**  
+   - Real-time communication for notifications and towing updates.
+   - Modular WebSocket services with reconnection logic.
+
+3. **Map Features**  
+   - Display of agents, towing requests, and user location on an interactive map.
+   - Integration of QR codes for agency details.
+
+4. **Notification System**  
+   - Real-time notification updates using WebSocket and REST APIs.
+   - Enhanced UI for managing notifications.
+
+5. **Error Handling and Fallbacks**  
+   - Graceful handling of WebSocket errors with fallback mechanisms.
+   - Mock data support for testing purposes.
 
 ---
 
 ## 📚 Resources and Support
 
 - **Angular CLI**: See the [Angular CLI Documentation](https://angular.io/cli) for help with Angular commands.
-- **API Documentation**: Refer to the API documentation for detailed information about endpoints and payloads.
+- **Leaflet.js**: Learn more about [Leaflet.js](https://leafletjs.com/) for interactive maps.
 - **Contributions**: Feel free to submit issues or pull requests for bugs and new features.
 
 ---
